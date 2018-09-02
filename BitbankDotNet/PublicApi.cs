@@ -20,7 +20,8 @@ namespace BitbankDotNet
             _client.Timeout = TimeSpan.FromSeconds(10);
         }
 
-        public async Task<T> Get<T>(string path, string pair)
+        async Task<T> Get<T>(string path, string pair)
+            where T : class, IResponse
         {
             try
             {
@@ -28,7 +29,11 @@ namespace BitbankDotNet
                 var json = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
-                    return JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
+                {
+                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
+                    if (result.Success == 1)
+                        return result;
+                }
 
                 Error error;
                 try
