@@ -59,10 +59,8 @@ namespace BitbankDotNet.Api
         public async Task<Depth> GetDepth(string pair)
             => (await Get<DepthResponse>("depth", pair).ConfigureAwait(false)).Data;
 
-        public void GetTransactions()
-        {
-
-        }
+        public async Task<Transaction[]> GetTransaction(string pair)
+            => (await Get<TransactionsResponse>("transactions", pair).ConfigureAwait(false)).Data.Transactions;
 
         public void GetCandlestick()
         {
