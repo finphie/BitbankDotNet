@@ -33,7 +33,7 @@ namespace BitbankDotNet.Api
                 Error error;
                 try
                 {
-                    error = JsonSerializer.Generic.Utf8.Deserialize<Error>(json);
+                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
                 }
                 catch
                 {
