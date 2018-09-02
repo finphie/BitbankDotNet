@@ -30,7 +30,7 @@ namespace BitbankDotNet
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
+                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver>(json);
                     if (result.Success == 1)
                         return result;
                 }
@@ -38,7 +38,7 @@ namespace BitbankDotNet
                 Error error;
                 try
                 {
-                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
+                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver>(json).Data;
                 }
                 catch
                 {
@@ -65,10 +65,10 @@ namespace BitbankDotNet
             => (await Get<DepthResponse>("depth", pair).ConfigureAwait(false)).Data;
 
         public async Task<Transaction[]> GetTransaction(string pair)
-            => (await Get<TransactionsResponse>("transactions", pair).ConfigureAwait(false)).Data.Transactions;
+            => (await Get<TransactionResponse>("transactions", pair).ConfigureAwait(false)).Data.Transactions;
 
         public async Task<Transaction[]> GetTransaction(string pair, DateTime date)
-            => (await Get<TransactionsResponse>($"transactions/{date:yyyyMMdd}", pair).ConfigureAwait(false)).Data.Transactions;
+            => (await Get<TransactionResponse>($"transactions/{date:yyyyMMdd}", pair).ConfigureAwait(false)).Data.Transactions;
 
         public async Task<Transaction[]> GetTransaction(string pair, DateTimeOffset date)
             => await GetTransaction(pair, date.UtcDateTime).ConfigureAwait(false);

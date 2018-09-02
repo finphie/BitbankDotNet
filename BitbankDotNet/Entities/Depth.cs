@@ -8,6 +8,7 @@ namespace BitbankDotNet.Entities
     {
         [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
         public List<double[]> Asks { get; set; }
+
         [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
         public List<double[]> Bids { get; set; }
 

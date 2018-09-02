@@ -4,8 +4,7 @@ using System;
 
 namespace BitbankDotNet.Resolvers
 {
-    sealed class BitbankResolver<TSymbol> : ResolverBase<TSymbol, BitbankResolver<TSymbol>>
-        where TSymbol : struct
+    sealed class BitbankResolver : ResolverBase<byte, BitbankResolver>
     {
         public BitbankResolver() : base(new SpanJsonOptions
         {
