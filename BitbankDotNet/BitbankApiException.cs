@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BitbankDotNet.Api
+namespace BitbankDotNet
 {
     public class BitbankApiException : Exception
     {

@@ -3,7 +3,7 @@ using SpanJson;
 using System;
 using System.Runtime.Serialization;
 
-namespace BitbankDotNet.Api.Entities
+namespace BitbankDotNet.Entities
 {
     public class Transaction
     {

@@ -2,7 +2,7 @@
 using SpanJson;
 using System;
 
-namespace BitbankDotNet.Api.Entities
+namespace BitbankDotNet.Entities
 {
     public class Ticker
     {

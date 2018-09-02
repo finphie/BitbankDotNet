@@ -1,4 +1,4 @@
-﻿namespace BitbankDotNet.Api
+﻿namespace BitbankDotNet
 {
     public static class CurrencyPair
     {

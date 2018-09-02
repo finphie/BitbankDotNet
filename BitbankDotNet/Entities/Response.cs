@@ -1,4 +1,4 @@
-﻿namespace BitbankDotNet.Api.Entities
+﻿namespace BitbankDotNet.Entities
 {
     class Response<T>
     {

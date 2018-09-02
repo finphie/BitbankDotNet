@@ -2,7 +2,7 @@
 using SpanJson;
 using System.Collections.Generic;
 
-namespace BitbankDotNet.Api.Entities
+namespace BitbankDotNet.Entities
 {
     public class Depth
     {

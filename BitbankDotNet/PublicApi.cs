@@ -1,11 +1,11 @@
-﻿using BitbankDotNet.Api.Entities;
+﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BitbankDotNet.Api
+namespace BitbankDotNet
 {
     public class PublicApi
     {
