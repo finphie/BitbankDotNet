@@ -62,6 +62,12 @@ namespace BitbankDotNet
         public async Task<Transaction[]> GetTransaction(string pair)
             => (await Get<TransactionsResponse>("transactions", pair).ConfigureAwait(false)).Data.Transactions;
 
+        public async Task<Transaction[]> GetTransaction(string pair, DateTime date)
+            => (await Get<TransactionsResponse>($"transactions/{date:yyyyMMdd}", pair).ConfigureAwait(false)).Data.Transactions;
+
+        public async Task<Transaction[]> GetTransaction(string pair, DateTimeOffset date)
+            => await GetTransaction(pair, date.UtcDateTime).ConfigureAwait(false);
+
         public void GetCandlestick()
         {
 
