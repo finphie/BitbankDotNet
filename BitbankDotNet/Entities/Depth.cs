@@ -1,8 +1,20 @@
-﻿using BitbankDotNet.Formatters;
-using SpanJson;
+﻿using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
+    public class BoardOrder
+    {
+        /// <summary>
+        /// 価格
+        /// </summary>
+        public double Price { get; set; }
+
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public double Amount { get; set; }
+    }
+
     /// <summary>
     /// 板情報
     /// </summary>
@@ -11,14 +23,12 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 売り板
         /// </summary>
-        [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
-        public double[][] Asks { get; set; }
+        public BoardOrder[] Asks { get; set; }
 
         /// <summary>
         /// 買い板
         /// </summary>
-        [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
-        public double[][] Bids { get; set; }
+        public BoardOrder[] Bids { get; set; }
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize(this);
