@@ -1,4 +1,5 @@
 ﻿using BitbankDotNet.Entities;
+using BitbankDotNet.Extensions;
 using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
@@ -30,7 +31,7 @@ namespace BitbankDotNet
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver>(json);
+                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
                     if (result.Success == 1)
                         return result;
                 }
@@ -38,7 +39,7 @@ namespace BitbankDotNet
                 Error error;
                 try
                 {
-                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver>(json).Data;
+                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
                 }
                 catch
                 {
@@ -73,9 +74,19 @@ namespace BitbankDotNet
         public async Task<Transaction[]> GetTransaction(string pair, DateTimeOffset date)
             => await GetTransaction(pair, date.UtcDateTime).ConfigureAwait(false);
 
-        public void GetCandlestick()
-        {
+        async Task<Ohlcv[]> GetCandlestick(string pair, CandleType type, string query)
+            => (await Get<CandlestickResponse>($"candlestick/{type.GetEnumMemberValue()}/{query}", pair).ConfigureAwait(false)).Data.Candlesticks[0].Ohlcv;
 
-        }    
+        public async Task<Ohlcv[]> GetCandlestick(string pair, CandleType type, int year)
+            => await GetCandlestick(pair, type, year.ToString()).ConfigureAwait(false);
+
+        public async Task<Ohlcv[]> GetCandlestick(string pair, CandleType type, int year, int month, int day)
+            => await GetCandlestick(pair, type, $"{year}{month}{day}").ConfigureAwait(false);
+
+        public async Task<Ohlcv[]> GetCandlestick(string pair, CandleType type, DateTime date)
+            => await GetCandlestick(pair, type, date.ToString("yyyyMMdd")).ConfigureAwait(false);
+
+        public async Task<Ohlcv[]> GetCandlestick(string pair, CandleType type, DateTimeOffset date)
+            => await GetCandlestick(pair, type, date.UtcDateTime).ConfigureAwait(false);
     }
 }

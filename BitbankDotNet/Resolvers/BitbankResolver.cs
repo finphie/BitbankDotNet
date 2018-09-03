@@ -1,10 +1,12 @@
-﻿using BitbankDotNet.Formatters;
+﻿using BitbankDotNet.Entities;
+using BitbankDotNet.Formatters;
 using SpanJson.Resolvers;
 using System;
 
 namespace BitbankDotNet.Resolvers
 {
-    sealed class BitbankResolver : ResolverBase<byte, BitbankResolver>
+    sealed class BitbankResolver<TSymbol> : ResolverBase<TSymbol, BitbankResolver<TSymbol>>
+        where TSymbol : struct
     {
         public BitbankResolver() : base(new SpanJsonOptions
         {
@@ -14,6 +16,8 @@ namespace BitbankDotNet.Resolvers
         })
         {
             RegisterGlobalCustomFormatter<DateTime, DateTimeAsLongFormatter>();
+            RegisterGlobalCustomFormatter<Ohlcv, BitbankOhlcvFormatter>();
+            RegisterGlobalCustomFormatter<Ohlcv[], BitbankOhlcvArrayFormatter>();
         }
     }
 }
