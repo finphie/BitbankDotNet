@@ -1,29 +1,46 @@
-﻿using BitbankDotNet.Formatters;
-using SpanJson;
+﻿using SpanJson;
 using System;
 
 namespace BitbankDotNet.Entities
 {
+    /// <summary>
+    /// ティッカー情報
+    /// </summary>
     public class Ticker
     {
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 現在の売り注文の最安値
+        /// </summary>
         public double Sell { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 現在の買い注文の最高値
+        /// </summary>
         public double Buy { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 過去24時間の最高値取引価格
+        /// </summary>
         public double High { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 過去24時間の最安値取引価格
+        /// </summary>
         public double Low { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 最新取引価格
+        /// </summary>
         public double Last { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 過去24時間の出来高
+        /// </summary>
         public double Vol { get; set; }
 
+        /// <summary>
+        /// 日時
+        /// </summary>
         public DateTime Timestamp { get; set; }
 
         public override string ToString()

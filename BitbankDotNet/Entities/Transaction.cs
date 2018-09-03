@@ -1,23 +1,38 @@
-﻿using BitbankDotNet.Formatters;
-using SpanJson;
+﻿using SpanJson;
 using System;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
+    /// <summary>
+    /// 約定履歴
+    /// </summary>
     public class Transaction
     {
+        /// <summary>
+        /// 取引ID
+        /// </summary>
         [DataMember(Name = "transaction_id")]
         public int TransactionId { get; set; }
 
+        /// <summary>
+        /// buyまたはsell
+        /// </summary>
         public OrderSide Side { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 価格
+        /// </summary>
         public double Price { get; set; }
 
-        [JsonCustomSerializer(typeof(DoubleAsStringFormatter))]
+        /// <summary>
+        /// 数量
+        /// </summary>
         public double Amount { get; set; }
 
+        /// <summary>
+        /// 約定日時
+        /// </summary>
         [DataMember(Name = "executed_at")]
         public DateTime ExecutedAt { get; set; }
 

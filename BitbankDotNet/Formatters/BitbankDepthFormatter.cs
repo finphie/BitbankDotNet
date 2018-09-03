@@ -12,9 +12,9 @@ namespace BitbankDotNet.Formatters
         public List<double[]> Deserialize(ref JsonReader<byte> reader)
         {
             var list = new List<double[]>(4);
-            reader.ReadBeginArrayOrThrow();
+            reader.ReadUtf8BeginArrayOrThrow();
             var count = 0;
-            while (!reader.TryReadIsEndArrayOrValueSeparator(ref count))
+            while (!reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count))
                 list.Add(ElementFormatter.Deserialize(ref reader));
 
             return list;
@@ -23,9 +23,9 @@ namespace BitbankDotNet.Formatters
         public List<double[]> Deserialize(ref JsonReader<char> reader)
         {
             var list = new List<double[]>(4);
-            reader.ReadBeginArrayOrThrow();
+            reader.ReadUtf16BeginArrayOrThrow();
             var count = 0;
-            while (!reader.TryReadIsEndArrayOrValueSeparator(ref count))
+            while (!reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count))
                 list.Add(ElementFormatter.Deserialize(ref reader));
 
             return list;

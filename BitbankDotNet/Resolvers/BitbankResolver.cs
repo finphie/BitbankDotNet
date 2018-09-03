@@ -15,6 +15,7 @@ namespace BitbankDotNet.Resolvers
             EnumOption = EnumOptions.String
         })
         {
+            RegisterGlobalCustomFormatter<double, DoubleAsStringFormatter>();
             RegisterGlobalCustomFormatter<DateTime, DateTimeAsLongFormatter>();
             RegisterGlobalCustomFormatter<Ohlcv, BitbankOhlcvFormatter>();
             RegisterGlobalCustomFormatter<Ohlcv[], BitbankOhlcvArrayFormatter>();

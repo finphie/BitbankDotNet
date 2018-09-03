@@ -4,11 +4,20 @@ using System.Collections.Generic;
 
 namespace BitbankDotNet.Entities
 {
+    /// <summary>
+    /// 板情報
+    /// </summary>
     public class Depth
     {
+        /// <summary>
+        /// 売り板
+        /// </summary>
         [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
         public List<double[]> Asks { get; set; }
 
+        /// <summary>
+        /// 買い板
+        /// </summary>
         [JsonCustomSerializer(typeof(BitbankDepthFormatter))]
         public List<double[]> Bids { get; set; }
 
