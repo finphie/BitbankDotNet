@@ -19,7 +19,6 @@ namespace BitbankDotNet.Resolvers
             RegisterGlobalCustomFormatter<DateTime, DateTimeAsLongFormatter>();
             RegisterGlobalCustomFormatter<BoardOrder, BitbankBoardOrderFormatter>();
             RegisterGlobalCustomFormatter<Ohlcv, BitbankOhlcvFormatter>();
-            RegisterGlobalCustomFormatter<Ohlcv[], BitbankOhlcvArrayFormatter>();
         }
     }
 }
