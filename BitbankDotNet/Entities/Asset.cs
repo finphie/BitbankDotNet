@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using SpanJson;
+using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
@@ -49,6 +50,9 @@ namespace BitbankDotNet.Entities
         //public bool StopDeposit { get; set; }
         //[DataMember(Name = "stop_withdrawal")]
         //public bool StopWithdrawal { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize(this);
     }
 
     class AssetList

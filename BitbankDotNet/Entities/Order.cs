@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpanJson;
+using System;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -68,6 +69,9 @@ namespace BitbankDotNet.Entities
         /// 注文ステータス
         /// </summary>
         public OrderStatus Status { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize(this);
     }
 
     class OrderResponse : Response<Order>

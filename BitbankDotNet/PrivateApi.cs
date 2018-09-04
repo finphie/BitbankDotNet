@@ -2,12 +2,12 @@
 using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BitbankDotNet
 {
@@ -86,6 +86,8 @@ namespace BitbankDotNet
             using (var hmac = new HMACSHA256(_apiSecret))
             {
                 var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+
+                // TODO: 後で高速化する
                 return BitConverter.ToString(hash).ToLower().Replace("-", "");
             }
         }
@@ -105,14 +107,11 @@ namespace BitbankDotNet
         /// <returns>注文情報</returns>
         public async Task<Order> GetOrder(string pair, int orderId)
         {
-            var parameters = new Dictionary<string, string>
-            {
-                {"pair", pair},
-                {"order_id", orderId.ToString()}
-            };
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["pair"] = pair;
+            query["order_id"] = orderId.ToString();
 
-            var content = await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false);
-            return (await Get<OrderResponse>("user/spot/order?" + content).ConfigureAwait(false)).Data;
+            return (await Get<OrderResponse>("user/spot/order?" + query).ConfigureAwait(false)).Data;
         }
     }
 }
