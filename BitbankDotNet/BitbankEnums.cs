@@ -3,6 +3,54 @@
 namespace BitbankDotNet
 {
     /// <summary>
+    /// アセット名
+    /// </summary>
+    public enum AssetName
+    {
+        /// <summary>
+        /// JPY
+        /// </summary>
+        [EnumMember(Value = "jpy")]
+        Jpy,
+
+        /// <summary>
+        /// BTC
+        /// </summary>
+        [EnumMember(Value = "btc")]
+        Btc,
+
+        /// <summary>
+        /// LTC
+        /// </summary>
+        [EnumMember(Value = "ltc")]
+        Ltc,
+
+        /// <summary>
+        /// XRP
+        /// </summary>
+        [EnumMember(Value = "xrp")]
+        Xrp,
+
+        /// <summary>
+        /// ETH
+        /// </summary>
+        [EnumMember(Value = "eth")]
+        Eth,
+
+        /// <summary>
+        /// MONA
+        /// </summary>
+        [EnumMember(Value = "mona")]
+        Mona,
+
+        /// <summary>
+        /// BCC
+        /// </summary>
+        [EnumMember(Value = "bcc")]
+        Bcc
+    }
+
+    /// <summary>
     /// ロウソク足の期間
     /// </summary>
     public enum CandleType
