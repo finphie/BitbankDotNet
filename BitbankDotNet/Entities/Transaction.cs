@@ -16,7 +16,7 @@ namespace BitbankDotNet.Entities
         public int TransactionId { get; set; }
 
         /// <summary>
-        /// buyまたはsell
+        /// 注文の方向
         /// </summary>
         public OrderSide Side { get; set; }
 

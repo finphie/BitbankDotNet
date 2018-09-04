@@ -2,6 +2,7 @@
 using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
@@ -95,5 +96,23 @@ namespace BitbankDotNet
         /// <returns>アセット一覧</returns>
         public async Task<Asset[]> GetAsset()
             => (await Get<AssetResponse>("user/assets").ConfigureAwait(false)).Data.Assets;
+
+        /// <summary>
+        /// 注文情報を取得します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="orderId">注文ID</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> GetOrder(string pair, int orderId)
+        {
+            var parameters = new Dictionary<string, string>
+            {
+                {"pair", pair},
+                {"order_id", orderId.ToString()}
+            };
+
+            var content = await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false);
+            return (await Get<OrderResponse>("user/spot/order?" + content).ConfigureAwait(false)).Data;
+        }
     }
 }

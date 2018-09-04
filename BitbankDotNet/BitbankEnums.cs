@@ -111,7 +111,7 @@ namespace BitbankDotNet
     }
 
     /// <summary>
-    /// Orderの種類
+    /// 注文の方向
     /// </summary>
     public enum OrderSide
     {
@@ -126,5 +126,59 @@ namespace BitbankDotNet
         /// </summary>
         [EnumMember(Value = "sell")]
         Sell
+    }
+
+    /// <summary>
+    /// 注文の種類
+    /// </summary>
+    public enum OrderType
+    {
+        /// <summary>
+        /// 指値
+        /// </summary>
+        [EnumMember(Value = "limit")]
+        Limit,
+
+        /// <summary>
+        /// 成行
+        /// </summary>
+        [EnumMember(Value = "market")]
+        Market
+    }
+
+    /// <summary>
+    /// 注文のステータス
+    /// </summary>
+    public enum OrderStatus
+    {
+        /// <summary>
+        /// 注文中
+        /// </summary>
+        [EnumMember(Value = "UNFILLED")]
+        Unfilled,
+
+        /// <summary>
+        /// 注文中（一部約定）
+        /// </summary>
+        [EnumMember(Value = "PARTIALLY_FILLED")]
+        PartiallyFilled,
+
+        /// <summary>
+        /// 約定済み
+        /// </summary>
+        [EnumMember(Value = "FULLY_FILLED")]
+        FullyFilled,
+
+        /// <summary>
+        /// 取消済
+        /// </summary>
+        [EnumMember(Value = "CANCELED_UNFILLED")]
+        CanceledUnfilled,
+
+        /// <summary>
+        /// 取消済（一部約定）
+        /// </summary>
+        [EnumMember(Value = "CANCELED_PARTIALLY_FILLED")]
+        CanceledPartiallyFilled
     }
 }
