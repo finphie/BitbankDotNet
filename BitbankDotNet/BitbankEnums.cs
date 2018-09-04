@@ -111,6 +111,60 @@ namespace BitbankDotNet
     }
 
     /// <summary>
+    /// 通貨ペア
+    /// </summary>
+    public enum CurrencyPair
+    {
+        /// <summary>
+        /// BTC/JPY
+        /// </summary>
+        [EnumMember(Value = "btc_jpy")]
+        BtcJpy,
+
+        /// <summary>
+        /// LTC/BTC
+        /// </summary>
+        [EnumMember(Value = "ltc_btc")]
+        LtcBtc,
+
+        /// <summary>
+        /// XRP/JPY
+        /// </summary>
+        [EnumMember(Value = "xrp_jpy")]
+        XrpJpy,
+
+        /// <summary>
+        /// ETH/BTC
+        /// </summary>
+        [EnumMember(Value = "eth_btc")]
+        EthBtc,
+
+        /// <summary>
+        /// MONA/JPY
+        /// </summary>
+        [EnumMember(Value = "mona_jpy")]
+        MonaJpy,
+
+        /// <summary>
+        /// MONA/BTC
+        /// </summary>
+        [EnumMember(Value = "mona_btc")]
+        MonaBtc,
+
+        /// <summary>
+        /// BCC/JPY
+        /// </summary>
+        [EnumMember(Value = "bcc_jpy")]
+        BccJpy,
+
+        /// <summary>
+        /// BCC/BTC
+        /// </summary>
+        [EnumMember(Value = "bcc_btc")]
+        BccBtc
+    }
+
+    /// <summary>
     /// 注文の方向
     /// </summary>
     public enum OrderSide
