@@ -13,12 +13,12 @@ namespace BitbankDotNet.Entities
         /// 取引ID
         /// </summary>
         [DataMember(Name = "order_id")]
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         /// <summary>
         /// 通貨ペア
         /// </summary>
-        public string Pair { get; set; }
+        public CurrencyPair Pair { get; set; }
 
         /// <summary>
         /// 注文の方向
