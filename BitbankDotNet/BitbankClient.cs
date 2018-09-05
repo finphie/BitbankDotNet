@@ -17,7 +17,7 @@ namespace BitbankDotNet
     public partial class BitbankClient
     {
         // Public API
-        const string PublicUrl = "https://public.bitbank.cc";
+        const string PublicUrl = "https://public.bitbank.cc/";
 
         // Private API
         const string PrivateUrl = "https://api.bitbank.cc/v1/";
@@ -40,64 +40,14 @@ namespace BitbankDotNet
             // APIキーとAPIシークレットが設定されている場合
             if (!string.IsNullOrEmpty(apiKey) && !string.IsNullOrEmpty(apiSecret))
             {
-                _client.BaseAddress = new Uri(PrivateUrl);
-
                 _apiKey = apiKey;
                 _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
-                return;
             }
-
-            _client.BaseAddress = new Uri(PublicUrl);
         }
 
-        async Task<T> GetAsync<T>(string path, CurrencyPair pair)
+        async Task<T> GetAsync<T>(HttpRequestMessage request)
             where T : class, IResponse
         {
-            try
-            {
-                var response = await _client.GetAsync(pair.GetEnumMemberValue() + "/" + path).ConfigureAwait(false);
-                var json = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
-                    if (result.Success == 1)
-                        return result;
-                }
-
-                Error error;
-                try
-                {
-                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
-                }
-                catch
-                {
-                    throw new BitbankApiException(
-                        $"JSONデシリアライズでエラーが発生しました。Response StatusCode:{response.StatusCode} ReasonPhrase:{response.ReasonPhrase}");
-                }
-
-                throw new BitbankApiException($"ErrorCode:{error.Code}");
-            }
-            catch (TaskCanceledException ex)
-            {
-                throw new BitbankApiException("リクエストがタイムアウトしました。", ex);
-            }
-            catch (HttpRequestException ex)
-            {
-                throw new BitbankApiException("リクエストに失敗しました。", ex);
-            }
-        }
-
-        async Task<T> GetAsync<T>(string path)
-           where T : class, IResponse
-        {
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-
-            var request = new HttpRequestMessage(HttpMethod.Get, path);
-            request.Headers.Add("ACCESS-KEY", _apiKey);
-            request.Headers.Add("ACCESS-NONCE", timestamp);
-            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + "/v1/" + path));
-
             try
             {
                 var response = await _client.SendAsync(request).ConfigureAwait(false);
@@ -131,6 +81,26 @@ namespace BitbankDotNet
             {
                 throw new BitbankApiException("リクエストに失敗しました。", ex);
             }
+        }
+
+        // Public API Getリクエスト
+        async Task<T> GetAsync<T>(string path, CurrencyPair pair)
+            where T : class, IResponse =>
+            await GetAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
+            .ConfigureAwait(false);
+
+        // Private API Getリクエスト
+        async Task<T> GetAsync<T>(string path)
+            where T : class, IResponse
+        {
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, PrivateUrl + path);
+            request.Headers.Add("ACCESS-KEY", _apiKey);
+            request.Headers.Add("ACCESS-NONCE", timestamp);
+            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + "/v1/" + path));
+
+            return await GetAsync<T>(request).ConfigureAwait(false);
         }
 
         async Task<T> PostAsync<T>(string path)
