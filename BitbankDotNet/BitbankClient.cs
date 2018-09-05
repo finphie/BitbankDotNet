@@ -45,7 +45,7 @@ namespace BitbankDotNet
             _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
         }
 
-        async Task<T> Get<T>(string path, CurrencyPair pair)
+        async Task<T> GetAsync<T>(string path, CurrencyPair pair)
             where T : class, IResponse
         {
             try
@@ -83,7 +83,7 @@ namespace BitbankDotNet
             }
         }
 
-        async Task<T> Get<T>(string path)
+        async Task<T> GetAsync<T>(string path)
            where T : class, IResponse
         {
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
@@ -128,7 +128,7 @@ namespace BitbankDotNet
             }
         }
 
-        async Task<T> Post<T>(string path)
+        async Task<T> PostAsync<T>(string path)
             where T : class, IResponse
         {
             throw new NotImplementedException();
