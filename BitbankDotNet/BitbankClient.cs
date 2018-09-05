@@ -27,22 +27,27 @@ namespace BitbankDotNet
         readonly string _apiKey;
         readonly byte[] _apiSecret;
 
-        public BitbankClient(HttpClient client)
+        public BitbankClient(HttpClient client) : this(client, string.Empty, string.Empty)
         {
-            _client = client;
-            _client.BaseAddress = new Uri(PublicUrl);
-            _client.Timeout = TimeSpan.FromSeconds(10);
         }
 
         public BitbankClient(HttpClient client, string apiKey, string apiSecret)
         {
             _client = client;
-            _client.BaseAddress = new Uri(PrivateUrl);
             _client.Timeout = TimeSpan.FromSeconds(10);
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            _apiKey = apiKey;
-            _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
+            // APIキーとAPIシークレットが設定されている場合
+            if (!string.IsNullOrEmpty(apiKey) && !string.IsNullOrEmpty(apiSecret))
+            {
+                _client.BaseAddress = new Uri(PrivateUrl);
+
+                _apiKey = apiKey;
+                _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
+                return;
+            }
+
+            _client.BaseAddress = new Uri(PublicUrl);
         }
 
         async Task<T> GetAsync<T>(string path, CurrencyPair pair)
