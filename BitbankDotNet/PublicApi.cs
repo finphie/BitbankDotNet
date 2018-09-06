@@ -31,6 +31,20 @@ namespace BitbankDotNet
         public async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair)
             => (await GetAsync<TransactionResponse>("/transactions", pair).ConfigureAwait(false)).Data.Transactions;
 
+        async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair, string query)
+            => (await GetAsync<TransactionResponse>($"/transactions/{query}", pair).ConfigureAwait(false)).Data.Transactions;
+
+        /// <summary>
+        /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="year">年</param>
+        /// <param name="month">月</param>
+        /// <param name="day">日</param>
+        /// <returns>約定履歴</returns>
+        public async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair, int year, int month, int day)
+            => await GetTransactionAsync(pair, $"{year:D2}{month:D2}{day:D2}").ConfigureAwait(false);
+
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
         /// </summary>
@@ -38,7 +52,7 @@ namespace BitbankDotNet
         /// <param name="date">日付</param>
         /// <returns>約定履歴</returns>
         public async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair, DateTime date)
-            => (await GetAsync<TransactionResponse>($"transactions/{date:yyyyMMdd}", pair).ConfigureAwait(false)).Data.Transactions;
+            => await GetTransactionAsync(pair, $"{date:yyyyMMdd}").ConfigureAwait(false);
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
