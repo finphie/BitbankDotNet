@@ -102,10 +102,20 @@ namespace BitbankDotNet
             return await SendAsync<T>(request).ConfigureAwait(false);
         }
 
-        async Task<T> PostAsync<T>(string path)
+        // Private API Postリクエスト
+        async Task<T> PostAsync<T, TBody>(string path, TBody body)
             where T : class, IResponse
         {
-            throw new NotImplementedException();
+            var json = JsonSerializer.Generic.Utf16.Serialize<TBody, BitbankResolver<char>>(body);
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+
+            var request = new HttpRequestMessage(HttpMethod.Post, PrivateUrl + path);
+            request.Headers.Add("ACCESS-KEY", _apiKey);
+            request.Headers.Add("ACCESS-NONCE", timestamp);
+            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + json));
+            request.Content = new StringContent(json);
+
+            return await SendAsync<T>(request).ConfigureAwait(false);
         }
 
         string CreateSign(string message)

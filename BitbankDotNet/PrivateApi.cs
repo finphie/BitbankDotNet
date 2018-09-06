@@ -20,7 +20,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> GetOrderAsync(CurrencyPair pair, int orderId)
+        public async Task<Order> GetOrderAsync(CurrencyPair pair, long orderId)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
@@ -28,5 +28,18 @@ namespace BitbankDotNet
 
             return (await GetAsync<OrderResponse>("user/spot/order?" + query).ConfigureAwait(false)).Data;
         }
+
+        /// <summary>
+        /// [PrivateAPI]複数の注文情報を取得します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="orderIds">複数の注文ID</param>
+        /// <returns>複数の注文情報</returns>
+        public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
+            => (await PostAsync<OrdersResponse, OrdersInfoBody>("user/spot/orders_info", new OrdersInfoBody
+            {
+                Pair = pair,
+                OrderIds = orderIds
+            }).ConfigureAwait(false)).Data.Orders;
     }
 }

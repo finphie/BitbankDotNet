@@ -74,7 +74,16 @@ namespace BitbankDotNet.Entities
             => JsonSerializer.Generic.Utf16.Serialize(this);
     }
 
+    class OrderList
+    {
+        public Order[] Orders { get; set; }
+    }
+
     class OrderResponse : Response<Order>
+    {
+    }
+
+    class OrdersResponse : Response<OrderList>
     {
     }
 }
