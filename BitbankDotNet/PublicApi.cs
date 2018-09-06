@@ -31,6 +31,7 @@ namespace BitbankDotNet
         public async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair)
             => (await GetAsync<TransactionResponse>("/transactions", pair).ConfigureAwait(false)).Data.Transactions;
 
+        // GetTransaction
         async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair, string query)
             => (await GetAsync<TransactionResponse>($"/transactions/{query}", pair).ConfigureAwait(false)).Data.Transactions;
 
@@ -63,6 +64,7 @@ namespace BitbankDotNet
         public async Task<Transaction[]> GetTransactionAsync(CurrencyPair pair, DateTimeOffset date)
             => await GetTransactionAsync(pair, date.UtcDateTime).ConfigureAwait(false);
 
+        // GetCandlestick
         async Task<Ohlcv[]> GetCandlestickAsync(CurrencyPair pair, CandleType type, string query)
             => (await GetAsync<CandlestickResponse>($"/candlestick/{type.GetEnumMemberValue()}/{query}", pair).ConfigureAwait(false)).Data.Candlesticks[0].Ohlcv;
 

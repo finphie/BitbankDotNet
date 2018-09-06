@@ -34,7 +34,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderIds">複数の注文ID</param>
-        /// <returns>複数の注文情報</returns>
+        /// <returns>注文情報</returns>
         public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
             => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
             {
