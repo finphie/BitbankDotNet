@@ -72,7 +72,7 @@ namespace BitbankDotNet
         /// <param name="day">日</param>
         /// <returns>ローソク足データ</returns>
         public async Task<Ohlcv[]> GetCandlestickAsync(CurrencyPair pair, CandleType type, int year, int month, int day)
-            => await GetCandlestickAsync(pair, type, $"{year}{month}{day}").ConfigureAwait(false);
+            => await GetCandlestickAsync(pair, type, $"{year:D2}{month:D2}{day:D2}").ConfigureAwait(false);
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
