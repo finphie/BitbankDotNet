@@ -20,7 +20,7 @@ namespace BitbankDotNet
         const string PublicUrl = "https://public.bitbank.cc/";
 
         // Private API
-        const string PrivateUrl = "https://api.bitbank.cc/v1/";
+        const string PrivateUrl = "https://api.bitbank.cc";
 
         readonly HttpClient _client;
 
@@ -84,38 +84,38 @@ namespace BitbankDotNet
 
         // Public API Getリクエスト
         async Task<T> GetAsync<T>(string path, CurrencyPair pair)
-            where T : class, IResponse =>
-            await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
-            .ConfigureAwait(false);
+            where T : class, IResponse
+            => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
+                .ConfigureAwait(false);
 
         // Private API Getリクエスト
         async Task<T> GetAsync<T>(string path)
             where T : class, IResponse
-        {
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-
-            var request = new HttpRequestMessage(HttpMethod.Get, PrivateUrl + path);
-            request.Headers.Add("ACCESS-KEY", _apiKey);
-            request.Headers.Add("ACCESS-NONCE", timestamp);
-            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + "/v1/" + path));
-
-            return await SendAsync<T>(request).ConfigureAwait(false);
-        }
+            => await SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path)).ConfigureAwait(false);
 
         // Private API Postリクエスト
         async Task<T> PostAsync<T, TBody>(string path, TBody body)
             where T : class, IResponse
         {
             var json = JsonSerializer.Generic.Utf16.Serialize<TBody, BitbankResolver<char>>(body);
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
-            var request = new HttpRequestMessage(HttpMethod.Post, PrivateUrl + path);
-            request.Headers.Add("ACCESS-KEY", _apiKey);
-            request.Headers.Add("ACCESS-NONCE", timestamp);
-            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + json));
+            var request = MakePrivateRequestHeader(HttpMethod.Post, path, json);
             request.Content = new StringContent(json);
 
             return await SendAsync<T>(request).ConfigureAwait(false);
+        }
+
+        // PrivateAPIのリクエストヘッダーを作成
+        HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, string signMessage)
+        {
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+
+            var request = new HttpRequestMessage(method, PrivateUrl + path);
+            request.Headers.Add("ACCESS-KEY", _apiKey);
+            request.Headers.Add("ACCESS-NONCE", timestamp);
+            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + signMessage));
+
+            return request;
         }
 
         string CreateSign(string message)

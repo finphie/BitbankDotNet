@@ -26,7 +26,7 @@ namespace BitbankDotNet
             query["pair"] = pair.GetEnumMemberValue();
             query["order_id"] = orderId.ToString();
 
-            return (await GetAsync<OrderResponse>("user/spot/order?" + query).ConfigureAwait(false)).Data;
+            return (await GetAsync<OrderResponse>("/v1/user/spot/order?" + query).ConfigureAwait(false)).Data;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>複数の注文情報</returns>
         public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PostAsync<OrdersResponse, OrdersInfoBody>("user/spot/orders_info", new OrdersInfoBody
+            => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
