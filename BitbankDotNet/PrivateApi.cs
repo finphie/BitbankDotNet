@@ -12,7 +12,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <returns>アセット一覧</returns>
         public async Task<Asset[]> GetAssetAsync()
-            => (await GetAsync<AssetResponse>("user/assets").ConfigureAwait(false)).Data.Assets;
+            => (await GetAsync<AssetResponse>("/v1/user/assets").ConfigureAwait(false)).Data.Assets;
 
         /// <summary>
         /// [PrivateAPI]注文情報を取得します。
