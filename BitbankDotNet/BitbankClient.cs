@@ -37,15 +37,14 @@ namespace BitbankDotNet
             _client.Timeout = TimeSpan.FromSeconds(10);
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            // APIキーとAPIシークレットが設定されている場合
-            if (!string.IsNullOrEmpty(apiKey) && !string.IsNullOrEmpty(apiSecret))
-            {
-                _apiKey = apiKey;
-                _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
-            }
+            // APIキーとAPIシークレットが設定されていない場合
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
+                return;
+            _apiKey = apiKey;
+            _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
         }
 
-        async Task<T> GetAsync<T>(HttpRequestMessage request)
+        async Task<T> SendAsync<T>(HttpRequestMessage request)
             where T : class, IResponse
         {
             try
@@ -86,7 +85,7 @@ namespace BitbankDotNet
         // Public API Getリクエスト
         async Task<T> GetAsync<T>(string path, CurrencyPair pair)
             where T : class, IResponse =>
-            await GetAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
+            await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
             .ConfigureAwait(false);
 
         // Private API Getリクエスト
@@ -100,7 +99,7 @@ namespace BitbankDotNet
             request.Headers.Add("ACCESS-NONCE", timestamp);
             request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + "/v1/" + path));
 
-            return await GetAsync<T>(request).ConfigureAwait(false);
+            return await SendAsync<T>(request).ConfigureAwait(false);
         }
 
         async Task<T> PostAsync<T>(string path)
