@@ -85,7 +85,7 @@ namespace BitbankDotNet
         // Public API Getリクエスト
         async Task<T> GetAsync<T>(string path, CurrencyPair pair)
             where T : class, IResponse
-            => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + "/" + path))
+            => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path))
                 .ConfigureAwait(false);
 
         // Private API Getリクエスト
