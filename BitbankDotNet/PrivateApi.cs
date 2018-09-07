@@ -52,7 +52,7 @@ namespace BitbankDotNet
         /// <param name="side">注文の方向</param>
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
-        async Task<Order> SendLimitOrder(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
+        async Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
             => (await PostAsync<OrderResponse, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
             {
                 Pair = pair,
@@ -70,7 +70,7 @@ namespace BitbankDotNet
         /// <param name="side">注文の方向</param>
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
-        async Task<Order> SendMarketOrder(CurrencyPair pair, double amount, OrderSide side, OrderType type)
+        async Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
             => (await PostAsync<OrderResponse, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
             {
                 Pair = pair,
@@ -86,8 +86,8 @@ namespace BitbankDotNet
         /// <param name="price">価格</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendBuyOrder(CurrencyPair pair, double price, double amount)
-            => await SendLimitOrder(pair, price, amount, OrderSide.Buy, OrderType.Limit).ConfigureAwait(false);
+        public async Task<Order> SendBuyOrderAsync(CurrencyPair pair, double price, double amount)
+            => await SendLimitOrderAsync(pair, price, amount, OrderSide.Buy, OrderType.Limit).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]新規成行買い注文を行います。
@@ -95,8 +95,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendBuyOrder(CurrencyPair pair, double amount)
-            => await SendMarketOrder(pair, amount, OrderSide.Buy, OrderType.Market).ConfigureAwait(false);
+        public async Task<Order> SendBuyOrderAsync(CurrencyPair pair, double amount)
+            => await SendMarketOrderAsync(pair, amount, OrderSide.Buy, OrderType.Market).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]新規指値売り注文を行います。
@@ -105,8 +105,8 @@ namespace BitbankDotNet
         /// <param name="price">価格</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendSellOrder(CurrencyPair pair, double price, double amount)
-            => await SendLimitOrder(pair, price, amount, OrderSide.Sell, OrderType.Limit).ConfigureAwait(false);
+        public async Task<Order> SendSellOrderAsync(CurrencyPair pair, double price, double amount)
+            => await SendLimitOrderAsync(pair, price, amount, OrderSide.Sell, OrderType.Limit).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]新規成行売り注文を行います。
@@ -114,8 +114,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendSellOrder(CurrencyPair pair, double amount)
-            => await SendMarketOrder(pair, amount, OrderSide.Sell, OrderType.Market).ConfigureAwait(false);
+        public async Task<Order> SendSellOrderAsync(CurrencyPair pair, double amount)
+            => await SendMarketOrderAsync(pair, amount, OrderSide.Sell, OrderType.Market).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]注文をキャンセルします。
@@ -123,7 +123,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> CancelOrder(CurrencyPair pair, long orderId)
+        public async Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
             => (await PostAsync<OrderResponse, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
             {
                 Pair = pair,
@@ -136,7 +136,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
-        public async Task<Order[]> CancelOrders(CurrencyPair pair, long[] orderIds)
+        public async Task<Order[]> CancelOrdersAsync(CurrencyPair pair, long[] orderIds)
             => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
             {
                 Pair = pair,
