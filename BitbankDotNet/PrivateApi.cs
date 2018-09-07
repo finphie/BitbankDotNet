@@ -129,5 +129,18 @@ namespace BitbankDotNet
                 Pair = pair,
                 OrderId = orderId
             }).ConfigureAwait(false)).Data;
+
+        /// <summary>
+        /// [PrivateAPI]複数の注文をキャンセルします。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="orderIds">複数の注文ID</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order[]> CancelOrders(CurrencyPair pair, long[] orderIds)
+            => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
+            {
+                Pair = pair,
+                OrderIds = orderIds
+            }).ConfigureAwait(false)).Data.Orders;
     }
 }
