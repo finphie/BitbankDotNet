@@ -116,5 +116,18 @@ namespace BitbankDotNet
         /// <returns>注文情報</returns>
         public async Task<Order> SendSellOrder(CurrencyPair pair, double amount)
             => await SendMarketOrder(pair, amount, OrderSide.Sell, OrderType.Market).ConfigureAwait(false);
+
+        /// <summary>
+        /// [PrivateAPI]注文をキャンセルします。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="orderId">注文ID</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> CancelOrder(CurrencyPair pair, long orderId)
+            => (await PostAsync<OrderResponse, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
+            {
+                Pair = pair,
+                OrderId = orderId
+            }).ConfigureAwait(false)).Data;
     }
 }
