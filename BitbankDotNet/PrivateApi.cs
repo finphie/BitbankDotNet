@@ -161,7 +161,7 @@ namespace BitbankDotNet
             query["from_id"] = fromId.ToString();
             query["end_id"] = fromId.ToString();
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
-            query["end"] = end.ToString();
+            query["end"] = end.ToUnixTimeMilliseconds().ToString();
 
             return (await GetAsync<OrdersResponse>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Data.Orders;
         }
