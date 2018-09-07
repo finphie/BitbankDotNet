@@ -188,5 +188,18 @@ namespace BitbankDotNet
 
             return (await GetAsync<TradeResponse>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Data.Trades;
         }
+
+        /// <summary>
+        /// [PrivateAPI]出金アカウントを取得します。
+        /// </summary>
+        /// <param name="asset">通貨名</param>
+        /// <returns>出金アカウント情報</returns>
+        public async Task<Account[]> GetWithdrawalAccountsAsync(AssetName asset)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["asset"] = asset.GetEnumMemberValue();
+
+            return (await GetAsync<AccountResponse>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Data.Accounts;
+        }
     }
 }
