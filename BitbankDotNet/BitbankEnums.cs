@@ -235,4 +235,22 @@ namespace BitbankDotNet
         [EnumMember(Value = "CANCELED_PARTIALLY_FILLED")]
         CanceledPartiallyFilled
     }
+
+    /// <summary>
+    /// ソート順序
+    /// </summary>
+    public enum SortOrder
+    {
+        /// <summary>
+        /// 昇順
+        /// </summary>
+        [EnumMember(Value = "asc")]
+        Asc,
+
+        /// <summary>
+        /// 降順
+        /// </summary>
+        [EnumMember(Value = "desc")]
+        Desc
+    }
 }

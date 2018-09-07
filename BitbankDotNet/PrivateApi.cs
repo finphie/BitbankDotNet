@@ -165,5 +165,28 @@ namespace BitbankDotNet
 
             return (await GetAsync<OrdersResponse>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Data.Orders;
         }
+
+        /// <summary>
+        /// [PrivateAPI]約定履歴を取得します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="count">取得する注文数</param>
+        /// <param name="orderId">注文ID</param>
+        /// <param name="since">開始時間</param>
+        /// <param name="end">終了時間</param>
+        /// <param name="sort">順序</param>
+        /// <returns>約定履歴</returns>
+        public async Task<Trade[]> GetTradeHistory(CurrencyPair pair, long count, long orderId, DateTimeOffset since, DateTimeOffset end, SortOrder sort)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["pair"] = pair.GetEnumMemberValue();
+            query["count"] = count.ToString();
+            query["order_id"] = orderId.ToString();
+            query["since"] = since.ToUnixTimeMilliseconds().ToString();
+            query["end"] = end.ToUnixTimeMilliseconds().ToString();
+            query["order"] = sort.GetEnumMemberValue();
+
+            return (await GetAsync<TradeResponse>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Data.Trades;
+        }
     }
 }
