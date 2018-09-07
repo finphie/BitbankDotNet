@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
+    /// <summary>
+    /// 約定履歴
+    /// </summary>
     public class Trade
     {
         /// <summary>

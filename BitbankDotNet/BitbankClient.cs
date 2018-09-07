@@ -44,6 +44,7 @@ namespace BitbankDotNet
             _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
         }
 
+        // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
             where T : class, IResponse
         {
@@ -118,6 +119,7 @@ namespace BitbankDotNet
             return request;
         }
 
+        // 署名作成
         string CreateSign(string message)
         {
             using (var hmac = new HMACSHA256(_apiSecret))
