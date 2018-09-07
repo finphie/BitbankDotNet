@@ -42,6 +42,7 @@ namespace BitbankDotNet
                 OrderIds = orderIds
             }).ConfigureAwait(false)).Data.Orders;
 
+        // TODO: 価格や数量では、APIやdoubleの有効桁数をチェックする。
         /// <summary>
         /// [PrivateAPI]新規指値注文を行います。
         /// </summary>
