@@ -154,7 +154,7 @@ namespace BitbankDotNet
         /// <param name="since">開始時間</param>
         /// <param name="end">終了時間</param>
         /// <returns>注文情報</returns>
-        public async Task<Order[]> GetActiveOrders(CurrencyPair pair, long count, long fromId, long endId, DateTimeOffset since, DateTimeOffset end)
+        public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair, long count, long fromId, long endId, DateTimeOffset since, DateTimeOffset end)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
@@ -176,7 +176,7 @@ namespace BitbankDotNet
         /// <param name="end">終了時間</param>
         /// <param name="sort">順序</param>
         /// <returns>約定履歴</returns>
-        public async Task<Trade[]> GetTradeHistory(CurrencyPair pair, long count, long orderId, DateTimeOffset since, DateTimeOffset end, SortOrder sort)
+        public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair, long count, long orderId, DateTimeOffset since, DateTimeOffset end, SortOrder sort)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
