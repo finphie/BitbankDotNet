@@ -41,5 +41,79 @@ namespace BitbankDotNet
                 Pair = pair,
                 OrderIds = orderIds
             }).ConfigureAwait(false)).Data.Orders;
+
+        /// <summary>
+        /// [PrivateAPI]新規指値注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="price">価格</param>
+        /// <param name="amount">数量</param>
+        /// <param name="side">注文の方向</param>
+        /// <param name="type">注文の種類</param>
+        /// <returns>注文情報</returns>
+        async Task<Order> SendLimitOrder(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
+            => (await PostAsync<OrderResponse, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
+            {
+                Pair = pair,
+                Amount = amount,
+                Price = price,
+                Side = side,
+                Type = type
+            }).ConfigureAwait(false)).Data;
+
+        /// <summary>
+        /// [PrivateAPI]新規成行注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="amount">数量</param>
+        /// <param name="side">注文の方向</param>
+        /// <param name="type">注文の種類</param>
+        /// <returns>注文情報</returns>
+        async Task<Order> SendMarketOrder(CurrencyPair pair, double amount, OrderSide side, OrderType type)
+            => (await PostAsync<OrderResponse, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
+            {
+                Pair = pair,
+                Amount = amount,
+                Side = side,
+                Type = type
+            }).ConfigureAwait(false)).Data;
+
+        /// <summary>
+        /// [PrivateAPI]新規指値買い注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="price">価格</param>
+        /// <param name="amount">数量</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> SendBuyOrder(CurrencyPair pair, double price, double amount)
+            => await SendLimitOrder(pair, price, amount, OrderSide.Buy, OrderType.Limit).ConfigureAwait(false);
+
+        /// <summary>
+        /// [PrivateAPI]新規成行買い注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="amount">数量</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> SendBuyOrder(CurrencyPair pair, double amount)
+            => await SendMarketOrder(pair, amount, OrderSide.Buy, OrderType.Market).ConfigureAwait(false);
+
+        /// <summary>
+        /// [PrivateAPI]新規指値売り注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="price">価格</param>
+        /// <param name="amount">数量</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> SendSellOrder(CurrencyPair pair, double price, double amount)
+            => await SendLimitOrder(pair, price, amount, OrderSide.Sell, OrderType.Limit).ConfigureAwait(false);
+
+        /// <summary>
+        /// [PrivateAPI]新規成行売り注文を行います。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="amount">数量</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order> SendSellOrder(CurrencyPair pair, double amount)
+            => await SendMarketOrder(pair, amount, OrderSide.Sell, OrderType.Market).ConfigureAwait(false);
     }
 }
