@@ -1,6 +1,7 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -201,5 +202,24 @@ namespace BitbankDotNet
 
             return (await GetAsync<AccountResponse>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Data.Accounts;
         }
+
+        /// <summary>
+        /// [PrivateAPI]出金リクエストを行います。
+        /// </summary>
+        /// <param name="asset">アセット名</param>
+        /// <param name="amount">引き出し量</param>
+        /// <param name="uuid">出金アカウントのUUID</param>
+        /// <param name="otpToken">二段階認証トークン</param>
+        /// <param name="smsToken">SMS認証トークン</param>
+        /// <returns></returns>
+        public async Task<Withdraw> RequestWithdrawAsync(AssetName asset, double amount, string uuid, string otpToken, string smsToken)
+            => (await PostAsync<WithdrawResponse, WithdrawBody>("/v1/user/request_withdrawal", new WithdrawBody
+            {
+                Asset = asset,
+                Amount = amount,
+                Uuid = uuid,
+                OtpToken = otpToken,
+                SmsToken = smsToken
+            }).ConfigureAwait(false)).Data;
     }
 }
