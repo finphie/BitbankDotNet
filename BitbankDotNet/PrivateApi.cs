@@ -1,7 +1,6 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -212,7 +211,7 @@ namespace BitbankDotNet
         /// <param name="otpToken">二段階認証トークン</param>
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
-        public async Task<Withdraw> RequestWithdrawAsync(AssetName asset, double amount, Guid uuid, int otpToken, int smsToken)
+        public async Task<Withdraw> RequestWithdrawalAsync(AssetName asset, double amount, Guid uuid, int otpToken, int smsToken)
             => (await PostAsync<WithdrawResponse, WithdrawBody>("/v1/user/request_withdrawal", new WithdrawBody
             {
                 Asset = asset,
