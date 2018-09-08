@@ -253,4 +253,52 @@ namespace BitbankDotNet
         [EnumMember(Value = "desc")]
         Desc
     }
+
+    /// <summary>
+    /// 出金ステータス
+    /// </summary>
+    public enum WithdrawalStatus
+    {
+        /// <summary>
+        /// メール認証待ち
+        /// </summary>
+        [EnumMember(Value = "CONFIRMING")]
+        Confirming,
+
+        /// <summary>
+        /// 審査中
+        /// </summary>
+        [EnumMember(Value = "EXAMINING")]
+        Examining,
+
+        /// <summary>
+        /// 送金待ち
+        /// </summary>
+        [EnumMember(Value = "SENDING")]
+        Sending,
+
+        /// <summary>
+        /// 送金完了
+        /// </summary>
+        [EnumMember(Value = "DONE")]
+        Done,
+
+        /// <summary>
+        /// 否認
+        /// </summary>
+        [EnumMember(Value = "REJECTED")]
+        Rejected,
+
+        /// <summary>
+        /// キャンセル済み
+        /// </summary>
+        [EnumMember(Value = "CANCELED")]
+        Canceled,
+
+        /// <summary>
+        /// メール認証タイムアウト
+        /// </summary>
+        [EnumMember(Value = "CONFIRM_TIMEOUT")]
+        ConfirmTimeout
+    }
 }

@@ -11,7 +11,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 出金アカウントのID
         /// </summary>
-        public string Uuid { get; set; }
+        public Guid Uuid { get; set; }
 
         /// <summary>
         /// アセット名
@@ -22,7 +22,7 @@ namespace BitbankDotNet.Entities
         /// アカウントのID
         /// </summary>
         [DataMember(Name = "account_uuid")]
-        public string AccountUuid { get; set; }
+        public Guid AccountUuid { get; set; }
 
         /// <summary>
         /// 引き出し量
@@ -52,7 +52,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// ステータス
         /// </summary>
-        public string Status { get; set; }
+        public WithdrawalStatus Status { get; set; }
 
         /// <summary>
         /// リクエスト日時

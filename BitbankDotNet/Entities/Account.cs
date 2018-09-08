@@ -1,4 +1,6 @@
-﻿namespace BitbankDotNet.Entities
+﻿using System;
+
+namespace BitbankDotNet.Entities
 {
     /// <summary>
     /// 出金アカウント情報
@@ -8,7 +10,7 @@
         /// <summary>
         /// 出金アカウントのID
         /// </summary>
-        public string Uuid { get; set; }
+        public Guid Uuid { get; set; }
 
         /// <summary>
         /// ラベル

@@ -212,7 +212,7 @@ namespace BitbankDotNet
         /// <param name="otpToken">二段階認証トークン</param>
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
-        public async Task<Withdraw> RequestWithdrawAsync(AssetName asset, double amount, string uuid, string otpToken, string smsToken)
+        public async Task<Withdraw> RequestWithdrawAsync(AssetName asset, double amount, Guid uuid, int otpToken, int smsToken)
             => (await PostAsync<WithdrawResponse, WithdrawBody>("/v1/user/request_withdrawal", new WithdrawBody
             {
                 Asset = asset,

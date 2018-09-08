@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
@@ -15,7 +16,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 出金アカウントのuuid
         /// </summary>
-        public string Uuid { get; set; }
+        public Guid Uuid { get; set; }
 
         /// <summary>
         /// 引き出し量
@@ -26,12 +27,12 @@ namespace BitbankDotNet.Entities
         /// 二段階認証トークン
         /// </summary>
         [DataMember(Name = "otp_token")]
-        public string OtpToken { get; set; }
+        public int OtpToken { get; set; }
 
         /// <summary>
         /// SMS認証トークン
         /// </summary>
         [DataMember(Name = "sms_token")]
-        public string SmsToken { get; set; }
+        public int SmsToken { get; set; }
     }
 }
