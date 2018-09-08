@@ -33,7 +33,7 @@ namespace BitbankDotNet
 
         public BitbankClient(HttpClient client, string apiKey, string apiSecret)
         {
-            _client = client;
+            _client = client ?? throw new NullReferenceException(nameof(client));
             _client.Timeout = TimeSpan.FromSeconds(10);
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
