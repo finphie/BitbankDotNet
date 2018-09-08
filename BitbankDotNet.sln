@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet", "BitbankDotNet\BitbankDotNet.csproj", "{11E1E216-48F5-47B4-8839-82E14B5C0B0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csproj", "{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitbankDotNet.Test", "BitbankDotNet.Test\BitbankDotNet.Test.csproj", "{B1E5C39E-D135-4E56-B28E-77248A7FCC71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
