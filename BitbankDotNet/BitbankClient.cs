@@ -1,13 +1,14 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
 using BitbankDotNet.Resolvers;
-using SpanJson;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static SpanJson.JsonSerializer.Generic.Utf16;
+using static SpanJson.JsonSerializer.Generic.Utf8;
 
 namespace BitbankDotNet
 {
@@ -55,7 +56,7 @@ namespace BitbankDotNet
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonSerializer.Generic.Utf8.Deserialize<T, BitbankResolver<byte>>(json);
+                    var result = Deserialize<T, BitbankResolver<byte>>(json);
                     if (result.Success == 1)
                         return result;
                 }
@@ -63,7 +64,7 @@ namespace BitbankDotNet
                 Error error;
                 try
                 {
-                    error = JsonSerializer.Generic.Utf8.Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
+                    error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
                 }
                 catch
                 {
@@ -98,7 +99,7 @@ namespace BitbankDotNet
         async Task<T> PostAsync<T, TBody>(string path, TBody body)
             where T : class, IResponse
         {
-            var json = JsonSerializer.Generic.Utf16.Serialize<TBody, BitbankResolver<char>>(body);
+            var json = Serialize<TBody, BitbankResolver<char>>(body);
 
             var request = MakePrivateRequestHeader(HttpMethod.Post, path, json);
             request.Content = new StringContent(json);
