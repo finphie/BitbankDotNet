@@ -329,4 +329,7 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
+# T4 Template
+BitbankDotNet.CodeGenerator/*Template.cs
+
 config.json
