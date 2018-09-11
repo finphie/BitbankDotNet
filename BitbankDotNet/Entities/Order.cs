@@ -1,4 +1,5 @@
-﻿using SpanJson;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
 using System;
 using System.Runtime.Serialization;
 
@@ -71,7 +72,7 @@ namespace BitbankDotNet.Entities
         public OrderStatus Status { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Order, BitbankResolver<char>>(this);
     }
 
     class OrderList

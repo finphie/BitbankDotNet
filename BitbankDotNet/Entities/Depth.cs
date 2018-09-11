@@ -1,4 +1,5 @@
-﻿using SpanJson;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
@@ -13,6 +14,9 @@ namespace BitbankDotNet.Entities
         /// 数量
         /// </summary>
         public double Amount { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<BoardOrder, BitbankResolver<char>>(this);
     }
 
     /// <summary>
@@ -31,7 +35,7 @@ namespace BitbankDotNet.Entities
         public BoardOrder[] Bids { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Depth, BitbankResolver<char>>(this);
     }
 
     class DepthResponse : Response<Depth>

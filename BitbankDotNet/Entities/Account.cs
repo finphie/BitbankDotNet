@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
+using System;
 
 namespace BitbankDotNet.Entities
 {
@@ -21,6 +23,9 @@ namespace BitbankDotNet.Entities
         /// 出金先アドレス
         /// </summary>
         public string Address { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<Account, BitbankResolver<char>>(this);
     }
 
     class AccountList

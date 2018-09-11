@@ -1,4 +1,5 @@
-﻿using SpanJson;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -52,7 +53,7 @@ namespace BitbankDotNet.Entities
         //public bool StopWithdrawal { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Asset, BitbankResolver<char>>(this);
     }
 
     class AssetList

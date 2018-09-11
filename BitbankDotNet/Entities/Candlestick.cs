@@ -1,4 +1,5 @@
-﻿using SpanJson;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
 using System;
 using System.Runtime.Serialization;
 
@@ -40,7 +41,7 @@ namespace BitbankDotNet.Entities
         public DateTime Date { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Ohlcv, BitbankResolver<char>>(this);
     }
 
     class Candlestick

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
+using System;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -59,6 +61,9 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "requested_at")]
         public DateTime RequestedAt { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<Withdraw, BitbankResolver<char>>(this);
     }
 
     class WithdrawResponse : Response<Withdraw>

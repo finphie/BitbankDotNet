@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
+using System;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -68,6 +70,9 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "executed_at")]
         public DateTime ExecutedAt { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<Trade, BitbankResolver<char>>(this);
     }
 
     class TradeList

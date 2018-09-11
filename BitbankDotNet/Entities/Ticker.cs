@@ -1,4 +1,5 @@
-﻿using SpanJson;
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
 using System;
 
 namespace BitbankDotNet.Entities
@@ -44,7 +45,7 @@ namespace BitbankDotNet.Entities
         public DateTime Timestamp { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Ticker, BitbankResolver<char>>(this);
     }
 
     class TickerResponse : Response<Ticker>
