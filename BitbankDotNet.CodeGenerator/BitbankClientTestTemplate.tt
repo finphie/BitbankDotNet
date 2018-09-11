@@ -50,13 +50,9 @@ namespace BitbankDotNet.Tests.PublicApis
                 var <#= ApiName2 #> = bitbank.<#= MethodName #>(pair).GetAwaiter().GetResult();
 
                 Assert.NotNull(<#= ApiName2 #>);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Sell);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Buy);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.High);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Low);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Last);
-                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Vol);
-                Assert.Equal(new DateTime(2018, 1, 1, 1, 1, 1, 111), <#= ApiName2 #>.Timestamp);
+<# foreach (var property in Properties) { #>
+                Assert.Equal(<#= GetTestValueString(property.GetValue(Entity)) #>, <#= ApiName2 #>.<#= property.Name #>);
+<# } #>
             }
         }
 

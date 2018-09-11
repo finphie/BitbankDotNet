@@ -31,12 +31,7 @@ namespace BitbankDotNet.CodeGenerator
         {
             const string methodName = nameof(BitbankClient.GetTickerAsync);
 
-            var ticker = new Ticker();
-            SetValue(ticker);
-
-            var json = ticker.ToString().Replace("\"", @"\""");
-
-            var tt = new BitbankClientTestTemplate(json, methodName);
+            var tt = new BitbankClientTestTemplate(new Ticker(), methodName);
             var text = tt.TransformText();
             File.WriteAllText(nameof(BitbankClient) + methodName + "Test.cs", text);
         }
