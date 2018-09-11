@@ -14,10 +14,10 @@ namespace BitbankDotNet.CodeGenerator
         public string ApiName1 { get; set; }
         public string ApiName2 { get; set; }
 
-        public BitbankClientTestTemplate(object entity, string methodName)
+        public BitbankClientTestTemplate(Type entityType, string methodName)
         {
-            SetValue(entity);
-            Entity = entity;
+            Entity = Activator.CreateInstance(entityType);
+            SetValue(Entity);
 
             Properties = Entity.GetType().GetProperties();
 
