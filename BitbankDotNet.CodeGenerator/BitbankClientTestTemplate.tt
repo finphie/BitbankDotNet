@@ -17,7 +17,7 @@ namespace BitbankDotNet.Tests.PublicApis
     public class BitbankClient<#= MethodName #>Test
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"sell\":\"76543210.12345678\",\"buy\":\"76543210.12345678\",\"high\":\"76543210.12345678\",\"low\":\"76543210.12345678\",\"last\":\"76543210.12345678\",\"vol\":\"76543210.12345678\",\"timestamp\":1514768461111}}";
+            "<#= Json #>";
 
         [Theory]
         [InlineData(CurrencyPair.BtcJpy, "btc_jpy")]
