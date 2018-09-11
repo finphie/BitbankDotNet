@@ -5,7 +5,7 @@ namespace BitbankDotNet.CodeGenerator
 {
     partial class BitbankClientTestTemplate
     {
-        public dynamic Entity { get; set; }
+        public object Entity { get; set; }
         public PropertyInfo[] Properties { get; set; }
 
         public string Json { get; set; }
@@ -29,7 +29,7 @@ namespace BitbankDotNet.CodeGenerator
             ApiName2 = name.ToLower();
         }
 
-        static object GetTestValue<T>(T property)
+        static object GetTestValue(object property)
         {
             switch (property)
             {
@@ -40,11 +40,11 @@ namespace BitbankDotNet.CodeGenerator
                 case DateTime _:
                     return new DateTime(2018, 1, 1, 1, 1, 1, 111);
                 default:
-                    throw new NotImplementedException(typeof(T).Name);
+                    throw new NotImplementedException(property.GetType().Name);
             }
         }
 
-        static string GetTestValueString<T>(T property)
+        static string GetTestValueString(object property)
         {
             string F(string s) => $"\"{s}\"";
 
@@ -57,13 +57,13 @@ namespace BitbankDotNet.CodeGenerator
                 case DateTime date:
                     return $"{nameof(DateTime)}.{nameof(DateTime.Parse)}({F($"{date:O}")})";
                 default:
-                    throw new NotImplementedException(typeof(T).Name);
+                    throw new NotImplementedException(property.GetType().Name);
             }
         }
 
-        static void SetValue<T>(T target)
+        static void SetValue(object target)
         {
-            foreach (var property in typeof(T).GetProperties())
+            foreach (var property in target.GetType().GetProperties())
                 property.SetValue(target, GetTestValue(property.GetValue(target)));
         }
     }
