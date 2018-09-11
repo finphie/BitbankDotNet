@@ -12,19 +12,24 @@ namespace BitbankDotNet.CodeGenerator
 
             foreach (var property in properties)
             {
-                var type = property.PropertyType;          
-                if (type == typeof(double))
-                    property.SetValue(target, 76543210.12345678);
-                else if (type == typeof(string))
-                    property.SetValue(target, "abc");
-                else if (type == typeof(DateTime))
-                    property.SetValue(target, new DateTime(2018, 1, 1, 1, 1, 1, 111));
-                else
-                    throw new NotImplementedException(type.Name);
+                switch (property.GetValue(target))
+                {
+                    case double _:
+                        property.SetValue(target, 76543210.12345678);
+                        break;
+                    case string _:
+                        property.SetValue(target, "abc");
+                        break;
+                    case DateTime _:
+                        property.SetValue(target, new DateTime(2018, 1, 1, 1, 1, 1, 111));
+                        break;
+                    default:
+                        throw new NotImplementedException(property.PropertyType.Name);
+                }
             }
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             const string methodName = nameof(BitbankClient.GetTickerAsync);
 
