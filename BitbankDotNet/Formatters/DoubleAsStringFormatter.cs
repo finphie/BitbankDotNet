@@ -22,14 +22,16 @@ namespace BitbankDotNet.Formatters
         public double Deserialize(ref JsonReader<char> reader)
             => double.Parse(reader.ReadUtf16StringSpan(), NumberStyles.Float, CultureInfo.InvariantCulture);
 
+        // TODO: 後で書き直す
         public void Serialize(ref JsonWriter<byte> writer, double value, int nestingLimit)
             => StringUtf8Formatter.Default.Serialize(ref writer, value.ToString(CultureInfo.InvariantCulture), nestingLimit);
 
+        // TODO: 後で書き直す
         public void Serialize(ref JsonWriter<char> writer, double value, int nestingLimit)
             => StringUtf16Formatter.Default.Serialize(ref writer, value.ToString(CultureInfo.InvariantCulture), nestingLimit);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ThrowJsonParserException(JsonParserException.ParserError error, int position)
+        static void ThrowJsonParserException(JsonParserException.ParserError error, int position)
             => throw new JsonParserException(error, position);
     }
 }

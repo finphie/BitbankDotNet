@@ -44,12 +44,24 @@ namespace BitbankDotNet.Formatters
 
         public void Serialize(ref JsonWriter<byte> writer, BoardOrder value, int nestingLimit)
         {
-            throw new System.NotImplementedException();
+            writer.WriteUtf8BeginArray();
+
+            ElementFormatter.Serialize(ref writer, value.Price, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter.Serialize(ref writer, value.Amount, nestingLimit);
+
+            writer.WriteUtf8EndArray();
         }
 
         public void Serialize(ref JsonWriter<char> writer, BoardOrder value, int nestingLimit)
         {
-            throw new System.NotImplementedException();
+            writer.WriteUtf16BeginArray();
+
+            ElementFormatter.Serialize(ref writer, value.Price, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter.Serialize(ref writer, value.Amount, nestingLimit);
+
+            writer.WriteUtf16EndArray();
         }
     }
 }

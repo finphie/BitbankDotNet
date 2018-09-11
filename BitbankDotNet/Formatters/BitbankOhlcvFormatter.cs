@@ -70,12 +70,40 @@ namespace BitbankDotNet.Formatters
 
         public void Serialize(ref JsonWriter<byte> writer, Ohlcv value, int nestingLimit)
         {
-            throw new NotImplementedException();
+            writer.WriteUtf8BeginArray();
+
+            ElementFormatter1.Serialize(ref writer, value.Open, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.High, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Low, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Close, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Volume, nestingLimit);
+            writer.WriteUtf8ValueSeparator();
+            ElementFormatter2.Serialize(ref writer, value.Date, nestingLimit);
+
+            writer.WriteUtf8EndArray();
         }
 
         public void Serialize(ref JsonWriter<char> writer, Ohlcv value, int nestingLimit)
         {
-            throw new NotImplementedException();
+            writer.WriteUtf16BeginArray();
+
+            ElementFormatter1.Serialize(ref writer, value.Open, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.High, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Low, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Close, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter1.Serialize(ref writer, value.Volume, nestingLimit);
+            writer.WriteUtf16ValueSeparator();
+            ElementFormatter2.Serialize(ref writer, value.Date, nestingLimit);
+
+            writer.WriteUtf16EndArray();
         }
     }
 }
