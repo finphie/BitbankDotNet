@@ -6,27 +6,25 @@ namespace BitbankDotNet.CodeGenerator
 {
     class Program
     {
+        static object GetTestValue<T>(T property)
+        {
+            switch (property)
+            {
+                case double _:
+                    return 76543210.12345678;
+                case string _:
+                    return "abc";
+                case DateTime _:
+                    return new DateTime(2018, 1, 1, 1, 1, 1, 111);
+                default:
+                    throw new NotImplementedException(typeof(T).Name);
+            }
+        }
+
         static void SetValue<T>(T target)
         {
-            var properties = typeof(T).GetProperties();
-
-            foreach (var property in properties)
-            {
-                switch (property.GetValue(target))
-                {
-                    case double _:
-                        property.SetValue(target, 76543210.12345678);
-                        break;
-                    case string _:
-                        property.SetValue(target, "abc");
-                        break;
-                    case DateTime _:
-                        property.SetValue(target, new DateTime(2018, 1, 1, 1, 1, 1, 111));
-                        break;
-                    default:
-                        throw new NotImplementedException(property.PropertyType.Name);
-                }
-            }
+            foreach (var property in typeof(T).GetProperties())
+                property.SetValue(target, GetTestValue(property.GetValue(target)));
         }
 
         static void Main()
