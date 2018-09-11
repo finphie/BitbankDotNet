@@ -49,14 +49,14 @@ namespace BitbankDotNet.Tests.PublicApis
                 var bitbank = new BitbankClient(client);
                 var <#= ApiName2 #> = bitbank.<#= MethodName #>(pair).GetAwaiter().GetResult();
 
-                Assert.NotNull(ticker);
-                Assert.Equal(76543210.12345678, ticker.Sell);
-                Assert.Equal(76543210.12345678, ticker.Buy);
-                Assert.Equal(76543210.12345678, ticker.High);
-                Assert.Equal(76543210.12345678, ticker.Low);
-                Assert.Equal(76543210.12345678, ticker.Last);
-                Assert.Equal(76543210.12345678, ticker.Vol);
-                Assert.Equal(new DateTime(2018, 1, 1, 1, 1, 1, 111), ticker.Timestamp);
+                Assert.NotNull(<#= ApiName2 #>);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Sell);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Buy);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.High);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Low);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Last);
+                Assert.Equal(76543210.12345678, <#= ApiName2 #>.Vol);
+                Assert.Equal(new DateTime(2018, 1, 1, 1, 1, 1, 111), <#= ApiName2 #>.Timestamp);
             }
         }
 
