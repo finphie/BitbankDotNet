@@ -21,14 +21,9 @@ namespace BitbankDotNet.Tests.PublicApis
             "<#= Json #>";
 
         [Theory]
-        [InlineData(CurrencyPair.BtcJpy)]
-        [InlineData(CurrencyPair.LtcBtc)]
-        [InlineData(CurrencyPair.XrpJpy)]
-        [InlineData(CurrencyPair.EthBtc)]
-        [InlineData(CurrencyPair.MonaJpy)]
-        [InlineData(CurrencyPair.MonaBtc)]
-        [InlineData(CurrencyPair.BccJpy)]
-        [InlineData(CurrencyPair.BccBtc)]
+<# foreach (var name in Enum.GetNames(typeof(CurrencyPair))) { #>
+        [InlineData(CurrencyPair.<#= name #>)]
+<# } #>
         public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す(<#= ParameterString #>)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
