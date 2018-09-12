@@ -22,6 +22,9 @@ namespace BitbankDotNet.CodeGenerator
         public BitbankClientTestTemplate(MethodInfo method)
         {
             var entityType = method.ReturnType.GenericTypeArguments[0];
+            if (entityType.IsArray)
+                entityType = entityType.GetElementType();
+
             Entity = Activator.CreateInstance(entityType);
             SetValue(Entity);
 
