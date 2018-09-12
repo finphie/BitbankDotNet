@@ -47,7 +47,7 @@ namespace BitbankDotNet.Tests.PublicApis
 
                 Assert.NotNull(<#= ApiName2 #>);
 <# foreach (var property in Properties) { #>
-                Assert.Equal(<#= GetTestValueString(property.GetValue(Entity)) #>, <#= ApiName2 #>.<#= property.Name #>);
+                Assert.Equal(<#= GetTestValueString(property.GetValue(Entity)) #>, <#= VariableName #>.<#= property.Name #>);
 <# } #>
             }
         }

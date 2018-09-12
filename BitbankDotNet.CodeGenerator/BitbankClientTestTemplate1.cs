@@ -16,6 +16,7 @@ namespace BitbankDotNet.CodeGenerator
 
         public string ApiName1 { get; set; }
         public string ApiName2 { get; set; }
+        public string VariableName { get; set; }
 
         public string ParameterString { get; set; }
 
@@ -23,7 +24,10 @@ namespace BitbankDotNet.CodeGenerator
         {
             var entityType = method.ReturnType.GenericTypeArguments[0];
             if (entityType.IsArray)
+            {
                 entityType = entityType.GetElementType();
+                VariableName = "[0]";
+            }
 
             Entity = Activator.CreateInstance(entityType);
             SetValue(Entity);
@@ -35,6 +39,7 @@ namespace BitbankDotNet.CodeGenerator
 
             ApiName1 = entityType.Name;
             ApiName2 = ApiName1.ToLower();
+            VariableName = ApiName2 + VariableName;            
 
             ParameterString = GetParameterString(method);
         }
