@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Extensions
 {
-    static class EnumExtensions
+    public static class EnumExtensions
     {
         public static string GetEnumMemberValue<T>(this T value)
             where T : struct, Enum

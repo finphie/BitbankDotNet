@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.CSharp;
+using System;
+using System.CodeDom;
+using System.Linq;
 using System.Reflection;
 
 namespace BitbankDotNet.CodeGenerator
@@ -14,7 +17,9 @@ namespace BitbankDotNet.CodeGenerator
         public string ApiName1 { get; set; }
         public string ApiName2 { get; set; }
 
-        public BitbankClientTestTemplate(Type entityType, string methodName)
+        public string ParameterString { get; set; }
+
+        public BitbankClientTestTemplate(Type entityType, MethodBase method)
         {
             Entity = Activator.CreateInstance(entityType);
             SetValue(Entity);
@@ -22,12 +27,18 @@ namespace BitbankDotNet.CodeGenerator
             Properties = Entity.GetType().GetProperties();
 
             Json = Entity.ToString().Replace("\"", @"\""");
-            MethodName = methodName;
+            MethodName = method.Name;
 
-            var name = methodName.Replace("Get", "").Replace("Async", "");
+            var name = MethodName.Replace("Get", "").Replace("Async", "");
             ApiName1 = name;
             ApiName2 = name.ToLower();
+
+            ParameterString = GetParameterString(method);
         }
+
+        // メソッドの引数を文字列として取得する
+        static string GetParameterString(MethodBase method)
+            => string.Join(", ", method.GetParameters().Select(p => $"{GetTypeOutput(p.ParameterType)} {p.Name}"));
 
         static object GetTestValue(object property)
         {
@@ -58,6 +69,19 @@ namespace BitbankDotNet.CodeGenerator
                     return $"{nameof(DateTime)}.{nameof(DateTime.Parse)}({F($"{date:O}")})";
                 default:
                     throw new NotImplementedException(property.GetType().Name);
+            }
+        }
+
+        // 指定した型のエイリアスを取得する
+        static string GetTypeOutput(Type type)
+        {
+            using (var provider = new CSharpCodeProvider())
+            {
+                var typeRef = new CodeTypeReference(type);
+                var typeName = provider.GetTypeOutput(typeRef);
+
+                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
+                return typeName.Split('.').Last();
             }
         }
 

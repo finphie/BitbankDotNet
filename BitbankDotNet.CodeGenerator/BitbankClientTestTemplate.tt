@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using BitbankDotNet.Extensions;
 using Moq;
 using Moq.Protected;
 using System;
@@ -20,15 +21,15 @@ namespace BitbankDotNet.Tests.PublicApis
             "<#= Json #>";
 
         [Theory]
-        [InlineData(CurrencyPair.BtcJpy, "btc_jpy")]
-        [InlineData(CurrencyPair.LtcBtc, "ltc_btc")]
-        [InlineData(CurrencyPair.XrpJpy, "xrp_jpy")]
-        [InlineData(CurrencyPair.EthBtc, "eth_btc")]
-        [InlineData(CurrencyPair.MonaJpy, "mona_jpy")]
-        [InlineData(CurrencyPair.MonaBtc, "mona_btc")]
-        [InlineData(CurrencyPair.BccJpy, "bcc_jpy")]
-        [InlineData(CurrencyPair.BccBtc, "bcc_btc")]
-        public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す(CurrencyPair pair, string pairName)
+        [InlineData(CurrencyPair.BtcJpy)]
+        [InlineData(CurrencyPair.LtcBtc)]
+        [InlineData(CurrencyPair.XrpJpy)]
+        [InlineData(CurrencyPair.EthBtc)]
+        [InlineData(CurrencyPair.MonaJpy)]
+        [InlineData(CurrencyPair.MonaBtc)]
+        [InlineData(CurrencyPair.BccJpy)]
+        [InlineData(CurrencyPair.BccBtc)]
+        public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す(<#= ParameterString #>)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -37,7 +38,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
                     Assert.Equal(HttpMethod.Get, request.Method);
-                    Assert.Equal($"https://public.bitbank.cc/{pairName}/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
+                    Assert.Equal($"https://public.bitbank.cc/{pair.GetEnumMemberValue()}/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
