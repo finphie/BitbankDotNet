@@ -19,8 +19,9 @@ namespace BitbankDotNet.CodeGenerator
 
         public string ParameterString { get; set; }
 
-        public BitbankClientTestTemplate(Type entityType, MethodBase method)
+        public BitbankClientTestTemplate(MethodInfo method)
         {
+            var entityType = method.ReturnType.GenericTypeArguments[0];
             Entity = Activator.CreateInstance(entityType);
             SetValue(Entity);
 
@@ -29,9 +30,8 @@ namespace BitbankDotNet.CodeGenerator
             Json = Entity.ToString().Replace("\"", @"\""");
             MethodName = method.Name;
 
-            var name = MethodName.Replace("Get", "").Replace("Async", "");
-            ApiName1 = name;
-            ApiName2 = name.ToLower();
+            ApiName1 = entityType.Name;
+            ApiName2 = ApiName1.ToLower();
 
             ParameterString = GetParameterString(method);
         }
