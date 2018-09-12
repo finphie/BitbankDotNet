@@ -39,7 +39,7 @@ namespace BitbankDotNet.CodeGenerator
 
             ApiName1 = entityType.Name;
             ApiName2 = ApiName1.ToLower();
-            VariableName = ApiName2 + VariableName;            
+            VariableName = ApiName2 + VariableName;
 
             ParameterString = GetParameterString(method);
         }
@@ -54,10 +54,16 @@ namespace BitbankDotNet.CodeGenerator
             {
                 case double _:
                     return 76543210.12345678;
+                case int _:
+                    return int.MaxValue;
+                case long _:
+                    return long.MaxValue;
                 case string _:
                     return "abc";
                 case DateTime _:
                     return new DateTime(2018, 1, 1, 1, 1, 1, 111);
+                case AssetName _:
+                    return AssetName.Jpy;
                 default:
                     throw new NotImplementedException(property.GetType().Name);
             }
@@ -70,11 +76,15 @@ namespace BitbankDotNet.CodeGenerator
             switch (property)
             {
                 case double _:
+                case int _:
+                case long _:
                     return property.ToString();
                 case string s:
                     return F(s);
                 case DateTime date:
                     return $"{nameof(DateTime)}.{nameof(DateTime.Parse)}({F($"{date:O}")})";
+                case AssetName _:
+                    return $"{nameof(AssetName)}.{nameof(AssetName.Jpy)}";
                 default:
                     throw new NotImplementedException(property.GetType().Name);
             }
