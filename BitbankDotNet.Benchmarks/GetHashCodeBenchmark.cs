@@ -3,6 +3,20 @@ using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
+    /// <summary>
+    /// GetHashCodeのベンチマーク
+    /// VS2017の機能で自動生成できる<see cref="HashCode"/>を利用すると良い。
+    /// </summary>
+    /// <remarks>
+    /// .NET Core 2.1.4 (CoreCLR 4.6.26814.03, CoreFX 4.6.26814.02), 64bit RyuJIT
+    ///          Method |     Mean |     Error |    StdDev | Scaled |  Gen 0 | Allocated |
+    /// --------------- |---------:|----------:|----------:|-------:|-------:|----------:|
+    ///   AnonymousType | 36.86 ns | 0.1272 ns | 0.1128 ns |   2.03 | 0.0356 |      56 B |
+    ///      ValueTuple | 33.16 ns | 0.0509 ns | 0.0397 ns |   1.83 |      - |       0 B |
+    ///       ReSharper | 12.94 ns | 0.0366 ns | 0.0343 ns |   0.71 |      - |       0 B |
+    ///     HashHelpers | 13.65 ns | 0.0644 ns | 0.0602 ns |   0.75 |      - |       0 B |
+    ///  SystemHashCode | 18.16 ns | 0.0526 ns | 0.0492 ns |   1.00 |      - |       0 B |
+    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class GetHashCodeBenchmark
     {
