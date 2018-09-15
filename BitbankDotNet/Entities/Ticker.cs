@@ -1,13 +1,15 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Entities
 {
     /// <summary>
     /// ティッカー情報
     /// </summary>
-    public class Ticker
+    public class Ticker : IEquatable<Ticker>
     {
         /// <summary>
         /// 現在の売り注文の最安値
@@ -43,6 +45,25 @@ namespace BitbankDotNet.Entities
         /// 日時
         /// </summary>
         public DateTime Timestamp { get; set; }
+
+        public override bool Equals(object obj)
+            => Equals(obj as Ticker);
+
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(Ticker other)
+            => other != null &&
+               Sell == other.Sell &&
+               Buy == other.Buy &&
+               High == other.High &&
+               Low == other.Low &&
+               Last == other.Last &&
+               Vol == other.Vol &&
+               Timestamp == other.Timestamp;
+
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+        public override int GetHashCode()
+            => HashCode.Combine(Sell, Buy, High, Low, Last, Vol, Timestamp);
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Ticker, BitbankResolver<char>>(this);

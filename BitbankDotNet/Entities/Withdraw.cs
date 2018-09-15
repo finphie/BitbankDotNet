@@ -1,6 +1,8 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -8,7 +10,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金情報
     /// </summary>
-    public class Withdraw
+    public class Withdraw : IEquatable<Withdraw>
     {
         /// <summary>
         /// 出金アカウントのID
@@ -61,6 +63,42 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "requested_at")]
         public DateTime RequestedAt { get; set; }
+
+        public override bool Equals(object obj)
+            => Equals(obj as Withdraw);
+
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(Withdraw other)
+            => other != null &&
+               Uuid.Equals(other.Uuid) &&
+               Asset == other.Asset &&
+               AccountUuid.Equals(other.AccountUuid) &&
+               Amount == other.Amount &&
+               Fee == other.Fee &&
+               Label == other.Label &&
+               Address == other.Address &&
+               TxId == other.TxId &&
+               Status == other.Status &&
+               RequestedAt == other.RequestedAt;
+
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            hash.Add(Uuid);
+            hash.Add(Asset);
+            hash.Add(AccountUuid);
+            hash.Add(Amount);
+            hash.Add(Fee);
+            hash.Add(Label);
+            hash.Add(Address);
+            hash.Add(TxId);
+            hash.Add(Status);
+            hash.Add(RequestedAt);
+
+            return hash.ToHashCode();
+        }
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Withdraw, BitbankResolver<char>>(this);
