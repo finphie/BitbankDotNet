@@ -61,7 +61,7 @@ namespace BitbankDotNet.Entities
     }
 
     class TransactionList
-    {    
+    {
         public Transaction[] Transactions { get; set; }
     }
 
