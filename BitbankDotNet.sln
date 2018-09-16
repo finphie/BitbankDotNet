@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Tests", "Bitb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.CodeGenerator", "BitbankDotNet.CodeGenerator\BitbankDotNet.CodeGenerator.csproj", "{14BC8007-44B5-4B7A-999F-47CB0A8D5962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitbankDotNet.Benchmarks", "BitbankDotNet.Benchmarks\BitbankDotNet.Benchmarks.csproj", "{E2574B71-3CD8-4E0B-A81F-48176D65A40D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Benchmarks", "BitbankDotNet.Benchmarks\BitbankDotNet.Benchmarks.csproj", "{E2574B71-3CD8-4E0B-A81F-48176D65A40D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitbankDotNet.Shared", "BitbankDotNet.Shared\BitbankDotNet.Shared.csproj", "{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E2574B71-3CD8-4E0B-A81F-48176D65A40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2574B71-3CD8-4E0B-A81F-48176D65A40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2574B71-3CD8-4E0B-A81F-48176D65A40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
