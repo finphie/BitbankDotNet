@@ -3,10 +3,11 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
+using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -46,9 +47,10 @@ namespace BitbankDotNet.Tests.PublicApis
                 var <#= ApiName2 #> = bitbank.<#= MethodName #>(pair).GetAwaiter().GetResult();
 
                 Assert.NotNull(<#= ApiName2 #>);
-<# foreach (var property in Properties) { #>
-                Assert.Equal(<#= GetTestValueString(property.GetValue(Entity)) #>, <#= VariableName #>.<#= property.Name #>);
-<# } #>
+				
+				var entity = new <#= ApiName1 #>();
+				EntityHelper.SetValue(entity);
+				Assert.Equal(entity, <#= ApiName2 #>, new PublicPropertyComparer<<#= ApiName1 #>>());
             }
         }
 

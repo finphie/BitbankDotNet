@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BitbankDotNet.Shared\BitbankDotNet.Shared.csproj" />
     <ProjectReference Include="..\BitbankDotNet\BitbankDotNet.csproj" />
   </ItemGroup>
 
