@@ -2,6 +2,7 @@
 using Microsoft.CSharp;
 using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -9,6 +10,11 @@ namespace BitbankDotNet.CodeGenerator
 {
     partial class BitbankClientTestTemplate
     {
+        static readonly Assembly LibraryAssembly = typeof(BitbankClient).Assembly;
+
+        // GetType()は名前空間付きの型名が必要。こちらの方が簡潔。
+        static readonly IEnumerable<TypeInfo> EntityTypes = LibraryAssembly.DefinedTypes;
+
         public string Json { get; set; }
         public string MethodName { get; set; }
 
@@ -29,10 +35,8 @@ namespace BitbankDotNet.CodeGenerator
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);
-
-            // GetType()は名前空間付きの型名が必要。こちらの方が簡潔。
-            var responseType = Assembly.GetAssembly(entityType).DefinedTypes
-                .First(t => t.Name == $"{ApiName1}Response");
+            
+            var responseType = EntityTypes.First(t => t.Name == $"{ApiName1}Response");
             var entityResponse = Activator.CreateInstance(responseType);
             responseType.GetProperty("Success").SetValue(entityResponse, 1);
             responseType.GetProperty("Data").SetValue(entityResponse, entity);
