@@ -9,8 +9,6 @@ namespace BitbankDotNet.CodeGenerator
 {
     partial class BitbankClientTestTemplate
     {
-        public object Entity { get; set; }
-
         public string Json { get; set; }
         public string MethodName { get; set; }
 
@@ -25,14 +23,21 @@ namespace BitbankDotNet.CodeGenerator
             if (entityType.IsArray)
                 entityType = entityType.GetElementType();
 
-            Entity = Activator.CreateInstance(entityType);
-            EntityHelper.SetValue(Entity);
-
-            Json = Entity.ToString().Replace("\"", @"\""");
-            MethodName = method.Name;
-
             ApiName1 = entityType.Name;
             ApiName2 = ApiName1.ToLower();
+            MethodName = method.Name;
+
+            var entity = Activator.CreateInstance(entityType);
+            EntityHelper.SetValue(entity);
+
+            // GetType()は名前空間付きの型名が必要。こちらの方が簡潔。
+            var responseType = Assembly.GetAssembly(entityType).DefinedTypes
+                .First(t => t.Name == $"{ApiName1}Response");
+            var entityResponse = Activator.CreateInstance(responseType);
+            responseType.GetProperty("Success").SetValue(entityResponse, 1);
+            responseType.GetProperty("Data").SetValue(entityResponse, entity);
+
+            Json = entityResponse.ToString().Replace("\"", @"\""");
 
             ParameterString = GetParameterString(method);
         }
