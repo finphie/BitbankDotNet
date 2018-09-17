@@ -20,8 +20,7 @@ namespace BitbankDotNet.Shared.Helpers
             {
                 var value = GetTestValue(type.GetElementType());
 
-                if (!(Activator.CreateInstance(type, 2) is object[] entityArray))
-                    throw new InvalidCastException(type.Name);
+                var entityArray = (object[]) Activator.CreateInstance(type, 2);
                 for (var i = 0; i < entityArray.Length; i++)
                     entityArray[i] = value;
                 return entityArray;

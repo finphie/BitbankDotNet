@@ -50,27 +50,6 @@ namespace BitbankDotNet.CodeGenerator
         static string GetParameterString(MethodBase method)
             => string.Join(", ", method.GetParameters().Select(p => $"{GetTypeOutput(p.ParameterType)} {p.Name}"));
 
-        static string GetTestValueString(object property)
-        {
-            string F(string s) => $"\"{s}\"";
-
-            switch (property)
-            {
-                case double _:
-                case int _:
-                case long _:
-                    return property.ToString();
-                case string s:
-                    return F(s);
-                case DateTime date:
-                    return $"{nameof(DateTime)}.{nameof(DateTime.Parse)}({F($"{date:O}")})";
-                case AssetName _:
-                    return $"{nameof(AssetName)}.{nameof(AssetName.Jpy)}";
-                default:
-                    throw new NotImplementedException(property.GetType().Name);
-            }
-        }
-
         // 指定した型のエイリアスを取得する
         static string GetTypeOutput(Type type)
         {
