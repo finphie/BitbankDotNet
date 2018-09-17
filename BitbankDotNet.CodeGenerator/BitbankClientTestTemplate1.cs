@@ -19,10 +19,13 @@ namespace BitbankDotNet.CodeGenerator
         public string Json { get; set; }
         public string MethodName { get; set; }
 
+        public string EntityName { get; set; }
         public string ApiName1 { get; set; }
         public string ApiName2 { get; set; }
 
-        public string ParameterString { get; set; }
+        public bool IsArray { get; set; }
+
+        public (string Name, string Type)[] Parameters { get; set; }
 
         public BitbankClientTestTemplate(MethodInfo method)
         {
@@ -32,9 +35,15 @@ namespace BitbankDotNet.CodeGenerator
             ApiName2 = ApiName1.ToLower();
 
             var entityType = method.ReturnType.GenericTypeArguments[0];
+            EntityName = entityType.Name;
+
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
-                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");       
+            {
+                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");
+                EntityName = entityType.GetElementType().Name;
+                IsArray = true;
+            }
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);
@@ -46,12 +55,11 @@ namespace BitbankDotNet.CodeGenerator
 
             Json = entityResponse.ToString().Replace("\"", @"\""");
 
-            ParameterString = GetParameterString(method);
+            Parameters = method.GetParameters().Select(p => (p.Name, GetTypeOutput(p.ParameterType))).ToArray();
         }
 
-        // メソッドの引数を文字列として取得する
-        static string GetParameterString(MethodBase method)
-            => string.Join(", ", method.GetParameters().Select(p => $"{GetTypeOutput(p.ParameterType)} {p.Name}"));
+        string GetDefaultParametersString()
+            => string.Join(", ", Enumerable.Repeat("default", Parameters.Length));
 
         // 指定した型のエイリアスを取得する
         static string GetTypeOutput(Type type)

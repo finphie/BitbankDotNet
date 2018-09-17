@@ -1,10 +1,10 @@
 ﻿<#@ template language="C#" #>
 <#@ assembly name="System.Core" #>
+<#@ import namespace="BitbankDotNet.Extensions" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using BitbankDotNet.Entities;
-using BitbankDotNet.Extensions;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -21,11 +21,8 @@ namespace BitbankDotNet.Tests.PublicApis
         const string Json =
             "<#= Json #>";
 
-        [Theory]
-<# foreach (var name in Enum.GetNames(typeof(CurrencyPair))) { #>
-        [InlineData(CurrencyPair.<#= name #>)]
-<# } #>
-        public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す(<#= ParameterString #>)
+        [Fact]
+        public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -34,7 +31,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
                     Assert.Equal(HttpMethod.Get, request.Method);
-                    Assert.Equal($"https://public.bitbank.cc/{pair.GetEnumMemberValue()}/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
+                    Assert.Equal("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -44,13 +41,17 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankClient(client);
-                var <#= ApiName2 #> = bitbank.<#= MethodName #>(pair).GetAwaiter().GetResult();
+                var <#= ApiName2 #> = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
 
                 Assert.NotNull(<#= ApiName2 #>);
 				
-				var entity = new <#= ApiName1 #>();
+				var entity = new <#= EntityName #>();
 				EntityHelper.SetValue(entity);
-				Assert.Equal(entity, <#= ApiName2 #>, new PublicPropertyComparer<<#= ApiName1 #>>());
+<# if (IsArray) { #>
+				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), <#= ApiName2 #>, new PublicPropertyComparer<<#= EntityName #>[]>());
+<# } else { #>
+				Assert.Equal(entity, <#= ApiName2 #>, new PublicPropertyComparer<<#= EntityName #>>());
+<# } #>
             }
         }
 
@@ -72,7 +73,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankClient(client);
                 Assert.Throws<BitbankApiException>(() =>
-                    bitbank.<#= MethodName #>(CurrencyPair.BtcJpy).GetAwaiter().GetResult());
+                    bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
             }
         }
     }
