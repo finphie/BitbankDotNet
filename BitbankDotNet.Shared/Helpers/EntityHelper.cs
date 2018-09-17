@@ -16,12 +16,28 @@ namespace BitbankDotNet.Shared.Helpers
                 return "abc";
             if (type == typeof(DateTime))
                 return new DateTime(2018, 1, 1, 1, 1, 1, 111);
-            //if (type == typeof(BoardOrder[]))
-            //    return new[] { new BoardOrder { Price = 1.1, Amount = 1.2 }, new BoardOrder { Price = 1.3, Amount = 1.4 } };
-            //if (type == typeof(AssetName))
-            //    return AssetName.Jpy;
+            if (type.IsArray)
+            {
+                var value = GetTestValue(type.GetElementType());
 
-            throw new NotImplementedException(type.Name);
+                if (!(Activator.CreateInstance(type, 2) is object[] entityArray))
+                    throw new InvalidCastException(type.Name);
+                for (var i = 0; i < entityArray.Length; i++)
+                    entityArray[i] = value;
+                return entityArray;
+            }
+
+            // TODO: enum
+
+            // Entityクラス以外で未実装の型の場合
+            if (type.Namespace != $"{nameof(BitbankDotNet)}.Entities")
+                throw new NotImplementedException(type.Name);
+
+            var entity = Activator.CreateInstance(type);
+            foreach (var property in type.GetProperties())
+                property.SetValue(entity, GetTestValue(property.PropertyType));
+
+            return entity;
         }
 
         public static void SetValue(object target)
