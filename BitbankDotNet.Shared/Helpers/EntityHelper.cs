@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 
 namespace BitbankDotNet.Shared.Helpers
 {
@@ -16,6 +18,13 @@ namespace BitbankDotNet.Shared.Helpers
                 return "abc";
             if (type == typeof(DateTime))
                 return new DateTime(2018, 1, 1, 1, 1, 1, 111);
+
+            // BitbankDotNetで定義したenumの場合
+            if (type.IsEnum && type.Namespace == nameof(BitbankDotNet))
+                // Activator.CreateInstance(type)では、enumの値が0のメンバーを返す。
+                // 0に相当するメンバーがない場合は0を返してしまうので使えない。             
+                return type.GetFields(BindingFlags.Public | BindingFlags.Static).First().GetValue(null);
+
             if (type.IsArray)
             {
                 var value = GetTestValue(type.GetElementType());
@@ -25,8 +34,6 @@ namespace BitbankDotNet.Shared.Helpers
                     entityArray[i] = value;
                 return entityArray;
             }
-
-            // TODO: enum
 
             // Entityクラス以外で未実装の型の場合
             if (type.Namespace != $"{nameof(BitbankDotNet)}.Entities")
