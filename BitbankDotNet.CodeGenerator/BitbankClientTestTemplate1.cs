@@ -5,6 +5,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace BitbankDotNet.CodeGenerator
 {
@@ -25,20 +26,16 @@ namespace BitbankDotNet.CodeGenerator
 
         public BitbankClientTestTemplate(MethodInfo method)
         {
-            var entityType = method.ReturnType.GenericTypeArguments[0];
-            ApiName1 = entityType.Name;
+            MethodName = method.Name;
+            ApiName1 = Regex.Matches(MethodName, "^[A-Z].+([A-Z].+)[A-Z].+$")
+                .SelectMany(m => m.Groups.Skip(1).Select(g => g.Value))
+                .First();
+            ApiName2 = ApiName1.ToLower();
 
+            var entityType = method.ReturnType.GenericTypeArguments[0];
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
-            {
-                var elementTypeName = entityType.GetElementType().Name;
-                entityType = EntityTypes.First(t => t.Name == $"{elementTypeName}List");
-
-                ApiName1 = elementTypeName;
-            }
-
-            ApiName2 = ApiName1.ToLower();
-            MethodName = method.Name;
+                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");       
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);
