@@ -16,8 +16,13 @@ namespace BitbankDotNet.Shared.Helpers
                 return long.MaxValue;
             if (type == typeof(string))
                 return "abc";
+
+            // タイムゾーンを明示的に指定しないと、ローカル時間と認識されてしまう。
+            // 対応策は主に2つ
+            // 1. new DateTimeOffset()でTimeSpan.Zeroを指定
+            // 2. DateTimeOffset.ParseでISO8601形式を利用（DateTime.Parseは不可）
             if (type == typeof(DateTime))
-                return new DateTime(2018, 1, 1, 1, 1, 1, 111);
+                return DateTimeOffset.Parse("2018-01-01T01:01:01.111Z").DateTime;
 
             // BitbankDotNetで定義したenumの場合
             if (type.IsEnum && type.Namespace == nameof(BitbankDotNet))
