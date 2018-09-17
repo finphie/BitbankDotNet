@@ -26,10 +26,17 @@ namespace BitbankDotNet.CodeGenerator
         public BitbankClientTestTemplate(MethodInfo method)
         {
             var entityType = method.ReturnType.GenericTypeArguments[0];
-            if (entityType.IsArray)
-                entityType = entityType.GetElementType();
-
             ApiName1 = entityType.Name;
+
+            // EntityResponseクラスが配列の場合
+            if (entityType.IsArray)
+            {
+                var elementTypeName = entityType.GetElementType().Name;
+                entityType = EntityTypes.First(t => t.Name == $"{elementTypeName}List");
+
+                ApiName1 = elementTypeName;
+            }
+
             ApiName2 = ApiName1.ToLower();
             MethodName = method.Name;
 
