@@ -27,9 +27,8 @@ namespace BitbankDotNet.CodeGenerator
         public BitbankClientTestTemplate(MethodInfo method)
         {
             MethodName = method.Name;
-            ApiName1 = Regex.Matches(MethodName, "^[A-Z].+([A-Z].+)[A-Z].+$")
-                .SelectMany(m => m.Groups.Skip(1).Select(g => g.Value))
-                .First();
+            var split = Regex.Split(MethodName, "(?<!^)(?=[A-Z])").AsSpan();
+            ApiName1 = string.Concat(split.Slice(1, split.Length - 2).ToArray());
             ApiName2 = ApiName1.ToLower();
 
             var entityType = method.ReturnType.GenericTypeArguments[0];
