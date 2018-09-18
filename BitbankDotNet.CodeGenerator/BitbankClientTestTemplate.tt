@@ -34,7 +34,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
                     Assert.Equal(HttpMethod.Get, request.Method);
-                    Assert.Equal("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
