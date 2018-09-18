@@ -51,7 +51,7 @@ namespace BitbankDotNet
         {
             try
             {
-                var response = await _client.SendAsync(request).ConfigureAwait(false);
+                var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 var json = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
