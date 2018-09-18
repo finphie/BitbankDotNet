@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
@@ -16,7 +15,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 出金アカウントのuuid
         /// </summary>
-        public Guid Uuid { get; set; }
+        public string Uuid { get; set; }
 
         /// <summary>
         /// 引き出し量

@@ -15,7 +15,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 出金アカウントのID
         /// </summary>
-        public Guid Uuid { get; set; }
+        public string Uuid { get; set; }
 
         /// <summary>
         /// アセット名
@@ -26,7 +26,7 @@ namespace BitbankDotNet.Entities
         /// アカウントのID
         /// </summary>
         [DataMember(Name = "account_uuid")]
-        public Guid AccountUuid { get; set; }
+        public string AccountUuid { get; set; }
 
         /// <summary>
         /// 引き出し量
@@ -71,9 +71,9 @@ namespace BitbankDotNet.Entities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Withdrawal other)
             => other != null &&
-               Uuid.Equals(other.Uuid) &&
+               Uuid == other.Uuid &&
                Asset == other.Asset &&
-               AccountUuid.Equals(other.AccountUuid) &&
+               AccountUuid == other.AccountUuid &&
                Amount == other.Amount &&
                Fee == other.Fee &&
                Label == other.Label &&
