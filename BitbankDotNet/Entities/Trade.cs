@@ -120,7 +120,7 @@ namespace BitbankDotNet.Entities
         public Trade[] Trades { get; set; }
     }
 
-    class TradeResponse : Response<TradeList>
+    class TradesResponse : Response<TradeList>
     {
     }
 }

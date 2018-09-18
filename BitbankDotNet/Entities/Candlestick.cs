@@ -75,7 +75,7 @@ namespace BitbankDotNet.Entities
         public Candlestick[] Candlesticks { get; set; }
     }
 
-    class CandlestickResponse : Response<CandlestickList>
+    class CandlesticksResponse : Response<CandlestickList>
     {
     }
 }

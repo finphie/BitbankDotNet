@@ -6,7 +6,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金リクエストのリクエストボディ
     /// </summary>
-    class WithdrawBody
+    class WithdrawalBody
     {
         /// <summary>
         /// アセット名

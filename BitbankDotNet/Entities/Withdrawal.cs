@@ -10,7 +10,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金情報
     /// </summary>
-    public class Withdraw : IEquatable<Withdraw>
+    public class Withdrawal : IEquatable<Withdrawal>
     {
         /// <summary>
         /// 出金アカウントのID
@@ -65,11 +65,11 @@ namespace BitbankDotNet.Entities
         public DateTime RequestedAt { get; set; }
 
         public override bool Equals(object obj)
-            => Equals(obj as Withdraw);
+            => Equals(obj as Withdrawal);
 
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Withdraw other)
+        public bool Equals(Withdrawal other)
             => other != null &&
                Uuid.Equals(other.Uuid) &&
                Asset == other.Asset &&
@@ -101,10 +101,10 @@ namespace BitbankDotNet.Entities
         }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize<Withdraw, BitbankResolver<char>>(this);
+            => JsonSerializer.Generic.Utf16.Serialize<Withdrawal, BitbankResolver<char>>(this);
     }
 
-    class WithdrawResponse : Response<Withdraw>
+    class WithdrawalResponse : Response<Withdrawal>
     {
     }
 }

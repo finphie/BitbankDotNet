@@ -81,7 +81,7 @@ namespace BitbankDotNet.Entities
         public Asset[] Assets { get; set; }
     }
 
-    class AssetResponse : Response<AssetList>
+    class AssetsResponse : Response<AssetList>
     {
     }
 }

@@ -9,7 +9,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金アカウント情報
     /// </summary>  
-    public class Account : IEquatable<Account>
+    public class WithdrawalAccount : IEquatable<WithdrawalAccount>
     {
         /// <summary>
         /// 出金アカウントのID
@@ -27,10 +27,10 @@ namespace BitbankDotNet.Entities
         public string Address { get; set; }
 
         public override bool Equals(object obj)
-            => Equals(obj as Account);
+            => Equals(obj as WithdrawalAccount);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Account other)
+        public bool Equals(WithdrawalAccount other)
             => other != null &&
                Uuid == other.Uuid &&
                Label == other.Label &&
@@ -41,15 +41,15 @@ namespace BitbankDotNet.Entities
             => HashCode.Combine(Uuid, Label, Address);
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize<Account, BitbankResolver<char>>(this);
+            => JsonSerializer.Generic.Utf16.Serialize<WithdrawalAccount, BitbankResolver<char>>(this);
     }
 
-    class AccountList
+    class WithdrawalAccountList
     {
-        public Account[] Accounts { get; set; }
+        public WithdrawalAccount[] Accounts { get; set; }
     }
 
-    class AccountResponse : Response<AccountList>
+    class WithdrawalAccountsResponse : Response<WithdrawalAccountList>
     {
     }
 }

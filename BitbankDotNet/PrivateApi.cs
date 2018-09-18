@@ -12,8 +12,8 @@ namespace BitbankDotNet
         /// [PrivateAPI]アセット一覧を返します。
         /// </summary>
         /// <returns>アセット一覧</returns>
-        public async Task<Asset[]> GetAssetAsync()
-            => (await GetAsync<AssetResponse>("/v1/user/assets").ConfigureAwait(false)).Data.Assets;
+        public async Task<Asset[]> GetAssetsAsync()
+            => (await GetAsync<AssetsResponse>("/v1/user/assets").ConfigureAwait(false)).Data.Assets;
 
         /// <summary>
         /// [PrivateAPI]注文情報を取得します。
@@ -186,7 +186,7 @@ namespace BitbankDotNet
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
             query["order"] = sort.GetEnumMemberValue();
 
-            return (await GetAsync<TradeResponse>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Data.Trades;
+            return (await GetAsync<TradesResponse>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Data.Trades;
         }
 
         /// <summary>
@@ -194,12 +194,12 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="asset">通貨名</param>
         /// <returns>出金アカウント情報</returns>
-        public async Task<Account[]> GetWithdrawalAccountsAsync(AssetName asset)
+        public async Task<WithdrawalAccount[]> GetWithdrawalAccountsAsync(AssetName asset)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["asset"] = asset.GetEnumMemberValue();
 
-            return (await GetAsync<AccountResponse>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Data.Accounts;
+            return (await GetAsync<WithdrawalAccountsResponse>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Data.Accounts;
         }
 
         /// <summary>
@@ -211,8 +211,8 @@ namespace BitbankDotNet
         /// <param name="otpToken">二段階認証トークン</param>
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
-        public async Task<Withdraw> RequestWithdrawalAsync(AssetName asset, double amount, Guid uuid, int otpToken, int smsToken)
-            => (await PostAsync<WithdrawResponse, WithdrawBody>("/v1/user/request_withdrawal", new WithdrawBody
+        public async Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, Guid uuid, int otpToken, int smsToken)
+            => (await PostAsync<WithdrawalResponse, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
             {
                 Asset = asset,
                 Amount = amount,
