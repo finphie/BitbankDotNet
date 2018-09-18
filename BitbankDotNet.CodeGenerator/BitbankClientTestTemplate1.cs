@@ -40,8 +40,8 @@ namespace BitbankDotNet.CodeGenerator
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
             {
-                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");
                 EntityName = entityType.GetElementType().Name;
+                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");
                 IsArray = true;
             }
 
