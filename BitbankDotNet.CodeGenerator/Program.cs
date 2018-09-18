@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace BitbankDotNet.CodeGenerator
@@ -12,13 +13,13 @@ namespace BitbankDotNet.CodeGenerator
                 .Where(m => m.IsPublic && !m.IsVirtual)
                 .Where(m => m.Name != "GetType");
 
-            // とりあえずGetTickerAsyncのみ
-            var method = methods.First(m => m.Name == nameof(BitbankClient.GetTickerAsync));
-
-            var tt = new BitbankClientTestTemplate(method);
-            var text = tt.TransformText();
-            File.WriteAllText(nameof(BitbankClient) + method.Name + "Test.cs", text);
-
+            foreach (var group in methods.GroupBy(m => m.Name))
+            {
+                Console.WriteLine(group.Key);
+                var tt = new BitbankClientTestTemplate(group.First());
+                var text = tt.TransformText();
+                File.WriteAllText(nameof(BitbankClient) + group.Key + "Test.cs", text);
+            }
         }
     }
 }
