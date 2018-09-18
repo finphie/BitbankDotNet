@@ -16,6 +16,8 @@ namespace BitbankDotNet.CodeGenerator
         // GetType()は名前空間付きの型名が必要。こちらの方が簡潔。
         static readonly IEnumerable<TypeInfo> EntityTypes = LibraryAssembly.DefinedTypes;
 
+        readonly string _responseName = "Response";
+
         public string Json { get; set; }
         public string MethodName { get; set; }
 
@@ -40,6 +42,8 @@ namespace BitbankDotNet.CodeGenerator
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
             {
+                _responseName = "s" + _responseName;
+                ApiName1 = ApiName1.TrimEnd('s');
                 EntityName = entityType.GetElementType().Name;
                 entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");
                 IsArray = true;
@@ -48,7 +52,7 @@ namespace BitbankDotNet.CodeGenerator
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);
             
-            var responseType = EntityTypes.First(t => t.Name == $"{ApiName1}Response");
+            var responseType = EntityTypes.First(t => t.Name == $"{ApiName1}{_responseName}");
             var entityResponse = Activator.CreateInstance(responseType);
             responseType.GetProperty("Success").SetValue(entityResponse, 1);
             responseType.GetProperty("Data").SetValue(entityResponse, entity);
