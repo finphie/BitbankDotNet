@@ -5,7 +5,6 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace BitbankDotNet.CodeGenerator
 {
@@ -20,10 +19,7 @@ namespace BitbankDotNet.CodeGenerator
 
         public string Json { get; set; }
         public string MethodName { get; set; }
-
-        public string EntityName { get; set; }
-        public string ApiName1 { get; set; }
-        public string ApiName2 { get; set; }
+        public string ApiName { get; set; }
 
         public bool IsArray { get; set; }
 
@@ -32,27 +28,25 @@ namespace BitbankDotNet.CodeGenerator
         public BitbankClientTestTemplate(MethodInfo method)
         {
             MethodName = method.Name;
-            var split = Regex.Split(MethodName, "(?<!^)(?=[A-Z])").AsSpan();
-            ApiName1 = string.Concat(split.Slice(1, split.Length - 2).ToArray());
-            ApiName2 = ApiName1.ToLower();
 
             var entityType = method.ReturnType.GenericTypeArguments[0];
-            EntityName = entityType.Name;
+            var apiName = ApiName = entityType.Name;
 
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
             {
                 _responseName = "s" + _responseName;
-                ApiName1 = ApiName1.TrimEnd('s');
-                EntityName = entityType.GetElementType().Name;
-                entityType = EntityTypes.First(t => t.Name == $"{ApiName1}List");
+                ApiName = apiName = entityType.GetElementType().Name;
+                if (apiName == "Ohlcv")
+                    apiName = "Candlestick";
+                entityType = EntityTypes.First(t => t.Name == $"{apiName}List");
                 IsArray = true;
             }
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);
             
-            var responseType = EntityTypes.First(t => t.Name == $"{ApiName1}{_responseName}");
+            var responseType = EntityTypes.First(t => t.Name == $"{apiName}{_responseName}");
             var entityResponse = Activator.CreateInstance(responseType);
             responseType.GetProperty("Success").SetValue(entityResponse, 1);
             responseType.GetProperty("Data").SetValue(entityResponse, entity);

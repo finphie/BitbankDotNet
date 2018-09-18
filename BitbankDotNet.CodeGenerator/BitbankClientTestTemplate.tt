@@ -25,7 +25,7 @@ namespace BitbankDotNet.Tests.PublicApis
             "<#= Json #>";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_<#= ApiName1 #>を返す()
+        public void HTTPステータスが200かつSuccessが1_<#= ApiName #>を返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -34,7 +34,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
                     Assert.Equal(HttpMethod.Get, request.Method);
-                    Assert.StartsWith("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName2 #>", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName.ToLower() #>", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -44,16 +44,16 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankClient(client);
-                var <#= ApiName2 #> = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
+                var result = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
 
-                Assert.NotNull(<#= ApiName2 #>);
+                Assert.NotNull(result);
 				
-				var entity = new <#= EntityName #>();
+				var entity = new <#= ApiName #>();
 				EntityHelper.SetValue(entity);
 <# if (IsArray) { #>
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), <#= ApiName2 #>, new PublicPropertyComparer<<#= EntityName #>[]>());
+				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<<#= ApiName #>[]>());
 <# } else { #>
-				Assert.Equal(entity, <#= ApiName2 #>, new PublicPropertyComparer<<#= EntityName #>>());
+				Assert.Equal(entity, result, new PublicPropertyComparer<<#= ApiName #>>());
 <# } #>
             }
         }
