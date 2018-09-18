@@ -8,6 +8,9 @@ using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
+<# if (IsArray) { #>
+using System.Linq;
+<# } #>
 using System.Net;
 using System.Net.Http;
 using System.Threading;
