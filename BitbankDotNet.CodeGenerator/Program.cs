@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace BitbankDotNet.CodeGenerator
 {
@@ -8,6 +13,29 @@ namespace BitbankDotNet.CodeGenerator
     {
         static void Main()
         {
+            var path = $"../../../../{nameof(BitbankDotNet)}/";
+            var publicApiPath = Path.GetFullPath(path + "PublicApi.cs");
+            var privateApiPath = Path.GetFullPath(path + "PrivateApi.cs");
+
+            // Roslynによる構文解析
+            var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(publicApiPath) + File.ReadAllText(privateApiPath));
+            var methodDeclarations = tree.GetRoot().DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .GroupBy(m => m.Identifier.ValueText);
+            var compilation = CSharpCompilation.Create("compilation", new[] {tree});
+            var semanticModel = compilation.GetSemanticModel(compilation.SyntaxTrees[0], true);
+
+            // コメント取得
+            var dic = new Dictionary<string, bool>();
+            foreach (var group in methodDeclarations)
+            {
+                var symbol = semanticModel.GetDeclaredSymbol(group.First());
+                var comment = symbol.GetDocumentationCommentXml();
+                var summary = XDocument.Parse(comment).Descendants("summary").First().Value;
+
+                dic.Add(group.Key, Regex.Match(summary, @"\[.*?\]").Value.Contains("PublicAPI"));
+            }
+
             // メソッド一覧を取得
             var methods = typeof(BitbankClient).GetMethods()
                 .Where(m => m.IsPublic && !m.IsVirtual)
@@ -17,7 +45,7 @@ namespace BitbankDotNet.CodeGenerator
             {
                 Console.WriteLine(group.Key);
                 var method = group.OrderByDescending(m => m.GetParameters().Length);
-                var tt = new BitbankClientTestTemplate(method.First());
+                var tt = new BitbankClientTestTemplate(method.First(), dic[group.Key]);
                 var text = tt.TransformText();
                 File.WriteAllText(nameof(BitbankClient) + group.Key + "Test.cs", text);
             }

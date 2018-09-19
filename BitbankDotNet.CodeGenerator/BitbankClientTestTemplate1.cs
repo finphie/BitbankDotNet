@@ -22,11 +22,13 @@ namespace BitbankDotNet.CodeGenerator
         public string ApiName { get; set; }
 
         public bool IsArray { get; set; }
+        public bool IsPublicApi { get; }
 
         public (string Name, string Type)[] Parameters { get; set; }
 
-        public BitbankClientTestTemplate(MethodInfo method)
+        public BitbankClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
+            IsPublicApi = isPublicApi;
             MethodName = method.Name;
 
             var entityType = method.ReturnType.GenericTypeArguments[0];

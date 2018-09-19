@@ -17,7 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BitbankDotNet.Tests.PublicApis
+namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 {
     public class BitbankClient<#= MethodName #>Test
     {
@@ -43,7 +43,11 @@ namespace BitbankDotNet.Tests.PublicApis
             
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
+<# if (IsPublicApi) { #>
                 var bitbank = new BitbankClient(client);
+<# } else { #>
+				var bitbank = new BitbankClient(client, " ", " ");
+<# } #>
                 var result = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
@@ -74,7 +78,11 @@ namespace BitbankDotNet.Tests.PublicApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
+<# if (IsPublicApi) { #>
                 var bitbank = new BitbankClient(client);
+<# } else { #>
+				var bitbank = new BitbankClient(client, " ", " ");
+<# } #>
                 Assert.Throws<BitbankApiException>(() =>
                     bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
             }
