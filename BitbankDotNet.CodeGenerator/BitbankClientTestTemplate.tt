@@ -34,7 +34,7 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
 <# if (IsPublicApi) { #>
-                    Assert.StartsWith("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/<#= ApiName.ToLower() #>", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/<#= CurrencyPair.BtcJpy.GetEnumMemberValue() #>/", request.RequestUri.AbsoluteUri);
 <# } else { #>
 					Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
 <# } #>
