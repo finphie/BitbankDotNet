@@ -16,7 +16,8 @@ namespace BitbankDotNet.CodeGenerator
             foreach (var group in methods.GroupBy(m => m.Name))
             {
                 Console.WriteLine(group.Key);
-                var tt = new BitbankClientTestTemplate(group.First());
+                var method = group.OrderByDescending(m => m.GetParameters().Length);
+                var tt = new BitbankClientTestTemplate(method.First());
                 var text = tt.TransformText();
                 File.WriteAllText(nameof(BitbankClient) + group.Key + "Test.cs", text);
             }
