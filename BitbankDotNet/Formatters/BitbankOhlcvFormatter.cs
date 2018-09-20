@@ -1,6 +1,5 @@
 ﻿using BitbankDotNet.Entities;
 using SpanJson;
-using System;
 
 namespace BitbankDotNet.Formatters
 {
