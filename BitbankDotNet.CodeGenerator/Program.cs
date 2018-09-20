@@ -13,9 +13,9 @@ namespace BitbankDotNet.CodeGenerator
     {
         static void Main()
         {
-            var path = $"../../../../{nameof(BitbankDotNet)}/";
-            var publicApiPath = Path.GetFullPath(path + "PublicApi.cs");
-            var privateApiPath = Path.GetFullPath(path + "PrivateApi.cs");
+            var path = $"../../../../{nameof(BitbankDotNet)}";
+            var publicApiPath = Path.GetFullPath(path + "/PublicApi.cs");
+            var privateApiPath = Path.GetFullPath(path + "/PrivateApi.cs");
 
             // Roslynによる構文解析
             var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(publicApiPath) + File.ReadAllText(privateApiPath));
@@ -45,9 +45,12 @@ namespace BitbankDotNet.CodeGenerator
             {
                 Console.WriteLine(group.Key);
                 var method = group.OrderByDescending(m => m.GetParameters().Length);
-                var tt = new BitbankClientTestTemplate(method.First(), dic[group.Key]);
+                var isPublicApi = dic[group.Key];
+                var tt = new BitbankClientTestTemplate(method.First(), isPublicApi);
                 var text = tt.TransformText();
-                File.WriteAllText(nameof(BitbankClient) + group.Key + "Test.cs", text);
+                var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
+                var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankClient)}{group.Key}Test.cs");
+                File.WriteAllText(outPath, text);
             }
         }
     }
