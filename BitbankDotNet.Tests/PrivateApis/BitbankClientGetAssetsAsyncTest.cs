@@ -2,21 +2,22 @@ using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BitbankDotNet.Tests.PublicApis
+namespace BitbankDotNet.Tests.PrivateApis
 {
-    public class BitbankClientGetTickerAsyncTest
+    public class BitbankClientGetAssetsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"sell\":\"76543210.1234568\",\"buy\":\"76543210.1234568\",\"high\":\"76543210.1234568\",\"low\":\"76543210.1234568\",\"last\":\"76543210.1234568\",\"vol\":\"76543210.1234568\",\"timestamp\":1514768461111}}";
+            "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":2147483647,\"onhand_amount\":\"76543210.1234568\",\"locked_amount\":\"76543210.1234568\",\"free_amount\":\"76543210.1234568\"},{\"asset\":\"jpy\",\"amount_precision\":2147483647,\"onhand_amount\":\"76543210.1234568\",\"locked_amount\":\"76543210.1234568\",\"free_amount\":\"76543210.1234568\"}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Tickerを返す()
+        public void HTTPステータスが200かつSuccessが1_Assetを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -24,7 +25,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-                    Assert.StartsWith("https://public.bitbank.cc/btc_jpy/", request.RequestUri.AbsoluteUri);
+					Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -33,14 +34,14 @@ namespace BitbankDotNet.Tests.PublicApis
             
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-                var bitbank = new BitbankClient(client);
-                var result = bitbank.GetTickerAsync(default).GetAwaiter().GetResult();
+				var bitbank = new BitbankClient(client, " ", " ");
+                var result = bitbank.GetAssetsAsync().GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
 				
-				var entity = new Ticker();
+				var entity = new Asset();
 				EntityHelper.SetValue(entity);
-				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
+				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Asset[]>());
             }
         }
 
@@ -60,9 +61,9 @@ namespace BitbankDotNet.Tests.PublicApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-                var bitbank = new BitbankClient(client);
+				var bitbank = new BitbankClient(client, " ", " ");
                 Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetTickerAsync(default).GetAwaiter().GetResult());
+                    bitbank.GetAssetsAsync().GetAwaiter().GetResult());
             }
         }
     }

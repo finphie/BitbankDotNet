@@ -2,21 +2,22 @@ using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BitbankDotNet.Tests.PublicApis
+namespace BitbankDotNet.Tests.PrivateApis
 {
-    public class BitbankClientGetTickerAsyncTest
+    public class BitbankClientGetWithdrawalAccountsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"sell\":\"76543210.1234568\",\"buy\":\"76543210.1234568\",\"high\":\"76543210.1234568\",\"low\":\"76543210.1234568\",\"last\":\"76543210.1234568\",\"vol\":\"76543210.1234568\",\"timestamp\":1514768461111}}";
+            "{\"success\":1,\"data\":{\"accounts\":[{\"uuid\":\"abc\",\"label\":\"abc\",\"address\":\"abc\"},{\"uuid\":\"abc\",\"label\":\"abc\",\"address\":\"abc\"}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Tickerを返す()
+        public void HTTPステータスが200かつSuccessが1_WithdrawalAccountを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -24,7 +25,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-                    Assert.StartsWith("https://public.bitbank.cc/btc_jpy/", request.RequestUri.AbsoluteUri);
+					Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
                 })
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -33,14 +34,14 @@ namespace BitbankDotNet.Tests.PublicApis
             
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-                var bitbank = new BitbankClient(client);
-                var result = bitbank.GetTickerAsync(default).GetAwaiter().GetResult();
+				var bitbank = new BitbankClient(client, " ", " ");
+                var result = bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
 				
-				var entity = new Ticker();
+				var entity = new WithdrawalAccount();
 				EntityHelper.SetValue(entity);
-				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
+				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<WithdrawalAccount[]>());
             }
         }
 
@@ -60,9 +61,9 @@ namespace BitbankDotNet.Tests.PublicApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-                var bitbank = new BitbankClient(client);
+				var bitbank = new BitbankClient(client, " ", " ");
                 Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetTickerAsync(default).GetAwaiter().GetResult());
+                    bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult());
             }
         }
     }

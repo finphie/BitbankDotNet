@@ -2,6 +2,7 @@ using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -10,13 +11,13 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PublicApis
 {
-    public class BitbankClientGetTickerAsyncTest
+    public class BitbankClientGetCandlesticksAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"sell\":\"76543210.1234568\",\"buy\":\"76543210.1234568\",\"high\":\"76543210.1234568\",\"low\":\"76543210.1234568\",\"last\":\"76543210.1234568\",\"vol\":\"76543210.1234568\",\"timestamp\":1514768461111}}";
+            "{\"success\":1,\"data\":{\"candlestick\":[{\"type\":\"1min\",\"ohlcv\":[[\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",1514768461111],[\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",1514768461111]]},{\"type\":\"1min\",\"ohlcv\":[[\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",1514768461111],[\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",\"76543210.1234568\",1514768461111]]}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Tickerを返す()
+        public void HTTPステータスが200かつSuccessが1_Ohlcvを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -34,13 +35,13 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankClient(client);
-                var result = bitbank.GetTickerAsync(default).GetAwaiter().GetResult();
+                var result = bitbank.GetCandlesticksAsync(default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
 				
-				var entity = new Ticker();
+				var entity = new Ohlcv();
 				EntityHelper.SetValue(entity);
-				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
+				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Ohlcv[]>());
             }
         }
 
@@ -62,7 +63,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankClient(client);
                 Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetTickerAsync(default).GetAwaiter().GetResult());
+                    bitbank.GetCandlesticksAsync(default, default, default, default, default).GetAwaiter().GetResult());
             }
         }
     }
