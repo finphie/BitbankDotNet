@@ -14,7 +14,7 @@ namespace BitbankDotNet.Tests.PublicApis
     public class BitbankClientGetTransactionsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"transactions\":[{\"transaction_id\":2147483647,\"side\":\"buy\",\"price\":\"76543210.1234568\",\"amount\":\"76543210.1234568\",\"executed_at\":1514768461111},{\"transaction_id\":2147483647,\"side\":\"buy\",\"price\":\"76543210.1234568\",\"amount\":\"76543210.1234568\",\"executed_at\":1514768461111}]}}";
+            "{\"success\":1,\"data\":{\"transactions\":[{\"transaction_id\":3,\"side\":\"buy\",\"price\":\"1.2\",\"amount\":\"1.2\",\"executed_at\":1514862245678},{\"transaction_id\":3,\"side\":\"buy\",\"price\":\"1.2\",\"amount\":\"1.2\",\"executed_at\":1514862245678}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Transactionを返す()

@@ -13,7 +13,7 @@ namespace BitbankDotNet.Tests.PublicApis
     public class BitbankClientGetTickerAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"sell\":\"76543210.1234568\",\"buy\":\"76543210.1234568\",\"high\":\"76543210.1234568\",\"low\":\"76543210.1234568\",\"last\":\"76543210.1234568\",\"vol\":\"76543210.1234568\",\"timestamp\":1514768461111}}";
+            "{\"success\":1,\"data\":{\"sell\":\"1.2\",\"buy\":\"1.2\",\"high\":\"1.2\",\"low\":\"1.2\",\"last\":\"1.2\",\"vol\":\"1.2\",\"timestamp\":1514862245678}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Tickerを返す()

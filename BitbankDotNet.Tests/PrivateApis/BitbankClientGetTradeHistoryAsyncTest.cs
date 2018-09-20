@@ -14,7 +14,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientGetTradeHistoryAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"trades\":[{\"trade_id\":9223372036854775807,\"pair\":\"btc_jpy\",\"order_id\":9223372036854775807,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"76543210.1234568\",\"price\":\"76543210.1234568\",\"maker_taker\":\"abc\",\"fee_amount_base\":\"abc\",\"fee_amount_quote\":\"abc\",\"executed_at\":1514768461111},{\"trade_id\":9223372036854775807,\"pair\":\"btc_jpy\",\"order_id\":9223372036854775807,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"76543210.1234568\",\"price\":\"76543210.1234568\",\"maker_taker\":\"abc\",\"fee_amount_base\":\"abc\",\"fee_amount_quote\":\"abc\",\"executed_at\":1514768461111}]}}";
+            "{\"success\":1,\"data\":{\"trades\":[{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678},{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Tradeを返す()

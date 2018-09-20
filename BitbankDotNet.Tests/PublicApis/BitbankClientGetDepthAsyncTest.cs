@@ -13,7 +13,7 @@ namespace BitbankDotNet.Tests.PublicApis
     public class BitbankClientGetDepthAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"asks\":[[\"76543210.1234568\",\"76543210.1234568\"],[\"76543210.1234568\",\"76543210.1234568\"]],\"bids\":[[\"76543210.1234568\",\"76543210.1234568\"],[\"76543210.1234568\",\"76543210.1234568\"]]}}";
+            "{\"success\":1,\"data\":{\"asks\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]],\"bids\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Depthを返す()

@@ -9,20 +9,20 @@ namespace BitbankDotNet.Shared.Helpers
         public static object GetTestValue(Type type)
         {
             if (type == typeof(double))
-                return 76543210.12345678;
+                return 1.2;
             if (type == typeof(int))
-                return int.MaxValue;
+                return 3;
             if (type == typeof(long))
-                return long.MaxValue;
+                return 4L;
             if (type == typeof(string))
-                return "abc";
+                return "a";
 
             // タイムゾーンを明示的に指定しないと、ローカル時間と認識されてしまう。
             // 対応策は主に2つ
             // 1. new DateTimeOffset()でTimeSpan.Zeroを指定
             // 2. DateTimeOffset.ParseでISO8601形式を利用（DateTime.Parseは不可）
             if (type == typeof(DateTime))
-                return DateTimeOffset.Parse("2018-01-01T01:01:01.111Z").DateTime;
+                return DateTimeOffset.Parse("2018-01-02T03:04:05.678Z").UtcDateTime;
 
             // BitbankDotNetで定義したenumの場合
             if (type.IsEnum && type.Namespace == nameof(BitbankDotNet))

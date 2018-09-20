@@ -14,7 +14,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientGetAssetsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":2147483647,\"onhand_amount\":\"76543210.1234568\",\"locked_amount\":\"76543210.1234568\",\"free_amount\":\"76543210.1234568\"},{\"asset\":\"jpy\",\"amount_precision\":2147483647,\"onhand_amount\":\"76543210.1234568\",\"locked_amount\":\"76543210.1234568\",\"free_amount\":\"76543210.1234568\"}]}}";
+            "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\"},{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\"}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Assetを返す()

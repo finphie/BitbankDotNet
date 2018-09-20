@@ -13,7 +13,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientRequestWithdrawalAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"uuid\":\"abc\",\"asset\":\"jpy\",\"account_uuid\":\"abc\",\"amount\":\"76543210.1234568\",\"fee\":\"76543210.1234568\",\"label\":\"abc\",\"address\":\"abc\",\"txId\":\"abc\",\"status\":\"CONFIRMING\",\"requested_at\":1514768461111}}";
+            "{\"success\":1,\"data\":{\"uuid\":\"a\",\"asset\":\"jpy\",\"account_uuid\":\"a\",\"amount\":\"1.2\",\"fee\":\"1.2\",\"label\":\"a\",\"address\":\"a\",\"txId\":\"a\",\"status\":\"CONFIRMING\",\"requested_at\":1514862245678}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Withdrawalを返す()

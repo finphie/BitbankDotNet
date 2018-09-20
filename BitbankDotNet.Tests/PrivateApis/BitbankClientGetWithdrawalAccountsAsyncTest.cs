@@ -14,7 +14,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientGetWithdrawalAccountsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"accounts\":[{\"uuid\":\"abc\",\"label\":\"abc\",\"address\":\"abc\"},{\"uuid\":\"abc\",\"label\":\"abc\",\"address\":\"abc\"}]}}";
+            "{\"success\":1,\"data\":{\"accounts\":[{\"uuid\":\"a\",\"label\":\"a\",\"address\":\"a\"},{\"uuid\":\"a\",\"label\":\"a\",\"address\":\"a\"}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_WithdrawalAccountを返す()

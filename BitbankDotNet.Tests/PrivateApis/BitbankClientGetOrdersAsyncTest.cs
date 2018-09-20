@@ -14,7 +14,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientGetOrdersAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"orders\":[{\"order_id\":9223372036854775807,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"76543210.1234568\",\"remaining_amount\":\"76543210.1234568\",\"executed_amount\":\"76543210.1234568\",\"price\":\"76543210.1234568\",\"average_price\":\"76543210.1234568\",\"ordered_at\":1514768461111,\"status\":\"UNFILLED\"},{\"order_id\":9223372036854775807,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"76543210.1234568\",\"remaining_amount\":\"76543210.1234568\",\"executed_amount\":\"76543210.1234568\",\"price\":\"76543210.1234568\",\"average_price\":\"76543210.1234568\",\"ordered_at\":1514768461111,\"status\":\"UNFILLED\"}]}}";
+            "{\"success\":1,\"data\":{\"orders\":[{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"},{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Orderを返す()
