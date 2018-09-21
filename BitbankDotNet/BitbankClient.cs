@@ -31,14 +31,15 @@ namespace BitbankDotNet
         readonly string _apiKey;
         readonly byte[] _apiSecret;
 
-        public BitbankClient(HttpClient client) : this(client, string.Empty, string.Empty)
+        public BitbankClient(HttpClient client, TimeSpan timeout = default)
+            : this(client, string.Empty, string.Empty, timeout)
         {
         }
 
-        public BitbankClient(HttpClient client, string apiKey, string apiSecret)
+        public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout = default)
         {
             _client = client ?? throw new NullReferenceException(nameof(client));
-            _client.Timeout = TimeSpan.FromSeconds(10);
+            _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             // APIキーとAPIシークレットが設定されていない場合
