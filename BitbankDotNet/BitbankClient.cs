@@ -70,13 +70,12 @@ namespace BitbankDotNet
                 {
                     error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    throw new BitbankApiException(
-                        $"JSONデシリアライズでエラーが発生しました。Response StatusCode:{response.StatusCode} ReasonPhrase:{response.ReasonPhrase}");
+                    throw new BitbankApiException("JSONデシリアライズでエラーが発生しました。", ex, response);
                 }
 
-                throw new BitbankApiException($"ErrorCode:{error.Code}");
+                throw new BitbankApiException("APIでエラーが発生しました。", response, error.Code);
             }
             catch (TaskCanceledException ex)
             {
