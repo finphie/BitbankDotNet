@@ -11,7 +11,7 @@ namespace BitbankDotNet.Extensions
         {
             var name = value.ToString();
             return typeof(T)
-                .GetField(value.ToString())
+                .GetField(name)
                 .GetCustomAttribute<EnumMemberAttribute>()?.Value ?? name;
         }
     }
