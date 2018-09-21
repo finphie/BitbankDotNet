@@ -38,7 +38,7 @@ namespace BitbankDotNet
 
         public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout = default)
         {
-            _client = client ?? throw new NullReferenceException(nameof(client));
+            _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
