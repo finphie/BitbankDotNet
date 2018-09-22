@@ -66,6 +66,7 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
         }
 
         [Theory]
+        [InlineData(HttpStatusCode.NotFound, 0)]
         [InlineData(HttpStatusCode.NotFound, 1)]
         [InlineData(HttpStatusCode.OK, 0)]
         public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success)
