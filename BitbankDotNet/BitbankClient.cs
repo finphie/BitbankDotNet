@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BitbankDotNet.Helpers;
+using SpanJson;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
@@ -58,33 +60,38 @@ namespace BitbankDotNet
                 var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
                 var json = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
+                // ステータスコードで200以外（404）を返す場合、Successが0となる。
+                // Bitbankの公式ライブラリでは、ステータスコードのチェックはしていない。
+                // そのため、IsSuccessStatusCodeは省略できるはずだが、一応チェックしておく。
                 if (response.IsSuccessStatusCode)
                 {
+                    // ここで、JsonParserExceptionがスローされる条件
+                    // 1.EntityFormatterの実装に不具合がある場合
+                    // 2.不正なJSONが入力された場合
+                    // そのため、catchしなくても問題ないはず。
+                    // ただし、JSONが空かどうかは確認したほうが良いかもしれない。
                     var result = Deserialize<T, BitbankResolver<byte>>(json);
                     if (result.Success == 1)
                         return result;
                 }
 
-                Error error;
                 try
                 {
-                    error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
+                    var error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
+                    ThrowHelper.ThrowBitbankApiException(response, error.Code);
                 }
-                catch (Exception ex)
+                catch (JsonParserException ex)
                 {
-                    throw new BitbankApiException("JSONデシリアライズでエラーが発生しました。", ex, response);
+                    ThrowHelper.ThrowBitbankJsonDeserializeException(ex, response);
                 }
-
-                throw new BitbankApiException("APIでエラーが発生しました。", response, error.Code);
             }
             catch (TaskCanceledException ex)
             {
-                throw new BitbankApiException("リクエストがタイムアウトしました。", ex);
+                ThrowHelper.ThrowBitbankRequestTimeoutException(ex);
             }
-            catch (HttpRequestException ex)
-            {
-                throw new BitbankApiException("リクエストに失敗しました。", ex);
-            }
+
+            // ここには到達しないはず
+            return default;
         }
 
         // Public API Getリクエスト
