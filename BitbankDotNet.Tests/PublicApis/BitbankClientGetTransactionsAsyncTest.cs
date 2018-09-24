@@ -27,10 +27,10 @@ namespace BitbankDotNet.Tests.PublicApis
                 {
                     Assert.StartsWith("https://public.bitbank.cc/btc_jpy/", request.RequestUri.AbsoluteUri);
                 })
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(Json)
-                }));
+                });
             
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
@@ -46,6 +46,7 @@ namespace BitbankDotNet.Tests.PublicApis
         }
 
         [Theory]
+        [InlineData(HttpStatusCode.NotFound, 0)]
         [InlineData(HttpStatusCode.NotFound, 1)]
         [InlineData(HttpStatusCode.OK, 0)]
         public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success)
@@ -54,10 +55,10 @@ namespace BitbankDotNet.Tests.PublicApis
             mockHttpHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Returns(Task.FromResult(new HttpResponseMessage(statusCode)
+                .ReturnsAsync(new HttpResponseMessage(statusCode)
                 {
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":10000}}}}")
-                }));
+                });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
