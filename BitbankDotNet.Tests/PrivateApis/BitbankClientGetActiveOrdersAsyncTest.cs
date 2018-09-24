@@ -93,5 +93,30 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("{}")]
+        [InlineData("{\"data\":\"\"}")]
+        [InlineData("{\"data\":{}")]
+        [InlineData("{\"data\":\"a\"}")]
+        public void 不正なJSONを取得_BitbankApiExceptionをスローする(string content)
+        {
+            var mockHttpHandler = new Mock<HttpMessageHandler>();
+            mockHttpHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(content)
+                });
+
+            using (var client = new HttpClient(mockHttpHandler.Object))
+            {
+				var bitbank = new BitbankClient(client, " ", " ");
+                Assert.Throws<BitbankApiException>(() =>
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
+            }
+        }
     }
 }
