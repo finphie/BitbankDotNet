@@ -80,8 +80,12 @@ namespace BitbankDotNet
                     var error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
                     ThrowHelper.ThrowBitbankApiException(response, error.Code);
                 }
-                catch (JsonParserException ex)
+                catch (Exception ex)
                 {
+                    // デシリアライズでスローされる可能性がある例外
+                    // 1.JsonParserException
+                    // 2.IndexOutOfRangeException
+                    // また、nullチェックを省略しているため、NullReferenceExceptionも考慮する必要がある。
                     ThrowHelper.ThrowBitbankJsonDeserializeException(ex, response);
                 }
             }
