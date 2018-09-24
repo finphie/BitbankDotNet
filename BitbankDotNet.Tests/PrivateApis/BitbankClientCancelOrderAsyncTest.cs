@@ -2,6 +2,7 @@ using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -64,6 +65,31 @@ namespace BitbankDotNet.Tests.PrivateApis
 				var bitbank = new BitbankClient(client, " ", " ");
                 Assert.Throws<BitbankApiException>(() =>
                     bitbank.CancelOrderAsync(default, default).GetAwaiter().GetResult());
+            }
+        }
+
+		[Fact]
+		public void タイムアウト_BitbankApiExceptionをスローする()
+        {
+            var mockHttpHandler = new Mock<HttpMessageHandler>();
+            mockHttpHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns<HttpRequestMessage, CancellationToken>(async (_, cancellationToken) =>
+                {
+                    await Task.Delay(50, cancellationToken).ConfigureAwait(false);
+                    return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    {
+                        Content = new StringContent(Json)
+                    };
+                });
+
+            using (var client = new HttpClient(mockHttpHandler.Object))
+            {
+				var bitbank = new BitbankClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
+                var exception = Assert.Throws<BitbankApiException>(() =>
+                    bitbank.CancelOrderAsync(default, default).GetAwaiter().GetResult());
+                Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
     }
