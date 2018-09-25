@@ -40,8 +40,15 @@ namespace BitbankDotNet.Tests.PublicApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Ohlcv();
-				EntityHelper.SetValue(entity);
+				var entity = new Ohlcv
+                {
+                    Open = EntityHelper.GetTestValue<double>(),
+                    High = EntityHelper.GetTestValue<double>(),
+                    Low = EntityHelper.GetTestValue<double>(),
+                    Close = EntityHelper.GetTestValue<double>(),
+                    Volume = EntityHelper.GetTestValue<double>(),
+                    Date = EntityHelper.GetTestValue<DateTime>(),
+                };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Ohlcv[]>());
             }
         }

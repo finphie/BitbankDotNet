@@ -39,8 +39,11 @@ namespace BitbankDotNet.Tests.PublicApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Depth();
-				EntityHelper.SetValue(entity);
+				var entity = new Depth
+                {
+                    Asks = EntityHelper.GetTestValue<BoardOrder[]>(),
+                    Bids = EntityHelper.GetTestValue<BoardOrder[]>(),
+                };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Depth>());
             }
         }

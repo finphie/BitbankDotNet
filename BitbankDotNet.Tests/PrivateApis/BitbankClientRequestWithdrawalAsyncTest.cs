@@ -39,8 +39,19 @@ namespace BitbankDotNet.Tests.PrivateApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Withdrawal();
-				EntityHelper.SetValue(entity);
+				var entity = new Withdrawal
+                {
+                    Uuid = EntityHelper.GetTestValue<string>(),
+                    Asset = EntityHelper.GetTestValue<AssetName>(),
+                    AccountUuid = EntityHelper.GetTestValue<string>(),
+                    Amount = EntityHelper.GetTestValue<double>(),
+                    Fee = EntityHelper.GetTestValue<double>(),
+                    Label = EntityHelper.GetTestValue<string>(),
+                    Address = EntityHelper.GetTestValue<string>(),
+                    TxId = EntityHelper.GetTestValue<string>(),
+                    Status = EntityHelper.GetTestValue<WithdrawalStatus>(),
+                    RequestedAt = EntityHelper.GetTestValue<DateTime>(),
+                };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Withdrawal>());
             }
         }

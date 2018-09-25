@@ -40,8 +40,20 @@ namespace BitbankDotNet.Tests.PrivateApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Trade();
-				EntityHelper.SetValue(entity);
+				var entity = new Trade
+                {
+                    TradeId = EntityHelper.GetTestValue<long>(),
+                    Pair = EntityHelper.GetTestValue<CurrencyPair>(),
+                    OrderId = EntityHelper.GetTestValue<long>(),
+                    Side = EntityHelper.GetTestValue<OrderSide>(),
+                    Type = EntityHelper.GetTestValue<OrderType>(),
+                    Amount = EntityHelper.GetTestValue<double>(),
+                    Price = EntityHelper.GetTestValue<double>(),
+                    MakerTaker = EntityHelper.GetTestValue<string>(),
+                    FeeAmountBase = EntityHelper.GetTestValue<string>(),
+                    FeeAmountQuote = EntityHelper.GetTestValue<string>(),
+                    ExecutedAt = EntityHelper.GetTestValue<DateTime>(),
+                };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Trade[]>());
             }
         }

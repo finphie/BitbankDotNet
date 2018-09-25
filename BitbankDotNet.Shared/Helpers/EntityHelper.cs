@@ -51,6 +51,9 @@ namespace BitbankDotNet.Shared.Helpers
             return entity;
         }
 
+        public static T GetTestValue<T>()
+            => (T)GetTestValue(typeof(T));
+
         public static void SetValue(object target)
         {
             foreach (var property in target.GetType().GetProperties())

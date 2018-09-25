@@ -40,8 +40,14 @@ namespace BitbankDotNet.Tests.PrivateApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Asset();
-				EntityHelper.SetValue(entity);
+				var entity = new Asset
+                {
+                    Name = EntityHelper.GetTestValue<AssetName>(),
+                    AmountPrecision = EntityHelper.GetTestValue<int>(),
+                    OnhandAmount = EntityHelper.GetTestValue<double>(),
+                    LockedAmount = EntityHelper.GetTestValue<double>(),
+                    FreeAmount = EntityHelper.GetTestValue<double>(),
+                };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Asset[]>());
             }
         }

@@ -56,8 +56,12 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 
                 Assert.NotNull(result);
 				
-				var entity = new <#= ApiName #>();
-				EntityHelper.SetValue(entity);
+				var entity = new <#= ApiName #>
+                {
+<# foreach (var proparty in EntityProperties) { #>
+                    <#= proparty.Key #> = EntityHelper.GetTestValue<<#= proparty.Value #>>(),
+<# } #>
+                };
 <# if (IsArray) { #>
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<<#= ApiName #>[]>());
 <# } else { #>

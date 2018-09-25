@@ -17,6 +17,7 @@ namespace BitbankDotNet.CodeGenerator
 
         readonly string _responseName = "Response";
 
+        public Dictionary<string, string> EntityProperties { get; }
         public string Json { get; set; }
         public string MethodName { get; set; }
         public string ApiName { get; set; }
@@ -32,18 +33,24 @@ namespace BitbankDotNet.CodeGenerator
             MethodName = method.Name;
 
             var entityType = method.ReturnType.GenericTypeArguments[0];
+            var entityElementType = entityType;
+
             var apiName = ApiName = entityType.Name;
 
             // EntityResponseクラスが配列の場合
             if (entityType.IsArray)
             {
                 _responseName = "s" + _responseName;
-                ApiName = apiName = entityType.GetElementType().Name;
+                entityElementType = entityType.GetElementType();
+                ApiName = apiName = entityElementType.Name;
                 if (apiName == "Ohlcv")
                     apiName = "Candlestick";
                 entityType = EntityTypes.First(t => t.Name == $"{apiName}List");
                 IsArray = true;
             }
+
+            EntityProperties = entityElementType.GetProperties()
+                .ToDictionary(pi => pi.Name, pi => GetTypeOutput(pi.PropertyType));
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);

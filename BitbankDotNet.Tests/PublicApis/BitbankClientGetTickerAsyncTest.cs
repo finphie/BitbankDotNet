@@ -39,8 +39,16 @@ namespace BitbankDotNet.Tests.PublicApis
 
                 Assert.NotNull(result);
 				
-				var entity = new Ticker();
-				EntityHelper.SetValue(entity);
+				var entity = new Ticker
+                {
+                    Sell = EntityHelper.GetTestValue<double>(),
+                    Buy = EntityHelper.GetTestValue<double>(),
+                    High = EntityHelper.GetTestValue<double>(),
+                    Low = EntityHelper.GetTestValue<double>(),
+                    Last = EntityHelper.GetTestValue<double>(),
+                    Vol = EntityHelper.GetTestValue<double>(),
+                    Timestamp = EntityHelper.GetTestValue<DateTime>(),
+                };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
             }
         }

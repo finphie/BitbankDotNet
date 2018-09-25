@@ -40,8 +40,12 @@ namespace BitbankDotNet.Tests.PrivateApis
 
                 Assert.NotNull(result);
 				
-				var entity = new WithdrawalAccount();
-				EntityHelper.SetValue(entity);
+				var entity = new WithdrawalAccount
+                {
+                    Uuid = EntityHelper.GetTestValue<string>(),
+                    Label = EntityHelper.GetTestValue<string>(),
+                    Address = EntityHelper.GetTestValue<string>(),
+                };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<WithdrawalAccount[]>());
             }
         }
