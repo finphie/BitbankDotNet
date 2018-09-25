@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net.Http;
+using System.Net;
 
 namespace BitbankDotNet
 {
@@ -9,9 +9,9 @@ namespace BitbankDotNet
     public class BitbankApiException : Exception
     {
         /// <summary>
-        /// HTTPメッセージ
+        /// HTTPステータス
         /// </summary>
-        public HttpResponseMessage Response { get; }
+        public HttpStatusCode StatusCode { get; }
 
         /// <summary>
         /// BitbankAPIのエラーコード
@@ -28,12 +28,12 @@ namespace BitbankDotNet
         {
         }
 
-        public BitbankApiException(string message, Exception inner, HttpResponseMessage response)
+        public BitbankApiException(string message, Exception inner, HttpStatusCode statusCode)
             : base(message, inner)
-            => Response = response;
+            => StatusCode = statusCode;
 
-        public BitbankApiException(string message, HttpResponseMessage response, int apiErrorCode)
-            : this(message, null, response)
+        public BitbankApiException(string message, HttpStatusCode statusCode, int apiErrorCode)
+            : this(message, null, statusCode)
             => ApiErrorCode = apiErrorCode;
     }
 }

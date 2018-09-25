@@ -1,6 +1,6 @@
 ﻿using SpanJson;
 using System;
-using System.Net.Http;
+using System.Net;
 using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Helpers
@@ -8,12 +8,12 @@ namespace BitbankDotNet.Helpers
     static class ThrowHelper
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ThrowBitbankApiException(HttpResponseMessage response, int errorCode)
-            => throw new BitbankApiException("APIでエラーが発生しました。", response, errorCode);
+        public static void ThrowBitbankApiException(HttpStatusCode statusCode, int errorCode)
+            => throw new BitbankApiException("APIでエラーが発生しました。", statusCode, errorCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ThrowBitbankJsonDeserializeException(Exception inner, HttpResponseMessage response)
-            => throw new BitbankApiException("JSONデシリアライズでエラーが発生しました。", inner, response);
+        public static void ThrowBitbankJsonDeserializeException(Exception inner, HttpStatusCode statusCode)
+            => throw new BitbankApiException("JSONデシリアライズでエラーが発生しました。", inner, statusCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankRequestTimeoutException(Exception inner)
