@@ -66,8 +66,9 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankClient(client);
-                Assert.Throws<BitbankApiException>(() =>
+                var exception = Assert.Throws<BitbankApiException>(() =>
                     bitbank.GetDepthAsync(default).GetAwaiter().GetResult());
+                Assert.Equal(statusCode, exception.StatusCode);
             }
         }
 
