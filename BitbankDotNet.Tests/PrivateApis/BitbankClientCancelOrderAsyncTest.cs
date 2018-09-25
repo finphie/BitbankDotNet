@@ -41,17 +41,17 @@ namespace BitbankDotNet.Tests.PrivateApis
 				
 				var entity = new Order
                 {
+                    AveragePrice = EntityHelper.GetTestValue<double>(),
+                    ExecutedAmount = EntityHelper.GetTestValue<double>(),
+                    OrderedAt = EntityHelper.GetTestValue<DateTime>(),
                     OrderId = EntityHelper.GetTestValue<long>(),
                     Pair = EntityHelper.GetTestValue<CurrencyPair>(),
-                    Side = EntityHelper.GetTestValue<OrderSide>(),
-                    Type = EntityHelper.GetTestValue<OrderType>(),
-                    StartAmount = EntityHelper.GetTestValue<double>(),
-                    RemainingAmount = EntityHelper.GetTestValue<double>(),
-                    ExecutedAmount = EntityHelper.GetTestValue<double>(),
                     Price = EntityHelper.GetTestValue<double>(),
-                    AveragePrice = EntityHelper.GetTestValue<double>(),
-                    OrderedAt = EntityHelper.GetTestValue<DateTime>(),
+                    RemainingAmount = EntityHelper.GetTestValue<double>(),
+                    Side = EntityHelper.GetTestValue<OrderSide>(),
+                    StartAmount = EntityHelper.GetTestValue<double>(),
                     Status = EntityHelper.GetTestValue<OrderStatus>(),
+                    Type = EntityHelper.GetTestValue<OrderType>(),
                 };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Order>());
             }

@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.Shared.Extensions;
+using BitbankDotNet.Shared.Helpers;
 using Microsoft.CSharp;
 using System;
 using System.CodeDom;
@@ -17,7 +18,7 @@ namespace BitbankDotNet.CodeGenerator
 
         readonly string _responseName = "Response";
 
-        public Dictionary<string, string> EntityProperties { get; }
+        public SortedDictionary<string, string> EntityProperties { get; }
         public string Json { get; set; }
         public string MethodName { get; set; }
         public string ApiName { get; set; }
@@ -50,7 +51,7 @@ namespace BitbankDotNet.CodeGenerator
             }
 
             EntityProperties = entityElementType.GetProperties()
-                .ToDictionary(pi => pi.Name, pi => GetTypeOutput(pi.PropertyType));
+                .ToSortedDictionary(pi => pi.Name, pi => GetTypeOutput(pi.PropertyType));
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);

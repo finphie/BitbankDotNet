@@ -41,13 +41,13 @@ namespace BitbankDotNet.Tests.PublicApis
 				
 				var entity = new Ticker
                 {
-                    Sell = EntityHelper.GetTestValue<double>(),
                     Buy = EntityHelper.GetTestValue<double>(),
                     High = EntityHelper.GetTestValue<double>(),
-                    Low = EntityHelper.GetTestValue<double>(),
                     Last = EntityHelper.GetTestValue<double>(),
-                    Vol = EntityHelper.GetTestValue<double>(),
+                    Low = EntityHelper.GetTestValue<double>(),
+                    Sell = EntityHelper.GetTestValue<double>(),
                     Timestamp = EntityHelper.GetTestValue<DateTime>(),
+                    Vol = EntityHelper.GetTestValue<double>(),
                 };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
             }

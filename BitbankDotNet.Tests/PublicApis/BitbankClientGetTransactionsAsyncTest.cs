@@ -42,11 +42,11 @@ namespace BitbankDotNet.Tests.PublicApis
 				
 				var entity = new Transaction
                 {
-                    TransactionId = EntityHelper.GetTestValue<int>(),
-                    Side = EntityHelper.GetTestValue<OrderSide>(),
-                    Price = EntityHelper.GetTestValue<double>(),
                     Amount = EntityHelper.GetTestValue<double>(),
                     ExecutedAt = EntityHelper.GetTestValue<DateTime>(),
+                    Price = EntityHelper.GetTestValue<double>(),
+                    Side = EntityHelper.GetTestValue<OrderSide>(),
+                    TransactionId = EntityHelper.GetTestValue<int>(),
                 };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Transaction[]>());
             }
