@@ -27,8 +27,9 @@ namespace BitbankDotNet.Shared.Helpers
             // BitbankDotNetで定義したenumの場合
             if (type.IsEnum && type.Namespace == nameof(BitbankDotNet))
                 // Activator.CreateInstance(type)では、enumの値が0のメンバーを返す。
-                // 0に相当するメンバーがない場合は0を返してしまうので使えない。             
-                return type.GetFields(BindingFlags.Public | BindingFlags.Static).First().GetValue(null);
+                // 0に相当するメンバーがない場合は0を返してしまうので使えない。
+                // また、type.GetFieldsは順序が不定なので注意
+                return type.GetFields(BindingFlags.Public | BindingFlags.Static).Min(x => x.GetValue(null));
 
             if (type.IsArray)
             {
