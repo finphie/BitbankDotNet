@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 
 namespace BitbankDotNet.Shared.Helpers
 {
@@ -29,7 +28,7 @@ namespace BitbankDotNet.Shared.Helpers
                 // Activator.CreateInstance(type)では、enumの値が0のメンバーを返す。
                 // 0に相当するメンバーがない場合は0を返してしまうので使えない。
                 // また、type.GetFieldsは順序が不定なので注意
-                return type.GetFields(BindingFlags.Public | BindingFlags.Static).Min(x => x.GetValue(null));
+                return Enum.GetValues(type).Cast<object>().Min();
 
             if (type.IsArray)
             {
