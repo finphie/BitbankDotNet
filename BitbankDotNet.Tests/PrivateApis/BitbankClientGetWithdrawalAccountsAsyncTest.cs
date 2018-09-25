@@ -51,10 +51,10 @@ namespace BitbankDotNet.Tests.PrivateApis
         }
 
         [Theory]
-        [InlineData(HttpStatusCode.NotFound, 0)]
-        [InlineData(HttpStatusCode.NotFound, 1)]
-        [InlineData(HttpStatusCode.OK, 0)]
-        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success)
+        [InlineData(HttpStatusCode.NotFound, 0, 10000)]
+        [InlineData(HttpStatusCode.NotFound, 1, 60003)]
+        [InlineData(HttpStatusCode.OK, 0, 70001)]
+        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -62,7 +62,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage(statusCode)
                 {
-                    Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":10000}}}}")
+                    Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
@@ -71,6 +71,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var exception = Assert.Throws<BitbankApiException>(() =>
                     bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult());
                 Assert.Equal(statusCode, exception.StatusCode);
+                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
