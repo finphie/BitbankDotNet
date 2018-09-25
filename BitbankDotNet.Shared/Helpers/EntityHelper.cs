@@ -52,7 +52,7 @@ namespace BitbankDotNet.Shared.Helpers
         }
 
         public static T GetTestValue<T>()
-            => (T)GetTestValue(typeof(T));
+            => (T) GetTestValue(typeof(T));
 
         public static void SetValue(object target)
         {

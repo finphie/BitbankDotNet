@@ -18,11 +18,6 @@ namespace BitbankDotNet
         /// </summary>
         public int ApiErrorCode { get; }
 
-        public BitbankApiException(string message)
-            : base(message)
-        {
-        }
-
         public BitbankApiException(string message, Exception inner)
             : base(message, inner)
         {
