@@ -81,6 +81,7 @@ namespace BitbankDotNet
                     ThrowHelper.ThrowBitbankApiException(response.StatusCode, error.Code);
                 }
                 catch (Exception ex)
+                    when (ex is JsonParserException || ex is IndexOutOfRangeException || ex is NullReferenceException)
                 {
                     // デシリアライズでスローされる可能性がある例外
                     // 1.JsonParserException
