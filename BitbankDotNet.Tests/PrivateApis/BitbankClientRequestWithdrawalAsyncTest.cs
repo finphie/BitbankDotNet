@@ -50,7 +50,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     RequestedAt = EntityHelper.GetTestValue<DateTime>(),
                     Status = EntityHelper.GetTestValue<WithdrawalStatus>(),
                     TxId = EntityHelper.GetTestValue<string>(),
-                    Uuid = EntityHelper.GetTestValue<string>(),
+                    Uuid = EntityHelper.GetTestValue<string>()
                 };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Withdrawal>());
             }

@@ -44,7 +44,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                 {
                     Address = EntityHelper.GetTestValue<string>(),
                     Label = EntityHelper.GetTestValue<string>(),
-                    Uuid = EntityHelper.GetTestValue<string>(),
+                    Uuid = EntityHelper.GetTestValue<string>()
                 };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<WithdrawalAccount[]>());
             }

@@ -46,7 +46,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     FreeAmount = EntityHelper.GetTestValue<double>(),
                     LockedAmount = EntityHelper.GetTestValue<double>(),
                     Name = EntityHelper.GetTestValue<AssetName>(),
-                    OnhandAmount = EntityHelper.GetTestValue<double>(),
+                    OnhandAmount = EntityHelper.GetTestValue<double>()
                 };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Asset[]>());
             }

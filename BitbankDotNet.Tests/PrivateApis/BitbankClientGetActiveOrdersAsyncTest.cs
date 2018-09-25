@@ -52,7 +52,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Side = EntityHelper.GetTestValue<OrderSide>(),
                     StartAmount = EntityHelper.GetTestValue<double>(),
                     Status = EntityHelper.GetTestValue<OrderStatus>(),
-                    Type = EntityHelper.GetTestValue<OrderType>(),
+                    Type = EntityHelper.GetTestValue<OrderType>()
                 };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Order[]>());
             }

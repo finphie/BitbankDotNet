@@ -47,7 +47,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     High = EntityHelper.GetTestValue<double>(),
                     Low = EntityHelper.GetTestValue<double>(),
                     Open = EntityHelper.GetTestValue<double>(),
-                    Volume = EntityHelper.GetTestValue<double>(),
+                    Volume = EntityHelper.GetTestValue<double>()
                 };
 				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Ohlcv[]>());
             }

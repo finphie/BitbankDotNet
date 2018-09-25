@@ -42,7 +42,7 @@ namespace BitbankDotNet.Tests.PublicApis
 				var entity = new Depth
                 {
                     Asks = EntityHelper.GetTestValue<BoardOrder[]>(),
-                    Bids = EntityHelper.GetTestValue<BoardOrder[]>(),
+                    Bids = EntityHelper.GetTestValue<BoardOrder[]>()
                 };
 				Assert.Equal(entity, result, new PublicPropertyComparer<Depth>());
             }
