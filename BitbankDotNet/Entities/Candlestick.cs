@@ -1,7 +1,6 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -9,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// ローソク足データ
     /// </summary>
-    public class Ohlcv : IEquatable<Ohlcv>
+    public class Ohlcv
     {
         /// <summary>
         /// 始値
@@ -40,23 +39,6 @@ namespace BitbankDotNet.Entities
         /// 日時
         /// </summary>
         public DateTime Date { get; set; }
-
-        public override bool Equals(object obj)
-            => Equals(obj as Ohlcv);
-
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-        public bool Equals(Ohlcv other)
-            => other != null &&
-               Open == other.Open &&
-               High == other.High &&
-               Low == other.Low &&
-               Close == other.Close &&
-               Volume == other.Volume &&
-               Date == other.Date;
-
-        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
-        public override int GetHashCode()
-            => HashCode.Combine(Open, High, Low, Close, Volume, Date);
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Ohlcv, BitbankResolver<char>>(this);

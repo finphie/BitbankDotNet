@@ -1,8 +1,6 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -10,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 注文情報
     /// </summary>
-    public class Order : IEquatable<Order>
+    public class Order
     {
         /// <summary>
         /// 取引ID
@@ -72,44 +70,6 @@ namespace BitbankDotNet.Entities
         /// 注文ステータス
         /// </summary>
         public OrderStatus Status { get; set; }
-
-        public override bool Equals(object obj)
-            => Equals(obj as Order);
-
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Order other)
-            => other != null &&
-               OrderId == other.OrderId &&
-               Pair == other.Pair &&
-               Side == other.Side &&
-               Type == other.Type &&
-               StartAmount == other.StartAmount &&
-               RemainingAmount == other.RemainingAmount &&
-               ExecutedAmount == other.ExecutedAmount &&
-               Price == other.Price &&
-               AveragePrice == other.AveragePrice &&
-               OrderedAt == other.OrderedAt &&
-               Status == other.Status;
-
-        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
-        public override int GetHashCode()
-        {
-            var hash = new HashCode();
-            hash.Add(OrderId);
-            hash.Add(Pair);
-            hash.Add(Side);
-            hash.Add(Type);
-            hash.Add(StartAmount);
-            hash.Add(RemainingAmount);
-            hash.Add(ExecutedAmount);
-            hash.Add(Price);
-            hash.Add(AveragePrice);
-            hash.Add(OrderedAt);
-            hash.Add(Status);
-
-            return hash.ToHashCode();
-        }
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Order, BitbankResolver<char>>(this);

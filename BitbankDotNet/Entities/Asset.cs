@@ -1,8 +1,5 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -10,7 +7,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// アセット一覧
     /// </summary>
-    public class Asset : IEquatable<Asset>
+    public class Asset
     {
         /// <summary>
         /// アセット名
@@ -41,23 +38,6 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "free_amount")]
         public double FreeAmount { get; set; }
-
-        public override bool Equals(object obj)
-            => Equals(obj as Asset);
-
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Asset other)
-            => other != null &&
-               Name == other.Name &&
-               AmountPrecision == other.AmountPrecision &&
-               OnhandAmount == other.OnhandAmount &&
-               LockedAmount == other.LockedAmount &&
-               FreeAmount == other.FreeAmount;
-
-        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
-        public override int GetHashCode()
-            => HashCode.Combine(Name, AmountPrecision, OnhandAmount, LockedAmount, FreeAmount);
 
         // TODO: Asset.WithdrawalFee専用のFormatterが必要
         // ドキュメントではstringが返ってくることになっているが、

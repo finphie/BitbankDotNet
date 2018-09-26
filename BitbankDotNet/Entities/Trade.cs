@@ -1,8 +1,6 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
@@ -10,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 約定履歴
     /// </summary>
-    public class Trade : IEquatable<Trade>
+    public class Trade
     {
         /// <summary>
         /// 注文ID
@@ -72,44 +70,6 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "executed_at")]
         public DateTime ExecutedAt { get; set; }
-
-        public override bool Equals(object obj)
-            => Equals(obj as Trade);
-
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Trade other)
-            => other != null &&
-               TradeId == other.TradeId &&
-               Pair == other.Pair &&
-               OrderId == other.OrderId &&
-               Side == other.Side &&
-               Type == other.Type &&
-               Amount == other.Amount &&
-               Price == other.Price &&
-               MakerTaker == other.MakerTaker &&
-               FeeAmountBase == other.FeeAmountBase &&
-               FeeAmountQuote == other.FeeAmountQuote &&
-               ExecutedAt == other.ExecutedAt;
-
-        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
-        public override int GetHashCode()
-        {
-            var hash = new HashCode();
-            hash.Add(TradeId);
-            hash.Add(Pair);
-            hash.Add(OrderId);
-            hash.Add(Side);
-            hash.Add(Type);
-            hash.Add(Amount);
-            hash.Add(Price);
-            hash.Add(MakerTaker);
-            hash.Add(FeeAmountBase);
-            hash.Add(FeeAmountQuote);
-            hash.Add(ExecutedAt);
-
-            return hash.ToHashCode();
-        }
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Trade, BitbankResolver<char>>(this);
