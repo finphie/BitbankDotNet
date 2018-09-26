@@ -1,4 +1,3 @@
-using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -38,13 +37,13 @@ namespace BitbankDotNet.Tests.PublicApis
                 var result = bitbank.GetTickerAsync(default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Buy);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.High);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Last);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Low);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Sell);
-				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Vol);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Buy);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.High);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Last);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Low);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Sell);
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Vol);
             }
         }
 

@@ -1,4 +1,3 @@
-using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -38,17 +37,17 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.SendBuyOrderAsync(default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.AveragePrice);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.ExecutedAmount);
-				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.OrderedAt);
-				Assert.Equal(EntityHelper.GetTestValue<long>(), result.OrderId);
-				Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), result.Pair);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Price);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.RemainingAmount);
-				Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), result.Side);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.StartAmount);
-				Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), result.Status);
-				Assert.Equal(EntityHelper.GetTestValue<OrderType>(), result.Type);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.AveragePrice);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.ExecutedAmount);
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.OrderedAt);
+                Assert.Equal(EntityHelper.GetTestValue<long>(), result.OrderId);
+                Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), result.Pair);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Price);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.RemainingAmount);
+                Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), result.Side);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.StartAmount);
+                Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), result.Status);
+                Assert.Equal(EntityHelper.GetTestValue<OrderType>(), result.Type);
             }
         }
 

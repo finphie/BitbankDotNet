@@ -1,4 +1,3 @@
-using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -38,16 +37,16 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				Assert.Equal(EntityHelper.GetTestValue<string>(), result.AccountUuid);
-				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Address);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Amount);
-				Assert.Equal(EntityHelper.GetTestValue<AssetName>(), result.Asset);
-				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Fee);
-				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Label);
-				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.RequestedAt);
-				Assert.Equal(EntityHelper.GetTestValue<WithdrawalStatus>(), result.Status);
-				Assert.Equal(EntityHelper.GetTestValue<string>(), result.TxId);
-				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Uuid);
+                Assert.Equal(EntityHelper.GetTestValue<string>(), result.AccountUuid);
+                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Address);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Amount);
+                Assert.Equal(EntityHelper.GetTestValue<AssetName>(), result.Asset);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Fee);
+                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Label);
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.RequestedAt);
+                Assert.Equal(EntityHelper.GetTestValue<WithdrawalStatus>(), result.Status);
+                Assert.Equal(EntityHelper.GetTestValue<string>(), result.TxId);
+                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Uuid);
             }
         }
 

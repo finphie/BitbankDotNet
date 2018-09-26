@@ -18,7 +18,7 @@ namespace BitbankDotNet.CodeGenerator
 
         readonly string _responseName = "Response";
 
-        public SortedList<string, string> EntityProperties { get; }
+        public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
         public string Json { get; set; }
         public string MethodName { get; set; }
         public string ApiName { get; set; }
@@ -51,7 +51,17 @@ namespace BitbankDotNet.CodeGenerator
             }
 
             EntityProperties = entityElementType.GetProperties()
-                .ToSortedList(pi => pi.Name, pi => GetTypeOutput(pi.PropertyType));
+                .ToSortedList(pi => pi.Name, pi =>
+                {
+                    var type = pi.PropertyType;
+                    var elementTypeName =
+                        type.IsArray && type.Namespace == $"{nameof(BitbankDotNet)}.{nameof(Entities)}"
+                            ? type.GetElementType()
+                            : null;
+                    var elementProperties = elementTypeName?.GetProperties()
+                        .ToSortedList(pi2 => pi2.Name, pi2 => GetTypeOutput(pi2.PropertyType));
+                    return (GetTypeOutput(pi.PropertyType), elementProperties);
+                });
 
             var entity = Activator.CreateInstance(entityType);
             EntityHelper.SetValue(entity);

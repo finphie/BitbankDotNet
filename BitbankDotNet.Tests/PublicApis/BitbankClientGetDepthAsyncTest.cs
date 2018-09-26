@@ -1,4 +1,3 @@
-using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -38,8 +37,16 @@ namespace BitbankDotNet.Tests.PublicApis
                 var result = bitbank.GetDepthAsync(default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				Assert.Equal(EntityHelper.GetTestValue<BoardOrder[]>(), result.Asks);
-				Assert.Equal(EntityHelper.GetTestValue<BoardOrder[]>(), result.Bids);
+                Assert.All(result.Asks, entity =>
+                {
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                });
+                Assert.All(result.Bids, entity =>
+                {
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                });
             }
         }
 

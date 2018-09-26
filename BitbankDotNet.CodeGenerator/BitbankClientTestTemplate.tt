@@ -4,7 +4,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-using BitbankDotNet.Entities;
 using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
@@ -56,12 +55,21 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 Assert.All(result, entity =>
                 {
 <# foreach (var proparty in EntityProperties) { #>
-                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value #>>(), entity.<#= proparty.Key #>);
+                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), entity.<#= proparty.Key #>);
 <# } #>
                 });
 <# } else { #>
 <# foreach (var proparty in EntityProperties) { #>
-				Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value #>>(), result.<#= proparty.Key #>);
+<# if (proparty.Value.Element != null) { #>
+                Assert.All(result.<#= proparty.Key #>, entity =>
+                {
+<# foreach (var proparty2 in proparty.Value.Element) { #>
+                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty2.Value #>>(), entity.<#= proparty2.Key #>);
+<# } #>
+                });
+<# } else { #>
+                Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), result.<#= proparty.Key #>);
+<# } #>
 <# } #>
 <# } #>
             }
