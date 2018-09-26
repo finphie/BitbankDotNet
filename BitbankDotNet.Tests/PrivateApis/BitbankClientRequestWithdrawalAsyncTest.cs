@@ -38,21 +38,16 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Withdrawal
-                {
-                    AccountUuid = EntityHelper.GetTestValue<string>(),
-                    Address = EntityHelper.GetTestValue<string>(),
-                    Amount = EntityHelper.GetTestValue<double>(),
-                    Asset = EntityHelper.GetTestValue<AssetName>(),
-                    Fee = EntityHelper.GetTestValue<double>(),
-                    Label = EntityHelper.GetTestValue<string>(),
-                    RequestedAt = EntityHelper.GetTestValue<DateTime>(),
-                    Status = EntityHelper.GetTestValue<WithdrawalStatus>(),
-                    TxId = EntityHelper.GetTestValue<string>(),
-                    Uuid = EntityHelper.GetTestValue<string>()
-                };
-				Assert.Equal(entity, result, new PublicPropertyComparer<Withdrawal>());
+				Assert.Equal(EntityHelper.GetTestValue<string>(), result.AccountUuid);
+				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Address);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Amount);
+				Assert.Equal(EntityHelper.GetTestValue<AssetName>(), result.Asset);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Fee);
+				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Label);
+				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.RequestedAt);
+				Assert.Equal(EntityHelper.GetTestValue<WithdrawalStatus>(), result.Status);
+				Assert.Equal(EntityHelper.GetTestValue<string>(), result.TxId);
+				Assert.Equal(EntityHelper.GetTestValue<string>(), result.Uuid);
             }
         }
 

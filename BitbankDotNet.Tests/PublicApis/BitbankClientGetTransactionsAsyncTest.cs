@@ -3,7 +3,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -39,16 +38,14 @@ namespace BitbankDotNet.Tests.PublicApis
                 var result = bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Transaction
+                Assert.All(result, entity =>
                 {
-                    Amount = EntityHelper.GetTestValue<double>(),
-                    ExecutedAt = EntityHelper.GetTestValue<DateTime>(),
-                    Price = EntityHelper.GetTestValue<double>(),
-                    Side = EntityHelper.GetTestValue<OrderSide>(),
-                    TransactionId = EntityHelper.GetTestValue<int>()
-                };
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Transaction[]>());
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
+                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.TransactionId);
+                });
             }
         }
 

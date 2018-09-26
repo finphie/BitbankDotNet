@@ -3,7 +3,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -39,17 +38,15 @@ namespace BitbankDotNet.Tests.PublicApis
                 var result = bitbank.GetCandlesticksAsync(default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Ohlcv
+                Assert.All(result, entity =>
                 {
-                    Close = EntityHelper.GetTestValue<double>(),
-                    Date = EntityHelper.GetTestValue<DateTime>(),
-                    High = EntityHelper.GetTestValue<double>(),
-                    Low = EntityHelper.GetTestValue<double>(),
-                    Open = EntityHelper.GetTestValue<double>(),
-                    Volume = EntityHelper.GetTestValue<double>()
-                };
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Ohlcv[]>());
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Close);
+                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.Date);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.High);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Low);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Open);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Volume);
+                });
             }
         }
 

@@ -38,22 +38,17 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.CancelOrderAsync(default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Order
-                {
-                    AveragePrice = EntityHelper.GetTestValue<double>(),
-                    ExecutedAmount = EntityHelper.GetTestValue<double>(),
-                    OrderedAt = EntityHelper.GetTestValue<DateTime>(),
-                    OrderId = EntityHelper.GetTestValue<long>(),
-                    Pair = EntityHelper.GetTestValue<CurrencyPair>(),
-                    Price = EntityHelper.GetTestValue<double>(),
-                    RemainingAmount = EntityHelper.GetTestValue<double>(),
-                    Side = EntityHelper.GetTestValue<OrderSide>(),
-                    StartAmount = EntityHelper.GetTestValue<double>(),
-                    Status = EntityHelper.GetTestValue<OrderStatus>(),
-                    Type = EntityHelper.GetTestValue<OrderType>()
-                };
-				Assert.Equal(entity, result, new PublicPropertyComparer<Order>());
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.AveragePrice);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.ExecutedAmount);
+				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.OrderedAt);
+				Assert.Equal(EntityHelper.GetTestValue<long>(), result.OrderId);
+				Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), result.Pair);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Price);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.RemainingAmount);
+				Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), result.Side);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.StartAmount);
+				Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), result.Status);
+				Assert.Equal(EntityHelper.GetTestValue<OrderType>(), result.Type);
             }
         }
 

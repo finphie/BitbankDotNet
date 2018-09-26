@@ -3,7 +3,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -39,16 +38,14 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.GetAssetsAsync().GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Asset
+                Assert.All(result, entity =>
                 {
-                    AmountPrecision = EntityHelper.GetTestValue<int>(),
-                    FreeAmount = EntityHelper.GetTestValue<double>(),
-                    LockedAmount = EntityHelper.GetTestValue<double>(),
-                    Name = EntityHelper.GetTestValue<AssetName>(),
-                    OnhandAmount = EntityHelper.GetTestValue<double>()
-                };
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Asset[]>());
+                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountPrecision);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FreeAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.LockedAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.OnhandAmount);
+                });
             }
         }
 

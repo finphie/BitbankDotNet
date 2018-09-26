@@ -9,9 +9,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-<# if (IsArray) { #>
-using System.Linq;
-<# } #>
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -55,18 +52,17 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 var result = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new <#= ApiName #>
-                {
-<# var i = 0; for (; i < EntityProperties.Count - 1; i++) { #>
-                    <#= EntityProperties.Keys[i] #> = EntityHelper.GetTestValue<<#= EntityProperties.Values[i] #>>(),
-<# } #>
-                    <#= EntityProperties.Keys[i] #> = EntityHelper.GetTestValue<<#= EntityProperties.Values[i] #>>()
-                };
 <# if (IsArray) { #>
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<<#= ApiName #>[]>());
+                Assert.All(result, entity =>
+                {
+<# foreach (var proparty in EntityProperties) { #>
+                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value #>>(), entity.<#= proparty.Key #>);
+<# } #>
+                });
 <# } else { #>
-				Assert.Equal(entity, result, new PublicPropertyComparer<<#= ApiName #>>());
+<# foreach (var proparty in EntityProperties) { #>
+				Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value #>>(), result.<#= proparty.Key #>);
+<# } #>
 <# } #>
             }
         }

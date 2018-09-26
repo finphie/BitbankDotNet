@@ -38,18 +38,13 @@ namespace BitbankDotNet.Tests.PublicApis
                 var result = bitbank.GetTickerAsync(default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Ticker
-                {
-                    Buy = EntityHelper.GetTestValue<double>(),
-                    High = EntityHelper.GetTestValue<double>(),
-                    Last = EntityHelper.GetTestValue<double>(),
-                    Low = EntityHelper.GetTestValue<double>(),
-                    Sell = EntityHelper.GetTestValue<double>(),
-                    Timestamp = EntityHelper.GetTestValue<DateTime>(),
-                    Vol = EntityHelper.GetTestValue<double>()
-                };
-				Assert.Equal(entity, result, new PublicPropertyComparer<Ticker>());
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Buy);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.High);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Last);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Low);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Sell);
+				Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
+				Assert.Equal(EntityHelper.GetTestValue<double>(), result.Vol);
             }
         }
 

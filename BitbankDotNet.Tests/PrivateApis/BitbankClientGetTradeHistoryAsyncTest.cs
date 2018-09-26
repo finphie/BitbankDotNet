@@ -3,7 +3,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -39,22 +38,20 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.GetTradeHistoryAsync(default, default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new Trade
+                Assert.All(result, entity =>
                 {
-                    Amount = EntityHelper.GetTestValue<double>(),
-                    ExecutedAt = EntityHelper.GetTestValue<DateTime>(),
-                    FeeAmountBase = EntityHelper.GetTestValue<string>(),
-                    FeeAmountQuote = EntityHelper.GetTestValue<string>(),
-                    MakerTaker = EntityHelper.GetTestValue<string>(),
-                    OrderId = EntityHelper.GetTestValue<long>(),
-                    Pair = EntityHelper.GetTestValue<CurrencyPair>(),
-                    Price = EntityHelper.GetTestValue<double>(),
-                    Side = EntityHelper.GetTestValue<OrderSide>(),
-                    TradeId = EntityHelper.GetTestValue<long>(),
-                    Type = EntityHelper.GetTestValue<OrderType>()
-                };
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<Trade[]>());
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountBase);
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountQuote);
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.MakerTaker);
+                    Assert.Equal(EntityHelper.GetTestValue<long>(), entity.OrderId);
+                    Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
+                    Assert.Equal(EntityHelper.GetTestValue<long>(), entity.TradeId);
+                    Assert.Equal(EntityHelper.GetTestValue<OrderType>(), entity.Type);
+                });
             }
         }
 

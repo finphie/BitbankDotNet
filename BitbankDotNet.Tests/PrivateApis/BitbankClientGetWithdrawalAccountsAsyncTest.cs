@@ -3,7 +3,6 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -39,14 +38,12 @@ namespace BitbankDotNet.Tests.PrivateApis
                 var result = bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-				
-				var entity = new WithdrawalAccount
+                Assert.All(result, entity =>
                 {
-                    Address = EntityHelper.GetTestValue<string>(),
-                    Label = EntityHelper.GetTestValue<string>(),
-                    Uuid = EntityHelper.GetTestValue<string>()
-                };
-				Assert.Equal(Enumerable.Repeat(entity, 2).ToArray(), result, new PublicPropertyComparer<WithdrawalAccount[]>());
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Address);
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Label);
+                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Uuid);
+                });
             }
         }
 
