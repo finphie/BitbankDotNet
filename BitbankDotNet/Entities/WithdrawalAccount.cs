@@ -28,12 +28,8 @@ namespace BitbankDotNet.Entities
             => JsonSerializer.Generic.Utf16.Serialize<WithdrawalAccount, BitbankResolver<char>>(this);
     }
 
-    class WithdrawalAccountList
+    class WithdrawalAccountList : IEntity
     {
         public WithdrawalAccount[] Accounts { get; set; }
-    }
-
-    class WithdrawalAccountsResponse : Response<WithdrawalAccountList>
-    {
     }
 }

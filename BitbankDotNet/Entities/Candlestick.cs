@@ -51,13 +51,9 @@ namespace BitbankDotNet.Entities
         public Ohlcv[] Ohlcv { get; set; }
     }
 
-    class CandlestickList
+    class CandlestickList : IEntity
     {
         [DataMember(Name = "candlestick")]
         public Candlestick[] Candlesticks { get; set; }
-    }
-
-    class CandlesticksResponse : Response<CandlestickList>
-    {
     }
 }

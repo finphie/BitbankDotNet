@@ -22,7 +22,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 板情報
     /// </summary>
-    public class Depth
+    public class Depth : IEntity
     {
         /// <summary>
         /// 売り板
@@ -36,9 +36,5 @@ namespace BitbankDotNet.Entities
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Depth, BitbankResolver<char>>(this);
-    }
-
-    class DepthResponse : Response<Depth>
-    {
     }
 }

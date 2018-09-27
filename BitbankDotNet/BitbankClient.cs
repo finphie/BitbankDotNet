@@ -53,7 +53,7 @@ namespace BitbankDotNet
 
         // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
-            where T : class, IResponse
+            where T : class, IEntity
         {
             try
             {
@@ -70,14 +70,14 @@ namespace BitbankDotNet
                     // 2.不正なJSONが入力された場合
                     // そのため、catchしなくても問題ないはず。
                     // ただし、JSONが空かどうかは確認したほうが良いかもしれない。
-                    var result = Deserialize<T, BitbankResolver<byte>>(json);
+                    var result = Deserialize<Response<T>, BitbankResolver<byte>>(json);
                     if (result.Success == 1)
-                        return result;
+                        return result.Data;
                 }
 
                 try
                 {
-                    var error = Deserialize<ErrorResponse, BitbankResolver<byte>>(json).Data;
+                    var error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
                     ThrowHelper.ThrowBitbankApiException(response.StatusCode, error.Code);
                 }
                 catch (Exception ex) when (!(ex is BitbankApiException))
@@ -100,18 +100,18 @@ namespace BitbankDotNet
 
         // Public API Getリクエスト
         async Task<T> GetAsync<T>(string path, CurrencyPair pair)
-            where T : class, IResponse
+            where T : class, IEntity
             => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path))
                 .ConfigureAwait(false);
 
         // Private API Getリクエスト
         async Task<T> GetAsync<T>(string path)
-            where T : class, IResponse
+            where T : class, IEntity
             => await SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path)).ConfigureAwait(false);
 
         // Private API Postリクエスト
         async Task<T> PostAsync<T, TBody>(string path, TBody body)
-            where T : class, IResponse
+            where T : class, IEntity
         {
             var json = Serialize<TBody, BitbankResolver<char>>(body);
 

@@ -1,11 +1,7 @@
 ﻿namespace BitbankDotNet.Entities
 {
-    class Error
+    class Error : IEntity
     {
         public int Code { get; set; }
-    }
-
-    class ErrorResponse : Response<Error>
-    {       
     }
 }

@@ -13,7 +13,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <returns>ティッカー情報</returns>
         public async Task<Ticker> GetTickerAsync(CurrencyPair pair)
-            => (await GetAsync<TickerResponse>("/ticker", pair).ConfigureAwait(false)).Data;
+            => await GetAsync<Ticker>("/ticker", pair).ConfigureAwait(false);
 
         /// <summary>
         /// [PublicAPI]板情報を返します。
@@ -21,7 +21,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <returns>板情報</returns>
         public async Task<Depth> GetDepthAsync(CurrencyPair pair)
-            => (await GetAsync<DepthResponse>("/depth", pair).ConfigureAwait(false)).Data;
+            => await GetAsync<Depth>("/depth", pair).ConfigureAwait(false);
 
         /// <summary>
         /// [PublicAPI]最新の約定履歴を返します。
@@ -29,7 +29,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
         public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair)
-            => (await GetAsync<TransactionsResponse>("/transactions", pair).ConfigureAwait(false)).Data.Transactions;
+            => (await GetAsync<TransactionList>("/transactions", pair).ConfigureAwait(false)).Transactions;
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
@@ -38,7 +38,7 @@ namespace BitbankDotNet
         /// <param name="query">クエリ</param>
         /// <returns>約定履歴</returns>
         async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, string query)
-            => (await GetAsync<TransactionsResponse>($"/transactions/{query}", pair).ConfigureAwait(false)).Data.Transactions;
+            => (await GetAsync<TransactionList>($"/transactions/{query}", pair).ConfigureAwait(false)).Transactions;
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
@@ -77,7 +77,7 @@ namespace BitbankDotNet
         /// <param name="query">クエリ</param>
         /// <returns>ローソク足データ</returns>
         async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, string query)
-            => (await GetAsync<CandlesticksResponse>($"/candlestick/{type.GetEnumMemberValue()}/{query}", pair).ConfigureAwait(false)).Data.Candlesticks[0].Ohlcv;
+            => (await GetAsync<CandlestickList>($"/candlestick/{type.GetEnumMemberValue()}/{query}", pair).ConfigureAwait(false)).Candlesticks[0].Ohlcv;
 
         /// <summary>
         /// [PublicAPI]指定された年（UTC）のローソク足データを返します。

@@ -41,12 +41,8 @@ namespace BitbankDotNet.Entities
             => JsonSerializer.Generic.Utf16.Serialize<Transaction, BitbankResolver<char>>(this);
     }
 
-    class TransactionList
+    class TransactionList : IEntity
     {
         public Transaction[] Transactions { get; set; }
-    }
-
-    class TransactionsResponse : Response<TransactionList>
-    {
     }
 }

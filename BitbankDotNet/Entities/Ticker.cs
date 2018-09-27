@@ -7,7 +7,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// ティッカー情報
     /// </summary>
-    public class Ticker
+    public class Ticker : IEntity
     {
         /// <summary>
         /// 現在の売り注文の最安値
@@ -46,9 +46,5 @@ namespace BitbankDotNet.Entities
 
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Ticker, BitbankResolver<char>>(this);
-    }
-
-    class TickerResponse : Response<Ticker>
-    {
     }
 }

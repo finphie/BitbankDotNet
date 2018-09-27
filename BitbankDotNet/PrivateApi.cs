@@ -13,7 +13,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <returns>アセット一覧</returns>
         public async Task<Asset[]> GetAssetsAsync()
-            => (await GetAsync<AssetsResponse>("/v1/user/assets").ConfigureAwait(false)).Data.Assets;
+            => (await GetAsync<AssetList>("/v1/user/assets").ConfigureAwait(false)).Assets;
 
         /// <summary>
         /// [PrivateAPI]注文情報を取得します。
@@ -27,7 +27,7 @@ namespace BitbankDotNet
             query["pair"] = pair.GetEnumMemberValue();
             query["order_id"] = orderId.ToString();
 
-            return (await GetAsync<OrderResponse>("/v1/user/spot/order?" + query).ConfigureAwait(false)).Data;
+            return await GetAsync<Order>("/v1/user/spot/order?" + query).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -37,11 +37,11 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
+            => (await PostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
-            }).ConfigureAwait(false)).Data.Orders;
+            }).ConfigureAwait(false)).Orders;
 
         // TODO: 価格や数量では、APIやdoubleの有効桁数をチェックする。
         /// <summary>
@@ -54,14 +54,14 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         async Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
-            => (await PostAsync<OrderResponse, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
+            => await PostAsync<Order, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
             {
                 Pair = pair,
                 Amount = amount,
                 Price = price,
                 Side = side,
                 Type = type
-            }).ConfigureAwait(false)).Data;
+            }).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]新規成行注文を行います。
@@ -72,13 +72,13 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         async Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
-            => (await PostAsync<OrderResponse, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
+            => await PostAsync<Order, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
             {
                 Pair = pair,
                 Amount = amount,
                 Side = side,
                 Type = type
-            }).ConfigureAwait(false)).Data;
+            }).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]新規指値買い注文を行います。
@@ -125,11 +125,11 @@ namespace BitbankDotNet
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
-            => (await PostAsync<OrderResponse, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
+            => await PostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
             {
                 Pair = pair,
                 OrderId = orderId
-            }).ConfigureAwait(false)).Data;
+            }).ConfigureAwait(false);
 
         /// <summary>
         /// [PrivateAPI]複数の注文をキャンセルします。
@@ -138,11 +138,11 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order[]> CancelOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PostAsync<OrdersResponse, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
+            => (await PostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
-            }).ConfigureAwait(false)).Data.Orders;
+            }).ConfigureAwait(false)).Orders;
 
         /// <summary>
         /// [PrivateAPI]アクティブな注文を取得します。
@@ -163,7 +163,7 @@ namespace BitbankDotNet
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
 
-            return (await GetAsync<OrdersResponse>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Data.Orders;
+            return (await GetAsync<OrderList>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Orders;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace BitbankDotNet
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
             query["order"] = sort.GetEnumMemberValue();
 
-            return (await GetAsync<TradesResponse>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Data.Trades;
+            return (await GetAsync<TradeList>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Trades;
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace BitbankDotNet
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["asset"] = asset.GetEnumMemberValue();
 
-            return (await GetAsync<WithdrawalAccountsResponse>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Data.Accounts;
+            return (await GetAsync<WithdrawalAccountList>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Accounts;
         }
 
         /// <summary>
@@ -212,13 +212,13 @@ namespace BitbankDotNet
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
         public async Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int otpToken, int smsToken)
-            => (await PostAsync<WithdrawalResponse, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
+            => await PostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
             {
                 Asset = asset,
                 Amount = amount,
                 Uuid = uuid,
                 OtpToken = otpToken,
                 SmsToken = smsToken
-            }).ConfigureAwait(false)).Data;
+            }).ConfigureAwait(false);
     }
 }
