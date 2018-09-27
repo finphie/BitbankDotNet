@@ -11,21 +11,29 @@ namespace BitbankDotNet.CodeGenerator
 {
     partial class BitbankClientTestTemplate
     {
+        // Entityの名前空間名
+        const string EntityNamespace = nameof(BitbankDotNet) + "." + nameof(Entities);
+
+        // BitbankClientがあるアセンブリ
         static readonly Assembly LibraryAssembly = typeof(BitbankClient).Assembly;
 
-        // GetType()は名前空間付きの型名が必要。こちらの方が簡潔。
-        static readonly IEnumerable<TypeInfo> EntityTypes = LibraryAssembly.DefinedTypes;
-        static readonly TypeInfo ResponseTypeInfo = EntityTypes.First(ti => ti.Name.StartsWith("Response"));
+        // Entityの型情報リスト
+        static readonly TypeInfo[] EntityTypeInfos = LibraryAssembly.DefinedTypes
+            .Where(ti=> ti.Namespace == EntityNamespace)
+            .ToArray();
+
+        // Response<T>の型情報
+        static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name.StartsWith("Response"));
 
         public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
-        public string Json { get; set; }
-        public string MethodName { get; set; }
-        public string ApiName { get; set; }
+        public string Json { get; }
+        public string MethodName { get; }
+        public string ApiName { get; }
 
-        public bool IsArray { get; set; }
+        public bool IsArray { get; }
         public bool IsPublicApi { get; }
 
-        public (string Name, string Type)[] Parameters { get; set; }
+        public (string Name, string Type)[] Parameters { get; }
 
         public BitbankClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
@@ -44,7 +52,7 @@ namespace BitbankDotNet.CodeGenerator
                 var apiName = ApiName = entityElementType.Name;
                 if (apiName == "Ohlcv")
                     apiName = "Candlestick";
-                entityType = EntityTypes.First(t => t.Name == $"{apiName}List");
+                entityType = EntityTypeInfos.First(ti => ti.Name == $"{apiName}List");
                 IsArray = true;
             }
 
@@ -52,10 +60,9 @@ namespace BitbankDotNet.CodeGenerator
                 .ToSortedList(pi => pi.Name, pi =>
                 {
                     var type = pi.PropertyType;
-                    var elementTypeName =
-                        type.IsArray && type.Namespace == $"{nameof(BitbankDotNet)}.{nameof(Entities)}"
-                            ? type.GetElementType()
-                            : null;
+                    var elementTypeName = type.IsArray && type.Namespace == EntityNamespace
+                        ? type.GetElementType()
+                        : null;
                     var elementProperties = elementTypeName?.GetProperties()
                         .ToSortedList(pi2 => pi2.Name, pi2 => GetTypeOutput(pi2.PropertyType));
                     return (GetTypeOutput(pi.PropertyType), elementProperties);
@@ -71,7 +78,7 @@ namespace BitbankDotNet.CodeGenerator
 
             Json = entityResponse.ToString().Replace("\"", @"\""");
 
-            Parameters = method.GetParameters().Select(p => (p.Name, GetTypeOutput(p.ParameterType))).ToArray();
+            Parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
         }
 
         string GetDefaultParametersString()

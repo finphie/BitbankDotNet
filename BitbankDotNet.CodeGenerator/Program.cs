@@ -38,13 +38,13 @@ namespace BitbankDotNet.CodeGenerator
 
             // メソッド一覧を取得
             var methods = typeof(BitbankClient).GetMethods()
-                .Where(m => m.IsPublic && !m.IsVirtual)
-                .Where(m => m.Name != "GetType");
+                .Where(mi => mi.IsPublic && !mi.IsVirtual)
+                .Where(mi => mi.Name != "GetType");
 
-            foreach (var group in methods.GroupBy(m => m.Name))
+            foreach (var group in methods.GroupBy(mi => mi.Name))
             {
                 Console.WriteLine(group.Key);
-                var method = group.OrderByDescending(m => m.GetParameters().Length);
+                var method = group.OrderByDescending(mi => mi.GetParameters().Length);
                 var isPublicApi = dic[group.Key];
                 var tt = new BitbankClientTestTemplate(method.First(), isPublicApi);
                 var text = tt.TransformText();

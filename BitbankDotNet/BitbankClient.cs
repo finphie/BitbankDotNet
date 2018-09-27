@@ -1,5 +1,6 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
+using BitbankDotNet.Helpers;
 using BitbankDotNet.Resolvers;
 using System;
 using System.Net.Http;
@@ -8,8 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using BitbankDotNet.Helpers;
-using SpanJson;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
