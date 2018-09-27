@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// ローソク足データ
     /// </summary>
-    public class Ohlcv
+    public class Ohlcv : IEntity
     {
         /// <summary>
         /// 始値
@@ -44,14 +44,14 @@ namespace BitbankDotNet.Entities
             => JsonSerializer.Generic.Utf16.Serialize<Ohlcv, BitbankResolver<char>>(this);
     }
 
-    class Candlestick
+    class Candlestick : IEntity
     {
         public CandleType Type { get; set; }
 
         public Ohlcv[] Ohlcv { get; set; }
     }
 
-    class CandlestickList : IEntity
+    class CandlestickList : IEntity, IEntityResponse
     {
         [DataMember(Name = "candlestick")]
         public Candlestick[] Candlesticks { get; set; }

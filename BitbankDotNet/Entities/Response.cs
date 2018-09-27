@@ -4,7 +4,7 @@ using SpanJson;
 namespace BitbankDotNet.Entities
 {
     class Response<T>
-        where T : class, IEntity
+        where T : class, IEntityResponse
     {
         public int Success { get; set; }
         public T Data { get; set; }

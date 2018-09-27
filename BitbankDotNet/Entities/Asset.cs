@@ -7,7 +7,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// アセット一覧
     /// </summary>
-    public class Asset
+    public class Asset : IEntity
     {
         /// <summary>
         /// アセット名
@@ -56,7 +56,7 @@ namespace BitbankDotNet.Entities
             => JsonSerializer.Generic.Utf16.Serialize<Asset, BitbankResolver<char>>(this);
     }
 
-    class AssetList : IEntity
+    class AssetList : IEntity, IEntityResponse
     {
         public Asset[] Assets { get; set; }
     }

@@ -1,6 +1,10 @@
 ﻿namespace BitbankDotNet.Entities
 {
-    interface IEntity
-    {       
+    public interface IEntity
+    {
+    }
+
+    interface IEntityResponse
+    {
     }
 }
