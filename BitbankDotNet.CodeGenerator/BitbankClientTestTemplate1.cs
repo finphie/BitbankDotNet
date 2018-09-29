@@ -1,6 +1,9 @@
-﻿using BitbankDotNet.Shared.Extensions;
+﻿using BitbankDotNet.Entities;
+using BitbankDotNet.Resolvers;
+using BitbankDotNet.Shared.Extensions;
 using BitbankDotNet.Shared.Helpers;
 using Microsoft.CSharp;
+using SpanJson;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -23,7 +26,7 @@ namespace BitbankDotNet.CodeGenerator
             .ToArray();
 
         // Response<T>の型情報
-        static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name.StartsWith("Response"));
+        static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name == typeof(Response<>).Name);
 
         public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
         public string Json { get; }
@@ -50,8 +53,8 @@ namespace BitbankDotNet.CodeGenerator
             {
                 entityElementType = entityType.GetElementType();
                 var apiName = ApiName = entityElementType.Name;
-                if (apiName == "Ohlcv")
-                    apiName = "Candlestick";
+                if (apiName == nameof(Ohlcv))
+                    apiName = nameof(Candlestick);
                 entityType = EntityTypeInfos.First(ti => ti.Name == $"{apiName}List");
                 IsArray = true;
             }
@@ -76,7 +79,8 @@ namespace BitbankDotNet.CodeGenerator
             responseType.GetProperty("Success").SetValue(entityResponse, 1);
             responseType.GetProperty("Data").SetValue(entityResponse, entity);
 
-            Json = entityResponse.ToString().Replace("\"", @"\""");
+            Json = JsonSerializer.NonGeneric.Utf16.Serialize<BitbankResolver<char>>(entityResponse)
+                .Replace("\"", @"\""");
 
             Parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
         }
