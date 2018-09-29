@@ -53,7 +53,8 @@ namespace BitbankDotNet.Entities
         //public bool StopWithdrawal { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize<Asset, BitbankResolver<char>>(this);
+            => JsonSerializer.PrettyPrinter.Print(
+                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Asset, BitbankResolver<char>>(this));
     }
 
     class AssetList : IEntity, IEntityResponse

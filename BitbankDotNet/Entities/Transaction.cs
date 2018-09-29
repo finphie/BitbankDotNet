@@ -38,7 +38,8 @@ namespace BitbankDotNet.Entities
         public DateTime ExecutedAt { get; set; }
 
         public override string ToString()
-            => JsonSerializer.Generic.Utf16.Serialize<Transaction, BitbankResolver<char>>(this);
+            => JsonSerializer.PrettyPrinter.Print(
+                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Transaction, BitbankResolver<char>>(this));
     }
 
     class TransactionList : IEntity, IEntityResponse
