@@ -42,7 +42,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Transaction, BitbankResolver<char>>(this));
     }
 
-    class TransactionList : IEntity, IEntityResponse
+    class TransactionList : IEntityResponse
     {
         public Transaction[] Transactions { get; set; }
     }

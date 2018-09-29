@@ -76,7 +76,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Trade, BitbankResolver<char>>(this));
     }
 
-    class TradeList : IEntity, IEntityResponse
+    class TradeList : IEntityResponse
     {
         public Trade[] Trades { get; set; }
     }

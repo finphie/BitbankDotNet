@@ -29,7 +29,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<WithdrawalAccount, BitbankResolver<char>>(this));
     }
 
-    class WithdrawalAccountList : IEntity, IEntityResponse
+    class WithdrawalAccountList : IEntityResponse
     {
         public WithdrawalAccount[] Accounts { get; set; }
     }

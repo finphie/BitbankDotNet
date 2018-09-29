@@ -45,14 +45,14 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Ohlcv, BitbankResolver<char>>(this));
     }
 
-    class Candlestick : IEntity
+    class Candlestick
     {
         public CandleType Type { get; set; }
 
         public Ohlcv[] Ohlcv { get; set; }
     }
 
-    class CandlestickList : IEntity, IEntityResponse
+    class CandlestickList : IEntityResponse
     {
         [DataMember(Name = "candlestick")]
         public Candlestick[] Candlesticks { get; set; }

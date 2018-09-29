@@ -76,7 +76,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Order, BitbankResolver<char>>(this));
     }
 
-    class OrderList : IEntity, IEntityResponse
+    class OrderList : IEntityResponse
     {
         public Order[] Orders { get; set; }
     }
