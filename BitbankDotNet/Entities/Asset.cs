@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Resolvers;
+﻿using BitbankDotNet.Formatters;
+using BitbankDotNet.Resolvers;
 using SpanJson;
 using System.Runtime.Serialization;
 
@@ -39,11 +40,12 @@ namespace BitbankDotNet.Entities
         [DataMember(Name = "free_amount")]
         public double FreeAmount { get; set; }
 
-        // TODO: Asset.WithdrawalFee専用のFormatterが必要
-        // ドキュメントではstringが返ってくることになっているが、
-        // JPYの場合のみ、オブジェクトが返ってくるので対応する必要あり。（threshold/under/over）
-        //[DataMember(Name = "withdrawal_fee")]
-        //public double WithdrawalFee { get; set; }
+        /// <summary>
+        /// 手数料
+        /// </summary>
+        [DataMember(Name = "withdrawal_fee")]
+        [JsonCustomSerializer(typeof(BitbankWithdrawalFeeFormatter))]
+        public WithdrawalFeeObject WithdrawalFee { get; set; }
 
         // stop_depositとstop_withdrawalはドキュメントには載っていない。
         // 使い道もなさそうなのでコメントアウトしておく。
@@ -55,6 +57,27 @@ namespace BitbankDotNet.Entities
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Asset, BitbankResolver<char>>(this));
+
+        /// <summary>
+        /// 手数料
+        /// </summary>
+        public class WithdrawalFeeObject
+        {
+            /// <summary>
+            /// 手数料変動のしきい値
+            /// </summary>
+            public double Threshold { get; set; }
+
+            /// <summary>
+            /// 手数料（<see cref="Threshold"/>未満）
+            /// </summary>
+            public double Under { get; set; }
+
+            /// <summary>
+            /// 手数料（<see cref="Threshold"/>以上）
+            /// </summary>
+            public double Over { get; set; }
+        }
     }
 
     class AssetList : IEntity, IEntityResponse
