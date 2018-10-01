@@ -13,7 +13,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankClientGetAssetsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\"},{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\"}]}}";
+            "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\",\"withdrawal_fee\":{\"threshold\":\"1.2\",\"under\":\"1.2\",\"over\":\"1.2\"}},{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\",\"withdrawal_fee\":{\"threshold\":\"1.2\",\"under\":\"1.2\",\"over\":\"1.2\"}}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Assetを返す()
@@ -44,6 +44,9 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.LockedAmount);
                     Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.OnhandAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Over);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Threshold);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Under);
                 });
             }
         }
