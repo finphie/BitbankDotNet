@@ -255,6 +255,30 @@ namespace BitbankDotNet
     }
 
     /// <summary>
+    /// 取引所ステータス
+    /// </summary>
+    public enum SystemStatus
+    {
+        /// <summary>
+        /// 通常
+        /// </summary>
+        [EnumMember(Value = "NORMAL")]
+        Normal,
+
+        /// <summary>
+        /// 負荷状態
+        /// </summary>
+        [EnumMember(Value = "BUSY")]
+        Busy,
+
+        /// <summary>
+        /// 高負荷状態
+        /// </summary>
+        [EnumMember(Value = "VERY_BUSY")]
+        VeryBusy
+    }
+
+    /// <summary>
     /// 出金ステータス
     /// </summary>
     public enum WithdrawalStatus

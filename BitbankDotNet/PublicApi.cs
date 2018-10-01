@@ -120,5 +120,12 @@ namespace BitbankDotNet
         /// <returns>ローソク足データ</returns>
         public async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTimeOffset date)
             => await GetCandlesticksAsync(pair, type, date.UtcDateTime).ConfigureAwait(false);
+
+        /// <summary>
+        /// [PublicAPI]取引所ステータスを返します。
+        /// </summary>
+        /// <returns>取引所ステータス</returns>
+        public async Task<HealthStatus[]> GetStatus()
+            => (await PublicApiGetAsync<HealthStatusList>("spot/status").ConfigureAwait(false)).Statuses;
     }
 }
