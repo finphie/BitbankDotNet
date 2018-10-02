@@ -105,18 +105,18 @@ namespace BitbankDotNet
                 .ConfigureAwait(false);
 
         // Public API Getリクエスト
-        async Task<T> GetAsync<T>(string path, CurrencyPair pair)
+        async Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
             where T : class, IEntityResponse
             => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path))
                 .ConfigureAwait(false);
 
         // Private API Getリクエスト
-        async Task<T> GetAsync<T>(string path)
+        async Task<T> PrivateApiGetAsync<T>(string path)
             where T : class, IEntityResponse
             => await SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path)).ConfigureAwait(false);
 
         // Private API Postリクエスト
-        async Task<T> PostAsync<T, TBody>(string path, TBody body)
+        async Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
             where T : class, IEntityResponse
         {
             var json = Serialize<TBody, BitbankResolver<char>>(body);

@@ -13,7 +13,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <returns>アセット一覧</returns>
         public async Task<Asset[]> GetAssetsAsync()
-            => (await GetAsync<AssetList>("/v1/user/assets").ConfigureAwait(false)).Assets;
+            => (await PrivateApiGetAsync<AssetList>("/v1/user/assets").ConfigureAwait(false)).Assets;
 
         /// <summary>
         /// [PrivateAPI]注文情報を取得します。
@@ -27,7 +27,7 @@ namespace BitbankDotNet
             query["pair"] = pair.GetEnumMemberValue();
             query["order_id"] = orderId.ToString();
 
-            return await GetAsync<Order>("/v1/user/spot/order?" + query).ConfigureAwait(false);
+            return await PrivateApiGetAsync<Order>("/v1/user/spot/order?" + query).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
+            => (await PrivateApiPostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/orders_info", new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
@@ -54,7 +54,7 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         async Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
-            => await PostAsync<Order, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
+            => await PrivateApiPostAsync<Order, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
             {
                 Pair = pair,
                 Amount = amount,
@@ -72,7 +72,7 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         async Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
-            => await PostAsync<Order, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
+            => await PrivateApiPostAsync<Order, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
             {
                 Pair = pair,
                 Amount = amount,
@@ -125,7 +125,7 @@ namespace BitbankDotNet
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
-            => await PostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
+            => await PrivateApiPostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
             {
                 Pair = pair,
                 OrderId = orderId
@@ -138,7 +138,7 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order[]> CancelOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
+            => (await PrivateApiPostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
@@ -163,7 +163,7 @@ namespace BitbankDotNet
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
 
-            return (await GetAsync<OrderList>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Orders;
+            return (await PrivateApiGetAsync<OrderList>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Orders;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace BitbankDotNet
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
             query["order"] = sort.GetEnumMemberValue();
 
-            return (await GetAsync<TradeList>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Trades;
+            return (await PrivateApiGetAsync<TradeList>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Trades;
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace BitbankDotNet
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["asset"] = asset.GetEnumMemberValue();
 
-            return (await GetAsync<WithdrawalAccountList>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Accounts;
+            return (await PrivateApiGetAsync<WithdrawalAccountList>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Accounts;
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace BitbankDotNet
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
         public async Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int otpToken, int smsToken)
-            => await PostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
+            => await PrivateApiPostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
             {
                 Asset = asset,
                 Amount = amount,
