@@ -17,17 +17,17 @@ namespace BitbankDotNet.Benchmarks
     {
         const int BufferSize = DataLength * 3;
         const int DataLength = 64;
-        static readonly string Data = new string('a', DataLength);
+        readonly string _data = new string('a', DataLength);
 
         [Benchmark]
         public byte[] Array()
-            => Encoding.UTF8.GetBytes(Data);
+            => Encoding.UTF8.GetBytes(_data);
    
         [Benchmark]
         public byte[] SpanStackAlloc()
         {
             Span<byte> buffer = stackalloc byte[BufferSize];
-            var length = Encoding.UTF8.GetBytes(Data, buffer);
+            var length = Encoding.UTF8.GetBytes(_data, buffer);
             return buffer.Slice(0, length).ToArray();
         }
 
@@ -38,7 +38,7 @@ namespace BitbankDotNet.Benchmarks
             try
             {
                 var span = buffer.AsSpan();
-                var length = Encoding.UTF8.GetBytes(Data, span);
+                var length = Encoding.UTF8.GetBytes(_data, span);
                 return span.Slice(0, length).ToArray();
             }
             finally
@@ -52,10 +52,10 @@ namespace BitbankDotNet.Benchmarks
         public unsafe byte[] UnsafeStackAlloc()
         {
             Span<byte> buffer = stackalloc byte[BufferSize];
-            fixed (char* chars = Data)
-            fixed (byte* bytes = &buffer.GetPinnableReference())
+            fixed (char* chars = _data)
+            fixed (byte* bytes = buffer)
             {
-                var length = Encoding.UTF8.GetBytes(chars, Data.Length, bytes, BufferSize);
+                var length = Encoding.UTF8.GetBytes(chars, _data.Length, bytes, BufferSize);
                 return buffer.Slice(0, length).ToArray();
             }
         }
@@ -67,10 +67,10 @@ namespace BitbankDotNet.Benchmarks
             try
             {
                 var span = buffer.AsSpan();
-                fixed (char* chars = Data)
-                fixed (byte* bytes = &span.GetPinnableReference())
+                fixed (char* chars = _data)
+                fixed (byte* bytes = span)
                 {
-                    var length = Encoding.UTF8.GetBytes(chars, Data.Length, bytes, BufferSize);
+                    var length = Encoding.UTF8.GetBytes(chars, _data.Length, bytes, BufferSize);
                     return span.Slice(0, length).ToArray();
                 }
             }
