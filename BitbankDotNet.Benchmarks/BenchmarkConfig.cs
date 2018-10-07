@@ -20,6 +20,10 @@ namespace BitbankDotNet.Benchmarks
 
             //Add(Job.Default.With(
             //    CsProjCoreToolchain.From(
+            //        new NetCoreAppSettings("netcoreapp2.2", "2.2.0-*", ".NET Core 2.2"))));
+
+            //Add(Job.Default.With(
+            //    CsProjCoreToolchain.From(
             //        new NetCoreAppSettings("netcoreapp3.0", "3.0.0-*", ".NET Core 3.0"))));
 
             // CoreRT（RyuJIT利用）
@@ -37,6 +41,8 @@ namespace BitbankDotNet.Benchmarks
             //        .UseCoreRtLocal(@"\corert\bin\Windows_NT.x64.Release")
             //        .UseCppCodeGenerator()
             //        .ToToolchain()));
+
+            Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printIL: true, printSource: true)));
         }
     }
 }
