@@ -42,7 +42,7 @@ namespace BitbankDotNet.Benchmarks
             //        .UseCppCodeGenerator()
             //        .ToToolchain()));
 
-            Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printIL: true, printSource: true)));
+            Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printSource: true)));
         }
     }
 }
