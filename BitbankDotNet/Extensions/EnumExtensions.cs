@@ -8,12 +8,16 @@ namespace BitbankDotNet.Extensions
 {
     public static class EnumExtensions
     {
-        static readonly ConcurrentDictionary<Enum, string> Cache = new ConcurrentDictionary<Enum, string>();
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetEnumMemberValue<T>(this T value)
             where T : struct, Enum
-            => Cache.GetOrAdd(value, e =>
+            => Cache<T>.Dic.GetOrAdd(value, e =>
                 typeof(T).GetField(e.ToString()).GetCustomAttribute<EnumMemberAttribute>().Value);
+
+        static class Cache<T>
+            where T : struct, Enum
+        {
+            public static readonly ConcurrentDictionary<T, string> Dic = new ConcurrentDictionary<T, string>();
+        }
     }
 }
