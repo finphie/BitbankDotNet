@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using EnumsNET;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -22,25 +23,33 @@ namespace BitbankDotNet.Benchmarks
             => TestEnum.Test1.GetEnumMemberValue();
 
         [Benchmark]
-        public string ConcurrentDictionary()
-            => TestEnum.Test1.GetEnumMemberValueConcurrentDictionary();
+        public string ConcurrentDictionaryBaseEnumKey()
+            => TestEnum.Test1.GetEnumMemberValueConcurrentDictionaryBaseEnumKey();
+
+        [Benchmark]
+        public string ConcurrentDictionaryEnumKey()
+            => TestEnum.Test1.GetEnumMemberValueConcurrentDictionaryEnumKey();
 
         [Benchmark]
         public string Hashtable()
             => TestEnum.Test1.GetEnumMemberValueHashtable();
 
+        [Benchmark]
+        public string EnumsNet()
+            => TestEnum.Test1.GetAttributes().Get<EnumMemberAttribute>().Value;
+
         enum TestEnum
         {
             [EnumMember(Value = "1")]
-            Test1
+            Test1,
+            [EnumMember(Value = "2")]
+            Test2
         }
     }
-
+  
     static class EnumExtensions
     {
-        static readonly ConcurrentDictionary<Enum, string> DictionaryCache
-            = new ConcurrentDictionary<Enum, string>();
-
+        static readonly ConcurrentDictionary<Enum, string> DictionaryCache = new ConcurrentDictionary<Enum, string>();
         static readonly Hashtable HashtableCache = new Hashtable();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -51,12 +60,22 @@ namespace BitbankDotNet.Benchmarks
                 .GetCustomAttribute<EnumMemberAttribute>().Value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetEnumMemberValueConcurrentDictionary<T>(this T value)
+        public static string GetEnumMemberValueConcurrentDictionaryBaseEnumKey<T>(this T value)
             where T : struct, Enum
             => DictionaryCache.GetOrAdd(value, e =>
                 typeof(T)
                     .GetField(e.ToString())
                     .GetCustomAttribute<EnumMemberAttribute>().Value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string GetEnumMemberValueConcurrentDictionaryEnumKey<T>(this T value)
+            where T : struct, Enum
+        {
+            return Cache<T>.Dic.GetOrAdd(value, e =>
+                typeof(T)
+                    .GetField(value.ToString())
+                    .GetCustomAttribute<EnumMemberAttribute>().Value);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetEnumMemberValueHashtable<T>(this T value)
@@ -69,6 +88,12 @@ namespace BitbankDotNet.Benchmarks
                 .GetCustomAttribute<EnumMemberAttribute>().Value;
             HashtableCache[value] = memberValue;
             return memberValue;
-        }     
+        }
+
+        static class Cache<T>
+            where T : struct, Enum
+        {
+            public static readonly ConcurrentDictionary<T, string> Dic = new ConcurrentDictionary<T, string>();
+        }
     }
 }
