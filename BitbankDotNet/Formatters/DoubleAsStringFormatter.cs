@@ -1,6 +1,5 @@
 ﻿using BitbankDotNet.Helpers;
 using SpanJson;
-using SpanJson.Formatters;
 using System.Buffers.Text;
 using System.Globalization;
 
@@ -22,12 +21,18 @@ namespace BitbankDotNet.Formatters
         public double Deserialize(ref JsonReader<char> reader)
             => double.Parse(reader.ReadUtf16StringSpan(), NumberStyles.Float, CultureInfo.InvariantCulture);
 
-        // TODO: 後で書き直す
         public void Serialize(ref JsonWriter<byte> writer, double value, int nestingLimit)
-            => StringUtf8Formatter.Default.Serialize(ref writer, value.ToString(CultureInfo.InvariantCulture), nestingLimit);
+        {
+            writer.WriteDoubleQuote();
+            writer.WriteUtf8Double(value);
+            writer.WriteDoubleQuote();
+        }
 
-        // TODO: 後で書き直す
         public void Serialize(ref JsonWriter<char> writer, double value, int nestingLimit)
-            => StringUtf16Formatter.Default.Serialize(ref writer, value.ToString(CultureInfo.InvariantCulture), nestingLimit);
+        {
+            writer.WriteDoubleQuote();
+            writer.WriteUtf16Double(value);
+            writer.WriteDoubleQuote();
+        }
     }
 }
