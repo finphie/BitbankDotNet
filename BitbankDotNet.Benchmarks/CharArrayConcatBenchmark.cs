@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -32,5 +33,14 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         public string SpanToString() => _source.AsSpan().ToString();
+
+        [Benchmark]
+        public string StringBuilder()
+        {
+            var sb = new StringBuilder(_source.Length);
+            foreach (var c in _source)
+                sb.Append(c);
+            return sb.ToString();
+        }
     }
 }
