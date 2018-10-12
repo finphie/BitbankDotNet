@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -68,9 +69,19 @@ namespace BitbankDotNet.Benchmarks
         public string MemoryMarshalCreateSpan()
         {
             var s = new string(default, 2);
-            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(s.AsSpan()), 2);           
+            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(s.AsSpan()), 2);
             span[0] = SourceChars[1];
             span[1] = SourceChars[10];
+            return s;
+        }
+
+        [Benchmark]
+        public string UnsafeAdd()
+        {
+            var s = new string(default, 2);
+            ref var r = ref MemoryMarshal.GetReference(s.AsSpan());
+            Unsafe.Add(ref r, 0) = SourceChars[1];
+            Unsafe.Add(ref r, 1) = SourceChars[10];
             return s;
         }
 
