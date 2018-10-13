@@ -59,9 +59,9 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int PointerConstString()
         {
             var result = 0;
-            fixed (char* sourcePtr = SourceConstString)
-            for (var i = 0; i < Count; i++)
-                result += sourcePtr[Index1] + sourcePtr[Index2];
+            fixed (char* pointer = SourceConstString)
+                for (var i = 0; i < Count; i++)
+                    result += pointer[Index1] + pointer[Index2];
             return result;
         }
 
@@ -69,9 +69,9 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int PointerStaticString()
         {
             var result = 0;
-            fixed (char* sourcePtr = SourceStaticString)
+            fixed (char* pointer = SourceStaticString)
                 for (var i = 0; i < Count; i++)
-                    result += sourcePtr[Index1] + sourcePtr[Index2];
+                    result += pointer[Index1] + pointer[Index2];
             return result;
         }
 
@@ -79,9 +79,9 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int PointerCharArray()
         {
             var result = 0;
-            fixed (char* sourcePtr = SourceCharArray)
+            fixed (char* pointer = SourceCharArray)
                 for (var i = 0; i < Count; i++)
-                    result += sourcePtr[Index1] + sourcePtr[Index2];
+                    result += pointer[Index1] + pointer[Index2];
             return result;
         }
 
@@ -112,9 +112,9 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public unsafe int MemoryPinConstString()
         {
-            var sourceMemory = SourceConstString.AsMemory();
+            var memory = SourceConstString.AsMemory();
             var result = 0;
-            using (var handle = sourceMemory.Pin())
+            using (var handle = memory.Pin())
             {
                 var pointer = (char*) handle.Pointer;
                 for (var i = 0; i < Count; i++)
@@ -126,9 +126,9 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public unsafe int MemoryPinStaticString()
         {
-            var sourceMemory = SourceStaticString.AsMemory();
+            var memory = SourceStaticString.AsMemory();
             var result = 0;
-            using (var handle = sourceMemory.Pin())
+            using (var handle = memory.Pin())
             {
                 var pointer = (char*) handle.Pointer;
                 for (var i = 0; i < Count; i++)
@@ -140,13 +140,13 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public unsafe int MemoryPinCharArray()
         {
-            var sourceMemory = SourceCharArray.AsMemory();
-            using (var handle = sourceMemory.Pin())
+            var memory = SourceCharArray.AsMemory();
+            using (var handle = memory.Pin())
             {
-                var sourcePtr = (char*) handle.Pointer;
+                var pointer = (char*) handle.Pointer;
                 var result = 0;
                 for (var i = 0; i < Count; i++)
-                    result += sourcePtr[Index1] + sourcePtr[Index2];
+                    result += pointer[Index1] + pointer[Index2];
                 return result;
             }         
         }
@@ -154,60 +154,60 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public int SpanConstString()
         {
-            var sourceSpan = SourceConstString.AsSpan();
+            var span = SourceConstString.AsSpan();
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += sourceSpan[Index1] + sourceSpan[Index2];
+                result += span[Index1] + span[Index2];
             return result;
         }
 
         [Benchmark]
         public int SpanStaticString()
         {
-            var sourceSpan = SourceStaticString.AsSpan();
+            var span = SourceStaticString.AsSpan();
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += sourceSpan[Index1] + sourceSpan[Index2];
+                result += span[Index1] + span[Index2];
             return result;
         }
 
         [Benchmark]
         public int SpanCharArray()
         {
-            var sourceSpan = SourceCharArray.AsSpan();
+            var span = SourceCharArray.AsSpan();
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += sourceSpan[Index1] + sourceSpan[Index2];
+                result += span[Index1] + span[Index2];
             return result;
         }
 
         [Benchmark]
         public int UnsafeAddConstString()
         {
-            ref var sourceStart = ref MemoryMarshal.GetReference(SourceConstString.AsSpan());
+            ref var start = ref MemoryMarshal.GetReference(SourceConstString.AsSpan());
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += Unsafe.Add(ref sourceStart, Index1) + Unsafe.Add(ref sourceStart, Index2);
+                result += Unsafe.Add(ref start, Index1) + Unsafe.Add(ref start, Index2);
             return result;
         }
 
         [Benchmark]
         public int UnsafeAddStaticString()
         {
-            ref var sourceStart = ref MemoryMarshal.GetReference(SourceStaticString.AsSpan());
+            ref var start = ref MemoryMarshal.GetReference(SourceStaticString.AsSpan());
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += Unsafe.Add(ref sourceStart, Index1) + Unsafe.Add(ref sourceStart, Index2);
+                result += Unsafe.Add(ref start, Index1) + Unsafe.Add(ref start, Index2);
             return result;
         }
 
         [Benchmark]
         public int UnsafeAddCharArray()
         {
-            ref var sourceStart = ref SourceCharArray.AsSpan().GetPinnableReference();
+            ref var start = ref SourceCharArray.AsSpan().GetPinnableReference();
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += Unsafe.Add(ref sourceStart, Index1) + Unsafe.Add(ref sourceStart, Index2);
+                result += Unsafe.Add(ref start, Index1) + Unsafe.Add(ref start, Index2);
             return result;
         }
     }
