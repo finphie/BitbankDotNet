@@ -16,7 +16,7 @@ namespace BitbankDotNet.Benchmarks
         // ReSharper disable once ConvertToConstant.Local
         static readonly string SourceStaticString = SourceConstString;
 
-        static readonly char[] SourceCharArray =
+        static readonly char[] SourceChars =
         {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f'
@@ -51,7 +51,7 @@ namespace BitbankDotNet.Benchmarks
         {
             var result = 0;
             for (var i = 0; i < Count; i++)
-                result += SourceCharArray[Index1] + SourceCharArray[Index2];
+                result += SourceChars[Index1] + SourceChars[Index2];
             return result;
         }
 
@@ -79,7 +79,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int PointerCharArray()
         {
             var result = 0;
-            fixed (char* pointer = SourceCharArray)
+            fixed (char* pointer = SourceChars)
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];
             return result;
@@ -100,8 +100,8 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public unsafe int UnsafeAsPointerCharArray()
         {
-            var handle = GCHandle.Alloc(SourceCharArray, GCHandleType.Pinned);
-            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceCharArray.AsSpan()));
+            var handle = GCHandle.Alloc(SourceChars, GCHandleType.Pinned);
+            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceChars.AsSpan()));
             var result = 0;
             for (var i = 0; i < Count; i++)
                 result += pointer[Index1] + pointer[Index2];
@@ -140,7 +140,7 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public unsafe int MemoryPinCharArray()
         {
-            var memory = SourceCharArray.AsMemory();
+            var memory = SourceChars.AsMemory();
             using (var handle = memory.Pin())
             {
                 var pointer = (char*) handle.Pointer;
@@ -174,7 +174,7 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public int SpanCharArray()
         {
-            var span = SourceCharArray.AsSpan();
+            var span = SourceChars.AsSpan();
             var result = 0;
             for (var i = 0; i < Count; i++)
                 result += span[Index1] + span[Index2];
@@ -204,7 +204,7 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public int UnsafeAddCharArray()
         {
-            ref var start = ref SourceCharArray.AsSpan().GetPinnableReference();
+            ref var start = ref SourceChars.AsSpan().GetPinnableReference();
             var result = 0;
             for (var i = 0; i < Count; i++)
                 result += Unsafe.Add(ref start, Index1) + Unsafe.Add(ref start, Index2);

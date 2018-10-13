@@ -46,10 +46,10 @@ namespace BitbankDotNet.Benchmarks
         public unsafe string Pointer()
         {
             var s = new string(default, 2);
-            fixed (char* sp = s)
+            fixed (char* pointer = s)
             {             
-                sp[0] = SourceChars[1];
-                sp[1] = SourceChars[10];
+                pointer[0] = SourceChars[1];
+                pointer[1] = SourceChars[10];
             }
             return s;
         }
@@ -105,9 +105,9 @@ namespace BitbankDotNet.Benchmarks
         public string UnsafeAdd()
         {
             var s = new string(default, 2);
-            ref var r = ref MemoryMarshal.GetReference(s.AsSpan());
-            Unsafe.Add(ref r, 0) = SourceChars[1];
-            Unsafe.Add(ref r, 1) = SourceChars[10];
+            ref var start = ref MemoryMarshal.GetReference(s.AsSpan());
+            Unsafe.Add(ref start, 0) = SourceChars[1];
+            Unsafe.Add(ref start, 1) = SourceChars[10];
             return s;
         }
 
