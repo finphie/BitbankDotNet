@@ -54,6 +54,32 @@ namespace BitbankDotNet.Benchmarks
             return s;
         }
 
+        [Benchmark]
+        public unsafe string UnsafeAsPointer()
+        {
+            var s = new string(default, 2);
+            var handle = GCHandle.Alloc(s, GCHandleType.Pinned);
+            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(s.AsSpan()));
+            pointer[0] = SourceChars[1];
+            pointer[1] = SourceChars[10];
+            handle.Free();
+            return s;
+        }
+
+        [Benchmark]
+        public unsafe string MemoryPin()
+        {
+            var s = new string(default, 2);
+            var memory = s.AsMemory();
+            using (var handle = memory.Pin())
+            {
+                var pointer = (char*) handle.Pointer;
+                pointer[0] = SourceChars[1];
+                pointer[1] = SourceChars[10];
+            }
+            return s;
+        }
+
         // cf. https://github.com/dotnet/corefx/blob/2d5952e2f0673b666a3095a6972c046dae78c355/src/Common/src/CoreLib/System/Char.cs#L995-L998
         [Benchmark]
         public unsafe string CfCoreFx()
