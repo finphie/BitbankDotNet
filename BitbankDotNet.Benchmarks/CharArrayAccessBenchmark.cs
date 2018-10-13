@@ -86,33 +86,69 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        public unsafe int UnsafeAsPointerConstString()
-        {
-            var result = 0;
-            var sourcePtr = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceConstString.AsSpan()));
-            for (var i = 0; i < Count; i++)
-                result += sourcePtr[Index1] + sourcePtr[Index2];
-            return result;
-        }
-
-        [Benchmark]
         public unsafe int UnsafeAsPointerStaticString()
         {
+            var handle = GCHandle.Alloc(SourceStaticString, GCHandleType.Pinned);
+            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceStaticString.AsSpan()));
             var result = 0;
-            var sourcePtr = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceStaticString.AsSpan()));
             for (var i = 0; i < Count; i++)
-                result += sourcePtr[Index1] + sourcePtr[Index2];
+                result += pointer[Index1] + pointer[Index2];
+            handle.Free();
             return result;
         }
 
         [Benchmark]
         public unsafe int UnsafeAsPointerCharArray()
         {
+            var handle = GCHandle.Alloc(SourceCharArray, GCHandleType.Pinned);
+            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceCharArray.AsSpan()));
             var result = 0;
-            var sourcePtr = (char*)Unsafe.AsPointer(ref SourceCharArray.AsSpan().GetPinnableReference());
             for (var i = 0; i < Count; i++)
-                result += sourcePtr[Index1] + sourcePtr[Index2];
+                result += pointer[Index1] + pointer[Index2];
+            handle.Free();
             return result;
+        }
+
+        [Benchmark]
+        public unsafe int MemoryPinConstString()
+        {
+            var sourceMemory = SourceConstString.AsMemory();
+            var result = 0;
+            using (var handle = sourceMemory.Pin())
+            {
+                var pointer = (char*) handle.Pointer;
+                for (var i = 0; i < Count; i++)
+                    result += pointer[Index1] + pointer[Index2];
+            }
+            return result;
+        }
+
+        [Benchmark]
+        public unsafe int MemoryPinStaticString()
+        {
+            var sourceMemory = SourceStaticString.AsMemory();
+            var result = 0;
+            using (var handle = sourceMemory.Pin())
+            {
+                var pointer = (char*) handle.Pointer;
+                for (var i = 0; i < Count; i++)
+                    result += pointer[Index1] + pointer[Index2];
+            }
+            return result;
+        }
+
+        [Benchmark]
+        public unsafe int MemoryPinCharArray()
+        {
+            var sourceMemory = SourceCharArray.AsMemory();
+            using (var handle = sourceMemory.Pin())
+            {
+                var sourcePtr = (char*) handle.Pointer;
+                var result = 0;
+                for (var i = 0; i < Count; i++)
+                    result += sourcePtr[Index1] + sourcePtr[Index2];
+                return result;
+            }         
         }
 
         [Benchmark]
