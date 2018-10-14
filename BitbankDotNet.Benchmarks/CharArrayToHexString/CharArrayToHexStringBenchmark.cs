@@ -1,14 +1,10 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using BenchmarkDotNet.Attributes;
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Xml.Serialization;
-using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks.CharArrayToHexString
 {
@@ -44,108 +40,8 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
 
         //[Benchmark]
         public string XmlSerializationWriterFromByteArrayHex()
-            => ByteArrayHelperUseXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
-
-        //[Benchmark]
-        public string ByteToString()
-        {
-            var hex = "";
-            // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var valueByte in SourceBytes)
-                hex += valueByte.ToString("x2");
-            return hex;
-        }
-
-        //[Benchmark]
-        public string StringFormat()
-        {
-            var hex = "";
-            // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var valueByte in SourceBytes)
-                hex += $"{valueByte:x2}";
-            return hex;
-        }
-
-        //[Benchmark]
-        public string StringBuilderAppendToString()
-        {
-            var sb = new StringBuilder(SourceBytes.Length * 2);
-            foreach (var valueByte in SourceBytes)
-                sb.Append(valueByte.ToString("x2"));
-            return sb.ToString();
-        }
-
-        //[Benchmark]
-        public string StringBuilderAppendTryFormat()
-        {         
-            Span<char> buffer = stackalloc char[2];
-            var sb = new StringBuilder(SourceBytes.Length * 2);
-            foreach (var valueByte in SourceBytes)
-            {
-                valueByte.TryFormat(buffer, out _, "x2");
-                sb.Append(buffer);
-            }
-            return sb.ToString();
-        }
-
-        //[Benchmark]
-        public string StringBuilderAppendFormat()
-        {
-            var sb = new StringBuilder(SourceBytes.Length * 2);
-            foreach (var valueByte in SourceBytes)
-                sb.AppendFormat("{0:x2}", valueByte);
-            return sb.ToString();
-        }
-
-        //[Benchmark]
-        public string LinqAppend()
-        {
-            IEnumerable<string> hex = new string[0];
-            // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var valueByte in SourceBytes)
-                hex = hex.Append(valueByte.ToString("x2"));
-            return string.Concat(hex);
-        }
-
-        //[Benchmark]
-        public string LinqAggregate()
-            => SourceBytes.Aggregate(new StringBuilder(SourceBytes.Length * 2), (sb, b) => sb.Append(b.ToString("x2")))
-                .ToString();
-
-        //[Benchmark]
-        public string StringConcat()
-        {
-            var buffer = ArrayPool<string>.Shared.Rent(SourceBytes.Length);
-            try
-            {
-                for (var i = 0; i < SourceBytes.Length; i++)
-                    buffer[i] = SourceBytes[i].ToString("x2");
-                return string.Concat(buffer);
-            }
-            finally
-            {
-                if (buffer != null)
-                    ArrayPool<string>.Shared.Return(buffer);
-            }
-        }
-
-        //[Benchmark]
-        public string StringJoin()
-        {
-            var buffer = ArrayPool<string>.Shared.Rent(SourceBytes.Length);
-            try
-            {
-                for (var i = 0; i < SourceBytes.Length; i++)
-                    buffer[i] = SourceBytes[i].ToString("x2");
-                return string.Join("", buffer);
-            }
-            finally
-            {
-                if (buffer != null)
-                    ArrayPool<string>.Shared.Return(buffer);
-            }
-        }
-
+            => ByteArrayHelperUseXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();      
+       
         //[Benchmark]
         public string ArrayConvertAll()
             => string.Concat(Array.ConvertAll(SourceBytes, b => b.ToString("x2")));
@@ -154,62 +50,15 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             => string.Concat(SourceBytes.Select(b => b.ToString("x2")));
 
         //[Benchmark]
-        public string StringCopyTo()
-        {
-            var buffer = ArrayPool<char>.Shared.Rent(SourceBytes.Length * 2);
-            try
-            {
-                for (var i = 0; i < SourceBytes.Length; i++)
-                    SourceBytes[i].ToString("x2").CopyTo(0, buffer, i * 2, 2);
-                return new string(buffer);
-            }
-            finally
-            {
-                if (buffer != null)
-                    ArrayPool<char>.Shared.Return(buffer);
-            }
-        }
-
-        //[Benchmark]
-        public string CharArrayBufferToString()
-        {
-            Span<char> buffer = stackalloc char[SourceBytes.Length * 2];
-            for (var i = 0; i < SourceBytes.Length; i++)
-            {
-                var s = SourceBytes[i].ToString("x2");
-                buffer[i * 2] = s[0];
-                buffer[i * 2 + 1] = s[1];
-            }
-            return new string(buffer);
-        }
-
-        //[Benchmark]
-        public string CharArrayBufferTryFormat()
-        {
-            Span<char> buffer = stackalloc char[SourceBytes.Length * 2];
-            for (var i = 0; i < SourceBytes.Length; i++)
-                SourceBytes[i].TryFormat(buffer.Slice(i * 2), out _, "x2");
-            return new string(buffer);
-        }
-
-        //[Benchmark]
-        public string CharArrayBufferSpanCopyTo()
-        {
-            Span<char> buffer = stackalloc char[SourceBytes.Length * 2];
-            for (var i = 0; i < SourceBytes.Length; i++)
-                SourceBytes[i].ToString("x2").AsSpan().CopyTo(buffer.Slice(i * 2));
-            return new string(buffer);
-        }
-
-        //[Benchmark]
-        public unsafe string StringDirect()
+        public string StringDirect()
         {
             var buffer = new string(default, SourceBytes.Length * 2);
-            fixed (char* chars = buffer)
+            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(buffer.AsSpan()), SourceBytes.Length * 2);
+            var i = 0;
+            foreach (var sourceByte in SourceBytes)
             {
-                var span = new Span<char>(chars, buffer.Length);
-                for (var i = 0; i < SourceBytes.Length; i++)
-                    SourceBytes[i].TryFormat(span.Slice(i * 2), out _, "x2");
+                sourceByte.TryFormat(span.Slice(i), out _, "x2");
+                i += 2;
             }
             return buffer;
         }
