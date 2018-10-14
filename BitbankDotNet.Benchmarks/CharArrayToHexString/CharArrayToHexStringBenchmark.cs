@@ -50,10 +50,23 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             => string.Concat(SourceBytes.Select(b => b.ToString("x2")));
 
         //[Benchmark]
-        public string StringDirect()
+        public string StringCreate()
+            => string.Create(SourceBytes.Length * 2, SourceBytes, (span, sourceBytes) =>
+            {
+                var i = 0;
+                foreach (var sourceByte in sourceBytes)
+                {
+                    sourceByte.TryFormat(span.Slice(i), out _, "x2");
+                    i += 2;
+                }
+            });
+
+        //[Benchmark]
+        public string MemoryMarshalCreateSpan()
         {
-            var buffer = new string(default, SourceBytes.Length * 2);
-            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(buffer.AsSpan()), SourceBytes.Length * 2);
+            var length = SourceBytes.Length * 2;
+            var buffer = new string(default, length);
+            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(buffer.AsSpan()), length);
             var i = 0;
             foreach (var sourceByte in SourceBytes)
             {
