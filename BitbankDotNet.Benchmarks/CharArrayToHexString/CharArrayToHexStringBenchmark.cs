@@ -215,6 +215,24 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         }
 
         //[Benchmark]
+        public unsafe string LookupShift()
+        {
+            const string hexString = "0123456789abcdef";
+            var buffer = new string(default, SourceBytes.Length * 2);
+            fixed (char* hexPtr = hexString)
+            fixed (char* bufferPtr = buffer)
+            {
+                var ptr = bufferPtr;
+                foreach (var sourceByte in SourceBytes)
+                {
+                    *ptr++ = hexPtr[sourceByte >> 0b0100];
+                    *ptr++ = hexPtr[sourceByte & 0b1111];
+                }
+            }
+            return buffer;
+        }
+
+        //[Benchmark]
         public string StringTable()
             => ByteArrayHelperUseStringTable.ToHexString(SourceBytes);
 
