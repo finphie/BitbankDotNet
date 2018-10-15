@@ -10,13 +10,13 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
 
         static ByteArrayHelperLookup()
         {
-            Table = new uint[256];
+            Table = new uint[0xFF + 1];
             for (var i = 0; i < Table.Length; i++)
             {
                 var s = i.ToString("x2");
                 Table[i] = BitConverter.IsLittleEndian
-                    ? s[0] + ((uint)s[1] << 16)
-                    : s[1] + ((uint)s[0] << 16);
+                    ? s[0] + ((uint)s[1] << (sizeof(char) * 8))
+                    : s[1] + ((uint)s[0] << (sizeof(char) * 8));
             }
         }
 

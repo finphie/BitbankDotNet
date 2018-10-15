@@ -19,11 +19,11 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
     /// 5. string直接書き換え, Buffer + new string({char[]}or{Span{char}}), Buffer + {Span{char}}.ToString, {StringBuilder}.Append, string.Concat({char[]})
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
-    public partial class CharArrayToHexStringBenchmark
+    public class CharArrayToHexStringBenchmark
     {
         // HMAC-SHA256は256bit
         const int ArraySize = 32;
-        static readonly byte[] SourceBytes;// = Enumerable.Repeat<byte>(1, 32).ToArray();
+        static readonly byte[] SourceBytes;
 
         static CharArrayToHexStringBenchmark()
         {
@@ -71,6 +71,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                 sourceByte.TryFormat(span.Slice(i), out _, "x2");
                 i += 2;
             }
+
             return buffer;
         }
 
@@ -97,8 +98,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         {
             const string table = "0123456789abcdef";
             var result = new string(default, SourceBytes.Length * 2);
-            fixed (char* resultPointer = result)
-            fixed (char* tablePointer = table)
+            fixed (char* resultPointer = result, tablePointer = table)
             {
                 var pointer = resultPointer;
                 foreach (var sourceByte in SourceBytes)
@@ -107,6 +107,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                     *pointer++ = tablePointer[sourceByte & 0b1111];
                 }
             }
+
             return result;
         }
 
@@ -143,6 +144,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                     *pointer++ = (char)(b > 9 ? 'a' - 10 + b : b + '0');
                 }
             }
+
             return result;
         }
 
@@ -180,6 +182,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                     *pointer++ = (char)('a' - 10 + b + (((b - 10) >> (sizeof(int) * 8 - 1)) & -('a' - 10 - '0')));
                 }
             }
+
             return result;
         }
 
