@@ -147,6 +147,43 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         }
 
         //[Benchmark]
+        public string Manipulation2()
+        {
+            var result = new string(default, SourceBytes.Length * 2);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+            var i = 0;
+            foreach (var sourceByte in SourceBytes)
+            {
+                var b = sourceByte >> 0b0100;
+                Unsafe.Add(ref resultStart, i++) =
+                    (char)('a' - 10 + b + (((b - 10) >> (sizeof(int) * 8 - 1)) & -('a' - 10 - '0')));
+                b = sourceByte & 0b1111;
+                Unsafe.Add(ref resultStart, i++) =
+                    (char)('a' - 10 + b + (((b - 10) >> (sizeof(int) * 8 - 1)) & -('a' - 10 - '0')));
+            }
+
+            return result;
+        }
+
+        //[Benchmark]
+        public unsafe string Manipulation2Unsafe()
+        {
+            var result = new string(default, SourceBytes.Length * 2);
+            fixed (char* resultPointer = result)
+            {
+                var pointer = resultPointer;
+                foreach (var sourceByte in SourceBytes)
+                {
+                    var b = sourceByte >> 0b0100;
+                    *pointer++ = (char)('a' - 10 + b + (((b - 10) >> (sizeof(int) * 8 - 1)) & -('a' - 10 - '0')));
+                    b = sourceByte & 0b1111;
+                    *pointer++ = (char)('a' - 10 + b + (((b - 10) >> (sizeof(int) * 8 - 1)) & -('a' - 10 - '0')));
+                }
+            }
+            return result;
+        }
+
+        //[Benchmark]
         public string StringTable() => ByteArrayHelperStringTable.ToHexString(SourceBytes);
 
         //[Benchmark]
