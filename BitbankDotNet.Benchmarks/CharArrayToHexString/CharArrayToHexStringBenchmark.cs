@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.CharArrayToHexString
@@ -74,21 +75,39 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         }
 
         //[Benchmark]
-        public unsafe string LookupShift()
+        public string LookupShift()
         {
-            const string hexString = "0123456789abcdef";
-            var buffer = new string(default, SourceBytes.Length * 2);
-            fixed (char* hexPtr = hexString)
-            fixed (char* bufferPtr = buffer)
+            const string table = "0123456789abcdef";
+            ref var tableStart = ref MemoryMarshal.GetReference(table.AsSpan());
+            var result = new string(default, SourceBytes.Length * 2);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
             {
-                var ptr = bufferPtr;
+                var i = 0;
                 foreach (var sourceByte in SourceBytes)
                 {
-                    *ptr++ = hexPtr[sourceByte >> 0b0100];
-                    *ptr++ = hexPtr[sourceByte & 0b1111];
+                    Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte >> 0b0100);
+                    Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte & 0b1111);
                 }
             }
-            return buffer;
+            return result;
+        }
+
+        //[Benchmark]
+        public unsafe string LookupShiftUnsafe()
+        {
+            const string table = "0123456789abcdef";
+            var result = new string(default, SourceBytes.Length * 2);
+            fixed (char* resultPointer = result)
+            fixed (char* tablePointer = table)
+            {
+                var pointer = resultPointer;
+                foreach (var sourceByte in SourceBytes)
+                {
+                    *pointer++ = tablePointer[sourceByte >> 0b0100];
+                    *pointer++ = tablePointer[sourceByte & 0b1111];
+                }
+            }
+            return result;
         }
 
         //[Benchmark]

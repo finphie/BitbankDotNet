@@ -39,9 +39,9 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             fixed (char* resultPointer = result)
             fixed (uint* tablePointer = &Table[0])
             {
-                var resultPointer2 = (uint*)resultPointer;
+                var pointer = (uint*)resultPointer;
                 for (var i = 0; i < source.Length; i++)
-                    resultPointer2[i] = tablePointer[source[i]];
+                    pointer[i] = tablePointer[source[i]];
             }
 
             return result;
