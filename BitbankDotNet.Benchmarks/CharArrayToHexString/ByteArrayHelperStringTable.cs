@@ -1,11 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.CharArrayToHexString
 {
     static class ByteArrayHelperStringTable
     {
-        static readonly string[] HexStringTable =
+        static readonly string[] Table =
         {
             "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f",
             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1a", "1b", "1c", "1d", "1e", "1f",
@@ -26,12 +27,20 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string ToHexString(byte[] value)
+        public static string ToHexString(byte[] source)
         {
-            var sb = new StringBuilder(value.Length * 2);
-            foreach (var b in value)
-                sb.Append(HexStringTable[b]);
-            return sb.ToString();
+            var result = new string(default, source.Length * 2);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+            ref var tableStart = ref Table[0];
+            var i = 0;
+            foreach (var b in source)
+            {
+                var value = Unsafe.Add(ref tableStart, b);
+                Unsafe.Add(ref resultStart, i++) = value[0];
+                Unsafe.Add(ref resultStart, i++) = value[1];
+            }
+
+            return result;
         }
     }
 }

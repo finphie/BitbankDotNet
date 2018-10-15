@@ -38,8 +38,8 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
 
         //[Benchmark]
         public string XmlSerializationWriterFromByteArrayHex()
-            => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();      
-       
+            => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
+
         //[Benchmark]
         public string ArrayConvertAll()
             => string.Concat(Array.ConvertAll(SourceBytes, b => b.ToString("x2")));
