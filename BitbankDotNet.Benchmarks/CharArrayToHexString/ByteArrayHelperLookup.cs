@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.CharArrayToHexString
@@ -13,56 +14,37 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             for (var i = 0; i < Table.Length; i++)
             {
                 var s = i.ToString("x2");
-                Table[i] = s[0] + ((uint) s[1] << 16);
-            }
-        }
-
-        public static unsafe string ToHexString(byte[] value)
-        {
-            var result = new string(default, value.Length * 2);
-            fixed (char* resultPointer = result)
-            {
-                for (var i = 0; i < value.Length; i++)
-                {
-                    var val = Table[value[i]];
-                    resultPointer[i * 2] = (char) val;
-                    resultPointer[i * 2 + 1] = (char) (val >> 16);
-                }
-                return result;
-            }
-        }
-    }
-
-    static unsafe class ByteArrayHelperLookupUnsafe
-    {
-        static readonly uint[] Table;
-        static readonly uint* TablePointer;
-
-        static ByteArrayHelperLookupUnsafe()
-        {
-            Table = new uint[256];
-            for (var i = 0; i < Table.Length; i++)
-            {
-                var s = i.ToString("x2");
                 Table[i] = BitConverter.IsLittleEndian
                     ? s[0] + ((uint)s[1] << 16)
                     : s[1] + ((uint)s[0] << 16);
             }
-
-            TablePointer = (uint*)GCHandle.Alloc(Table, GCHandleType.Pinned).AddrOfPinnedObject();
         }
 
-        public static string ToHexString(byte[] value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ToHexString(byte[] source)
         {
-            var result = new string(default, value.Length * 2);
-            fixed (byte* bytesPointer = value)
-            fixed (char* resultPointer = result)
-            {
-                var resultPointer2 = (uint*)resultPointer;
-                for (var i = 0; i < value.Length; i++)
-                    resultPointer2[i] = TablePointer[bytesPointer[i]];
-            }
+            var result = new string(default, source.Length * 2);
+            ref var resultStart = ref Unsafe.As<char, uint>(ref MemoryMarshal.GetReference(result.AsSpan()));
+            ref var tableStart = ref Table[0];
+            for (var i = 0; i < source.Length; i++)
+                Unsafe.Add(ref resultStart, i) = Unsafe.Add(ref tableStart, source[i]);
+
             return result;
         }
-    }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe string ToHexStringUnsafe(byte[] source)
+        {
+            var result = new string(default, source.Length * 2);
+            fixed (char* resultPointer = result)
+            fixed (uint* tablePointer = &Table[0])
+            {
+                var resultPointer2 = (uint*)resultPointer;
+                for (var i = 0; i < source.Length; i++)
+                    resultPointer2[i] = tablePointer[source[i]];
+            }
+
+            return result;
+        }
+    } 
 }

@@ -98,6 +98,6 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         public string Lookup() => ByteArrayHelperLookup.ToHexString(SourceBytes);
 
         //[Benchmark]
-        public string LookupUnsafe() => ByteArrayHelperLookupUnsafe.ToHexString(SourceBytes);
+        public string LookupUnsafe() => ByteArrayHelperLookup.ToHexStringUnsafe(SourceBytes);
     }
 }
