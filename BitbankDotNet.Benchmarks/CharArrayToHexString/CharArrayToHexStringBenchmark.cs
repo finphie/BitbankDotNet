@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Buffers.Binary;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -73,6 +74,77 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             }
 
             return buffer;
+        }
+
+        //[Benchmark]
+        public string UnsafeAsLong()
+        {
+            var length = SourceBytes.Length * 2;
+            var result = new string(default, length);
+            var resultSpan = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
+            ref var sourceStart = ref Unsafe.As<byte, long>(ref SourceBytes[0]);
+
+            const int size = sizeof(long);
+            const string format = "x16";
+
+            BinaryPrimitives.ReverseEndianness(Unsafe.Add(ref sourceStart, 0))
+                .TryFormat(resultSpan, out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.Add(ref sourceStart, 1))
+                .TryFormat(resultSpan.Slice(size * 2 * 1), out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.Add(ref sourceStart, 2))
+                .TryFormat(resultSpan.Slice(size * 2 * 2), out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.Add(ref sourceStart, 3))
+                .TryFormat(resultSpan.Slice(size * 2 * 3), out _, format);
+
+            return result;
+        }
+
+        //[Benchmark]
+        public string UnsafeReadUnalignedLong()
+        {
+            var length = SourceBytes.Length * 2;
+            var result = new string(default, length);
+            var resultSpan = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
+            ref var sourceStart = ref SourceBytes[0];
+
+            const int size = sizeof(long);
+            const string format = "x16";
+
+            // MemoryMarshal.Read内部では、Unsafe.ReadUnalignedを使用している。
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Runtime/InteropServices/MemoryMarshal.cs#L165
+            BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 0)))
+                .TryFormat(resultSpan, out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 1)))
+                .TryFormat(resultSpan.Slice(size * 2 * 1), out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 2)))
+                .TryFormat(resultSpan.Slice(size * 2 * 2), out _, format);
+            BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 3)))
+                .TryFormat(resultSpan.Slice(size * 2 * 3), out _, format);
+
+            return result;
+        }
+
+        //[Benchmark]
+        public string BinaryPrimitivesReadInt64()
+        {
+            var length = SourceBytes.Length * 2;
+            var result = new string(default, length);
+            var resultSpan = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
+            var sourceSpan = SourceBytes.AsSpan();
+
+            const int size = sizeof(long);
+            const string format = "x16";
+
+            BinaryPrimitives.ReadInt64BigEndian(sourceSpan)
+                .TryFormat(resultSpan, out _, format);
+            BinaryPrimitives.ReadInt64BigEndian(sourceSpan.Slice(size * 1))
+                .TryFormat(resultSpan.Slice(size * 2 * 1), out _, format);
+            BinaryPrimitives.ReadInt64BigEndian(sourceSpan.Slice(size * 2))
+                .TryFormat(resultSpan.Slice(size * 2 * 2), out _, format);
+            BinaryPrimitives.ReadInt64BigEndian(sourceSpan.Slice(size * 3))
+                .TryFormat(resultSpan.Slice(size * 2 * 3), out _, format);
+
+            return result;
         }
 
         //[Benchmark]
