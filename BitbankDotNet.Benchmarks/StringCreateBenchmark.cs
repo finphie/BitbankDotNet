@@ -80,7 +80,7 @@ namespace BitbankDotNet.Benchmarks
             return s;
         }
 
-        // cf. https://github.com/dotnet/corefx/blob/2d5952e2f0673b666a3095a6972c046dae78c355/src/Common/src/CoreLib/System/Char.cs#L995-L998
+        // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Char.cs#L994-L998
         [Benchmark]
         public unsafe string CfCoreFx()
         {

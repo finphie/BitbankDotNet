@@ -45,6 +45,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         public string ArrayConvertAll()
             => string.Concat(Array.ConvertAll(SourceBytes, b => b.ToString("x2")));
 
+        //[Benchmark]
         public string LinqSelect()
             => string.Concat(SourceBytes.Select(b => b.ToString("x2")));
 
@@ -61,7 +62,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             });
 
         //[Benchmark]
-        public string MemoryMarshalCreateSpan()
+        public string ForEach()
         {
             var length = SourceBytes.Length * 2;
             var buffer = new string(default, length);
