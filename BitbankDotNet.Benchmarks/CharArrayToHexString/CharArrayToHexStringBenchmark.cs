@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Buffers.Binary;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -133,6 +134,32 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                 .TryFormat(resultSpan.Slice(size * 2 * 2), out _, format);
             BinaryPrimitives.ReadInt64BigEndian(sourceSpan.Slice(size * 3))
                 .TryFormat(resultSpan.Slice(size * 2 * 3), out _, format);
+
+            return result;
+        }
+
+        //[Benchmark]
+        public string BinaryReader()
+        {
+            var length = SourceBytes.Length * 2;
+            var result = new string(default, length);
+            var resultSpan = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
+
+            using (var ms = new MemoryStream(SourceBytes))
+            using (var br = new BinaryReader(ms))
+            {
+                const int size = sizeof(long);
+                const string format = "x16";
+
+                BinaryPrimitives.ReverseEndianness(br.ReadInt64())
+                    .TryFormat(resultSpan, out _, format);
+                BinaryPrimitives.ReverseEndianness(br.ReadInt64())
+                    .TryFormat(resultSpan.Slice(size * 2 * 1), out _, format);
+                BinaryPrimitives.ReverseEndianness(br.ReadInt64())
+                    .TryFormat(resultSpan.Slice(size * 2 * 2), out _, format);
+                BinaryPrimitives.ReverseEndianness(br.ReadInt64())
+                    .TryFormat(resultSpan.Slice(size * 2 * 3), out _, format);
+            }
 
             return result;
         }
