@@ -50,18 +50,6 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             => string.Concat(SourceBytes.Select(b => b.ToString("x2")));
 
         //[Benchmark]
-        public string StringCreate()
-            => string.Create(SourceBytes.Length * 2, SourceBytes, (span, sourceBytes) =>
-            {
-                var i = 0;
-                foreach (var sourceByte in sourceBytes)
-                {
-                    sourceByte.TryFormat(span.Slice(i), out _, "x2");
-                    i += 2;
-                }
-            });
-
-        //[Benchmark]
         public string ForEach()
         {
             var length = SourceBytes.Length * 2;
