@@ -54,8 +54,8 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         public string ForEach()
         {
             var length = SourceBytes.Length * 2;
-            var buffer = new string(default, length);
-            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(buffer.AsSpan()), length);
+            var result = new string(default, length);
+            var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
             var i = 0;
             foreach (var sourceByte in SourceBytes)
             {
@@ -63,7 +63,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
                 i += 2;
             }
 
-            return buffer;
+            return result;
         }
 
         //[Benchmark]
@@ -171,14 +171,13 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             ref var tableStart = ref MemoryMarshal.GetReference(table.AsSpan());
             var result = new string(default, SourceBytes.Length * 2);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+            var i = 0;
+            foreach (var sourceByte in SourceBytes)
             {
-                var i = 0;
-                foreach (var sourceByte in SourceBytes)
-                {
-                    Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte >> 0b0100);
-                    Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte & 0b1111);
-                }
+                Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte >> 0b0100);
+                Unsafe.Add(ref resultStart, i++) = Unsafe.Add(ref tableStart, sourceByte & 0b1111);
             }
+
             return result;
         }
 
@@ -205,16 +204,15 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         {
             var result = new string(default, SourceBytes.Length * 2);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+            var i = 0;
+            foreach (var sourceByte in SourceBytes)
             {
-                var i = 0;
-                foreach (var sourceByte in SourceBytes)
-                {
-                    var b = (byte)(sourceByte >> 0b0100);
-                    Unsafe.Add(ref resultStart, i++) = (char)(b > 9 ? 'a' - 10 + b : b + '0');
-                    b = (byte)(sourceByte & 0b1111);
-                    Unsafe.Add(ref resultStart, i++) = (char)(b > 9 ? 'a' - 10 + b : b + '0');
-                }
+                var b = (byte)(sourceByte >> 0b0100);
+                Unsafe.Add(ref resultStart, i++) = (char)(b > 9 ? 'a' - 10 + b : b + '0');
+                b = (byte)(sourceByte & 0b1111);
+                Unsafe.Add(ref resultStart, i++) = (char)(b > 9 ? 'a' - 10 + b : b + '0');
             }
+
             return result;
         }
 
