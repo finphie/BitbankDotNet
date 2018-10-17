@@ -16,30 +16,29 @@ namespace BitbankDotNet.Benchmarks
     public class DoubleFormattingBenchmark
     {
         const int BufferSize = 32;
-        // ReSharper disable once ConvertToConstant.Local
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        double _value = 12345.6789;
+
+        public double Value = 12345.6789;
 
         [Benchmark]
         public string DoubleToString()
-            => _value.ToString(CultureInfo.InvariantCulture);
+            => Value.ToString(CultureInfo.InvariantCulture);
 
         [Benchmark]
         public byte[] DoubleToStringEncodingGetBytes()
-            => Encoding.UTF8.GetBytes(_value.ToString(CultureInfo.InvariantCulture));
+            => Encoding.UTF8.GetBytes(Value.ToString(CultureInfo.InvariantCulture));
 
         [Benchmark]
         public byte[] DoubleToStringEncodingGetBytesSpan()
         {
             Span<byte> byteBuffer = stackalloc byte[BufferSize];
-            var byteLength = Encoding.UTF8.GetBytes(_value.ToString(CultureInfo.InvariantCulture), byteBuffer);
+            var byteLength = Encoding.UTF8.GetBytes(Value.ToString(CultureInfo.InvariantCulture), byteBuffer);
             return byteBuffer.Slice(0, byteLength).ToArray();
         }
 
         [Benchmark]
         public unsafe byte[] DoubleToStringEncodingGetBytesUnsafe()
         {
-            var value = _value.ToString(CultureInfo.InvariantCulture);
+            var value = Value.ToString(CultureInfo.InvariantCulture);
             Span<byte> byteBuffer = stackalloc byte[BufferSize];
             fixed (char* chars = value)
             fixed (byte* bytes = byteBuffer)
@@ -53,15 +52,15 @@ namespace BitbankDotNet.Benchmarks
         public string DoubleTryFormat()
         {
             Span<char> charBuffer = stackalloc char[BufferSize];
-            _value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
-            return charBuffer.Slice(0, charLength).ToString();
+            Value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
+            return new string(charBuffer.Slice(0, charLength));
         }
 
         [Benchmark]
         public byte[] DoubleTryFormatEncodingGetBytes()
         {
             Span<char> charBuffer = stackalloc char[BufferSize];
-            _value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
+            Value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
             return Encoding.UTF8.GetBytes(charBuffer.Slice(0, charLength).ToArray());
         }
 
@@ -69,7 +68,7 @@ namespace BitbankDotNet.Benchmarks
         public byte[] DoubleTryFormatEncodingGetBytesSpan()
         {
             Span<char> charBuffer = stackalloc char[BufferSize];
-            _value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
+            Value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
             Span<byte> byteBuffer = stackalloc byte[charLength];
             var byteLength = Encoding.UTF8.GetBytes(charBuffer.Slice(0, charLength), byteBuffer);
             return byteBuffer.Slice(0, byteLength).ToArray();
@@ -79,7 +78,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe byte[] DoubleTryFormatEncodingGetBytesUnsafe()
         {
             Span<char> charBuffer = stackalloc char[BufferSize];
-            _value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
+            Value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
             Span<byte> byteBuffer = stackalloc byte[charLength];
             fixed (char* chars = charBuffer)
             fixed (byte* bytes = byteBuffer)
@@ -93,7 +92,7 @@ namespace BitbankDotNet.Benchmarks
         public string Utf8FormatterTryFormatEncodingGetString()
         {
             Span<byte> byteBuffer = stackalloc byte[BufferSize];
-            Utf8Formatter.TryFormat(_value, byteBuffer, out var byteLength);
+            Utf8Formatter.TryFormat(Value, byteBuffer, out var byteLength);
             return Encoding.UTF8.GetString(byteBuffer.Slice(0, byteLength));
         }
 
@@ -101,7 +100,7 @@ namespace BitbankDotNet.Benchmarks
         public byte[] Utf8FormatterTryFormat()
         {
             Span<byte> byteBuffer = stackalloc byte[BufferSize];
-            Utf8Formatter.TryFormat(_value, byteBuffer, out var byteLength);
+            Utf8Formatter.TryFormat(Value, byteBuffer, out var byteLength);
             return byteBuffer.Slice(0, byteLength).ToArray();
         }
     }
