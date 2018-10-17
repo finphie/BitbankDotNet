@@ -30,15 +30,12 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
         public static string ToHexString(byte[] source)
         {
             var result = new string(default, source.Length * 2);
-            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+            ref var resultStart = ref Unsafe.As<char, int>(ref MemoryMarshal.GetReference(result.AsSpan()));
             ref var tableStart = ref Table[0];
-            var i = 0;
-            foreach (var b in source)
-            {
-                var value = Unsafe.Add(ref tableStart, b);
-                Unsafe.Add(ref resultStart, i++) = value[0];
-                Unsafe.Add(ref resultStart, i++) = value[1];
-            }
+            for (var i = 0; i < source.Length; i++)
+                Unsafe.Add(ref resultStart, i) =
+                    Unsafe.As<char, int>(
+                        ref MemoryMarshal.GetReference(Unsafe.Add(ref tableStart, source[i]).AsSpan()));
 
             return result;
         }
