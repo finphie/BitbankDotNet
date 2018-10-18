@@ -140,15 +140,14 @@ namespace BitbankDotNet
             return request;
         }
 
+        // TODO: 高速化する
         // 署名作成
         string CreateSign(string message)
         {
             using (var hmac = new HMACSHA256(_apiSecret))
             {
                 var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-
-                // TODO: 後で高速化する
-                return BitConverter.ToString(hash).ToLower().Replace("-", "");
+                return hash.ToHexString();
             }
         }
     }
