@@ -37,15 +37,12 @@ namespace BitbankDotNet.Extensions
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string ToHexString(this byte[] source)
+        public static void ToHexString(this byte[] source, in ReadOnlySpan<char> destination)
         {
-            var result = new string(default, source.Length * 2);
-            ref var resultStart = ref Unsafe.As<char, int>(ref MemoryMarshal.GetReference(result.AsSpan()));
+            ref var destinationStart = ref Unsafe.As<char, int>(ref MemoryMarshal.GetReference(destination));
             ref var tableStart = ref Table[0];
             for (var i = 0; i < source.Length; i++)
-                Unsafe.Add(ref resultStart, i) = Unsafe.Add(ref tableStart, source[i]);
-
-            return result;
+                Unsafe.Add(ref destinationStart, i) = Unsafe.Add(ref tableStart, source[i]);
         }
     }
 }

@@ -28,10 +28,16 @@ namespace BitbankDotNet
         // Private API
         const string PrivateUrl = "https://api.bitbank.cc";
 
+        // 16進数署名文字列の長さ（UTF-16）
+        // HMAC-SHA256は32バイトのbyte配列
+        const int SignHexUtf16StringLength = 32 * 2;
+
         readonly HttpClient _client;
 
         readonly string _apiKey;
         readonly byte[] _apiSecret;
+
+        readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
         public BitbankClient(HttpClient client, TimeSpan timeout = default)
             : this(client, string.Empty, string.Empty, timeout)
@@ -132,22 +138,23 @@ namespace BitbankDotNet
         {
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
+            CreateSign(timestamp + signMessage);
             var request = new HttpRequestMessage(method, PrivateUrl + path);
             request.Headers.Add("ACCESS-KEY", _apiKey);
             request.Headers.Add("ACCESS-NONCE", timestamp);
-            request.Headers.Add("ACCESS-SIGNATURE", CreateSign(timestamp + signMessage));
+            request.Headers.Add("ACCESS-SIGNATURE", _signHexUtf16String);
 
             return request;
         }
 
         // TODO: 高速化する
         // 署名作成
-        string CreateSign(string message)
+        void CreateSign(string message)
         {
             using (var hmac = new HMACSHA256(_apiSecret))
             {
                 var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-                return hash.ToHexString();
+                hash.ToHexString(_signHexUtf16String);
             }
         }
     }
