@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BitbankDotNet
 {
-    public partial class BitbankClient
+    partial class BitbankClient
     {
         /// <summary>
         /// [PrivateAPI]アセット一覧を返します。

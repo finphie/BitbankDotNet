@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BitbankDotNet
 {
-    public partial class BitbankClient
+    partial class BitbankClient
     {
         /// <summary>
         /// [PublicAPI]ティッカー情報を返します。

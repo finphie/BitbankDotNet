@@ -20,7 +20,7 @@ namespace BitbankDotNet
     /// <summary>
     /// Bitbank REST API Client
     /// </summary>
-    public partial class BitbankClient
+    public sealed partial class BitbankClient : IDisposable
     {
         // Public API
         const string PublicUrl = "https://public.bitbank.cc/";
@@ -35,8 +35,8 @@ namespace BitbankDotNet
         readonly HttpClient _client;
 
         readonly string _apiKey;
-        readonly byte[] _apiSecret;
 
+        readonly HMACSHA256 _hmac;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
         public BitbankClient(HttpClient client, TimeSpan timeout = default)
@@ -54,8 +54,10 @@ namespace BitbankDotNet
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
                 return;
             _apiKey = apiKey;
-            _apiSecret = Encoding.UTF8.GetBytes(apiSecret);
+            _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
         }
+
+        public void Dispose() => _hmac?.Dispose();
 
         // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
@@ -149,11 +151,8 @@ namespace BitbankDotNet
         // 署名作成
         void CreateSign(string message)
         {
-            using (var hmac = new HMACSHA256(_apiSecret))
-            {
-                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-                hash.ToHexString(_signHexUtf16String);
-            }
+            var hash = _hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+            hash.ToHexString(_signHexUtf16String);
         }
     }
 }
