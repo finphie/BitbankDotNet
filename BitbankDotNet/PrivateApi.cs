@@ -21,13 +21,13 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> GetOrderAsync(CurrencyPair pair, long orderId)
+        public Task<Order> GetOrderAsync(CurrencyPair pair, long orderId)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
             query["order_id"] = orderId.ToString();
 
-            return await PrivateApiGetAsync<Order>("/v1/user/spot/order?" + query).ConfigureAwait(false);
+            return PrivateApiGetAsync<Order>("/v1/user/spot/order?" + query);
         }
 
         /// <summary>
@@ -53,15 +53,15 @@ namespace BitbankDotNet
         /// <param name="side">注文の方向</param>
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
-        async Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
-            => await PrivateApiPostAsync<Order, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
+        Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
+            => PrivateApiPostAsync<Order, LimitOrderBody>("/v1/user/spot/order", new LimitOrderBody
             {
                 Pair = pair,
                 Amount = amount,
                 Price = price,
                 Side = side,
                 Type = type
-            }).ConfigureAwait(false);
+            });
 
         /// <summary>
         /// [PrivateAPI]新規成行注文を行います。
@@ -71,14 +71,14 @@ namespace BitbankDotNet
         /// <param name="side">注文の方向</param>
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
-        async Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
-            => await PrivateApiPostAsync<Order, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
+        Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
+            => PrivateApiPostAsync<Order, MarketOrderBody>("/v1/user/spot/order", new MarketOrderBody
             {
                 Pair = pair,
                 Amount = amount,
                 Side = side,
                 Type = type
-            }).ConfigureAwait(false);
+            });
 
         /// <summary>
         /// [PrivateAPI]新規指値買い注文を行います。
@@ -87,8 +87,8 @@ namespace BitbankDotNet
         /// <param name="price">価格</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendBuyOrderAsync(CurrencyPair pair, double price, double amount)
-            => await SendLimitOrderAsync(pair, price, amount, OrderSide.Buy, OrderType.Limit).ConfigureAwait(false);
+        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, double price, double amount)
+            => SendLimitOrderAsync(pair, price, amount, OrderSide.Buy, OrderType.Limit);
 
         /// <summary>
         /// [PrivateAPI]新規成行買い注文を行います。
@@ -96,8 +96,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendBuyOrderAsync(CurrencyPair pair, double amount)
-            => await SendMarketOrderAsync(pair, amount, OrderSide.Buy, OrderType.Market).ConfigureAwait(false);
+        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, double amount)
+            => SendMarketOrderAsync(pair, amount, OrderSide.Buy, OrderType.Market);
 
         /// <summary>
         /// [PrivateAPI]新規指値売り注文を行います。
@@ -106,8 +106,8 @@ namespace BitbankDotNet
         /// <param name="price">価格</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendSellOrderAsync(CurrencyPair pair, double price, double amount)
-            => await SendLimitOrderAsync(pair, price, amount, OrderSide.Sell, OrderType.Limit).ConfigureAwait(false);
+        public Task<Order> SendSellOrderAsync(CurrencyPair pair, double price, double amount)
+            => SendLimitOrderAsync(pair, price, amount, OrderSide.Sell, OrderType.Limit);
 
         /// <summary>
         /// [PrivateAPI]新規成行売り注文を行います。
@@ -115,8 +115,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> SendSellOrderAsync(CurrencyPair pair, double amount)
-            => await SendMarketOrderAsync(pair, amount, OrderSide.Sell, OrderType.Market).ConfigureAwait(false);
+        public Task<Order> SendSellOrderAsync(CurrencyPair pair, double amount)
+            => SendMarketOrderAsync(pair, amount, OrderSide.Sell, OrderType.Market);
 
         /// <summary>
         /// [PrivateAPI]注文をキャンセルします。
@@ -124,12 +124,12 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
-        public async Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
-            => await PrivateApiPostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
+        public Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
+            => PrivateApiPostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
             {
                 Pair = pair,
                 OrderId = orderId
-            }).ConfigureAwait(false);
+            });
 
         /// <summary>
         /// [PrivateAPI]複数の注文をキャンセルします。
@@ -211,14 +211,14 @@ namespace BitbankDotNet
         /// <param name="otpToken">二段階認証トークン</param>
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
-        public async Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int otpToken, int smsToken)
-            => await PrivateApiPostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
+        public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int otpToken, int smsToken)
+            => PrivateApiPostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
             {
                 Asset = asset,
                 Amount = amount,
                 Uuid = uuid,
                 OtpToken = otpToken,
                 SmsToken = smsToken
-            }).ConfigureAwait(false);
+            });
     }
 }

@@ -12,16 +12,16 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>ティッカー情報</returns>
-        public async Task<Ticker> GetTickerAsync(CurrencyPair pair)
-            => await PublicApiGetAsync<Ticker>("/ticker", pair).ConfigureAwait(false);
+        public Task<Ticker> GetTickerAsync(CurrencyPair pair)
+            => PublicApiGetAsync<Ticker>("/ticker", pair);
 
         /// <summary>
         /// [PublicAPI]板情報を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>板情報</returns>
-        public async Task<Depth> GetDepthAsync(CurrencyPair pair)
-            => await PublicApiGetAsync<Depth>("/depth", pair).ConfigureAwait(false);
+        public Task<Depth> GetDepthAsync(CurrencyPair pair)
+            => PublicApiGetAsync<Depth>("/depth", pair);
 
         /// <summary>
         /// [PublicAPI]最新の約定履歴を返します。
@@ -48,8 +48,8 @@ namespace BitbankDotNet
         /// <param name="month">月</param>
         /// <param name="day">日</param>
         /// <returns>約定履歴</returns>
-        public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, int year, int month, int day)
-            => await GetTransactionsAsync(pair, $"{year:D2}{month:D2}{day:D2}").ConfigureAwait(false);
+        public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, int year, int month, int day)
+            => GetTransactionsAsync(pair, $"{year:D2}{month:D2}{day:D2}");
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
@@ -57,8 +57,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
         /// <returns>約定履歴</returns>
-        public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTime date)
-            => await GetTransactionsAsync(pair, $"{date:yyyyMMdd}").ConfigureAwait(false);
+        public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTime date)
+            => GetTransactionsAsync(pair, $"{date:yyyyMMdd}");
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
@@ -66,8 +66,8 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
         /// <returns>約定履歴</returns>
-        public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTimeOffset date)
-            => await GetTransactionsAsync(pair, date.UtcDateTime).ConfigureAwait(false);
+        public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTimeOffset date)
+            => GetTransactionsAsync(pair, date.UtcDateTime);
 
         /// <summary>
         /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
@@ -86,8 +86,8 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="year">年</param>
         /// <returns>ローソク足データ</returns>
-        public async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year)
-            => await GetCandlesticksAsync(pair, type, year.ToString()).ConfigureAwait(false);
+        public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year)
+            => GetCandlesticksAsync(pair, type, year.ToString());
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
@@ -98,8 +98,8 @@ namespace BitbankDotNet
         /// <param name="month">月</param>
         /// <param name="day">日</param>
         /// <returns>ローソク足データ</returns>
-        public async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year, int month, int day)
-            => await GetCandlesticksAsync(pair, type, $"{year:D2}{month:D2}{day:D2}").ConfigureAwait(false);
+        public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year, int month, int day)
+            => GetCandlesticksAsync(pair, type, $"{year:D2}{month:D2}{day:D2}");
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
@@ -108,8 +108,8 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="date">日付</param>
         /// <returns>ローソク足データ</returns>
-        public async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTime date)
-            => await GetCandlesticksAsync(pair, type, $"{date:yyyyMMdd}").ConfigureAwait(false);
+        public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTime date)
+            => GetCandlesticksAsync(pair, type, $"{date:yyyyMMdd}");
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
@@ -118,8 +118,8 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="date">日付</param>
         /// <returns>ローソク足データ</returns>
-        public async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTimeOffset date)
-            => await GetCandlesticksAsync(pair, type, date.UtcDateTime).ConfigureAwait(false);
+        public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTimeOffset date)
+            => GetCandlesticksAsync(pair, type, date.UtcDateTime);
 
         /// <summary>
         /// [PublicAPI]取引所ステータスを返します。

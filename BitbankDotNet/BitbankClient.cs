@@ -105,24 +105,22 @@ namespace BitbankDotNet
         }
 
         // Public API Getリクエスト
-        async Task<T> PublicApiGetAsync<T>(string path)
+        Task<T> PublicApiGetAsync<T>(string path)
             where T : class, IEntityResponse
-            => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + path))
-                .ConfigureAwait(false);
+            => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + path));
 
         // Public API Getリクエスト
-        async Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
+        Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
             where T : class, IEntityResponse
-            => await SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path))
-                .ConfigureAwait(false);
+            => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path));
 
         // Private API Getリクエスト
-        async Task<T> PrivateApiGetAsync<T>(string path)
+        Task<T> PrivateApiGetAsync<T>(string path)
             where T : class, IEntityResponse
-            => await SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path)).ConfigureAwait(false);
+            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path));
 
         // Private API Postリクエスト
-        async Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
+        Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
             where T : class, IEntityResponse
         {
             var json = Serialize<TBody, BitbankResolver<char>>(body);
@@ -130,7 +128,7 @@ namespace BitbankDotNet
             var request = MakePrivateRequestHeader(HttpMethod.Post, path, json);
             request.Content = new StringContent(json);
 
-            return await SendAsync<T>(request).ConfigureAwait(false);
+            return SendAsync<T>(request);
         }
 
         // PrivateAPIのリクエストヘッダーを作成
