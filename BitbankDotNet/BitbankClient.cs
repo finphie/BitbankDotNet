@@ -39,6 +39,8 @@ namespace BitbankDotNet
         readonly HMACSHA256 _hmac;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
+        ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
         public BitbankClient(HttpClient client, TimeSpan timeout = default)
             : this(client, string.Empty, string.Empty, timeout)
         {
@@ -133,10 +135,16 @@ namespace BitbankDotNet
             return SendAsync<T>(request);
         }
 
+        // TODO: 高速化する
         // PrivateAPIのリクエストヘッダーを作成
         HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, string signMessage)
         {
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+            // オーバーフローする可能性がある。
+            // a. ToUnixTimeMillisecondsで取得できるUnix時間の最大値は、253,402,300,799,999（9999/12/31T23:59:59.999Z）
+            // b. ulongの最大値は、18,446,744,073,709,551,615
+            // つまり、最小で18,446,490,671,408,751,615(b-a-1)回インクリメントできる。
+            // 従って、オーバーフローのチェックは行わない。
+            var timestamp = _nonce++.ToString();
 
             CreateSign(timestamp + signMessage);
             var request = new HttpRequestMessage(method, PrivateUrl + path);
