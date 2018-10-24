@@ -37,6 +37,7 @@ namespace BitbankDotNet
         readonly string _apiKey;
 
         readonly HMACSHA256 _hmac;
+        readonly byte[] _hash;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -57,6 +58,9 @@ namespace BitbankDotNet
                 return;
             _apiKey = apiKey;
             _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
+
+            // HashSizeはビット単位
+            _hash = new byte[_hmac.HashSize / 8];
         }
 
         public void Dispose() => _hmac?.Dispose();
@@ -159,8 +163,10 @@ namespace BitbankDotNet
         // 署名作成
         void CreateSign(string message)
         {
-            var hash = _hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-            hash.ToHexString(_signHexUtf16String);
+            // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Primitives/src/System/Security/Cryptography/HashAlgorithm.cs#L51-L75
+            _hmac.TryComputeHash(Encoding.UTF8.GetBytes(message), _hash, out _);
+            _hash.ToHexString(_signHexUtf16String);
         }
     }
 }
