@@ -51,7 +51,8 @@ namespace BitbankDotNet
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Add(
+                MediaTypeWithQualityHeaderValue.Parse("application/json;charset=utf-8"));
 
             // APIキーとAPIシークレットが設定されていない場合
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
