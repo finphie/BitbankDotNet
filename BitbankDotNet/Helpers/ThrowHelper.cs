@@ -22,5 +22,9 @@ namespace BitbankDotNet.Helpers
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowJsonParserException(JsonParserException.ParserError error, int position)
             => throw new JsonParserException(error, position);
+
+        // ReSharper disable once IdentifierTypo
+        public static Exception ThrowBigEndianNotSupported()
+            => new PlatformNotSupportedException("ビックエンディアンプロセッサーは対応していません。");
     }
 }

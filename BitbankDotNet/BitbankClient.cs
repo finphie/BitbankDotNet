@@ -49,6 +49,9 @@ namespace BitbankDotNet
 
         public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout = default)
         {
+            if (!BitConverter.IsLittleEndian)
+                throw ThrowHelper.ThrowBigEndianNotSupported();
+
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
             _client.DefaultRequestHeaders.Accept.Add(
