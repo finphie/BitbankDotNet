@@ -6,10 +6,10 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
 [assembly: InternalsVisibleTo(nameof(BitbankDotNet) + ".CodeGenerator")]
@@ -129,23 +129,23 @@ namespace BitbankDotNet
         // Private API Getリクエスト
         Task<T> PrivateApiGetAsync<T>(string path)
             where T : class, IEntityResponse
-            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path));
+            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, Encoding.UTF8.GetBytes(path)));
 
         // Private API Postリクエスト
         Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
             where T : class, IEntityResponse
         {
-            var json = Serialize<TBody, BitbankResolver<char>>(body);
+            var json = Serialize<TBody, BitbankResolver<byte>>(body);
 
             var request = MakePrivateRequestHeader(HttpMethod.Post, path, json);
-            request.Content = new StringContent(json);
+            request.Content = new ByteArrayContent(json);
 
             return SendAsync<T>(request);
         }
 
         // TODO: 高速化する
         // PrivateAPIのリクエストヘッダーを作成
-        HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, string signMessage)
+        HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, byte[] signMessage)
         {
             // オーバーフローする可能性がある。
             // a. ToUnixTimeMillisecondsで取得できるUnix時間の最大値は、253,402,300,799,999（9999/12/31T23:59:59.999Z）
@@ -154,7 +154,7 @@ namespace BitbankDotNet
             // 従って、オーバーフローのチェックは行わない。
             var timestamp = _nonce++.ToString();
 
-            CreateSign(timestamp + signMessage);
+            CreateSign(timestamp, signMessage);
             var request = new HttpRequestMessage(method, PrivateUrl + path);
             request.Headers.Add("ACCESS-KEY", _apiKey);
             request.Headers.Add("ACCESS-NONCE", timestamp);
@@ -165,11 +165,16 @@ namespace BitbankDotNet
 
         // TODO: 高速化する
         // 署名作成
-        void CreateSign(string message)
+        void CreateSign(string nonce, byte[] message)
         {
+            Span<byte> buffer = new byte[nonce.Length + message.Length];
+            ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
+            var length = Encoding.UTF8.GetBytes(nonce, buffer);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, length), ref message[0], (uint)message.Length);
+
             // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
             // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Primitives/src/System/Security/Cryptography/HashAlgorithm.cs#L51-L75
-            _hmac.TryComputeHash(Encoding.UTF8.GetBytes(message), _hash, out _);
+            _hmac.TryComputeHash(buffer.Slice(0, length + message.Length), _hash, out _);
             _hash.ToHexString(_signHexUtf16String);
         }
     }
