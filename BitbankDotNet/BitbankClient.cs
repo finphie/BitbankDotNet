@@ -32,6 +32,9 @@ namespace BitbankDotNet
         // HMAC-SHA256は32バイトのbyte配列
         const int SignHexUtf16StringLength = 32 * 2;
 
+        static readonly MediaTypeHeaderValue ContentType =
+            new MediaTypeHeaderValue("application/json") {CharSet = Encoding.UTF8.WebName};
+
         readonly HttpClient _client;
 
         readonly string _apiKey;
@@ -54,8 +57,6 @@ namespace BitbankDotNet
 
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
-            _client.DefaultRequestHeaders.Accept.Add(
-                MediaTypeWithQualityHeaderValue.Parse("application/json;charset=utf-8"));
 
             // APIキーとAPIシークレットが設定されていない場合
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
@@ -139,6 +140,7 @@ namespace BitbankDotNet
 
             var request = MakePrivateRequestHeader(HttpMethod.Post, path, json);
             request.Content = new ByteArrayContent(json);
+            request.Content.Headers.ContentType = ContentType;
 
             return SendAsync<T>(request);
         }
