@@ -159,10 +159,13 @@ namespace BitbankDotNet
             var timestamp = _nonce++.ToString();
 
             CreateSign(timestamp, signMessage);
+
             var request = new HttpRequestMessage(method, PrivateUrl + path);
-            request.Headers.Add("ACCESS-KEY", _apiKey);
-            request.Headers.Add("ACCESS-NONCE", timestamp);
-            request.Headers.Add("ACCESS-SIGNATURE", _signHexUtf16String);
+
+            // TryAddWithoutValidationの方がAddより速い。
+            request.Headers.TryAddWithoutValidation("ACCESS-KEY", _apiKey);
+            request.Headers.TryAddWithoutValidation("ACCESS-NONCE", timestamp);
+            request.Headers.TryAddWithoutValidation("ACCESS-SIGNATURE", _signHexUtf16String);
 
             return request;
         }
