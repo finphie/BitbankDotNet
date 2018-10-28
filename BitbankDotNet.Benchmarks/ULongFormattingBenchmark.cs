@@ -3,6 +3,7 @@ using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,13 +18,15 @@ namespace BitbankDotNet.Benchmarks
     {
         const int BufferLength = 20;
 
-        public IEnumerable<ulong> Values => new[]
+        public IEnumerable<ulong> ULongValues => new[]
         {
             (ulong)DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds()
         };
 
+        public IEnumerable<string> StringValues => ULongValues.Select(l => l.ToString());
+
         [Benchmark]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(ULongValues))]
         public unsafe byte[] TryFormatEncodingGetBytes(ulong value)
         {
             Span<char> charBuffer = stackalloc char[BufferLength];
@@ -38,7 +41,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(ULongValues))]
         public byte[] Utf8FormatterTryFormat(ulong value)
         {
             Span<byte> byteBuffer = stackalloc byte[BufferLength];
@@ -47,7 +50,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(ULongValues))]
         public byte[] ToUtf8Bytes(ulong value)
         {
             Span<byte> byteBuffer = stackalloc byte[BufferLength];
@@ -68,6 +71,18 @@ namespace BitbankDotNet.Benchmarks
             }
 
             return byteBuffer.Slice(0, digits).ToArray();
+        }
+
+        [Benchmark]
+        [ArgumentsSource(nameof(StringValues))]
+        public unsafe byte[] StringEncodingGetBytes(string value)
+        {
+            var byteBuffer = new byte[value.Length];
+            fixed (char* chars = value)
+            fixed (byte* bytes = byteBuffer)
+                Encoding.UTF8.GetBytes(chars, value.Length, bytes, byteBuffer.Length);
+
+            return byteBuffer;
         }
     }
 }
