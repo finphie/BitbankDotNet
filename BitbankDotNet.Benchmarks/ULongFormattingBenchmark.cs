@@ -35,7 +35,7 @@ namespace BitbankDotNet.Benchmarks
             fixed (char* chars = charBuffer)
             fixed (byte* bytes = byteBuffer)
             {
-                var byteLength = Encoding.UTF8.GetBytes(chars, charLength, bytes, BufferLength);
+                var byteLength = Encoding.ASCII.GetBytes(chars, charLength, bytes, BufferLength);
                 return byteBuffer.Slice(0, byteLength).ToArray();
             }
         }
@@ -80,7 +80,7 @@ namespace BitbankDotNet.Benchmarks
             var byteBuffer = new byte[value.Length];
             fixed (char* chars = value)
             fixed (byte* bytes = byteBuffer)
-                Encoding.UTF8.GetBytes(chars, value.Length, bytes, byteBuffer.Length);
+                Encoding.ASCII.GetBytes(chars, value.Length, bytes, byteBuffer.Length);
 
             return byteBuffer;
         }
