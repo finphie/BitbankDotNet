@@ -20,7 +20,7 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
-        public unsafe byte[] StringEncodingGetBytes(string value)
+        public unsafe byte[] EncodingGetBytes(string value)
         {
             var byteBuffer = new byte[value.Length];
             fixed (char* chars = value)
@@ -32,7 +32,7 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
-        public byte[] StringCast(string value)
+        public byte[] Cast(string value)
         {
             ref var valueStart = ref MemoryMarshal.GetReference(value.AsSpan());
             var byteBuffer = new byte[value.Length];

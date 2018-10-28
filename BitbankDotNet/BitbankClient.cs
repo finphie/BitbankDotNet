@@ -172,13 +172,13 @@ namespace BitbankDotNet
 
         // TODO: 高速化する
         // 署名作成
-        void CreateSign(string nonce, byte[] message)
+        void CreateSign(string nonce, byte[] data)
         {
             // nonceの最大文字数は、ulongの最大桁数である20文字
-            // messageは、120文字以下のはず。
-            // nonceとmessageはUTF-8として利用するが、ASCII文字しかないので1文字1バイト
+            // dataは、120文字以下のはず。
+            // nonceとdataはUTF-8として利用するが、ASCII文字しかないので1文字1バイト
             // 合計で140バイトなのでスタックでも問題ないはず。
-            Span<byte> buffer = stackalloc byte[nonce.Length + message.Length];
+            Span<byte> buffer = stackalloc byte[nonce.Length + data.Length];
             ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
 
             // 数値のUTF-16文字列をUTF-8のbyte配列に変換
@@ -191,7 +191,7 @@ namespace BitbankDotNet
             // ReSharper disable once CommentTypo
             // HMACSHA256よりIncrementalHashの方が速い。
             // また、AppendDataを2回呼び出すより、バッファにコピーして一括で処理した方が速い。
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref message[0], (uint)message.Length);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref data[0], (uint)data.Length);
             _incrementalHash.AppendData(buffer);
 
             // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
