@@ -184,7 +184,7 @@ namespace BitbankDotNet
             var length = Encoding.UTF8.GetBytes(nonce, buffer);
 
             // ReSharper disable once CommentTypo
-            // HMACSHA256よりIncrementalHashの方が速い
+            // HMACSHA256よりIncrementalHashの方が速い。
             // また、AppendDataを2回呼び出すより、バッファにコピーして一括で処理した方が速い。
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, length), ref message[0], (uint)message.Length);
             _incrementalHash.AppendData(buffer);

@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Benchmarks.CharArrayToHexString
+namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
     static class ByteArrayHelperStringTable
     {

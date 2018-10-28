@@ -6,51 +6,45 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Benchmarks.CharArrayToHexString
+namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
-    // cf. https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
     /// <summary>
     /// byte配列を16進数stringに変換
+    /// cf. <see cref="!:https://stackoverflow.com/q/311165"/>
     /// </summary>
     /// <remarks>
-    /// ベンチマーク結果（左から速い順）
-    /// 1. {byte}.TryFormat, {byte}.ToString, string.Format
-    /// 2. {StringBuilder}.Append, {StringBuilder}.AppendFormat, {IEnumerable{char}}.Append
-    /// 3. foreach, {IEnumerable{char}}.Aggregate
-    /// 4. string.Concat({string[]}), string.Join
-    /// 5. string直接書き換え, Buffer + new string({char[]}or{Span{char}}), Buffer + {Span{char}}.ToString, {StringBuilder}.Append, string.Concat({char[]})
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
-    public class CharArrayToHexStringBenchmark
+    public class ByteArrayToHexStringBenchmark
     {
         // HMAC-SHA256は256bit
         const int ArraySize = 32;
         static readonly byte[] SourceBytes;
 
-        static CharArrayToHexStringBenchmark()
+        static ByteArrayToHexStringBenchmark()
         {
             SourceBytes = new byte[ArraySize];
             var random = new Random();
             random.NextBytes(SourceBytes);
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string BitConverterToString()
             => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", "", StringComparison.Ordinal);
 
-        //[Benchmark]
+        [Benchmark]
         public string XmlSerializationWriterFromByteArrayHex()
             => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
 
-        //[Benchmark]
+        [Benchmark]
         public string ArrayConvertAll()
             => string.Concat(Array.ConvertAll(SourceBytes, b => b.ToString("x2")));
 
-        //[Benchmark]
+        [Benchmark]
         public string LinqSelect()
             => string.Concat(SourceBytes.Select(b => b.ToString("x2")));
 
-        //[Benchmark]
+        [Benchmark]
         public string ForEach()
         {
             var length = SourceBytes.Length * 2;
@@ -66,7 +60,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string UnsafeAsLong()
         {
             var length = SourceBytes.Length * 2;
@@ -89,7 +83,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string UnsafeReadUnalignedLong()
         {
             var length = SourceBytes.Length * 2;
@@ -118,7 +112,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string BinaryReader()
         {
             var length = SourceBytes.Length * 2;
@@ -144,7 +138,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string LookupShift()
         {
             const string table = "0123456789abcdef";
@@ -161,7 +155,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public unsafe string LookupShiftUnsafe()
         {
             const string table = "0123456789abcdef";
@@ -179,7 +173,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string Manipulation1()
         {
             var result = new string(default, SourceBytes.Length * 2);
@@ -196,7 +190,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public unsafe string Manipulation1Unsafe()
         {
             var result = new string(default, SourceBytes.Length * 2);
@@ -215,7 +209,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string Manipulation2()
         {
             var result = new string(default, SourceBytes.Length * 2);
@@ -234,7 +228,7 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public unsafe string Manipulation2Unsafe()
         {
             var result = new string(default, SourceBytes.Length * 2);
@@ -253,13 +247,13 @@ namespace BitbankDotNet.Benchmarks.CharArrayToHexString
             return result;
         }
 
-        //[Benchmark]
+        [Benchmark]
         public string StringTable() => ByteArrayHelperStringTable.ToHexString(SourceBytes);
 
-        //[Benchmark]
+        [Benchmark]
         public string Lookup() => ByteArrayHelperLookup.ToHexString(SourceBytes);
 
-        //[Benchmark]
+        [Benchmark]
         public string LookupUnsafe() => ByteArrayHelperLookup.ToHexStringUnsafe(SourceBytes);
     }
 }

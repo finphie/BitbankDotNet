@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace BitbankDotNet.Benchmarks.CharArrayToHexString
+namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
     sealed class ByteArrayHelperXmlSerializationWriter : XmlSerializationWriter
     {
