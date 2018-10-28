@@ -3,9 +3,7 @@ using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace BitbankDotNet.Benchmarks
@@ -18,15 +16,13 @@ namespace BitbankDotNet.Benchmarks
     {
         const int BufferLength = 20;
 
-        public IEnumerable<ulong> ULongValues => new[]
+        public IEnumerable<ulong> Values => new[]
         {
             (ulong)DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds()
         };
 
-        public IEnumerable<string> StringValues => ULongValues.Select(l => l.ToString());
-
         [Benchmark]
-        [ArgumentsSource(nameof(ULongValues))]
+        [ArgumentsSource(nameof(Values))]
         public unsafe byte[] TryFormatEncodingGetBytes(ulong value)
         {
             Span<char> charBuffer = stackalloc char[BufferLength];
@@ -41,7 +37,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        [ArgumentsSource(nameof(ULongValues))]
+        [ArgumentsSource(nameof(Values))]
         public byte[] Utf8FormatterTryFormat(ulong value)
         {
             Span<byte> byteBuffer = stackalloc byte[BufferLength];
@@ -50,7 +46,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        [ArgumentsSource(nameof(ULongValues))]
+        [ArgumentsSource(nameof(Values))]
         public byte[] ToUtf8Bytes(ulong value)
         {
             var digits = value < 10_000_000_000_000 ? 13
@@ -71,18 +67,6 @@ namespace BitbankDotNet.Benchmarks
                 value /= 10;
                 Unsafe.Add(ref byteBufferStart, i - 1) = (byte)(temp - value * 10);
             }
-
-            return byteBuffer;
-        }
-
-        [Benchmark]
-        [ArgumentsSource(nameof(StringValues))]
-        public unsafe byte[] StringEncodingGetBytes(string value)
-        {
-            var byteBuffer = new byte[value.Length];
-            fixed (char* chars = value)
-            fixed (byte* bytes = byteBuffer)
-                Encoding.ASCII.GetBytes(chars, value.Length, bytes, byteBuffer.Length);
 
             return byteBuffer;
         }
