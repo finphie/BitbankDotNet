@@ -181,12 +181,17 @@ namespace BitbankDotNet
             Span<byte> buffer = stackalloc byte[nonce.Length + message.Length];
             ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
 
-            var length = Encoding.UTF8.GetBytes(nonce, buffer);
+            // 数値のUTF-16文字列をUTF-8のbyte配列に変換
+            // 今回の場合、数値のUTF-16文字列が他に必要となるので、stringへの変換コストは無視できる。
+            // ベンチマークを取った結果、文字列を変換する方が数値を直接変換するよりも速くなった。
+            // なお、Encoding.GetBytesやUtf8Formatterを利用するのは遅いため、
+            // 独自に高速化したバージョン同士で比較した。（ベンチマークプロジェクト参照）
+            nonce.FromAsciiStringToUtf8Bytes(buffer);
 
             // ReSharper disable once CommentTypo
             // HMACSHA256よりIncrementalHashの方が速い。
             // また、AppendDataを2回呼び出すより、バッファにコピーして一括で処理した方が速い。
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, length), ref message[0], (uint)message.Length);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref message[0], (uint)message.Length);
             _incrementalHash.AppendData(buffer);
 
             // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
