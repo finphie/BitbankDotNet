@@ -31,13 +31,13 @@ namespace BitbankDotNet.Benchmarks
         {
             Span<char> charBuffer = stackalloc char[BufferLength];
             value.TryFormat(charBuffer, out var charLength, null, CultureInfo.InvariantCulture);
-            Span<byte> byteBuffer = stackalloc byte[charLength];
+
+            var byteBuffer = new byte[charLength];
             fixed (char* chars = charBuffer)
             fixed (byte* bytes = byteBuffer)
-            {
-                var byteLength = Encoding.ASCII.GetBytes(chars, charLength, bytes, BufferLength);
-                return byteBuffer.Slice(0, byteLength).ToArray();
-            }
+                Encoding.ASCII.GetBytes(chars, charLength, bytes, BufferLength);
+
+            return byteBuffer;
         }
 
         [Benchmark]
@@ -53,8 +53,6 @@ namespace BitbankDotNet.Benchmarks
         [ArgumentsSource(nameof(ULongValues))]
         public byte[] ToUtf8Bytes(ulong value)
         {
-            Span<byte> byteBuffer = stackalloc byte[BufferLength];
-            ref var byteBufferStart = ref MemoryMarshal.GetReference(byteBuffer);
             var digits = value < 10_000_000_000_000 ? 13
                 : value < 100_000_000_000_000 ? 14
                 : value < 1_000_000_000_000_000 ? 15
@@ -63,6 +61,10 @@ namespace BitbankDotNet.Benchmarks
                 : value < 1_000_000_000_000_000_000 ? 18
                 : value < 10_000_000_000_000_000_000 ? 19
                 : 20;
+
+            var byteBuffer = new byte[digits];
+            ref var byteBufferStart = ref byteBuffer[0];
+
             for (var i = digits; i > 0; i--)
             {
                 var temp = '0' + value;
@@ -70,7 +72,7 @@ namespace BitbankDotNet.Benchmarks
                 Unsafe.Add(ref byteBufferStart, i - 1) = (byte)(temp - value * 10);
             }
 
-            return byteBuffer.Slice(0, digits).ToArray();
+            return byteBuffer;
         }
 
         [Benchmark]
