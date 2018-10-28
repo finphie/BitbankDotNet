@@ -175,9 +175,9 @@ namespace BitbankDotNet
         void CreateSign(string nonce, byte[] data)
         {
             // nonceの最大文字数は、ulongの最大桁数である20文字
-            // dataは、120文字以下のはず。
+            // dataは、150文字以下のはず。
             // nonceとdataはUTF-8として利用するが、ASCII文字しかないので1文字1バイト
-            // 合計で140バイトなのでスタックでも問題ないはず。
+            // 合計で170バイトなのでスタックでも問題ない。
             Span<byte> buffer = stackalloc byte[nonce.Length + data.Length];
             ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
 
