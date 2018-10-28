@@ -28,9 +28,12 @@ namespace BitbankDotNet
         // Private API
         const string PrivateUrl = "https://api.bitbank.cc";
 
+        // HMAC-SHA256のハッシュサイズ（バイト単位）
+        const int HashSize = 32;
+
         // 16進数署名文字列の長さ（UTF-16）
         // HMAC-SHA256は32バイトのbyte配列
-        const int SignHexUtf16StringLength = 32 * 2;
+        const int SignHexUtf16StringLength = HashSize * 2;
 
         static readonly MediaTypeHeaderValue ContentType =
             new MediaTypeHeaderValue("application/json") {CharSet = Encoding.UTF8.WebName};
@@ -39,7 +42,7 @@ namespace BitbankDotNet
 
         readonly string _apiKey;
 
-        readonly HMACSHA256 _hmac;
+        readonly IncrementalHash _incrementalHash;
         readonly byte[] _hash;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
@@ -62,13 +65,12 @@ namespace BitbankDotNet
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
                 return;
             _apiKey = apiKey;
-            _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
+            _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, Encoding.UTF8.GetBytes(apiSecret));
 
-            // HashSizeはビット単位
-            _hash = new byte[_hmac.HashSize / 8];
+            _hash = new byte[HashSize];
         }
 
-        public void Dispose() => _hmac?.Dispose();
+        public void Dispose() => _incrementalHash?.Dispose();
 
         // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
@@ -169,14 +171,26 @@ namespace BitbankDotNet
         // 署名作成
         void CreateSign(string nonce, byte[] message)
         {
-            Span<byte> buffer = new byte[nonce.Length + message.Length];
+            // nonceの最大文字数は、ulongの最大桁数である20文字
+            // messageは、120文字以下のはず。
+            // nonceとmessageはUTF-8として利用するが、ASCII文字しかないので1文字1バイト
+            // 合計で140バイトなのでスタックでも問題ないはず。
+            Span<byte> buffer = stackalloc byte[nonce.Length + message.Length];
             ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
+
             var length = Encoding.UTF8.GetBytes(nonce, buffer);
+
+            // ReSharper disable once CommentTypo
+            // HMACSHA256よりIncrementalHashの方が速い
+            // また、AppendDataを2回呼び出すより、バッファにコピーして一括で処理した方が速い。
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, length), ref message[0], (uint)message.Length);
+            _incrementalHash.AppendData(buffer);
 
             // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Primitives/src/System/Security/Cryptography/HashAlgorithm.cs#L51-L75
-            _hmac.TryComputeHash(buffer.Slice(0, length + message.Length), _hash, out _);
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/Internal/Cryptography/HashProviderCng.cs#L87-L104
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.Unix.cs#L151-L166
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.OSX.cs#L121-L142
+            _incrementalHash.TryGetHashAndReset(_hash, out _);
             _hash.ToHexString(_signHexUtf16String);
         }
     }
