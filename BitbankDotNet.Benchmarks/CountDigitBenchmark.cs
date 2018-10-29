@@ -39,7 +39,51 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
-        public int SpanJson(ulong value) => FormatterUtils.CountDigits(value);
+        public int CoreFx(ulong value)
+        {
+            // CoreFXやSpanJsonでの実装
+            // System.Buffers.Text.FormattingHelpers.CountDigits
+            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Buffers/Text/FormattingHelpers.CountDigits.cs#L13-L66
+            // SpanJson.FormatterUtils.CountDigits
+            // cf. https://github.com/Tornhoof/SpanJson/blob/master/SpanJson/Helpers/FormatterUtils.cs#L11-L64
+
+            var digits = 1;
+            uint part;
+            if (value >= 10000000)
+            {
+                if (value >= 100000000000000)
+                {
+                    part = (uint)(value / 100000000000000);
+                    digits += 14;
+                }
+                else
+                {
+                    part = (uint)(value / 10000000);
+                    digits += 7;
+                }
+            }
+            else
+                part = (uint)value;
+
+            if (part < 10)
+            {
+                // no-op
+            }
+            else if (part < 100)
+                digits += 1;
+            else if (part < 1000)
+                digits += 2;
+            else if (part < 10000)
+                digits += 3;
+            else if (part < 100000)
+                digits += 4;
+            else if (part < 1000000)
+                digits += 5;
+            else
+                digits += 6;
+
+            return digits;
+        }
 
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
