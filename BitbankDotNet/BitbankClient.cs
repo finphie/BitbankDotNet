@@ -147,7 +147,6 @@ namespace BitbankDotNet
             return SendAsync<T>(request);
         }
 
-        // TODO: 高速化する
         // PrivateAPIのリクエストヘッダーを作成
         HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, byte[] signMessage)
         {
@@ -162,7 +161,7 @@ namespace BitbankDotNet
 
             var request = new HttpRequestMessage(method, PrivateUrl + path);
 
-            // TryAddWithoutValidationの方がAddより速い。
+            // TryAddWithoutValidationの方がAddやコレクション初期化子より速い。
             request.Headers.TryAddWithoutValidation("ACCESS-KEY", _apiKey);
             request.Headers.TryAddWithoutValidation("ACCESS-NONCE", timestamp);
             request.Headers.TryAddWithoutValidation("ACCESS-SIGNATURE", _signHexUtf16String);
@@ -170,7 +169,6 @@ namespace BitbankDotNet
             return request;
         }
 
-        // TODO: 高速化する
         // 署名作成
         void CreateSign(string nonce, byte[] data)
         {
