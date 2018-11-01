@@ -43,7 +43,6 @@ namespace BitbankDotNet
         readonly string _apiKey;
 
         readonly IncrementalHash _incrementalHash;
-        readonly byte[] _hash;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -66,8 +65,6 @@ namespace BitbankDotNet
                 return;
             _apiKey = apiKey;
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, Encoding.UTF8.GetBytes(apiSecret));
-
-            _hash = new byte[HashSize];
         }
 
         public void Dispose() => _incrementalHash?.Dispose();
@@ -192,12 +189,13 @@ namespace BitbankDotNet
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref data[0], (uint)data.Length);
             _incrementalHash.AppendData(buffer);
 
-            // 出力先バッファは固定（=長さが一定）なので、戻り値やbytesWrittenのチェックは省略できる。
+            // 出力先バッファは固定サイズなので、戻り値やbytesWrittenのチェックは省略できる。
             // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/Internal/Cryptography/HashProviderCng.cs#L87-L104
             // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.Unix.cs#L151-L166
             // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.OSX.cs#L121-L142
-            _incrementalHash.TryGetHashAndReset(_hash, out _);
-            _hash.ToHexString(_signHexUtf16String);
+            Span<byte> hash = stackalloc byte[HashSize];
+            _incrementalHash.TryGetHashAndReset(hash, out _);
+            SpanHelper.ToHexString(hash, _signHexUtf16String);
         }
     }
 }

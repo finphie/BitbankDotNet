@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Extensions
+namespace BitbankDotNet.Helpers
 {
-    static class ByteArrayExtensions
+    static class SpanHelper
     {
         static readonly int[] Table =
         {
@@ -37,7 +37,7 @@ namespace BitbankDotNet.Extensions
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ToHexString(this byte[] source, in ReadOnlySpan<char> destination)
+        public static void ToHexString(in ReadOnlySpan<byte> source, in ReadOnlySpan<char> destination)
         {
             ref var destinationStart = ref Unsafe.As<char, int>(ref MemoryMarshal.GetReference(destination));
             ref var tableStart = ref Table[0];
