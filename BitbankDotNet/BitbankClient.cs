@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Entities;
+﻿using BitbankDotNet.Caches;
+using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
 using BitbankDotNet.Helpers;
 using BitbankDotNet.Resolvers;
@@ -47,6 +48,8 @@ namespace BitbankDotNet
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
+        static BitbankClient() => CreateCache();
+
         public BitbankClient(HttpClient client, TimeSpan timeout = default)
             : this(client, string.Empty, string.Empty, timeout)
         {
@@ -68,6 +71,12 @@ namespace BitbankDotNet
         }
 
         public void Dispose() => _incrementalHash?.Dispose();
+
+        /// <summary>
+        /// キャッシュ作成
+        /// </summary>
+        static void CreateCache()
+            => RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<CurrencyPair>).TypeHandle);
 
         // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
