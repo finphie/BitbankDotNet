@@ -66,7 +66,12 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public string StringBuilder()
         {
-            var sb = new StringBuilder(32);
+            var length = _uri.Length +
+                         _key1.Length + _value1.Length +
+                         _key2.Length + _value2.Length +
+                         3;
+
+            var sb = new StringBuilder(length);
             sb.Append(_uri);
             sb.Append(_key1);
             sb.Append(EqualsSign);
@@ -86,11 +91,11 @@ namespace BitbankDotNet.Benchmarks
                          _key1.Length + _value1.Length +
                          _key2.Length + _value2.Length +
                          3;
+
             var result = new string(default, length);
             var span = MemoryMarshal.CreateSpan(ref MemoryMarshal.GetReference(result.AsSpan()), length);
 
             _uri.AsSpan().CopyTo(span);
-
             var pos = _uri.Length;
             _key1.AsSpan().CopyTo(span.Slice(pos));
             pos += _key1.Length;
@@ -113,6 +118,7 @@ namespace BitbankDotNet.Benchmarks
                          _key1.Length + _value1.Length +
                          _key2.Length + _value2.Length +
                          3;
+
             var result = new string(default, length);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
@@ -127,7 +133,7 @@ namespace BitbankDotNet.Benchmarks
             pos += size;
 
             Unsafe.Add(ref resultStart, pos) = (byte)CharEqualsSign;
-            pos += 2;
+            pos += sizeof(char);
 
             size = _value1.Length * sizeof(char);
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_value1.AsSpan()));
@@ -135,7 +141,7 @@ namespace BitbankDotNet.Benchmarks
             pos += size;
 
             Unsafe.Add(ref resultStart, pos) = (byte)CharAndSign;
-            pos += 2;
+            pos += sizeof(char);
 
             size = _key2.Length * sizeof(char);
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_key2.AsSpan()));
@@ -143,7 +149,7 @@ namespace BitbankDotNet.Benchmarks
             pos += size;
 
             Unsafe.Add(ref resultStart, pos) = (byte)CharEqualsSign;
-            pos += 2;
+            pos += sizeof(char);
 
             size = _value2.Length * sizeof(char);
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_value2.AsSpan()));

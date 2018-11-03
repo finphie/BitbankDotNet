@@ -61,11 +61,11 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         public void UnsafeCopyBlock()
-            => Unsafe.CopyBlock(ref _destination[0], ref _source[0], (uint) _destination.Length);
+            => Unsafe.CopyBlock(ref _destination[0], ref _source[0], (uint)_destination.Length);
 
         [Benchmark]
         public void UnsafeCopyBlockUnaligned()
-            => Unsafe.CopyBlockUnaligned(ref _destination[0], ref _source[0], (uint) _destination.Length);
+            => Unsafe.CopyBlockUnaligned(ref _destination[0], ref _source[0], (uint)_destination.Length);
 
         [Benchmark]
         public unsafe void UnmanagedMemoryStreamCopyTo()
