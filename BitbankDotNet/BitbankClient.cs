@@ -70,7 +70,11 @@ namespace BitbankDotNet
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, Encoding.UTF8.GetBytes(apiSecret));
         }
 
-        public void Dispose() => _incrementalHash?.Dispose();
+        public void Dispose()
+        {
+            _client?.Dispose();
+            _incrementalHash?.Dispose();
+        }
 
         /// <summary>
         /// キャッシュ作成

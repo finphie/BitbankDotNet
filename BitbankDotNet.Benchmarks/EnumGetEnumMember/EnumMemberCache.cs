@@ -9,7 +9,7 @@ namespace BitbankDotNet.Benchmarks.EnumGetEnumMember
         where T: struct, Enum
     {
         // ReSharper disable once StaticMemberInGenericType
-        public static readonly string[] Table;
+        static readonly string[] Table;
 
         public static string Get(T value) => Table[Unsafe.As<T, int>(ref value)];
 

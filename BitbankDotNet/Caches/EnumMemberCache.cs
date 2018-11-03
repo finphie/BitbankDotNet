@@ -8,7 +8,7 @@ namespace BitbankDotNet.Caches
     /// <summary>
     /// <see cref="EnumMemberAttribute"/>の値をキャッシュします。
     /// </summary>
-    /// <typeparam name="T">int型で0から始まる連番の列挙体</typeparam>
+    /// <typeparam name="T">int型で0から始まる連番の列挙型</typeparam>
     static class EnumMemberCache<T>
         where T : struct, Enum
     {
@@ -25,7 +25,14 @@ namespace BitbankDotNet.Caches
 
         static EnumMemberCache()
         {
+            // 列挙体の全要素を取得する。
             var values = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            // EnumMemberの値を配列にキャッシュする。
+            // ただし、以下の条件の列挙型のみ対応している。
+            // ・int型
+            // ・0から始まる連番
+            // ・FlagsAttribute属性が付与されていない
             Table = new string[values.Length];
             for (var i = 0; i < values.Length; i++)
                 Table[i] = values[i].GetCustomAttribute<EnumMemberAttribute>().Value;
