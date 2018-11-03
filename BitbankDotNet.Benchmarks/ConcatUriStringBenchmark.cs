@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Web;
@@ -101,6 +102,52 @@ namespace BitbankDotNet.Benchmarks
             pos += _key2.Length;
             span[pos++] = CharEqualsSign;
             _value2.AsSpan().CopyTo(span.Slice(pos));
+
+            return result;
+        }
+
+        [Benchmark]
+        public string UnsafeCopyBlockUnaligned()
+        {
+            var length = _uri.Length +
+                         _key1.Length + _value1.Length +
+                         _key2.Length + _value2.Length +
+                         3;
+            var result = new string(default, length);
+            ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
+
+            var pos = _uri.Length * sizeof(char);
+
+            ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_uri.AsSpan()));
+            Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, (uint)pos);
+
+            var size = _key1.Length * sizeof(char);
+            sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_key1.AsSpan()));
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, pos), ref sourceStart, (uint)size);
+            pos += size;
+
+            Unsafe.Add(ref resultStart, pos) = (byte)CharEqualsSign;
+            pos += 2;
+
+            size = _value1.Length * sizeof(char);
+            sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_value1.AsSpan()));
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, pos), ref sourceStart, (uint)size);
+            pos += size;
+
+            Unsafe.Add(ref resultStart, pos) = (byte)CharAndSign;
+            pos += 2;
+
+            size = _key2.Length * sizeof(char);
+            sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_key2.AsSpan()));
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, pos), ref sourceStart, (uint)size);
+            pos += size;
+
+            Unsafe.Add(ref resultStart, pos) = (byte)CharEqualsSign;
+            pos += 2;
+
+            size = _value2.Length * sizeof(char);
+            sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_value2.AsSpan()));
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, pos), ref sourceStart, (uint)size);
 
             return result;
         }
