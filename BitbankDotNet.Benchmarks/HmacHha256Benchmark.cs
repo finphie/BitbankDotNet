@@ -1,9 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BitbankDotNet.Shared.Helpers;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -28,7 +28,7 @@ namespace BitbankDotNet.Benchmarks
 
         public HmacHha256Benchmark()
         {
-            var key = CreateUtf8Bytes(KeyLength);
+            var key = ByteArrayHelper.CreateUtf8Bytes(KeyLength);
             _hmac = new HMACSHA256(key);
             _hash = new byte[_hmac.HashSize / 8];
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key);
@@ -37,8 +37,8 @@ namespace BitbankDotNet.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            _source1 = CreateUtf8Bytes(Source1Length);
-            _source2 = CreateUtf8Bytes(SourceLength - Source1Length);
+            _source1 = ByteArrayHelper.CreateUtf8Bytes(Source1Length);
+            _source2 = ByteArrayHelper.CreateUtf8Bytes(SourceLength - Source1Length);
         }
 
         [GlobalCleanup]
@@ -87,22 +87,6 @@ namespace BitbankDotNet.Benchmarks
 
             _incrementalHash.AppendData(buffer);
             _incrementalHash.TryGetHashAndReset(_hash, out _);
-        }
-
-        // UTF-8 byte配列作成
-        static byte[] CreateUtf8Bytes(int length)
-        {
-            // UTF-16文字列作成
-            string CreateUtf16String() => Guid.NewGuid().ToString("N");
-
-            var sb = new StringBuilder(64);
-            sb.Append(CreateUtf16String());
-
-            var count = length / sb.Length;
-            for (var i = 0; i < count; i++)
-                sb.Append(CreateUtf16String());
-
-            return Encoding.UTF8.GetBytes(sb.ToString().Substring(0, length));
         }
     }
 }

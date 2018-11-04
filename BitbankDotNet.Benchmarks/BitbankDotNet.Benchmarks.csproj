@@ -23,4 +23,8 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BitbankDotNet.Shared\BitbankDotNet.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
