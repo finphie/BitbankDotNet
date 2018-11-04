@@ -10,6 +10,16 @@ namespace BitbankDotNet.Benchmarks
     /// <summary>
     /// URI文字列連結処理のベンチマーク
     /// </summary>
+    /// <remarks>
+    ///                      Method |        Mean |     Error |    StdDev | Gen 0/1k Op | Allocated Memory/Op |
+    /// --------------------------- |-------------|-----------|-----------|-------------|---------------------|
+    /// HttpUtilityParseQueryString | 1,344.51 ns | 5.8619 ns | 5.4833 ns |      0.7057 |              1112 B |
+    ///               StringConcat1 |    78.80 ns | 0.5835 ns | 0.5458 ns |      0.1067 |               168 B |
+    ///               StringConcat2 |    68.91 ns | 0.2437 ns | 0.2161 ns |      0.1220 |               192 B |
+    ///               StringBuilder |    67.91 ns | 0.4094 ns | 0.3629 ns |      0.1322 |               208 B |
+    ///                        Span |    44.06 ns | 0.1720 ns | 0.1609 ns |      0.0508 |                80 B |
+    ///    UnsafeCopyBlockUnaligned |    21.48 ns | 0.0829 ns | 0.0776 ns |      0.0508 |                80 B |
+    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class ConcatUriStringBenchmark
     {
