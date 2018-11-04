@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Exporters;
@@ -43,6 +44,9 @@ namespace BitbankDotNet.Benchmarks
             //        .ToToolchain()));
 
             Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printSource: true)));
+
+            Add(BenchmarkLogicalGroupRule.ByCategory);
+            Add(CategoriesColumn.Default);
         }
     }
 }
