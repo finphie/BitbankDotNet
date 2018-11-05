@@ -16,6 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="StringConcatBenchmark\BinaryHelper.Fast.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BinaryHelper.Fast.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.2" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
@@ -25,6 +33,25 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BitbankDotNet.Shared\BitbankDotNet.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="StringConcatBenchmark\BinaryHelper.Fast.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BinaryHelper.Fast.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="StringConcatBenchmark\BinaryHelper.Fast.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BinaryHelper.Fast.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

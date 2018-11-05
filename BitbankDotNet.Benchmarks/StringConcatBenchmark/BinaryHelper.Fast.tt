@@ -1,0 +1,67 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+using System.Runtime.CompilerServices;
+
+namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
+{
+<#
+    const int Max = 32;
+    const int Count = sizeof(long) / sizeof(char);
+#>
+    partial class BinaryHelper
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CopyChar(ref char source, ref char destination, int charCount)
+        {
+            switch (charCount)
+            {
+<# for(var i = 1; i <= Max; i++) { #>
+                case <#= i #>:
+                    CopyChar<#= i #>(ref source, <# if (i == 1) { #>out<# } else { #>ref<# } #> destination);
+                    break;
+<# } #>
+                default:
+                    ref var s = ref Unsafe.As<char, byte>(ref source);
+                    ref var d = ref Unsafe.As<char, byte>(ref destination);
+                    Unsafe.CopyBlockUnaligned(ref d, ref s, (uint)charCount * sizeof(char));
+                    break;
+            }
+        }
+
+<# for(var i = 1; i < Count; i++) { #>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CopyChar<#= i #>(ref char source, <# if (i == 1) { #>out<# } else { #>ref<# } #> char destination)
+        {
+<# if (i == 1) { #>
+            destination = source;
+<# } else { #>
+            ref var s = ref Unsafe.As<char, int>(ref source);
+            ref var d = ref Unsafe.As<char, int>(ref destination);
+            d = s;
+<# } if (i == 3) { #>
+            Unsafe.Add(ref destination, <#= i - 1 #>) = Unsafe.Add(ref source, <#= i - 1 #>);
+<# } #>
+        }
+<# if (i < Count) { Write(Environment.NewLine); } #>
+<# } #>
+
+<# for(var i = Count; i <= Max; i++) { #>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CopyChar<#= i #>(ref char source, ref char destination)
+        {
+            ref var s = ref Unsafe.As<char, long>(ref source);
+            ref var d = ref Unsafe.As<char, long>(ref destination);
+            d = s;
+<# for(var j = 1; j < (i / Count); j++) { #>
+            Unsafe.Add(ref d, <#= j #>) = Unsafe.Add(ref s, <#= j #>);
+<# } #>
+<# if (i % Count != 0) { #>
+            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, <#= i - Count #>));
+            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, <#= i - Count #>));
+            d = s;
+<# } #>
+		}
+<# if (i < Max) { Write(Environment.NewLine); } #>
+<# } #>
+    }
+}

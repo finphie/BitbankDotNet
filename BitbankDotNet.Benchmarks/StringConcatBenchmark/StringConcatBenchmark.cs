@@ -403,6 +403,35 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             return result;
         }
 
+        [Benchmark, BenchmarkCategory(Count04)]
+        public string LongCopy04a()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref resultStart, pos);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            var byteCount = _source01.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            pos += byteCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            byteCount = _source02.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            pos += byteCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            byteCount = _source03.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+
+            return result;
+        }
+
         [Benchmark, BenchmarkCategory(Count08)]
         public string LongCopy08()
         {

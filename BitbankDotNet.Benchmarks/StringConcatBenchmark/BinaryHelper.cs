@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 {
-    static class BinaryHelper
+    static partial class BinaryHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Copy(in ReadOnlySpan<char> source, ref byte destination, int byteCount)
