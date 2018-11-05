@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Extensions
 {
-    public static class EnumExtensions
+    static class EnumExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetEnumMemberValue<T>(this T value)

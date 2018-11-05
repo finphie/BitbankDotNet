@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace BitbankDotNet.Benchmarks
+namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 {
     /// <summary>
     /// 文字列連結処理のベンチマーク
@@ -257,18 +257,18 @@ namespace BitbankDotNet.Benchmarks
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             var pos = _source00.Length * sizeof(char);
-            Copy(_source00, ref resultStart, pos);
+            BinaryHelper.Copy(_source00, ref resultStart, pos);
 
             var byteCount = _source01.Length * sizeof(char);
-            Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source02.Length * sizeof(char);
-            Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source03.Length * sizeof(char);
-            Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
         }
@@ -283,34 +283,34 @@ namespace BitbankDotNet.Benchmarks
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             var pos = _source00.Length * sizeof(char);
-            Copy(_source00, ref resultStart, pos);
+            BinaryHelper.Copy(_source00, ref resultStart, pos);
 
             var byteCount = _source01.Length * sizeof(char);
-            Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source02.Length * sizeof(char);
-            Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source03.Length * sizeof(char);
-            Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source04.Length * sizeof(char);
-            Copy(_source04, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source04, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source05.Length * sizeof(char);
-            Copy(_source05, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source05, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source06.Length * sizeof(char);
-            Copy(_source06, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source06, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source07.Length * sizeof(char);
-            Copy(_source07, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source07, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
         }
@@ -326,50 +326,50 @@ namespace BitbankDotNet.Benchmarks
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             var pos = _source00.Length * sizeof(char);
-            Copy(_source00, ref resultStart, pos);
+            BinaryHelper.Copy(_source00, ref resultStart, pos);
 
             var byteCount = _source01.Length * sizeof(char);
-            Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source01, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source02.Length * sizeof(char);
-            Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source02, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source03.Length * sizeof(char);
-            Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source03, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source04.Length * sizeof(char);
-            Copy(_source04, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source04, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source05.Length * sizeof(char);
-            Copy(_source05, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source05, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source06.Length * sizeof(char);
-            Copy(_source06, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source06, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source07.Length * sizeof(char);
-            Copy(_source07, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source07, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source08.Length * sizeof(char);
-            Copy(_source08, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source08, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source09.Length * sizeof(char);
-            Copy(_source09, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source09, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source10.Length * sizeof(char);
-            Copy(_source10, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source10, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             byteCount = _source11.Length * sizeof(char);
-            Copy(_source11, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(_source11, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
         }
@@ -384,21 +384,21 @@ namespace BitbankDotNet.Benchmarks
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
             var pos = _source00.Length;
-            LongCopy(ref sourceStart, ref resultStart, pos);
+            BinaryHelper.Copy(ref sourceStart, ref resultStart, pos);
 
             sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
             var byteCount = _source01.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
             byteCount = _source02.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
             byteCount = _source03.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
         }
@@ -414,41 +414,41 @@ namespace BitbankDotNet.Benchmarks
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
             var pos = _source00.Length;
-            LongCopy(ref sourceStart, ref resultStart, pos);
+            BinaryHelper.Copy(ref sourceStart, ref resultStart, pos);
 
             sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
             var byteCount = _source01.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
             byteCount = _source02.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
             byteCount = _source03.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
             byteCount = _source04.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
             byteCount = _source05.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
             byteCount = _source06.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
             byteCount = _source07.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
         }
@@ -465,94 +465,63 @@ namespace BitbankDotNet.Benchmarks
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
             var pos = _source00.Length;
-            LongCopy(ref sourceStart, ref resultStart, pos);
+            BinaryHelper.Copy(ref sourceStart, ref resultStart, pos);
 
             sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
             var byteCount = _source01.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
             byteCount = _source02.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
             byteCount = _source03.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
             byteCount = _source04.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
             byteCount = _source05.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
             byteCount = _source06.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
             byteCount = _source07.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source08.AsSpan());
             byteCount = _source08.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source09.AsSpan());
             byteCount = _source09.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source10.AsSpan());
             byteCount = _source10.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
             pos += byteCount;
 
             sourceStart = ref MemoryMarshal.GetReference(_source11.AsSpan());
             byteCount = _source11.Length;
-            LongCopy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
+            BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), byteCount);
 
             return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Copy(in ReadOnlySpan<char> source, ref byte destination, int byteCount)
-        {
-            ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(source));
-            Unsafe.CopyBlockUnaligned(ref destination, ref sourceStart, (uint)byteCount);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void LongCopy(ref char source, ref char destination, int charCount)
-        {
-            var i = 0;
-            while (charCount >= 4)
-            {
-                ref var s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, i));
-                ref var d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, i));
-                d = s;
-                i += 4;
-                charCount -= 4;
-            }
-            if (charCount >= 2)
-            {
-                ref var s = ref Unsafe.As<char, int>(ref Unsafe.Add(ref source, i));
-                ref var d = ref Unsafe.As<char, int>(ref Unsafe.Add(ref destination, i));
-                d = s;
-                i += 2;
-                charCount -= 2;
-            }
-            if (charCount >= 1)
-                Unsafe.Add(ref destination, i) = Unsafe.Add(ref source, i);
-        }
+        }      
     }
 }
