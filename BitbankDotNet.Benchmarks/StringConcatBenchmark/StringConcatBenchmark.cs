@@ -57,6 +57,9 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         string _source04, _source05, _source06, _source07;
         string _source08, _source09, _source10, _source11;
 
+        delegate void Copy(ref char source, ref char destination);
+        Copy _copy;
+
         [GlobalSetup]
         public void Setup()
         {
@@ -66,6 +69,9 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             (_source00, _source01, _source02, _source03) = CreateUtf16String();
             (_source04, _source05, _source06, _source07) = CreateUtf16String();
             (_source08, _source09, _source10, _source11) = CreateUtf16String();
+
+            var mi = typeof(BinaryHelper).GetMethod(nameof(BinaryHelper.CopyChar) + Length);
+            _copy = (Copy)mi.CreateDelegate(typeof(Copy));
         }
 
         [Benchmark, BenchmarkCategory(Count04)]
@@ -647,6 +653,135 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             sourceStart = ref MemoryMarshal.GetReference(_source11.AsSpan());
             charCount = _source11.Length;
             BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+
+            return result;
+        }
+
+        [Benchmark, BenchmarkCategory(Count04)]
+        public string CopyChar04C()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            _copy(ref sourceStart, ref resultStart);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source01.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source02.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+
+            return result;
+        }
+
+        [Benchmark, BenchmarkCategory(Count08)]
+        public string CopyChar08C()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
+                         _source04.Length + _source05.Length + _source06.Length + _source07.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            _copy(ref sourceStart, ref resultStart);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source01.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source02.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source03.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source04.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source05.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source06.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+
+            return result;
+        }
+
+        [Benchmark, BenchmarkCategory(Count12)]
+        public string CopyChar12C()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
+                         _source04.Length + _source05.Length + _source06.Length + _source07.Length +
+                         _source08.Length + _source09.Length + _source10.Length + _source11.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            _copy(ref sourceStart, ref resultStart);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source01.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source02.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source03.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source04.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source05.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source06.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source07.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source08.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source08.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source09.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source09.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source10.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
+            pos += _source10.Length;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source11.AsSpan());
+            _copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos));
 
             return result;
         }
