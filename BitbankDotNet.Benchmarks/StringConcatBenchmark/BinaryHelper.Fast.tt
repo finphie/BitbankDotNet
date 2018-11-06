@@ -55,7 +55,9 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 <# for(var j = 1; j < (i / Count); j++) { #>
             Unsafe.Add(ref d, <#= j #>) = Unsafe.Add(ref s, <#= j #>);
 <# } #>
-<# if (i % Count != 0) { #>
+<# if (i % Count == 1) { #>
+            Unsafe.Add(ref destination, <#= i - 1 #>) = Unsafe.Add(ref source, <#= i - 1 #>);
+<# } else if (i % Count != 0) { #>
             s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, <#= i - Count #>));
             d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, <#= i - Count #>));
             d = s;

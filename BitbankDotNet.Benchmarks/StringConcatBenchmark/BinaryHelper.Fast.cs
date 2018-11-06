@@ -150,9 +150,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             ref var s = ref Unsafe.As<char, long>(ref source);
             ref var d = ref Unsafe.As<char, long>(ref destination);
             d = s;
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 1));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 1));
-            d = s;
+            Unsafe.Add(ref destination, 4) = Unsafe.Add(ref source, 4);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -193,9 +191,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             ref var d = ref Unsafe.As<char, long>(ref destination);
             d = s;
             Unsafe.Add(ref d, 1) = Unsafe.Add(ref s, 1);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 5));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 5));
-            d = s;
+            Unsafe.Add(ref destination, 8) = Unsafe.Add(ref source, 8);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -240,9 +236,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             d = s;
             Unsafe.Add(ref d, 1) = Unsafe.Add(ref s, 1);
             Unsafe.Add(ref d, 2) = Unsafe.Add(ref s, 2);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 9));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 9));
-            d = s;
+            Unsafe.Add(ref destination, 12) = Unsafe.Add(ref source, 12);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -291,9 +285,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref d, 1) = Unsafe.Add(ref s, 1);
             Unsafe.Add(ref d, 2) = Unsafe.Add(ref s, 2);
             Unsafe.Add(ref d, 3) = Unsafe.Add(ref s, 3);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 13));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 13));
-            d = s;
+            Unsafe.Add(ref destination, 16) = Unsafe.Add(ref source, 16);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -346,9 +338,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref d, 2) = Unsafe.Add(ref s, 2);
             Unsafe.Add(ref d, 3) = Unsafe.Add(ref s, 3);
             Unsafe.Add(ref d, 4) = Unsafe.Add(ref s, 4);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 17));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 17));
-            d = s;
+            Unsafe.Add(ref destination, 20) = Unsafe.Add(ref source, 20);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -405,9 +395,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref d, 3) = Unsafe.Add(ref s, 3);
             Unsafe.Add(ref d, 4) = Unsafe.Add(ref s, 4);
             Unsafe.Add(ref d, 5) = Unsafe.Add(ref s, 5);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 21));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 21));
-            d = s;
+            Unsafe.Add(ref destination, 24) = Unsafe.Add(ref source, 24);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -468,9 +456,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref d, 4) = Unsafe.Add(ref s, 4);
             Unsafe.Add(ref d, 5) = Unsafe.Add(ref s, 5);
             Unsafe.Add(ref d, 6) = Unsafe.Add(ref s, 6);
-            s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, 25));
-            d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, 25));
-            d = s;
+            Unsafe.Add(ref destination, 28) = Unsafe.Add(ref source, 28);
 		}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
