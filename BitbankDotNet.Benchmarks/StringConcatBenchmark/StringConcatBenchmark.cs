@@ -50,7 +50,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         const string Count08 = "08";
         const string Count12 = "12";
 
-        [Params(5, 10)]
+        [Params(5, 10, 16, 32)]
         public int Length { get; set; }
 
         string _source00, _source01, _source02, _source03;
@@ -352,7 +352,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         }
 
         [Benchmark, BenchmarkCategory(Count04)]
-        public string LongCopy04()
+        public string CopyChar04A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
 
@@ -379,38 +379,9 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 
             return result;
         }
-
-        [Benchmark, BenchmarkCategory(Count04)]
-        public string CopyChar04()
-        {
-            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
-
-            var result = new string(default, length);
-            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
-
-            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
-            var pos = _source00.Length;
-            BinaryHelper.CopyChar(ref sourceStart, ref resultStart, pos);
-
-            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
-            var charCount = _source01.Length;
-            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
-            pos += charCount;
-
-            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
-            charCount = _source02.Length;
-            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
-            pos += charCount;
-
-            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
-            charCount = _source03.Length;
-            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
-
-            return result;
-        }
-
+       
         [Benchmark, BenchmarkCategory(Count08)]
-        public string LongCopy08()
+        public string CopyChar08A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
                          _source04.Length + _source05.Length + _source06.Length + _source07.Length;
@@ -460,7 +431,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         }
 
         [Benchmark, BenchmarkCategory(Count12)]
-        public string LongCopy12()
+        public string CopyChar12A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
                          _source04.Length + _source05.Length + _source06.Length + _source07.Length +
@@ -528,6 +499,156 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             BinaryHelper.Copy(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
 
             return result;
-        }      
+        }
+
+        [Benchmark, BenchmarkCategory(Count04)]
+        public string CopyChar04B()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref resultStart, pos);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            var charCount = _source01.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            charCount = _source02.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            charCount = _source03.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+
+            return result;
+        }
+
+        [Benchmark, BenchmarkCategory(Count08)]
+        public string CopyChar08B()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
+                         _source04.Length + _source05.Length + _source06.Length + _source07.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref resultStart, pos);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            var charCount = _source01.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            charCount = _source02.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            charCount = _source03.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
+            charCount = _source04.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
+            charCount = _source05.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
+            charCount = _source06.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
+            charCount = _source07.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+
+            return result;
+        }
+
+        [Benchmark, BenchmarkCategory(Count12)]
+        public string CopyChar12B()
+        {
+            var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
+                         _source04.Length + _source05.Length + _source06.Length + _source07.Length +
+                         _source08.Length + _source09.Length + _source10.Length + _source11.Length;
+
+            var result = new string(default, length);
+            ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
+
+            ref var sourceStart = ref MemoryMarshal.GetReference(_source00.AsSpan());
+            var pos = _source00.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref resultStart, pos);
+
+            sourceStart = ref MemoryMarshal.GetReference(_source01.AsSpan());
+            var charCount = _source01.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source02.AsSpan());
+            charCount = _source02.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source03.AsSpan());
+            charCount = _source03.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source04.AsSpan());
+            charCount = _source04.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source05.AsSpan());
+            charCount = _source05.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source06.AsSpan());
+            charCount = _source06.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source07.AsSpan());
+            charCount = _source07.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source08.AsSpan());
+            charCount = _source08.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source09.AsSpan());
+            charCount = _source09.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source10.AsSpan());
+            charCount = _source10.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+            pos += charCount;
+
+            sourceStart = ref MemoryMarshal.GetReference(_source11.AsSpan());
+            charCount = _source11.Length;
+            BinaryHelper.CopyChar(ref sourceStart, ref Unsafe.Add(ref resultStart, pos), charCount);
+
+            return result;
+        }
     }
 }
