@@ -25,24 +25,20 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
     ///                     Span04 |         04 |     10 |  40.44 ns | 0.0928 ns | 0.0823 ns |      0.0712 |               112 B |
     /// UnsafeCopyBlockUnaligned04 |         04 |     10 |  21.68 ns | 0.0825 ns | 0.0771 ns |      0.0712 |               112 B |
     ///                            |            |        |           |           |           |             |                     |
-    ///            StringConcat08A |         08 |      5 |  77.38 ns | 0.3934 ns | 0.3071 ns |      0.1271 |               200 B |
-    ///            StringConcat08B |         08 |      5 |  74.86 ns | 0.2557 ns | 0.2392 ns |      0.1627 |               256 B |
+    ///             StringConcat08 |         08 |      5 |  77.38 ns | 0.3934 ns | 0.3071 ns |      0.1271 |               200 B |
     ///            StringBuilder08 |         08 |      5 |  79.03 ns | 0.2369 ns | 0.2216 ns |      0.1677 |               264 B |
     ///                     Span08 |         08 |      5 |  60.21 ns | 0.1718 ns | 0.1607 ns |      0.0712 |               112 B |
     /// UnsafeCopyBlockUnaligned08 |         08 |      5 |  30.48 ns | 0.1067 ns | 0.0998 ns |      0.0712 |               112 B |
-    ///            StringConcat08A |         08 |     10 |  82.63 ns | 0.4420 ns | 0.3918 ns |      0.1780 |               280 B |
-    ///            StringConcat08B |         08 |     10 |  86.71 ns | 0.2147 ns | 0.2008 ns |      0.2644 |               416 B |
+    ///             StringConcat08 |         08 |     10 |  82.63 ns | 0.4420 ns | 0.3918 ns |      0.1780 |               280 B |
     ///            StringBuilder08 |         08 |     10 |  95.28 ns | 0.3558 ns | 0.3154 ns |      0.2695 |               424 B |
     ///                     Span08 |         08 |     10 |  66.12 ns | 0.1831 ns | 0.1713 ns |      0.1220 |               192 B |
     /// UnsafeCopyBlockUnaligned08 |         08 |     10 |  37.15 ns | 0.2163 ns | 0.2023 ns |      0.1220 |               192 B |
     ///                            |            |        |           |           |           |             |                     |
-    ///            StringConcat12A |         12 |      5 | 111.08 ns | 0.3497 ns | 0.3271 ns |      0.1729 |               272 B |
-    ///            StringConcat12B |         12 |      5 | 112.26 ns | 0.5094 ns | 0.4254 ns |      0.2339 |               368 B |
+    ///             StringConcat12 |         12 |      5 | 111.08 ns | 0.3497 ns | 0.3271 ns |      0.1729 |               272 B |
     ///            StringBuilder12 |         12 |      5 | 106.81 ns | 0.3034 ns | 0.2838 ns |      0.2186 |               344 B |
     ///                     Span12 |         12 |      5 |  82.66 ns | 0.3092 ns | 0.2741 ns |      0.0966 |               152 B |
     /// UnsafeCopyBlockUnaligned12 |         12 |      5 |  43.44 ns | 0.0859 ns | 0.0762 ns |      0.0966 |               152 B |
-    ///            StringConcat12A |         12 |     10 | 125.41 ns | 0.3513 ns | 0.3286 ns |      0.2491 |               392 B |
-    ///            StringConcat12B |         12 |     10 | 129.49 ns | 0.5026 ns | 0.4701 ns |      0.3865 |               608 B |
+    ///             StringConcat12 |         12 |     10 | 125.41 ns | 0.3513 ns | 0.3286 ns |      0.2491 |               392 B |
     ///            StringBuilder12 |         12 |     10 | 127.76 ns | 0.4600 ns | 0.4078 ns |      0.3712 |               584 B |
     ///                     Span12 |         12 |     10 |  92.31 ns | 0.1660 ns | 0.1472 ns |      0.1729 |               272 B |
     /// UnsafeCopyBlockUnaligned12 |         12 |     10 |  53.03 ns | 0.2643 ns | 0.2473 ns |      0.1729 |               272 B |
@@ -76,36 +72,17 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         public string StringConcat04() => string.Concat(_source00, _source01, _source02, _source03);
 
         [Benchmark, BenchmarkCategory(Count08)]
-        public string StringConcat08A()
+        public string StringConcat08()
             => string.Concat(
                 _source00, _source01, _source02, _source03,
                 _source04, _source05, _source06, _source07);
 
-        [Benchmark, BenchmarkCategory(Count08)]
-        public string StringConcat08B()
-        {
-            var s1 = string.Concat(_source00, _source01, _source02, _source03);
-            var s2 = string.Concat(_source04, _source05, _source06, _source07);
-
-            return string.Concat(s1, s2);
-        }
-
         [Benchmark, BenchmarkCategory(Count12)]
-        public string StringConcat12A()
+        public string StringConcat12()
             => string.Concat(
                 _source00, _source01, _source02, _source03,
                 _source04, _source05, _source06, _source07,
                 _source08, _source09, _source10, _source11);
-
-        [Benchmark, BenchmarkCategory(Count12)]
-        public string StringConcat12B()
-        {
-            var s1 = string.Concat(_source00, _source01, _source02, _source03);
-            var s2 = string.Concat(_source04, _source05, _source06, _source07);
-            var s3 = string.Concat(_source08, _source09, _source10, _source11);
-
-            return string.Concat(s1, s2, s3);
-        }
 
         [Benchmark, BenchmarkCategory(Count04)]
         public string StringBuilder04()
