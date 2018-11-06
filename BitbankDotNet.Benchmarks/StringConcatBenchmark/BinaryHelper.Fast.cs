@@ -136,7 +136,6 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref destination, 2) = Unsafe.Add(ref source, 2);
         }
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CopyChar4(ref char source, ref char destination)
         {

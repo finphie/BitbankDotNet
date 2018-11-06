@@ -42,7 +42,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             Unsafe.Add(ref destination, <#= i - 1 #>) = Unsafe.Add(ref source, <#= i - 1 #>);
 <# } #>
         }
-<# if (i < Count) { Write(Environment.NewLine); } #>
+<# if (i < Count - 1) { Write(Environment.NewLine); } #>
 <# } #>
 
 <# for(var i = Count; i <= Max; i++) { #>
