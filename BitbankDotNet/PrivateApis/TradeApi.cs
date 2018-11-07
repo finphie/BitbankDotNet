@@ -9,6 +9,8 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string TradeHistoryPath = "/v1/user/spot/trade_history?";
+
         /// <summary>
         /// [PrivateAPI]約定履歴を取得します。
         /// </summary>
@@ -28,8 +30,10 @@ namespace BitbankDotNet
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
             query["order"] = sort.GetEnumMemberValue();
+            var path = TradeHistoryPath + query;
+            var result = await PrivateApiGetAsync<TradeList>(path).ConfigureAwait(false);
 
-            return (await PrivateApiGetAsync<TradeList>("/v1/user/spot/trade_history?" + query).ConfigureAwait(false)).Trades;
+            return result.Trades;
         }
     }
 }

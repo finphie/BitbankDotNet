@@ -6,11 +6,16 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string StatusPath = "spot/status";
+
         /// <summary>
         /// [PublicAPI]取引所ステータスを返します。
         /// </summary>
         /// <returns>取引所ステータス</returns>
         public async Task<HealthStatus[]> GetStatus()
-            => (await PublicApiGetAsync<HealthStatusList>("spot/status").ConfigureAwait(false)).Statuses;
+        {
+            var result = await PublicApiGetAsync<HealthStatusList>(StatusPath).ConfigureAwait(false);
+            return result.Statuses;
+        }
     }
 }

@@ -6,6 +6,9 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string CancelOrderPath = "/v1/user/spot/cancel_order";
+        const string CancelOrdersPath = "/v1/user/spot/cancel_orders";
+
         /// <summary>
         /// [PrivateAPI]注文をキャンセルします。
         /// </summary>
@@ -13,11 +16,14 @@ namespace BitbankDotNet
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
         public Task<Order> CancelOrderAsync(CurrencyPair pair, long orderId)
-            => PrivateApiPostAsync<Order, OrderInfoBody>("/v1/user/spot/cancel_order", new OrderInfoBody
+        {
+            var body = new OrderInfoBody
             {
                 Pair = pair,
                 OrderId = orderId
-            });
+            };
+            return PrivateApiPostAsync<Order, OrderInfoBody>(CancelOrderPath, body);
+        }
 
         /// <summary>
         /// [PrivateAPI]複数の注文をキャンセルします。
@@ -26,10 +32,16 @@ namespace BitbankDotNet
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
         public async Task<Order[]> CancelOrdersAsync(CurrencyPair pair, long[] orderIds)
-            => (await PrivateApiPostAsync<OrderList, OrdersInfoBody>("/v1/user/spot/cancel_orders", new OrdersInfoBody
+        {
+            var body = new OrdersInfoBody
             {
                 Pair = pair,
                 OrderIds = orderIds
-            }).ConfigureAwait(false)).Orders;
+            };
+            var result = await PrivateApiPostAsync<OrderList, OrdersInfoBody>(CancelOrdersPath, body)
+                .ConfigureAwait(false);
+
+            return result.Orders;
+        }
     }
 }

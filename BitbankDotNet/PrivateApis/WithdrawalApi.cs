@@ -8,6 +8,9 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string WithdrawalAccountPath = "/v1/user/withdrawal_account?";
+        const string RequestWithdrawalPath = "/v1/user/request_withdrawal";
+
         /// <summary>
         /// [PrivateAPI]出金アカウントを取得します。
         /// </summary>
@@ -17,8 +20,10 @@ namespace BitbankDotNet
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["asset"] = asset.GetEnumMemberValue();
+            var path = WithdrawalAccountPath + query;
+            var result = await PrivateApiGetAsync<WithdrawalAccountList>(path).ConfigureAwait(false);
 
-            return (await PrivateApiGetAsync<WithdrawalAccountList>("/v1/user/withdrawal_account?" + query).ConfigureAwait(false)).Accounts;
+            return result.Accounts;
         }
 
         /// <summary>
@@ -31,13 +36,17 @@ namespace BitbankDotNet
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
         public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int otpToken, int smsToken)
-            => PrivateApiPostAsync<Withdrawal, WithdrawalBody>("/v1/user/request_withdrawal", new WithdrawalBody
+        {
+            var body = new WithdrawalBody
             {
                 Asset = asset,
                 Amount = amount,
                 Uuid = uuid,
                 OtpToken = otpToken,
                 SmsToken = smsToken
-            });
+            };
+
+            return PrivateApiPostAsync<Withdrawal, WithdrawalBody>(RequestWithdrawalPath, body);
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string ActiveOrderPath = "/v1/user/spot/active_orders?";
+
         /// <summary>
         /// [PrivateAPI]アクティブな注文を取得します。
         /// </summary>
@@ -28,7 +30,10 @@ namespace BitbankDotNet
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
 
-            return (await PrivateApiGetAsync<OrderList>("/v1/user/spot/active_orders?" + query).ConfigureAwait(false)).Orders;
+            var path = ActiveOrderPath + query;
+            var result = await PrivateApiGetAsync<OrderList>(path).ConfigureAwait(false);
+
+            return result.Orders;
         }
     }
 }

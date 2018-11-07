@@ -7,13 +7,18 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
+        const string TransactionPath = "/transactions";
+
         /// <summary>
         /// [PublicAPI]最新の約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
         public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair)
-            => (await PublicApiGetAsync<TransactionList>("/transactions", pair).ConfigureAwait(false)).Transactions;
+        {
+            var result = await PublicApiGetAsync<TransactionList>(TransactionPath, pair).ConfigureAwait(false);
+            return result.Transactions;
+        }
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
@@ -22,7 +27,11 @@ namespace BitbankDotNet
         /// <param name="query">クエリ</param>
         /// <returns>約定履歴</returns>
         async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, string query)
-            => (await PublicApiGetAsync<TransactionList>($"/transactions/{query}", pair).ConfigureAwait(false)).Transactions;
+        {
+            var path = TransactionPath + $"/{query}";
+            var result = await PublicApiGetAsync<TransactionList>(path, pair).ConfigureAwait(false);
+            return result.Transactions;
+        }
 
         /// <summary>
         /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。

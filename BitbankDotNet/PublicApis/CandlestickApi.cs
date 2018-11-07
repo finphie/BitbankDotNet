@@ -8,15 +8,7 @@ namespace BitbankDotNet
 {
     partial class BitbankClient
     {
-        /// <summary>
-        /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
-        /// </summary>
-        /// <param name="pair">通貨ペア</param>
-        /// <param name="type">ローソク足の期間</param>
-        /// <param name="query">クエリ</param>
-        /// <returns>ローソク足データ</returns>
-        async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, string query)
-            => (await PublicApiGetAsync<CandlestickList>($"/candlestick/{type.GetEnumMemberValue()}/{query}", pair).ConfigureAwait(false)).Candlesticks[0].Ohlcv;
+        const string CandlestickPath = "/candlestick/";
 
         /// <summary>
         /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
@@ -51,7 +43,7 @@ namespace BitbankDotNet
             => GetCandlesticksAsync(pair, type, $"{date:yyyyMMdd}");
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
+        /// [PublicAPI]指定された日付のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>
@@ -59,5 +51,20 @@ namespace BitbankDotNet
         /// <returns>ローソク足データ</returns>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTimeOffset date)
             => GetCandlesticksAsync(pair, type, date.UtcDateTime);
+
+        /// <summary>
+        /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
+        /// <param name="type">ローソク足の期間</param>
+        /// <param name="query">クエリ</param>
+        /// <returns>ローソク足データ</returns>
+        async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, string query)
+        {
+            var path = CandlestickPath + type.GetEnumMemberValue() + $"/{query}";
+            var result = await PublicApiGetAsync<CandlestickList>(path, pair).ConfigureAwait(false);
+
+            return result.Candlesticks[0].Ohlcv;
+        }
     }
 }
