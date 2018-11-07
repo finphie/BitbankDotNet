@@ -142,7 +142,7 @@ namespace BitbankDotNet
         // Private API Getリクエスト
         Task<T> PrivateApiGetAsync<T>(string path)
             where T : class, IEntityResponse
-            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, Encoding.UTF8.GetBytes(path)));
+            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path.FromAsciiStringToUtf8Bytes()));
 
         // Private API Postリクエスト
         Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
