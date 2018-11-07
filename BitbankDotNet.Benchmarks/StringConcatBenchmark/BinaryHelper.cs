@@ -17,30 +17,28 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         public static void Copy(ref char source, ref char destination, int charCount)
         {
             var i = 0;
+            ref var s = ref Unsafe.As<char, byte>(ref source);
+            ref var d = ref Unsafe.As<char, byte>(ref destination);
 
             const int count4 = sizeof(long) / sizeof(char);
             while (charCount >= count4)
             {
-                ref var s = ref Unsafe.As<char, long>(ref Unsafe.Add(ref source, i));
-                ref var d = ref Unsafe.As<char, long>(ref Unsafe.Add(ref destination, i));
-                d = s;
-                i += count4;
+                Unsafe.WriteUnaligned(ref Unsafe.Add(ref d, i), Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref s, i)));
+                i += sizeof(long);
                 charCount -= count4;
             }
 
             const int count2 = sizeof(int) / sizeof(char);
             if (charCount >= count2)
             {
-                ref var s = ref Unsafe.As<char, int>(ref Unsafe.Add(ref source, i));
-                ref var d = ref Unsafe.As<char, int>(ref Unsafe.Add(ref destination, i));
-                d = s;
-                i += count2;
+                Unsafe.WriteUnaligned(ref Unsafe.Add(ref d, i), Unsafe.ReadUnaligned<int>(ref Unsafe.Add(ref s, i)));
+                i += sizeof(int);
                 charCount -= count2;
             }
 
             const int count1 = sizeof(char) / sizeof(char);
             if (charCount >= count1)
-                Unsafe.Add(ref destination, i) = Unsafe.Add(ref source, i);
+                Unsafe.WriteUnaligned(ref Unsafe.Add(ref d, i), Unsafe.ReadUnaligned<char>(ref Unsafe.Add(ref s, i)));
         }
     }
 }
