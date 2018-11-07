@@ -9,7 +9,7 @@ namespace BitbankDotNet.Shared.Extensions
     {
         public static void Deconstruct<T>(this T[] array, out T first, out T second, out T third, out T fourth)
         {
-            if (array == null)
+            if (array is null)
                 throw new ArgumentNullException(nameof(array));
             if (array.Length < 4)
                 throw new ArgumentOutOfRangeException(nameof(array));
