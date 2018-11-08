@@ -2,7 +2,6 @@
 using BitbankDotNet.Shared.Extensions;
 using BitbankDotNet.Shared.Helpers;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -63,12 +62,11 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [GlobalSetup]
         public void Setup()
         {
-            string[] CreateUtf16String()
-                => Enumerable.Range(1, 4).Select(_ => StringHelper.CreateUtf16String(Length)).ToArray();
+            string[] CreateUtf16Strings() => StringHelper.CreateUtf16Strings(4, Length);
 
-            (_source00, _source01, _source02, _source03) = CreateUtf16String();
-            (_source04, _source05, _source06, _source07) = CreateUtf16String();
-            (_source08, _source09, _source10, _source11) = CreateUtf16String();
+            (_source00, _source01, _source02, _source03) = CreateUtf16Strings();
+            (_source04, _source05, _source06, _source07) = CreateUtf16Strings();
+            (_source08, _source09, _source10, _source11) = CreateUtf16Strings();
 
             var mi = typeof(BinaryHelper).GetMethod(nameof(BinaryHelper.CopyChar) + Length);
             _copy = (Copy)mi.CreateDelegate(typeof(Copy));
