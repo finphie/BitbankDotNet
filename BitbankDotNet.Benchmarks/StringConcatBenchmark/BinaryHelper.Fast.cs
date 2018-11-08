@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿// ReSharper disable RedundantAssignment
+
+using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 {
@@ -10,7 +12,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             switch (charCount)
             {
                 case 1:
-                    CopyChar1(ref source, out destination);
+                    CopyChar1(ref source, ref destination);
                     break;
                 case 2:
                     CopyChar2(ref source, ref destination);
@@ -114,7 +116,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CopyChar1(ref char source, out char destination)
+        public static void CopyChar1(ref char source, ref char destination)
         {
             destination = source;
         }

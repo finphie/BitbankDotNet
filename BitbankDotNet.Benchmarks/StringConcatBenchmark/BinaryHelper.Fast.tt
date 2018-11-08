@@ -1,5 +1,7 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ output extension=".cs" #>
+// ReSharper disable RedundantAssignment
+
 using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
@@ -17,7 +19,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
             {
 <# for(var i = 1; i <= Max; i++) { #>
                 case <#= i #>:
-                    CopyChar<#= i #>(ref source, <# if (i == 1) { #>out<# } else { #>ref<# } #> destination);
+                    CopyChar<#= i #>(ref source, ref destination);
                     break;
 <# } #>
                 default:
@@ -30,7 +32,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
 
 <# for(var i = 1; i < Count; i++) { #>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CopyChar<#= i #>(ref char source, <# if (i == 1) { #>out<# } else { #>ref<# } #> char destination)
+        public static void CopyChar<#= i #>(ref char source, ref char destination)
         {
 <# if (i == 1) { #>
             destination = source;
