@@ -44,14 +44,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>A()
         {
-            var result = new string(default, <#= i #>);
+            var result = new string(default, <#= i * 2 #>);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, <#= i * 2 #>);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i #>), ref sourceStart, <#= i * 2 #>);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, <#= i * 2 #>);
 
             return result;
         }
@@ -59,14 +59,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>B()
         {
-            var result = new string(default, <#= i #>);
+            var result = new string(default, <#= i * 2 #>);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length<#= i #>);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i #>), ref sourceStart, _length<#= i #>);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, _length<#= i #>);
 
             return result;
         }
@@ -74,7 +74,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("<#= i #>")]
         public string CopyChar<#= i #>()
         {
-            var result = new string(default, <#= i #>);
+            var result = new string(default, <#= i * 2 #>);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan());

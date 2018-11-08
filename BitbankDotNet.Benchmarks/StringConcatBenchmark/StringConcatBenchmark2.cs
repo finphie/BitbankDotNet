@@ -149,14 +149,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("1")]
         public string UnsafeCopyBlockUnaligned1A()
         {
-            var result = new string(default, 1);
+            var result = new string(default, 2);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source1A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 2);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source1B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 1), ref sourceStart, 2);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 2), ref sourceStart, 2);
 
             return result;
         }
@@ -164,14 +164,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("1")]
         public string UnsafeCopyBlockUnaligned1B()
         {
-            var result = new string(default, 1);
+            var result = new string(default, 2);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source1A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length1);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source1B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 1), ref sourceStart, _length1);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 2), ref sourceStart, _length1);
 
             return result;
         }
@@ -179,7 +179,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("1")]
         public string CopyChar1()
         {
-            var result = new string(default, 1);
+            var result = new string(default, 2);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source1A.AsSpan());
@@ -194,14 +194,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("2")]
         public string UnsafeCopyBlockUnaligned2A()
         {
-            var result = new string(default, 2);
+            var result = new string(default, 4);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source2A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 4);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source2B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 2), ref sourceStart, 4);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 4), ref sourceStart, 4);
 
             return result;
         }
@@ -209,14 +209,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("2")]
         public string UnsafeCopyBlockUnaligned2B()
         {
-            var result = new string(default, 2);
+            var result = new string(default, 4);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source2A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length2);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source2B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 2), ref sourceStart, _length2);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 4), ref sourceStart, _length2);
 
             return result;
         }
@@ -224,7 +224,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("2")]
         public string CopyChar2()
         {
-            var result = new string(default, 2);
+            var result = new string(default, 4);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source2A.AsSpan());
@@ -239,14 +239,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("3")]
         public string UnsafeCopyBlockUnaligned3A()
         {
-            var result = new string(default, 3);
+            var result = new string(default, 6);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source3A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 6);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source3B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 3), ref sourceStart, 6);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 6), ref sourceStart, 6);
 
             return result;
         }
@@ -254,14 +254,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("3")]
         public string UnsafeCopyBlockUnaligned3B()
         {
-            var result = new string(default, 3);
+            var result = new string(default, 6);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source3A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length3);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source3B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 3), ref sourceStart, _length3);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 6), ref sourceStart, _length3);
 
             return result;
         }
@@ -269,7 +269,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("3")]
         public string CopyChar3()
         {
-            var result = new string(default, 3);
+            var result = new string(default, 6);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source3A.AsSpan());
@@ -284,14 +284,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("4")]
         public string UnsafeCopyBlockUnaligned4A()
         {
-            var result = new string(default, 4);
+            var result = new string(default, 8);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source4A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 8);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source4B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 4), ref sourceStart, 8);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 8), ref sourceStart, 8);
 
             return result;
         }
@@ -299,14 +299,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("4")]
         public string UnsafeCopyBlockUnaligned4B()
         {
-            var result = new string(default, 4);
+            var result = new string(default, 8);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source4A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length4);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source4B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 4), ref sourceStart, _length4);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 8), ref sourceStart, _length4);
 
             return result;
         }
@@ -314,7 +314,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("4")]
         public string CopyChar4()
         {
-            var result = new string(default, 4);
+            var result = new string(default, 8);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source4A.AsSpan());
@@ -329,14 +329,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("5")]
         public string UnsafeCopyBlockUnaligned5A()
         {
-            var result = new string(default, 5);
+            var result = new string(default, 10);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source5A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 10);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source5B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 5), ref sourceStart, 10);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 10), ref sourceStart, 10);
 
             return result;
         }
@@ -344,14 +344,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("5")]
         public string UnsafeCopyBlockUnaligned5B()
         {
-            var result = new string(default, 5);
+            var result = new string(default, 10);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source5A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length5);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source5B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 5), ref sourceStart, _length5);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 10), ref sourceStart, _length5);
 
             return result;
         }
@@ -359,7 +359,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("5")]
         public string CopyChar5()
         {
-            var result = new string(default, 5);
+            var result = new string(default, 10);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source5A.AsSpan());
@@ -374,14 +374,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("6")]
         public string UnsafeCopyBlockUnaligned6A()
         {
-            var result = new string(default, 6);
+            var result = new string(default, 12);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source6A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 12);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source6B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 6), ref sourceStart, 12);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 12), ref sourceStart, 12);
 
             return result;
         }
@@ -389,14 +389,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("6")]
         public string UnsafeCopyBlockUnaligned6B()
         {
-            var result = new string(default, 6);
+            var result = new string(default, 12);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source6A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length6);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source6B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 6), ref sourceStart, _length6);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 12), ref sourceStart, _length6);
 
             return result;
         }
@@ -404,7 +404,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("6")]
         public string CopyChar6()
         {
-            var result = new string(default, 6);
+            var result = new string(default, 12);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source6A.AsSpan());
@@ -419,14 +419,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("7")]
         public string UnsafeCopyBlockUnaligned7A()
         {
-            var result = new string(default, 7);
+            var result = new string(default, 14);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source7A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 14);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source7B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 7), ref sourceStart, 14);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 14), ref sourceStart, 14);
 
             return result;
         }
@@ -434,14 +434,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("7")]
         public string UnsafeCopyBlockUnaligned7B()
         {
-            var result = new string(default, 7);
+            var result = new string(default, 14);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source7A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length7);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source7B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 7), ref sourceStart, _length7);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 14), ref sourceStart, _length7);
 
             return result;
         }
@@ -449,7 +449,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("7")]
         public string CopyChar7()
         {
-            var result = new string(default, 7);
+            var result = new string(default, 14);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source7A.AsSpan());
@@ -464,14 +464,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("8")]
         public string UnsafeCopyBlockUnaligned8A()
         {
-            var result = new string(default, 8);
+            var result = new string(default, 16);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source8A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 16);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source8B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 8), ref sourceStart, 16);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 16), ref sourceStart, 16);
 
             return result;
         }
@@ -479,14 +479,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("8")]
         public string UnsafeCopyBlockUnaligned8B()
         {
-            var result = new string(default, 8);
+            var result = new string(default, 16);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source8A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length8);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source8B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 8), ref sourceStart, _length8);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 16), ref sourceStart, _length8);
 
             return result;
         }
@@ -494,7 +494,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("8")]
         public string CopyChar8()
         {
-            var result = new string(default, 8);
+            var result = new string(default, 16);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source8A.AsSpan());
@@ -509,14 +509,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("9")]
         public string UnsafeCopyBlockUnaligned9A()
         {
-            var result = new string(default, 9);
+            var result = new string(default, 18);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source9A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 18);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source9B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 9), ref sourceStart, 18);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 18), ref sourceStart, 18);
 
             return result;
         }
@@ -524,14 +524,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("9")]
         public string UnsafeCopyBlockUnaligned9B()
         {
-            var result = new string(default, 9);
+            var result = new string(default, 18);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source9A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length9);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source9B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 9), ref sourceStart, _length9);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 18), ref sourceStart, _length9);
 
             return result;
         }
@@ -539,7 +539,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("9")]
         public string CopyChar9()
         {
-            var result = new string(default, 9);
+            var result = new string(default, 18);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source9A.AsSpan());
@@ -554,14 +554,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("10")]
         public string UnsafeCopyBlockUnaligned10A()
         {
-            var result = new string(default, 10);
+            var result = new string(default, 20);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source10A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 20);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source10B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 10), ref sourceStart, 20);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 20), ref sourceStart, 20);
 
             return result;
         }
@@ -569,14 +569,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("10")]
         public string UnsafeCopyBlockUnaligned10B()
         {
-            var result = new string(default, 10);
+            var result = new string(default, 20);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source10A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length10);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source10B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 10), ref sourceStart, _length10);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 20), ref sourceStart, _length10);
 
             return result;
         }
@@ -584,7 +584,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("10")]
         public string CopyChar10()
         {
-            var result = new string(default, 10);
+            var result = new string(default, 20);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source10A.AsSpan());
@@ -599,14 +599,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("11")]
         public string UnsafeCopyBlockUnaligned11A()
         {
-            var result = new string(default, 11);
+            var result = new string(default, 22);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source11A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 22);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source11B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 11), ref sourceStart, 22);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 22), ref sourceStart, 22);
 
             return result;
         }
@@ -614,14 +614,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("11")]
         public string UnsafeCopyBlockUnaligned11B()
         {
-            var result = new string(default, 11);
+            var result = new string(default, 22);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source11A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length11);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source11B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 11), ref sourceStart, _length11);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 22), ref sourceStart, _length11);
 
             return result;
         }
@@ -629,7 +629,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("11")]
         public string CopyChar11()
         {
-            var result = new string(default, 11);
+            var result = new string(default, 22);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source11A.AsSpan());
@@ -644,14 +644,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("12")]
         public string UnsafeCopyBlockUnaligned12A()
         {
-            var result = new string(default, 12);
+            var result = new string(default, 24);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source12A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 24);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source12B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 12), ref sourceStart, 24);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 24), ref sourceStart, 24);
 
             return result;
         }
@@ -659,14 +659,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("12")]
         public string UnsafeCopyBlockUnaligned12B()
         {
-            var result = new string(default, 12);
+            var result = new string(default, 24);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source12A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length12);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source12B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 12), ref sourceStart, _length12);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 24), ref sourceStart, _length12);
 
             return result;
         }
@@ -674,7 +674,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("12")]
         public string CopyChar12()
         {
-            var result = new string(default, 12);
+            var result = new string(default, 24);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source12A.AsSpan());
@@ -689,14 +689,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("13")]
         public string UnsafeCopyBlockUnaligned13A()
         {
-            var result = new string(default, 13);
+            var result = new string(default, 26);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source13A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 26);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source13B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 13), ref sourceStart, 26);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 26), ref sourceStart, 26);
 
             return result;
         }
@@ -704,14 +704,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("13")]
         public string UnsafeCopyBlockUnaligned13B()
         {
-            var result = new string(default, 13);
+            var result = new string(default, 26);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source13A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length13);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source13B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 13), ref sourceStart, _length13);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 26), ref sourceStart, _length13);
 
             return result;
         }
@@ -719,7 +719,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("13")]
         public string CopyChar13()
         {
-            var result = new string(default, 13);
+            var result = new string(default, 26);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source13A.AsSpan());
@@ -734,14 +734,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("14")]
         public string UnsafeCopyBlockUnaligned14A()
         {
-            var result = new string(default, 14);
+            var result = new string(default, 28);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source14A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 28);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source14B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 14), ref sourceStart, 28);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 28), ref sourceStart, 28);
 
             return result;
         }
@@ -749,14 +749,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("14")]
         public string UnsafeCopyBlockUnaligned14B()
         {
-            var result = new string(default, 14);
+            var result = new string(default, 28);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source14A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length14);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source14B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 14), ref sourceStart, _length14);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 28), ref sourceStart, _length14);
 
             return result;
         }
@@ -764,7 +764,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("14")]
         public string CopyChar14()
         {
-            var result = new string(default, 14);
+            var result = new string(default, 28);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source14A.AsSpan());
@@ -779,14 +779,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("15")]
         public string UnsafeCopyBlockUnaligned15A()
         {
-            var result = new string(default, 15);
+            var result = new string(default, 30);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source15A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 30);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source15B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 15), ref sourceStart, 30);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 30), ref sourceStart, 30);
 
             return result;
         }
@@ -794,14 +794,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("15")]
         public string UnsafeCopyBlockUnaligned15B()
         {
-            var result = new string(default, 15);
+            var result = new string(default, 30);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source15A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length15);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source15B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 15), ref sourceStart, _length15);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 30), ref sourceStart, _length15);
 
             return result;
         }
@@ -809,7 +809,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("15")]
         public string CopyChar15()
         {
-            var result = new string(default, 15);
+            var result = new string(default, 30);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source15A.AsSpan());
@@ -824,14 +824,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("16")]
         public string UnsafeCopyBlockUnaligned16A()
         {
-            var result = new string(default, 16);
+            var result = new string(default, 32);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source16A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 32);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source16B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 16), ref sourceStart, 32);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 32), ref sourceStart, 32);
 
             return result;
         }
@@ -839,14 +839,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("16")]
         public string UnsafeCopyBlockUnaligned16B()
         {
-            var result = new string(default, 16);
+            var result = new string(default, 32);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source16A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length16);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source16B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 16), ref sourceStart, _length16);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 32), ref sourceStart, _length16);
 
             return result;
         }
@@ -854,7 +854,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("16")]
         public string CopyChar16()
         {
-            var result = new string(default, 16);
+            var result = new string(default, 32);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source16A.AsSpan());
@@ -869,14 +869,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("17")]
         public string UnsafeCopyBlockUnaligned17A()
         {
-            var result = new string(default, 17);
+            var result = new string(default, 34);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source17A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 34);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source17B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 17), ref sourceStart, 34);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 34), ref sourceStart, 34);
 
             return result;
         }
@@ -884,14 +884,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("17")]
         public string UnsafeCopyBlockUnaligned17B()
         {
-            var result = new string(default, 17);
+            var result = new string(default, 34);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source17A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length17);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source17B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 17), ref sourceStart, _length17);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 34), ref sourceStart, _length17);
 
             return result;
         }
@@ -899,7 +899,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("17")]
         public string CopyChar17()
         {
-            var result = new string(default, 17);
+            var result = new string(default, 34);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source17A.AsSpan());
@@ -914,14 +914,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("18")]
         public string UnsafeCopyBlockUnaligned18A()
         {
-            var result = new string(default, 18);
+            var result = new string(default, 36);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source18A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 36);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source18B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 18), ref sourceStart, 36);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 36), ref sourceStart, 36);
 
             return result;
         }
@@ -929,14 +929,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("18")]
         public string UnsafeCopyBlockUnaligned18B()
         {
-            var result = new string(default, 18);
+            var result = new string(default, 36);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source18A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length18);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source18B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 18), ref sourceStart, _length18);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 36), ref sourceStart, _length18);
 
             return result;
         }
@@ -944,7 +944,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("18")]
         public string CopyChar18()
         {
-            var result = new string(default, 18);
+            var result = new string(default, 36);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source18A.AsSpan());
@@ -959,14 +959,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("19")]
         public string UnsafeCopyBlockUnaligned19A()
         {
-            var result = new string(default, 19);
+            var result = new string(default, 38);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source19A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 38);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source19B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 19), ref sourceStart, 38);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 38), ref sourceStart, 38);
 
             return result;
         }
@@ -974,14 +974,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("19")]
         public string UnsafeCopyBlockUnaligned19B()
         {
-            var result = new string(default, 19);
+            var result = new string(default, 38);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source19A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length19);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source19B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 19), ref sourceStart, _length19);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 38), ref sourceStart, _length19);
 
             return result;
         }
@@ -989,7 +989,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("19")]
         public string CopyChar19()
         {
-            var result = new string(default, 19);
+            var result = new string(default, 38);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source19A.AsSpan());
@@ -1004,14 +1004,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("20")]
         public string UnsafeCopyBlockUnaligned20A()
         {
-            var result = new string(default, 20);
+            var result = new string(default, 40);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source20A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 40);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source20B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 20), ref sourceStart, 40);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 40), ref sourceStart, 40);
 
             return result;
         }
@@ -1019,14 +1019,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("20")]
         public string UnsafeCopyBlockUnaligned20B()
         {
-            var result = new string(default, 20);
+            var result = new string(default, 40);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source20A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length20);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source20B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 20), ref sourceStart, _length20);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 40), ref sourceStart, _length20);
 
             return result;
         }
@@ -1034,7 +1034,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("20")]
         public string CopyChar20()
         {
-            var result = new string(default, 20);
+            var result = new string(default, 40);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source20A.AsSpan());
@@ -1049,14 +1049,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("21")]
         public string UnsafeCopyBlockUnaligned21A()
         {
-            var result = new string(default, 21);
+            var result = new string(default, 42);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source21A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 42);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source21B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 21), ref sourceStart, 42);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 42), ref sourceStart, 42);
 
             return result;
         }
@@ -1064,14 +1064,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("21")]
         public string UnsafeCopyBlockUnaligned21B()
         {
-            var result = new string(default, 21);
+            var result = new string(default, 42);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source21A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length21);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source21B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 21), ref sourceStart, _length21);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 42), ref sourceStart, _length21);
 
             return result;
         }
@@ -1079,7 +1079,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("21")]
         public string CopyChar21()
         {
-            var result = new string(default, 21);
+            var result = new string(default, 42);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source21A.AsSpan());
@@ -1094,14 +1094,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("22")]
         public string UnsafeCopyBlockUnaligned22A()
         {
-            var result = new string(default, 22);
+            var result = new string(default, 44);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source22A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 44);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source22B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 22), ref sourceStart, 44);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 44), ref sourceStart, 44);
 
             return result;
         }
@@ -1109,14 +1109,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("22")]
         public string UnsafeCopyBlockUnaligned22B()
         {
-            var result = new string(default, 22);
+            var result = new string(default, 44);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source22A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length22);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source22B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 22), ref sourceStart, _length22);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 44), ref sourceStart, _length22);
 
             return result;
         }
@@ -1124,7 +1124,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("22")]
         public string CopyChar22()
         {
-            var result = new string(default, 22);
+            var result = new string(default, 44);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source22A.AsSpan());
@@ -1139,14 +1139,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("23")]
         public string UnsafeCopyBlockUnaligned23A()
         {
-            var result = new string(default, 23);
+            var result = new string(default, 46);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source23A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 46);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source23B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 23), ref sourceStart, 46);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 46), ref sourceStart, 46);
 
             return result;
         }
@@ -1154,14 +1154,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("23")]
         public string UnsafeCopyBlockUnaligned23B()
         {
-            var result = new string(default, 23);
+            var result = new string(default, 46);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source23A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length23);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source23B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 23), ref sourceStart, _length23);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 46), ref sourceStart, _length23);
 
             return result;
         }
@@ -1169,7 +1169,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("23")]
         public string CopyChar23()
         {
-            var result = new string(default, 23);
+            var result = new string(default, 46);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source23A.AsSpan());
@@ -1184,14 +1184,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("24")]
         public string UnsafeCopyBlockUnaligned24A()
         {
-            var result = new string(default, 24);
+            var result = new string(default, 48);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source24A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 48);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source24B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 24), ref sourceStart, 48);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 48), ref sourceStart, 48);
 
             return result;
         }
@@ -1199,14 +1199,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("24")]
         public string UnsafeCopyBlockUnaligned24B()
         {
-            var result = new string(default, 24);
+            var result = new string(default, 48);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source24A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length24);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source24B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 24), ref sourceStart, _length24);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 48), ref sourceStart, _length24);
 
             return result;
         }
@@ -1214,7 +1214,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("24")]
         public string CopyChar24()
         {
-            var result = new string(default, 24);
+            var result = new string(default, 48);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source24A.AsSpan());
@@ -1229,14 +1229,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("25")]
         public string UnsafeCopyBlockUnaligned25A()
         {
-            var result = new string(default, 25);
+            var result = new string(default, 50);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source25A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 50);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source25B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 25), ref sourceStart, 50);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 50), ref sourceStart, 50);
 
             return result;
         }
@@ -1244,14 +1244,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("25")]
         public string UnsafeCopyBlockUnaligned25B()
         {
-            var result = new string(default, 25);
+            var result = new string(default, 50);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source25A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length25);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source25B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 25), ref sourceStart, _length25);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 50), ref sourceStart, _length25);
 
             return result;
         }
@@ -1259,7 +1259,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("25")]
         public string CopyChar25()
         {
-            var result = new string(default, 25);
+            var result = new string(default, 50);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source25A.AsSpan());
@@ -1274,14 +1274,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("26")]
         public string UnsafeCopyBlockUnaligned26A()
         {
-            var result = new string(default, 26);
+            var result = new string(default, 52);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source26A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 52);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source26B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 26), ref sourceStart, 52);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 52), ref sourceStart, 52);
 
             return result;
         }
@@ -1289,14 +1289,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("26")]
         public string UnsafeCopyBlockUnaligned26B()
         {
-            var result = new string(default, 26);
+            var result = new string(default, 52);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source26A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length26);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source26B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 26), ref sourceStart, _length26);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 52), ref sourceStart, _length26);
 
             return result;
         }
@@ -1304,7 +1304,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("26")]
         public string CopyChar26()
         {
-            var result = new string(default, 26);
+            var result = new string(default, 52);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source26A.AsSpan());
@@ -1319,14 +1319,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("27")]
         public string UnsafeCopyBlockUnaligned27A()
         {
-            var result = new string(default, 27);
+            var result = new string(default, 54);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source27A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 54);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source27B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 27), ref sourceStart, 54);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 54), ref sourceStart, 54);
 
             return result;
         }
@@ -1334,14 +1334,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("27")]
         public string UnsafeCopyBlockUnaligned27B()
         {
-            var result = new string(default, 27);
+            var result = new string(default, 54);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source27A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length27);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source27B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 27), ref sourceStart, _length27);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 54), ref sourceStart, _length27);
 
             return result;
         }
@@ -1349,7 +1349,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("27")]
         public string CopyChar27()
         {
-            var result = new string(default, 27);
+            var result = new string(default, 54);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source27A.AsSpan());
@@ -1364,14 +1364,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("28")]
         public string UnsafeCopyBlockUnaligned28A()
         {
-            var result = new string(default, 28);
+            var result = new string(default, 56);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source28A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 56);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source28B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 28), ref sourceStart, 56);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 56), ref sourceStart, 56);
 
             return result;
         }
@@ -1379,14 +1379,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("28")]
         public string UnsafeCopyBlockUnaligned28B()
         {
-            var result = new string(default, 28);
+            var result = new string(default, 56);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source28A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length28);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source28B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 28), ref sourceStart, _length28);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 56), ref sourceStart, _length28);
 
             return result;
         }
@@ -1394,7 +1394,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("28")]
         public string CopyChar28()
         {
-            var result = new string(default, 28);
+            var result = new string(default, 56);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source28A.AsSpan());
@@ -1409,14 +1409,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("29")]
         public string UnsafeCopyBlockUnaligned29A()
         {
-            var result = new string(default, 29);
+            var result = new string(default, 58);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source29A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 58);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source29B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 29), ref sourceStart, 58);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 58), ref sourceStart, 58);
 
             return result;
         }
@@ -1424,14 +1424,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("29")]
         public string UnsafeCopyBlockUnaligned29B()
         {
-            var result = new string(default, 29);
+            var result = new string(default, 58);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source29A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length29);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source29B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 29), ref sourceStart, _length29);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 58), ref sourceStart, _length29);
 
             return result;
         }
@@ -1439,7 +1439,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("29")]
         public string CopyChar29()
         {
-            var result = new string(default, 29);
+            var result = new string(default, 58);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source29A.AsSpan());
@@ -1454,14 +1454,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("30")]
         public string UnsafeCopyBlockUnaligned30A()
         {
-            var result = new string(default, 30);
+            var result = new string(default, 60);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source30A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 60);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source30B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 30), ref sourceStart, 60);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 60), ref sourceStart, 60);
 
             return result;
         }
@@ -1469,14 +1469,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("30")]
         public string UnsafeCopyBlockUnaligned30B()
         {
-            var result = new string(default, 30);
+            var result = new string(default, 60);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source30A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length30);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source30B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 30), ref sourceStart, _length30);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 60), ref sourceStart, _length30);
 
             return result;
         }
@@ -1484,7 +1484,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("30")]
         public string CopyChar30()
         {
-            var result = new string(default, 30);
+            var result = new string(default, 60);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source30A.AsSpan());
@@ -1499,14 +1499,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("31")]
         public string UnsafeCopyBlockUnaligned31A()
         {
-            var result = new string(default, 31);
+            var result = new string(default, 62);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source31A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 62);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source31B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 31), ref sourceStart, 62);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 62), ref sourceStart, 62);
 
             return result;
         }
@@ -1514,14 +1514,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("31")]
         public string UnsafeCopyBlockUnaligned31B()
         {
-            var result = new string(default, 31);
+            var result = new string(default, 62);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source31A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length31);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source31B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 31), ref sourceStart, _length31);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 62), ref sourceStart, _length31);
 
             return result;
         }
@@ -1529,7 +1529,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("31")]
         public string CopyChar31()
         {
-            var result = new string(default, 31);
+            var result = new string(default, 62);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source31A.AsSpan());
@@ -1544,14 +1544,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("32")]
         public string UnsafeCopyBlockUnaligned32A()
         {
-            var result = new string(default, 32);
+            var result = new string(default, 64);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source32A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, 64);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source32B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 32), ref sourceStart, 64);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 64), ref sourceStart, 64);
 
             return result;
         }
@@ -1559,14 +1559,14 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("32")]
         public string UnsafeCopyBlockUnaligned32B()
         {
-            var result = new string(default, 32);
+            var result = new string(default, 64);
             ref var resultStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(result.AsSpan()));
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source32A.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length32);
  
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(_source32B.AsSpan()));
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 32), ref sourceStart, _length32);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, 64), ref sourceStart, _length32);
 
             return result;
         }
@@ -1574,7 +1574,7 @@ namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
         [Benchmark, BenchmarkCategory("32")]
         public string CopyChar32()
         {
-            var result = new string(default, 32);
+            var result = new string(default, 64);
             ref var resultStart = ref MemoryMarshal.GetReference(result.AsSpan());
 
             ref var sourceStart = ref MemoryMarshal.GetReference(_source32A.AsSpan());
