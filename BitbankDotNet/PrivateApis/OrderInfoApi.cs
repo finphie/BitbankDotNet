@@ -1,5 +1,8 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
+using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -10,6 +13,13 @@ namespace BitbankDotNet
     {
         const string OrderInfoPath = "/v1/user/spot/order?";
         const string OrdersInfoPath = "/v1/user/spot/orders_info";
+        const int OrderInfoPathLength = 20;
+
+        static readonly byte[] OrderInfoUtf8Path =
+        {
+            0x2F, 0x76, 0x31, 0x2F, 0x75, 0x73, 0x65, 0x72, 0x2F, 0x73,
+            0x70, 0x6F, 0x74, 0x2F, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3F
+        };
 
         /// <summary>
         /// [PrivateAPI]注文情報を取得します。
@@ -22,9 +32,17 @@ namespace BitbankDotNet
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
             query["order_id"] = orderId.ToString();
+            var utf16Query = query.ToString();
+
+            Span<byte> buffer = stackalloc byte[OrderInfoPathLength + utf16Query.Length];
+            ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
+
+            Unsafe.CopyBlockUnaligned(ref bufferStart, ref OrderInfoUtf8Path[0], OrderInfoPathLength);
+            utf16Query.FromAsciiStringToUtf8Bytes(buffer.Slice(OrderInfoPathLength));
+
             var path = OrderInfoPath + query;
 
-            return PrivateApiGetAsync<Order>(path);
+            return PrivateApiGetAsync<Order>(path, buffer);
         }
 
         /// <summary>

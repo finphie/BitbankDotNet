@@ -1,6 +1,8 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -10,6 +12,14 @@ namespace BitbankDotNet
     partial class BitbankClient
     {
         const string ActiveOrderPath = "/v1/user/spot/active_orders?";
+        const int ActiveOrderPathLength = 28;
+
+        static readonly byte[] ActiveOrderUtf8Path =
+        {
+            0x2F, 0x76, 0x31, 0x2F, 0x75, 0x73, 0x65, 0x72, 0x2F, 0x73,
+            0x70, 0x6F, 0x74, 0x2F, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65,
+            0x5F, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x73, 0x3F
+        };
 
         /// <summary>
         /// [PrivateAPI]アクティブな注文を取得します。
@@ -29,11 +39,22 @@ namespace BitbankDotNet
             query["end_id"] = fromId.ToString();
             query["since"] = since.ToUnixTimeMilliseconds().ToString();
             query["end"] = end.ToUnixTimeMilliseconds().ToString();
+            
+            var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
+            return result.Orders;
+        }
+
+        Task<OrderList> GetActiveOrdersAsync(string query)
+        {
+            Span<byte> buffer = stackalloc byte[ActiveOrderPathLength + query.Length];
+            ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
+
+            Unsafe.CopyBlockUnaligned(ref bufferStart, ref ActiveOrderUtf8Path[0], ActiveOrderPathLength);
+            query.FromAsciiStringToUtf8Bytes(buffer.Slice(ActiveOrderPathLength));
 
             var path = ActiveOrderPath + query;
-            var result = await PrivateApiGetAsync<OrderList>(path).ConfigureAwait(false);
 
-            return result.Orders;
+            return PrivateApiGetAsync<OrderList>(path, buffer);
         }
     }
 }

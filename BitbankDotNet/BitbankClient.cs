@@ -140,9 +140,9 @@ namespace BitbankDotNet
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path));
 
         // Private API Getリクエスト
-        Task<T> PrivateApiGetAsync<T>(string path)
+        Task<T> PrivateApiGetAsync<T>(string path, in Span<byte> utf8Path)
             where T : class, IEntityResponse
-            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, path.FromAsciiStringToUtf8Bytes()));
+            => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, utf8Path));
 
         // Private API Postリクエスト
         Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
@@ -158,7 +158,7 @@ namespace BitbankDotNet
         }
 
         // PrivateAPIのリクエストヘッダーを作成
-        HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, byte[] signMessage)
+        HttpRequestMessage MakePrivateRequestHeader(HttpMethod method, string path, in Span<byte> signMessage)
         {
             // オーバーフローする可能性がある。
             // a. ToUnixTimeMillisecondsで取得できるUnix時間の最大値は、253,402,300,799,999（9999/12/31T23:59:59.999Z）
@@ -180,7 +180,7 @@ namespace BitbankDotNet
         }
 
         // 署名作成
-        void CreateSign(string nonce, byte[] data)
+        void CreateSign(string nonce, in Span<byte> data)
         {
             // nonceの最大文字数は、ulongの最大桁数である20文字
             // dataは、150文字以下のはず。
@@ -199,7 +199,8 @@ namespace BitbankDotNet
             // ReSharper disable once CommentTypo
             // HMACSHA256よりIncrementalHashの方が速い。
             // また、AppendDataを2回呼び出すより、バッファにコピーして一括で処理した方が速い。
-            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref data[0], (uint)data.Length);
+            ref var dataStart = ref MemoryMarshal.GetReference(data);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref bufferStart, nonce.Length), ref dataStart, (uint)data.Length);
             _incrementalHash.AppendData(buffer);
 
             // 出力先バッファは固定サイズなので、戻り値やbytesWrittenのチェックは省略できる。

@@ -1,5 +1,8 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Extensions;
+using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -10,6 +13,14 @@ namespace BitbankDotNet
     {
         const string WithdrawalAccountPath = "/v1/user/withdrawal_account?";
         const string RequestWithdrawalPath = "/v1/user/request_withdrawal";
+        const int WithdrawalAccountPathLength = 28;
+
+        static readonly byte[] WithdrawalAccountUtf8Path =
+        {
+            0x2F, 0x76, 0x31, 0x2F, 0x75, 0x73, 0x65, 0x72, 0x2F, 0x77,
+            0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6C, 0x5F,
+            0x61, 0x63, 0x63, 0x6F, 0x75, 0x6E, 0x74, 0x3F
+        };
 
         /// <summary>
         /// [PrivateAPI]出金アカウントを取得します。
@@ -20,9 +31,8 @@ namespace BitbankDotNet
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["asset"] = asset.GetEnumMemberValue();
-            var path = WithdrawalAccountPath + query;
-            var result = await PrivateApiGetAsync<WithdrawalAccountList>(path).ConfigureAwait(false);
 
+            var result = await GetWithdrawalAccountsAsync(query.ToString()).ConfigureAwait(false);
             return result.Accounts;
         }
 
@@ -47,6 +57,19 @@ namespace BitbankDotNet
             };
 
             return PrivateApiPostAsync<Withdrawal, WithdrawalBody>(RequestWithdrawalPath, body);
+        }
+
+        Task<WithdrawalAccountList> GetWithdrawalAccountsAsync(string query)
+        {
+            Span<byte> buffer = stackalloc byte[WithdrawalAccountPathLength + query.Length];
+            ref var bufferStart = ref MemoryMarshal.GetReference(buffer);
+
+            Unsafe.CopyBlockUnaligned(ref bufferStart, ref WithdrawalAccountUtf8Path[0], WithdrawalAccountPathLength);
+            query.FromAsciiStringToUtf8Bytes(buffer.Slice(WithdrawalAccountPathLength));
+
+            var path = WithdrawalAccountPath + query;
+
+            return PrivateApiGetAsync<WithdrawalAccountList>(path, buffer);
         }
     }
 }
