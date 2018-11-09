@@ -12,9 +12,15 @@ function Format-Array {
     $i = 0
     do {
         $array10 = $Array[$i..($i+$Count-1)]
-        $array10 -join ", "
-        $i += $Count
-    } while ($array10.Length -eq $Count)
+        $result = $array10 -join ", "
+        if ($array10.Length -eq $Count) {
+            $result + ","
+            $i += $Count
+        } else {
+            $result
+            break
+        }
+    } while ($true)
 }
 
 Export-ModuleMember -Function Format-Array
