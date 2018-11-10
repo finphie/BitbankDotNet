@@ -34,7 +34,7 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankClient(client);
-                var result = bitbank.GetStatus().GetAwaiter().GetResult();
+                var result = bitbank.GetStatusAsync().GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -65,7 +65,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankClient(client);
                 var exception = Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetStatus().GetAwaiter().GetResult());
+                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
                 Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
@@ -91,7 +91,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankClient(client, TimeSpan.FromMilliseconds(1));
                 var exception = Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetStatus().GetAwaiter().GetResult());
+                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -117,7 +117,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankClient(client);
                 Assert.Throws<BitbankApiException>(() =>
-                    bitbank.GetStatus().GetAwaiter().GetResult());
+                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
             }
         }
     }
