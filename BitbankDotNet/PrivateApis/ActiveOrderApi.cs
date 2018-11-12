@@ -25,20 +25,40 @@ namespace BitbankDotNet
         /// [PrivateAPI]アクティブな注文を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
+        /// <returns>注文情報</returns>
+        public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["pair"] = pair.GetEnumMemberValue();
+
+            var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
+            return result.Orders;
+        }
+
+        /// <summary>
+        /// [PrivateAPI]アクティブな注文を取得します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
         /// <param name="count">取得する注文数</param>
         /// <param name="fromId">取得開始注文ID</param>
         /// <param name="endId">取得終了注文ID</param>
         /// <param name="since">開始時間</param>
         /// <param name="end">終了時間</param>
         /// <returns>注文情報</returns>
-        public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair, long count, long fromId, long endId, DateTimeOffset since, DateTimeOffset end)
+        public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair, long? count, long? fromId, long? endId, DateTimeOffset? since, DateTimeOffset? end)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
-            query["from_id"] = fromId.ToString();
-            query["end_id"] = fromId.ToString();
-            query["since"] = since.ToUnixTimeMilliseconds().ToString();
-            query["end"] = end.ToUnixTimeMilliseconds().ToString();
+            if (count.HasValue)
+                query["count"] = count.ToString();
+            if (fromId.HasValue)
+                query["from_id"] = fromId.ToString();
+            if (endId.HasValue)
+                query["end_id"] = fromId.ToString();
+            if (since.HasValue)
+                query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
+            if (end.HasValue)
+                query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
             
             var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
             return result.Orders;
