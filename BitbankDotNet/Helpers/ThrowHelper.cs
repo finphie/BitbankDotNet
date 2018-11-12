@@ -9,7 +9,7 @@ namespace BitbankDotNet.Helpers
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankApiException(HttpStatusCode statusCode, int errorCode)
-            => throw new BitbankApiException("APIでエラーが発生しました。", statusCode, errorCode);
+            => throw new BitbankApiException(statusCode, errorCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankJsonDeserializeException(Exception inner, HttpStatusCode statusCode)

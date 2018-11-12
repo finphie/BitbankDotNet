@@ -1,5 +1,4 @@
-﻿using BitbankDotNet.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -10,6 +9,8 @@ namespace BitbankDotNet
     /// </summary>
     public class BitbankApiException : Exception
     {
+        const string DefaultApiErrorMessage = "APIリクエストでエラーが発生しました。";
+
         /// <summary>
         /// エラーコード一覧
         /// cf. https://docs.bitbank.cc/error_code/
@@ -102,8 +103,8 @@ namespace BitbankDotNet
             : base(message, inner)
             => StatusCode = statusCode;
 
-        public BitbankApiException(string message, HttpStatusCode statusCode, int apiErrorCode)
-            : this(message + ErrorCodes.GetOrDefault(apiErrorCode), null, statusCode)
+        public BitbankApiException(HttpStatusCode statusCode, int apiErrorCode)
+            : this(ErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage, null, statusCode)
         {
             ApiErrorCode = apiErrorCode;
         }
