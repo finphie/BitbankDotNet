@@ -26,12 +26,12 @@ namespace BitbankDotNet.Entities
         /// 二段階認証トークン
         /// </summary>
         [DataMember(Name = "otp_token")]
-        public int OtpToken { get; set; }
+        public int? OtpToken { get; set; }
 
         /// <summary>
         /// SMS認証トークン
         /// </summary>
         [DataMember(Name = "sms_token")]
-        public int SmsToken { get; set; }
+        public int? SmsToken { get; set; }
     }
 }
