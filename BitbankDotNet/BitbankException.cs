@@ -7,7 +7,7 @@ namespace BitbankDotNet
     /// <summary>
     /// <see cref="BitbankClient"/>例外クラス
     /// </summary>
-    public class BitbankApiException : Exception
+    public class BitbankException : Exception
     {
         const string DefaultApiErrorMessage = "APIリクエストでエラーが発生しました。";
 
@@ -15,7 +15,7 @@ namespace BitbankDotNet
         /// エラーコード一覧
         /// cf. https://docs.bitbank.cc/error_code/
         /// </summary>
-        static readonly Dictionary<int, string> ErrorCodes = new Dictionary<int, string>
+        static readonly Dictionary<int, string> ApiErrorCodes = new Dictionary<int, string>
         {
             {10000, "URLが存在しません。"},
             {10001, "システムエラーが発生しました。サポートにお問い合わせ下さい。"},
@@ -93,18 +93,26 @@ namespace BitbankDotNet
         /// </summary>
         public int ApiErrorCode { get; }
 
+        public BitbankException(string message)
+            : base(message)
+        {
+        }
 
-        public BitbankApiException(string message, Exception inner)
+        public BitbankException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
-        public BitbankApiException(string message, Exception inner, HttpStatusCode statusCode)
-            : base(message, inner)
+        public BitbankException(string message, HttpStatusCode statusCode)
+            : this(message)
             => StatusCode = statusCode;
 
-        public BitbankApiException(HttpStatusCode statusCode, int apiErrorCode)
-            : this(ErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage, null, statusCode)
+        public BitbankException(string message, Exception inner, HttpStatusCode statusCode)
+            : this(message, inner)
+            => StatusCode = statusCode;
+
+        public BitbankException(HttpStatusCode statusCode, int apiErrorCode)
+            : this(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage, statusCode)
         {
             ApiErrorCode = apiErrorCode;
         }

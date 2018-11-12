@@ -111,7 +111,7 @@ namespace BitbankDotNet
                     var error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
                     ThrowHelper.ThrowBitbankApiException(response.StatusCode, error.Code);
                 }
-                catch (Exception ex) when (!(ex is BitbankApiException))
+                catch (Exception ex) when (!(ex is BitbankException))
                 {
                     // デシリアライズでスローされる可能性がある例外
                     // 1.JsonParserException

@@ -9,15 +9,15 @@ namespace BitbankDotNet.Helpers
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankApiException(HttpStatusCode statusCode, int errorCode)
-            => throw new BitbankApiException(statusCode, errorCode);
+            => throw new BitbankException(statusCode, errorCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankJsonDeserializeException(Exception inner, HttpStatusCode statusCode)
-            => throw new BitbankApiException("JSONデシリアライズでエラーが発生しました。", inner, statusCode);
+            => throw new BitbankException("JSONデシリアライズでエラーが発生しました。", inner, statusCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankRequestTimeoutException(Exception inner)
-            => throw new BitbankApiException("リクエストがタイムアウトしました。", inner);
+            => throw new BitbankException("リクエストがタイムアウトしました。", inner);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowJsonParserException(JsonParserException.ParserError error, int position)

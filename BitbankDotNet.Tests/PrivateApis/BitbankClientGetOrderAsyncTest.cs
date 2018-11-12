@@ -69,7 +69,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankClient(client, " ", " ");
-                var exception = Assert.Throws<BitbankApiException>(() =>
+                var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.GetOrderAsync(default, default).GetAwaiter().GetResult());
                 Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
@@ -95,7 +95,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
-                var exception = Assert.Throws<BitbankApiException>(() =>
+                var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.GetOrderAsync(default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
@@ -121,7 +121,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankClient(client, " ", " ");
-                Assert.Throws<BitbankApiException>(() =>
+                Assert.Throws<BitbankException>(() =>
                     bitbank.GetOrderAsync(default, default).GetAwaiter().GetResult());
             }
         }
