@@ -25,21 +25,40 @@ namespace BitbankDotNet
         /// [PrivateAPI]約定履歴を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
+        /// <returns>約定履歴</returns>
+        public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query["pair"] = pair.GetEnumMemberValue();
+
+            var result = await GetTradeHistoryAsync(query.ToString()).ConfigureAwait(false);
+            return result.Trades;
+        }
+
+        /// <summary>
+        /// [PrivateAPI]約定履歴を取得します。
+        /// </summary>
+        /// <param name="pair">通貨ペア</param>
         /// <param name="count">取得する注文数</param>
         /// <param name="orderId">注文ID</param>
         /// <param name="since">開始時間</param>
         /// <param name="end">終了時間</param>
         /// <param name="sort">順序</param>
         /// <returns>約定履歴</returns>
-        public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair, long count, long orderId, DateTimeOffset since, DateTimeOffset end, SortOrder sort)
+        public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair, long? count, long? orderId, DateTimeOffset? since, DateTimeOffset? end, SortOrder? sort)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
-            query["count"] = count.ToString();
-            query["order_id"] = orderId.ToString();
-            query["since"] = since.ToUnixTimeMilliseconds().ToString();
-            query["end"] = end.ToUnixTimeMilliseconds().ToString();
-            query["order"] = sort.GetEnumMemberValue();
+            if (count.HasValue)
+                query["count"] = count.ToString();
+            if (orderId.HasValue)
+                query["order_id"] = orderId.ToString();
+            if (since.HasValue)
+                query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
+            if (end.HasValue)
+                query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
+            if (sort.HasValue)
+                query["order"] = sort.Value.GetEnumMemberValue();
 
             var result = await GetTradeHistoryAsync(query.ToString()).ConfigureAwait(false);
             return result.Trades;
