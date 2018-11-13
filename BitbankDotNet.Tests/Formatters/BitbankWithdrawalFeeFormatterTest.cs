@@ -12,17 +12,38 @@ namespace BitbankDotNet.Tests.Formatters
 {
     public class BitbankWithdrawalFeeFormatterTest
     {
-        const string JpyJson = "{\"threshold\":\"30000\",\"under\":\"540\",\"over\":\"756\"}";
-        const string NotJpyJson = "\"0.001\"";
+        const string Threshold = "\"threshold\"";
+        const string Under = "\"under\"";
+        const string Over = "\"over\"";
 
-        public static IEnumerable<object[]> TestData => new[]
+        const double Threshold0 = 30000.0;
+        const double Under0 = 540.0;
+        const double Over0 = 756.0;
+
+        const double Threshold1 = 0.0;
+        const double Under1 = 0.001;
+        const double Over1 = 0.001;
+
+        public static IEnumerable<object[]> DeserializeTestData()
         {
-            new object[] {JpyJson, 30000.0, 540.0, 756.0},
-            new object[] {NotJpyJson, 0.0, 0.001, 0.001}
+            string CreateJsonString(string value) => $"{{{value}}}";
+
+            var json0 = string.Join(",", GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0));
+            var json1 = string.Join(",", GetThreshold(Threshold1), GetUnder(Under1), GetOver(Over1));
+
+            yield return new object[] {CreateJsonString(json0), 30000.0, 540.0, 756.0};
+            yield return new object[] {CreateJsonString(json1), 0.0, 0.001, 0.001};
+        }
+
+        public static IEnumerable<object[]> SerializeTestData() => new[]
+        {
+            new object[]
+                {new[] {GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0)}, Threshold0, Under0, Over0},
+            new object[] {new[] {$"\"{Under1}\""}, Threshold1, Under1, Over1}
         };
 
         [Theory]
-        [MemberData(nameof(TestData))]
+        [MemberData(nameof(DeserializeTestData))]
         public void Deserialize_UTF8のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, double threshold, double under, double over)
         {
             var deserialize = Deserialize<WithdrawalFee, WithdrawalFeeResolver<byte>>(Encoding.UTF8.GetBytes(json));
@@ -34,7 +55,7 @@ namespace BitbankDotNet.Tests.Formatters
         }
 
         [Theory]
-        [MemberData(nameof(TestData))]
+        [MemberData(nameof(DeserializeTestData))]
         public void Deserialize_UTF16のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, double threshold, double under, double over)
         {
             var deserialize = Deserialize<WithdrawalFee, WithdrawalFeeResolver<char>>(json);
@@ -46,8 +67,8 @@ namespace BitbankDotNet.Tests.Formatters
         }
 
         [Theory]
-        [MemberData(nameof(TestData))]
-        public void Serialize_WithdrawalFeeObjectを入力_UTF8のJSON文字列を出力(string json, double threshold, double under, double over)
+        [MemberData(nameof(SerializeTestData))]
+        public void Serialize_WithdrawalFeeObjectを入力_UTF8のJSON文字列を出力(string[] json, double threshold, double under, double over)
         {
             var serialize = Serialize<WithdrawalFee, WithdrawalFeeResolver<byte>>(new WithdrawalFee
             {
@@ -57,12 +78,19 @@ namespace BitbankDotNet.Tests.Formatters
             });
 
             Assert.NotNull(serialize);
-            Assert.Equal(Encoding.UTF8.GetBytes(json), serialize);
+
+            if (json.Length == 1)
+            {
+                Assert.All(Encoding.UTF8.GetBytes(json[0]), b => Assert.Contains(b, serialize));
+                return;
+            }
+            foreach (var j in json)
+                Assert.All(Encoding.UTF8.GetBytes(j), b => Assert.Contains(b, serialize));
         }
 
         [Theory]
-        [MemberData(nameof(TestData))]
-        public void Serialize_WithdrawalFeeObjectを入力_UTF16のJSON文字列を出力(string json, double threshold, double under, double over)
+        [MemberData(nameof(SerializeTestData))]
+        public void Serialize_WithdrawalFeeObjectを入力_UTF16のJSON文字列を出力(string[] json, double threshold, double under, double over)
         {
             var serialize = Serialize<WithdrawalFee, WithdrawalFeeResolver<char>>(new WithdrawalFee
             {
@@ -72,8 +100,20 @@ namespace BitbankDotNet.Tests.Formatters
             });
 
             Assert.NotNull(serialize);
-            Assert.Equal(json, serialize);
+
+            if (json.Length == 1)
+            {
+                Assert.Contains(json[0], serialize);
+                return;
+            }
+            foreach (var j in json)
+                Assert.Contains(j, serialize);
         }
+
+        static string Join(string key, double value) => string.Join(":", key, $"\"{value}\"");
+        static string GetThreshold(double value) => Join(Threshold, value);
+        static string GetUnder(double value) => Join(Under, value);
+        static string GetOver(double value) => Join(Over, value);
 
         sealed class WithdrawalFeeResolver<TSymbol> : ResolverBase<TSymbol, WithdrawalFeeResolver<TSymbol>>
             where TSymbol : struct
