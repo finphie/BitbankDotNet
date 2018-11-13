@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PublicApis
 {
-    public class BitbankClientGetStatusTest
+    public class BitbankClientGetStatusAsyncTest
     {
         const string Json =
             "{\"success\":1,\"data\":{\"statuses\":[{\"pair\":\"btc_jpy\",\"status\":\"NORMAL\",\"min_amount\":\"1.2\"},{\"pair\":\"btc_jpy\",\"status\":\"NORMAL\",\"min_amount\":\"1.2\"}]}}";

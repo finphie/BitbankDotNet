@@ -31,8 +31,8 @@ namespace BitbankDotNet.Tests.Formatters
             var json0 = string.Join(",", GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0));
             var json1 = string.Join(",", GetThreshold(Threshold1), GetUnder(Under1), GetOver(Over1));
 
-            yield return new object[] {CreateJsonString(json0), 30000.0, 540.0, 756.0};
-            yield return new object[] {CreateJsonString(json1), 0.0, 0.001, 0.001};
+            yield return new object[] {CreateJsonString(json0), Threshold0, Under0, Over0};
+            yield return new object[] {CreateJsonString(json1), Threshold1, Under1, Over1};
         }
 
         public static IEnumerable<object[]> SerializeTestData() => new[]
