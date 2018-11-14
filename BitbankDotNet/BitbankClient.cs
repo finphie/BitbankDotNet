@@ -50,7 +50,15 @@ namespace BitbankDotNet
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-        static BitbankClient() => CreateCache();
+        static BitbankClient()
+        {
+            // EnumMemberCacheでは、静的コンストラクターでリフレクションを利用している。
+            // 初回アクセスは遅いので、静的コンストラクターを強制的に実行しておく。
+            RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<AssetName>).TypeHandle);
+            RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<CurrencyPair>).TypeHandle);
+            RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<CandleType>).TypeHandle);
+            RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<SortOrder>).TypeHandle);
+        }
 
         public BitbankClient(HttpClient client)
             : this(client, string.Empty, string.Empty, DefaultTimeout)
@@ -87,12 +95,6 @@ namespace BitbankDotNet
             _client?.Dispose();
             _incrementalHash?.Dispose();
         }
-
-        /// <summary>
-        /// キャッシュ作成
-        /// </summary>
-        static void CreateCache()
-            => RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<CurrencyPair>).TypeHandle);
 
         // リクエスト送信
         async Task<T> SendAsync<T>(HttpRequestMessage request)
