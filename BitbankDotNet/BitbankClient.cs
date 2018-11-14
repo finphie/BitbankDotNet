@@ -36,6 +36,8 @@ namespace BitbankDotNet
         // HMAC-SHA256は32バイトのbyte配列
         const int SignHexUtf16StringLength = HashSize * 2;
 
+        static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(10);
+
         static readonly MediaTypeHeaderValue ContentType =
             new MediaTypeHeaderValue("application/json") {CharSet = Encoding.UTF8.WebName};
 
@@ -50,18 +52,28 @@ namespace BitbankDotNet
 
         static BitbankClient() => CreateCache();
 
-        public BitbankClient(HttpClient client, TimeSpan timeout = default)
+        public BitbankClient(HttpClient client)
+            : this(client, string.Empty, string.Empty, DefaultTimeout)
+        {
+        }
+
+        public BitbankClient(HttpClient client, TimeSpan timeout)
             : this(client, string.Empty, string.Empty, timeout)
         {
         }
 
-        public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout = default)
+        public BitbankClient(HttpClient client, string apiKey, string apiSecret)
+            : this(client, apiKey, apiSecret, DefaultTimeout)
+        {
+        }
+
+        public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout)
         {
             if (!BitConverter.IsLittleEndian)
                 throw ThrowHelper.ThrowBigEndianNotSupported();
 
             _client = client ?? throw new ArgumentNullException(nameof(client));
-            _client.Timeout = timeout == default ? TimeSpan.FromSeconds(10) : timeout;
+            _client.Timeout = timeout;
 
             // APIキーとAPIシークレットが設定されていない場合
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
