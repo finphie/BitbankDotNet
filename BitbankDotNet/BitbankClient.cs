@@ -50,20 +50,8 @@ namespace BitbankDotNet
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-        void A()
-        {
-            var a = false;
-
-            if (a)
-            {
-                Console.WriteLine();
-            }
-        }
-
         static BitbankClient()
         {
-            var f1 = 1; var f2 = 2;
-            var a = (f1:f1, f2:f2);
             // EnumMemberCacheでは、静的コンストラクターでリフレクションを利用している。
             // 初回アクセスは遅いので、静的コンストラクターを強制的に実行しておく。
             RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<AssetName>).TypeHandle);
