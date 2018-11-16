@@ -105,15 +105,80 @@ csharp_preserve_single_line_statements = false
 csharp_preserve_single_line_blocks = true
 
 # Naming Conventions
-# Style Definitions
-dotnet_naming_style.pascal_case_style.capitalization = pascal_case
-# Use PascalCase for constant fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+
+# private fields
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_underscore_style
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.camel_case_underscore_style.required_prefix = _
+dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
+
+# constant fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+
 dotnet_naming_symbols.constant_fields.applicable_kinds = field
 dotnet_naming_symbols.constant_fields.applicable_accessibilities = *
 dotnet_naming_symbols.constant_fields.required_modifiers = const
+
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# static readonly fields
+dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = static_readonly_fields
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.static_readonly_fields.applicable_kinds = field
+dotnet_naming_symbols.static_readonly_fields.applicable_accessibilities = *
+dotnet_naming_symbols.static_readonly_fields.required_modifiers = static, readonly
+
+#dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# local variables
+dotnet_naming_rule.local_variables_should_be_camel_case.symbols = local_variables
+dotnet_naming_rule.local_variables_should_be_camel_case.style = camel_case_style
+dotnet_naming_rule.local_variables_should_be_camel_case.severity = suggestion
+
+dotnet_naming_symbols.local_variables.applicable_kinds = local
+
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# async members
+dotnet_naming_rule.async_members_should_be_pascal_case_suffixed_with_async.symbols = async_members
+dotnet_naming_rule.async_members_should_be_pascal_case_suffixed_with_async.style = pascal_case_suffixed_with_async_style
+dotnet_naming_rule.async_members_should_be_pascal_case_suffixed_with_async.severity = suggestion
+
+dotnet_naming_symbols.async_members.required_modifiers = async
+
+dotnet_naming_style.pascal_case_suffixed_with_async_style.required_suffix = Async
+dotnet_naming_style.pascal_case_suffixed_with_async_style.capitalization = pascal_case
+
+# interfaces
+dotnet_naming_rule.interfaces_should_be_pascal_case_prefixed_with_i.symbols = interfaces
+dotnet_naming_rule.interfaces_should_be_pascal_case_prefixed_with_i.style = pascal_case_prefixed_with_i_style
+dotnet_naming_rule.interfaces_should_be_pascal_case_prefixed_with_i.severity = suggestion
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_symbols.interfaces.applicable_accessibilities = *
+
+dotnet_naming_style.pascal_case_prefixed_with_i_style.required_prefix = I
+dotnet_naming_style.pascal_case_prefixed_with_i_style.capitalization = pascal_case
+
+# type paraeters
+dotnet_naming_rule.type_parameters_should_be_pascal_case_prefixed_with_t.symbols = type_parameters
+dotnet_naming_rule.type_parameters_should_be_pascal_case_prefixed_with_t.style = pascal_case_prefixed_with_t_style
+dotnet_naming_rule.type_parameters_should_be_pascal_case_prefixed_with_t.severity = suggestion
+
+dotnet_naming_symbols.type_parameters.applicable_kinds = type_parameter
+
+dotnet_naming_style.pascal_case_prefixed_with_t_style.required_prefix = T
+dotnet_naming_style.pascal_case_prefixed_with_t_style.capitalization = pascal_case
+
 
 [*.{csproj,ruleset}]
 indent_size = 2
