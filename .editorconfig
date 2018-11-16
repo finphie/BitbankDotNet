@@ -106,6 +106,18 @@ csharp_preserve_single_line_blocks = true
 
 # Naming Conventions
 
+# constants
+#dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
+#dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
+#dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+
+#dotnet_naming_symbols.constant_fields.applicable_kinds = field, local
+#dotnet_naming_symbols.constant_fields.applicable_accessibilities = *
+#dotnet_naming_symbols.constant_fields.required_modifiers = const
+
+#dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+
 # private fields
 dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
 dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_underscore_style
@@ -117,29 +129,34 @@ dotnet_naming_symbols.private_fields.applicable_accessibilities = private
 dotnet_naming_style.camel_case_underscore_style.required_prefix = _
 dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
-# constant fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = constant_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
-dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 
-dotnet_naming_symbols.constant_fields.applicable_kinds = field
-dotnet_naming_symbols.constant_fields.applicable_accessibilities = *
-dotnet_naming_symbols.constant_fields.required_modifiers = const
+# Non-private fields
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = non_private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = pascal_case_style3
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
 
-dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_symbols.non_private_fields.applicable_kinds = field
+dotnet_naming_symbols.non_private_fields.applicable_accessibilities = public,internal,protected,protected_internal,private_protected
+
+dotnet_naming_style.pascal_case_style3.capitalization = pascal_case
+
+
 
 # static readonly fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols = static_readonly_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style2
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 
 dotnet_naming_symbols.static_readonly_fields.applicable_kinds = field
 dotnet_naming_symbols.static_readonly_fields.applicable_accessibilities = *
 dotnet_naming_symbols.static_readonly_fields.required_modifiers = static, readonly
 
-#dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_style.pascal_case_style2.capitalization = pascal_case
 
-# local variables
+
+
+
+# local variables and constants
 dotnet_naming_rule.local_variables_should_be_camel_case.symbols = local_variables
 dotnet_naming_rule.local_variables_should_be_camel_case.style = camel_case_style
 dotnet_naming_rule.local_variables_should_be_camel_case.severity = suggestion
