@@ -11,10 +11,36 @@ indent_size = 4
 insert_final_newline = false
 trim_trailing_whitespace = true
 
-# Code files
+# CSharp code files
 [*.{cs,csx}]
 charset = utf-8-bom
 
+# T4 template files
+[*.tt]
+charset = utf-8-bom
+
+# Solution files
+[*.sln]
+charset = utf-8-bom
+indent_style = tab
+
+# XML project files
+[*.csproj]
+indent_size = 2
+
+# XML config files
+[*.ruleset]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+
+# CSharp code style settings
 [*.cs]
 # Language conventions
 # "This." qualifiers
@@ -205,9 +231,3 @@ dotnet_naming_style.pascal_case_prefixed_with_i_style.capitalization = pascal_ca
 # TPascalCase
 dotnet_naming_style.pascal_case_prefixed_with_t_style.required_prefix = T
 dotnet_naming_style.pascal_case_prefixed_with_t_style.capitalization = pascal_case
-
-[*.{csproj,ruleset}]
-indent_size = 2
-
-[*.md]
-trim_trailing_whitespace = false
