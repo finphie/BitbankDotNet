@@ -130,6 +130,29 @@
     <Rule Id="CA5350" Action="Info" />
     <Rule Id="CA5351" Action="Info" />
   </Rules>
+  <Rules AnalyzerId="Microsoft.NetFramework.Analyzers" RuleNamespace="Microsoft.NetFramework.Analyzers">
+    <Rule Id="CA1058" Action="Info" />
+    <Rule Id="CA2153" Action="Info" />
+    <Rule Id="CA2229" Action="Info" />
+    <Rule Id="CA2235" Action="Info" />
+    <Rule Id="CA2237" Action="Info" />
+    <Rule Id="CA3075" Action="Info" />
+    <Rule Id="CA3147" Action="Info" />
+    <Rule Id="CA9999" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.NetFramework.CSharp.Analyzers" RuleNamespace="Microsoft.NetFramework.CSharp.Analyzers">
+    <Rule Id="CA1300" Action="Info" />
+    <Rule Id="CA1301" Action="Info" />
+    <Rule Id="CA1306" Action="Info" />
+    <Rule Id="CA2212" Action="Info" />
+    <Rule Id="CA2232" Action="Info" />
+    <Rule Id="CA2236" Action="Info" />
+    <Rule Id="CA2238" Action="Info" />
+    <Rule Id="CA2239" Action="Info" />
+    <Rule Id="CA2240" Action="Info" />
+    <Rule Id="CA3076" Action="Info" />
+    <Rule Id="CA3077" Action="Info" />
+  </Rules>
   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
     <Rule Id="CA1704" Action="Info" />
   </Rules>
