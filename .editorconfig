@@ -26,10 +26,12 @@ indent_style = tab
 
 # XML project files
 [*.csproj]
+charset = utf-8-bom
 indent_size = 2
 
 # XML config files
 [*.ruleset]
+charset = utf-8-bom
 indent_size = 2
 
 # JSON files
