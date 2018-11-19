@@ -14,19 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="StringConcatBenchmark\BinaryHelper.Fast.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>BinaryHelper.Fast.tt</DependentUpon>
-    </None>
-    <None Include="StringConcatBenchmark\StringConcatBenchmark2.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StringConcatBenchmark2.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.2" />
     <PackageReference Include="Enums.NET" Version="2.3.2" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
