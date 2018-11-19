@@ -16,7 +16,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.CoreRt;
 #endif
 using BenchmarkDotNet.Toolchains.CsProj;
-#if Core22 || Core30
+#if Core30
 using BenchmarkDotNet.Toolchains.DotNetCli;
 #endif
 
@@ -36,9 +36,7 @@ namespace BitbankDotNet.Benchmarks
             Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp21));
 #endif
 #if Core22
-            Add(Job.Default.With(
-                CsProjCoreToolchain.From(
-                    new NetCoreAppSettings("netcoreapp2.2", "2.2.0-*", ".NET Core 2.2"))));
+            Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp22));
 #endif
 #if Core30
             Add(Job.Default.With(
