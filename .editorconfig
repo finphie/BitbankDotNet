@@ -29,8 +29,8 @@ indent_style = tab
 charset = utf-8-bom
 indent_size = 2
 
-# XML config files
-[*.ruleset]
+# XML files
+[*.{props,ruleset}]
 charset = utf-8-bom
 indent_size = 2
 
