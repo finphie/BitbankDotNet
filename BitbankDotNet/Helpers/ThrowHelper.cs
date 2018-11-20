@@ -1,6 +1,5 @@
 ﻿using SpanJson;
 using System;
-using System.Net;
 using System.Runtime.CompilerServices;
 
 namespace BitbankDotNet.Helpers
@@ -8,12 +7,12 @@ namespace BitbankDotNet.Helpers
     static class ThrowHelper
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ThrowBitbankApiException(HttpStatusCode statusCode, int errorCode)
-            => throw new BitbankException(statusCode, errorCode);
+        public static void ThrowBitbankApiException(int errorCode)
+            => throw new BitbankException(errorCode);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void ThrowBitbankJsonDeserializeException(Exception inner, HttpStatusCode statusCode)
-            => throw new BitbankException("JSONデシリアライズでエラーが発生しました。", inner, statusCode);
+        public static void ThrowBitbankJsonDeserializeException(Exception inner)
+            => throw new BitbankException("JSONデシリアライズでエラーが発生しました。", inner);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankRequestTimeoutException(Exception inner)

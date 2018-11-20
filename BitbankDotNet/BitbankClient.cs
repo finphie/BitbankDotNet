@@ -110,33 +110,25 @@ namespace BitbankDotNet
                 // そのため、IsSuccessStatusCodeは省略できるはずだが、一応チェックしておく。
                 if (response.IsSuccessStatusCode)
                 {
-                    // ここで、JsonParserExceptionがスローされる条件
-                    // 1.EntityFormatterの実装に不具合がある場合
-                    // 2.不正なJSONが入力された場合
-                    // そのため、catchしなくても問題ないはず。
-                    // ただし、JSONが空かどうかは確認したほうが良いかもしれない。
                     var result = Deserialize<Response<T>, BitbankResolver<byte>>(json);
                     if (result.Success == 1)
                         return result.Data;
                 }
 
-                try
-                {
-                    var error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
-                    ThrowHelper.ThrowBitbankApiException(response.StatusCode, error.Code);
-                }
-                catch (Exception ex) when (!(ex is BitbankException))
-                {
-                    // デシリアライズでスローされる可能性がある例外
-                    // 1.JsonParserException
-                    // 2.IndexOutOfRangeException
-                    // また、nullチェックを省略しているため、NullReferenceExceptionも考慮する必要がある。
-                    ThrowHelper.ThrowBitbankJsonDeserializeException(ex, response.StatusCode);
-                }
+                var error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
+                ThrowHelper.ThrowBitbankApiException(error.Code);
             }
             catch (TaskCanceledException ex)
             {
                 ThrowHelper.ThrowBitbankRequestTimeoutException(ex);
+            }
+            catch (Exception ex) when (!(ex is BitbankException))
+            {
+                // ここに到達した場合、デシリアライズでエラーが発生しているはず。
+                // 1.JsonParserException
+                // 2.IndexOutOfRangeException
+                // また、nullチェックを省略しているため、NullReferenceExceptionも考慮する必要がある。
+                ThrowHelper.ThrowBitbankJsonDeserializeException(ex);
             }
 
             // ここには到達しないはず

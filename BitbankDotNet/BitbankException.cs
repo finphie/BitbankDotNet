@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace BitbankDotNet
 {
@@ -84,11 +83,6 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// HTTPステータス
-        /// </summary>
-        public HttpStatusCode StatusCode { get; }
-
-        /// <summary>
         /// BitbankAPIのエラーコード
         /// </summary>
         public int ApiErrorCode { get; }
@@ -103,16 +97,8 @@ namespace BitbankDotNet
         {
         }
 
-        public BitbankException(string message, HttpStatusCode statusCode)
-            : this(message)
-            => StatusCode = statusCode;
-
-        public BitbankException(string message, Exception inner, HttpStatusCode statusCode)
-            : this(message, inner)
-            => StatusCode = statusCode;
-
-        public BitbankException(HttpStatusCode statusCode, int apiErrorCode)
-            : this(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage, statusCode)
+        public BitbankException(int apiErrorCode)
+            : this(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage)
         {
             ApiErrorCode = apiErrorCode;
         }
