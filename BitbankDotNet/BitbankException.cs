@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BitbankDotNet
 {
     /// <summary>
-    /// <see cref="BitbankClient"/>例外クラス
+    /// <see cref="BitbankRestApiClient"/>例外クラス
     /// </summary>
     public class BitbankException : Exception
     {

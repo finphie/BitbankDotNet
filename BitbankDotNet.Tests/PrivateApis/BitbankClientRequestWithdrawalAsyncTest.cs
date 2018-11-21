@@ -33,7 +33,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankClient(client, " ", " ");
+				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var result = bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
@@ -67,7 +67,7 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankClient(client, " ", " ");
+				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(statusCode, exception.StatusCode);
@@ -93,7 +93,7 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
+				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
                 var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
@@ -119,7 +119,7 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankClient(client, " ", " ");
+				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 Assert.Throws<BitbankException>(() =>
                     bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
             }

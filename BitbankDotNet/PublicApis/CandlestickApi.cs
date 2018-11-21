@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
 {
-    partial class BitbankClient
+    partial class BitbankRestApiClient
     {
         const string CandlestickPath = "/candlestick/";
 

@@ -9,7 +9,7 @@ using System.Web;
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
 {
-    partial class BitbankClient
+    partial class BitbankRestApiClient
     {
         const string WithdrawalAccountPath = "/v1/user/withdrawal_account?";
         const string RequestWithdrawalPath = "/v1/user/request_withdrawal";

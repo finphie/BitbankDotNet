@@ -18,7 +18,7 @@ namespace BitbankDotNet.CodeGenerator
         const string EntityNamespace = nameof(BitbankDotNet) + "." + nameof(Entities);
 
         // BitbankClientがあるアセンブリ
-        static readonly Assembly LibraryAssembly = typeof(BitbankClient).Assembly;
+        static readonly Assembly LibraryAssembly = typeof(BitbankRestApiClient).Assembly;
 
         // Entityの型情報リスト
         static readonly TypeInfo[] EntityTypeInfos = LibraryAssembly.DefinedTypes

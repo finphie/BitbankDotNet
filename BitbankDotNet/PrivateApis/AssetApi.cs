@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
 {
-    partial class BitbankClient
+    partial class BitbankRestApiClient
     {
         const string AssetPath = "/v1/user/assets";
 

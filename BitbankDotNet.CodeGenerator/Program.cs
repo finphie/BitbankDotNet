@@ -37,7 +37,7 @@ namespace BitbankDotNet.CodeGenerator
             }
 
             // メソッド一覧を取得
-            var methods = typeof(BitbankClient).GetMethods()
+            var methods = typeof(BitbankRestApiClient).GetMethods()
                 .Where(mi => mi.IsPublic && !mi.IsVirtual)
                 .Where(mi => mi.Name != "GetType");
 
@@ -49,7 +49,7 @@ namespace BitbankDotNet.CodeGenerator
                 var tt = new BitbankClientTestTemplate(method.First(), isPublicApi);
                 var text = tt.TransformText();
                 var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
-                var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankClient)}{group.Key}Test.cs");
+                var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");
                 File.WriteAllText(outPath, text);
             }
         }

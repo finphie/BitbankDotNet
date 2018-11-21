@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
 {
-    partial class BitbankClient
+    partial class BitbankRestApiClient
     {
         const string CancelOrderPath = "/v1/user/spot/cancel_order";
         const string CancelOrdersPath = "/v1/user/spot/cancel_orders";

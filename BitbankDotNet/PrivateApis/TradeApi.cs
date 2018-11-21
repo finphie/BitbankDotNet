@@ -9,7 +9,7 @@ using System.Web;
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
 {
-    partial class BitbankClient
+    partial class BitbankRestApiClient
     {
         const string TradeHistoryPath = "/v1/user/spot/trade_history?";
         const int TradeHistoryPathLength = 28;

@@ -21,7 +21,7 @@ namespace BitbankDotNet
     /// <summary>
     /// Bitbank REST API Client
     /// </summary>
-    public sealed partial class BitbankClient : IDisposable
+    public sealed partial class BitbankRestApiClient : IDisposable
     {
         // Public API
         const string PublicUrl = "https://public.bitbank.cc/";
@@ -50,7 +50,7 @@ namespace BitbankDotNet
 
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-        static BitbankClient()
+        static BitbankRestApiClient()
         {
             // EnumMemberCacheでは、静的コンストラクターでリフレクションを利用している。
             // 初回アクセスは遅いので、静的コンストラクターを強制的に実行しておく。
@@ -60,22 +60,22 @@ namespace BitbankDotNet
             RuntimeHelpers.RunClassConstructor(typeof(EnumMemberCache<SortOrder>).TypeHandle);
         }
 
-        public BitbankClient(HttpClient client)
+        public BitbankRestApiClient(HttpClient client)
             : this(client, string.Empty, string.Empty, DefaultTimeout)
         {
         }
 
-        public BitbankClient(HttpClient client, TimeSpan timeout)
+        public BitbankRestApiClient(HttpClient client, TimeSpan timeout)
             : this(client, string.Empty, string.Empty, timeout)
         {
         }
 
-        public BitbankClient(HttpClient client, string apiKey, string apiSecret)
+        public BitbankRestApiClient(HttpClient client, string apiKey, string apiSecret)
             : this(client, apiKey, apiSecret, DefaultTimeout)
         {
         }
 
-        public BitbankClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout)
+        public BitbankRestApiClient(HttpClient client, string apiKey, string apiSecret, TimeSpan timeout)
         {
             if (!BitConverter.IsLittleEndian)
                 throw ThrowHelper.ThrowBigEndianNotSupported();
