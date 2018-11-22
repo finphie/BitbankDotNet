@@ -14,11 +14,12 @@ namespace BitbankDotNet.CodeGenerator
         static void Main()
         {
             var path = $"../../../../{nameof(BitbankDotNet)}";
-            var publicApiPath = Path.GetFullPath(path + "/PublicApi.cs");
-            var privateApiPath = Path.GetFullPath(path + "/PrivateApi.cs");
+            var files = Directory.EnumerateFiles(path + "/PublicApis")
+                .Concat(Directory.EnumerateFiles(path + "/PrivateApis"))
+                .Select(s => File.ReadAllText(s));
 
             // Roslynによる構文解析
-            var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(publicApiPath) + File.ReadAllText(privateApiPath));
+            var tree = CSharpSyntaxTree.ParseText(string.Concat(files));
             var methodDeclarations = tree.GetRoot().DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
                 .GroupBy(m => m.Identifier.ValueText);
