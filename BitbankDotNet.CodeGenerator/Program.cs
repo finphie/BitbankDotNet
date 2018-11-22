@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -51,7 +52,7 @@ namespace BitbankDotNet.CodeGenerator
                 var text = tt.TransformText();
                 var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
                 var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");
-                File.WriteAllText(outPath, text);
+                File.WriteAllText(outPath, text, Encoding.UTF8);
             }
         }
     }
