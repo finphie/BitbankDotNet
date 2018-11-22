@@ -10,13 +10,13 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PrivateApis
 {
-    public class BitbankClientGetTradeHistoryAsyncTest
+    public class BitbankRestApiClientGetActiveOrdersAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"trades\":[{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678},{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678}]}}";
+            "{\"success\":1,\"data\":{\"orders\":[{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"},{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Tradeを返す()
+        public void HTTPステータスが200かつSuccessが1_Orderを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -34,21 +34,21 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var result = bitbank.GetTradeHistoryAsync(default, default, default, default, default, default).GetAwaiter().GetResult();
+                var result = bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
-                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountBase);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountQuote);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.MakerTaker);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.AveragePrice);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.ExecutedAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.OrderedAt);
                     Assert.Equal(EntityHelper.GetTestValue<long>(), entity.OrderId);
                     Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.RemainingAmount);
                     Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
-                    Assert.Equal(EntityHelper.GetTestValue<long>(), entity.TradeId);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.StartAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), entity.Status);
                     Assert.Equal(EntityHelper.GetTestValue<OrderType>(), entity.Type);
                 });
             }
@@ -72,8 +72,8 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.GetTradeHistoryAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
+                var exception = Assert.Throws<BitbankApiException>(() =>
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
@@ -98,8 +98,8 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
-                var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.GetTradeHistoryAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
+                var exception = Assert.Throws<BitbankApiException>(() =>
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -124,8 +124,8 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                Assert.Throws<BitbankException>(() =>
-                    bitbank.GetTradeHistoryAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
+                Assert.Throws<BitbankApiException>(() =>
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
             }
         }
     }
