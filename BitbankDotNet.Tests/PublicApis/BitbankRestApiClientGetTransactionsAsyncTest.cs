@@ -68,7 +68,6 @@ namespace BitbankDotNet.Tests.PublicApis
                 var bitbank = new BitbankRestApiClient(client);
                 var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }

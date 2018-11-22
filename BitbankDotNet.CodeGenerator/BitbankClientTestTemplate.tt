@@ -99,7 +99,6 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 <# } #>
                 var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
