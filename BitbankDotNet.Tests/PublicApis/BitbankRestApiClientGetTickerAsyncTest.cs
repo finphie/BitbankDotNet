@@ -30,7 +30,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankRestApiClient(client);
