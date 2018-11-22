@@ -30,7 +30,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
@@ -44,7 +44,9 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.LockedAmount);
                     Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.OnhandAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<WithdrawalFeeObject>(), entity.WithdrawalFee);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Over);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Threshold);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Under);
                 });
             }
         }
