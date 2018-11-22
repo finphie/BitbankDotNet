@@ -1,4 +1,4 @@
-using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PublicApis
 {
-    public class BitbankClientGetDepthAsyncTest
+    public class BitbankRestApiClientGetDepthAsyncTest
     {
         const string Json =
             "{\"success\":1,\"data\":{\"asks\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]],\"bids\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]]}}";
@@ -24,13 +24,13 @@ namespace BitbankDotNet.Tests.PublicApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-                    Assert.StartsWith("https://public.bitbank.cc/btc_jpy/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri);
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankRestApiClient(client);
@@ -54,7 +54,7 @@ namespace BitbankDotNet.Tests.PublicApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public void HTTPステータスが404またはSuccessが0_BitbankExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -70,13 +70,12 @@ namespace BitbankDotNet.Tests.PublicApis
                 var bitbank = new BitbankRestApiClient(client);
                 var exception = Assert.Throws<BitbankException>(() =>
                     bitbank.GetDepthAsync(default).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
 		[Fact]
-		public void タイムアウト_BitbankApiExceptionをスローする()
+		public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -106,7 +105,7 @@ namespace BitbankDotNet.Tests.PublicApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankApiExceptionをスローする(string content)
+        public void 不正なJSONを取得_BitbankExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()

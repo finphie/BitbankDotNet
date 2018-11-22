@@ -1,4 +1,4 @@
-using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
@@ -10,13 +10,13 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PrivateApis
 {
-    public class BitbankClientRequestWithdrawalAsyncTest
+    public class BitbankRestApiClientSendBuyOrderAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"uuid\":\"a\",\"asset\":\"jpy\",\"account_uuid\":\"a\",\"amount\":\"1.2\",\"fee\":\"1.2\",\"label\":\"a\",\"address\":\"a\",\"txId\":\"a\",\"status\":\"CONFIRMING\",\"requested_at\":1514862245678}}";
+            "{\"success\":1,\"data\":{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Withdrawalを返す()
+        public void HTTPステータスが200かつSuccessが1_Orderを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -30,23 +30,24 @@ namespace BitbankDotNet.Tests.PrivateApis
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var result = bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult();
+                var result = bitbank.SendBuyOrderAsync(default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
-                Assert.Equal(EntityHelper.GetTestValue<string>(), result.AccountUuid);
-                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Address);
-                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Amount);
-                Assert.Equal(EntityHelper.GetTestValue<AssetName>(), result.Asset);
-                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Fee);
-                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Label);
-                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.RequestedAt);
-                Assert.Equal(EntityHelper.GetTestValue<WithdrawalStatus>(), result.Status);
-                Assert.Equal(EntityHelper.GetTestValue<string>(), result.TxId);
-                Assert.Equal(EntityHelper.GetTestValue<string>(), result.Uuid);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.AveragePrice);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.ExecutedAmount);
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.OrderedAt);
+                Assert.Equal(EntityHelper.GetTestValue<long>(), result.OrderId);
+                Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), result.Pair);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Price);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.RemainingAmount);
+                Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), result.Side);
+                Assert.Equal(EntityHelper.GetTestValue<double>(), result.StartAmount);
+                Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), result.Status);
+                Assert.Equal(EntityHelper.GetTestValue<OrderType>(), result.Type);
             }
         }
 
@@ -54,7 +55,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public void HTTPステータスが404またはSuccessが0_BitbankExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -69,14 +70,13 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
+                    bitbank.SendBuyOrderAsync(default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
 		[Fact]
-		public void タイムアウト_BitbankApiExceptionをスローする()
+		public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -95,7 +95,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
+                    bitbank.SendBuyOrderAsync(default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -106,7 +106,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankApiExceptionをスローする(string content)
+        public void 不正なJSONを取得_BitbankExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -121,7 +121,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 Assert.Throws<BitbankException>(() =>
-                    bitbank.RequestWithdrawalAsync(default, default, default, default, default).GetAwaiter().GetResult());
+                    bitbank.SendBuyOrderAsync(default, default, default).GetAwaiter().GetResult());
             }
         }
     }

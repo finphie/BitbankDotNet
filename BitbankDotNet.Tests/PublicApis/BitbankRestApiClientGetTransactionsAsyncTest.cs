@@ -1,4 +1,4 @@
-using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
@@ -8,15 +8,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BitbankDotNet.Tests.PrivateApis
+namespace BitbankDotNet.Tests.PublicApis
 {
-    public class BitbankClientGetWithdrawalAccountsAsyncTest
+    public class BitbankRestApiClientGetTransactionsAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"accounts\":[{\"uuid\":\"a\",\"label\":\"a\",\"address\":\"a\"},{\"uuid\":\"a\",\"label\":\"a\",\"address\":\"a\"}]}}";
+            "{\"success\":1,\"data\":{\"transactions\":[{\"transaction_id\":3,\"side\":\"buy\",\"price\":\"1.2\",\"amount\":\"1.2\",\"executed_at\":1514862245678},{\"transaction_id\":3,\"side\":\"buy\",\"price\":\"1.2\",\"amount\":\"1.2\",\"executed_at\":1514862245678}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_WithdrawalAccountを返す()
+        public void HTTPステータスが200かつSuccessが1_Transactionを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -24,24 +24,26 @@ namespace BitbankDotNet.Tests.PrivateApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-					Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri);
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var result = bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult();
+                var bitbank = new BitbankRestApiClient(client);
+                var result = bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Address);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Label);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.Uuid);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
+                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.TransactionId);
                 });
             }
         }
@@ -50,7 +52,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public void HTTPステータスが404またはSuccessが0_BitbankExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -63,16 +65,15 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
+                var bitbank = new BitbankRestApiClient(client);
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
+                    bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
 		[Fact]
-		public void タイムアウト_BitbankApiExceptionをスローする()
+		public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -89,9 +90,9 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
+                var bitbank = new BitbankRestApiClient(client, TimeSpan.FromMilliseconds(1));
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult());
+                    bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -102,7 +103,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankApiExceptionをスローする(string content)
+        public void 不正なJSONを取得_BitbankExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -115,9 +116,9 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
+                var bitbank = new BitbankRestApiClient(client);
                 Assert.Throws<BitbankException>(() =>
-                    bitbank.GetWithdrawalAccountsAsync(default).GetAwaiter().GetResult());
+                    bitbank.GetTransactionsAsync(default, default, default, default).GetAwaiter().GetResult());
             }
         }
     }

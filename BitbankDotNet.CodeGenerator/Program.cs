@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -14,11 +15,12 @@ namespace BitbankDotNet.CodeGenerator
         static void Main()
         {
             var path = $"../../../../{nameof(BitbankDotNet)}";
-            var publicApiPath = Path.GetFullPath(path + "/PublicApi.cs");
-            var privateApiPath = Path.GetFullPath(path + "/PrivateApi.cs");
+            var files = Directory.EnumerateFiles(path + "/PublicApis")
+                .Concat(Directory.EnumerateFiles(path + "/PrivateApis"))
+                .Select(s => File.ReadAllText(s));
 
             // Roslynによる構文解析
-            var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(publicApiPath) + File.ReadAllText(privateApiPath));
+            var tree = CSharpSyntaxTree.ParseText(string.Concat(files));
             var methodDeclarations = tree.GetRoot().DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
                 .GroupBy(m => m.Identifier.ValueText);
@@ -50,7 +52,7 @@ namespace BitbankDotNet.CodeGenerator
                 var text = tt.TransformText();
                 var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
                 var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");
-                File.WriteAllText(outPath, text);
+                File.WriteAllText(outPath, text, Encoding.UTF8);
             }
         }
     }

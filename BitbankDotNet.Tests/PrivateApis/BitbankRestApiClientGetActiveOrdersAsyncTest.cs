@@ -1,4 +1,4 @@
-using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PrivateApis
 {
-    public class BitbankClientCancelOrdersAsyncTest
+    public class BitbankRestApiClientGetActiveOrdersAsyncTest
     {
         const string Json =
             "{\"success\":1,\"data\":{\"orders\":[{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"},{\"order_id\":4,\"pair\":\"btc_jpy\",\"side\":\"buy\",\"type\":\"limit\",\"start_amount\":\"1.2\",\"remaining_amount\":\"1.2\",\"executed_amount\":\"1.2\",\"price\":\"1.2\",\"average_price\":\"1.2\",\"ordered_at\":1514862245678,\"status\":\"UNFILLED\"}]}}";
@@ -30,11 +30,11 @@ namespace BitbankDotNet.Tests.PrivateApis
                 {
                     Content = new StringContent(Json)
                 });
-            
+
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var result = bitbank.CancelOrdersAsync(default, default).GetAwaiter().GetResult();
+                var result = bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -58,7 +58,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankApiExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public void HTTPステータスが404またはSuccessが0_BitbankExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -73,14 +73,13 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.CancelOrdersAsync(default, default).GetAwaiter().GetResult());
-                Assert.Equal(statusCode, exception.StatusCode);
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
 		[Fact]
-		public void タイムアウト_BitbankApiExceptionをスローする()
+		public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -99,7 +98,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
                 var exception = Assert.Throws<BitbankException>(() =>
-                    bitbank.CancelOrdersAsync(default, default).GetAwaiter().GetResult());
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -110,7 +109,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankApiExceptionをスローする(string content)
+        public void 不正なJSONを取得_BitbankExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -125,7 +124,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             {
 				var bitbank = new BitbankRestApiClient(client, " ", " ");
                 Assert.Throws<BitbankException>(() =>
-                    bitbank.CancelOrdersAsync(default, default).GetAwaiter().GetResult());
+                    bitbank.GetActiveOrdersAsync(default, default, default, default, default, default).GetAwaiter().GetResult());
             }
         }
     }
