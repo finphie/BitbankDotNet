@@ -22,7 +22,7 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// [PrivateAPI]アクティブな注文を取得します。
+        /// [Private API]アクティブな注文を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>注文情報</returns>
@@ -36,7 +36,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]アクティブな注文を取得します。
+        /// [Private API]アクティブな注文を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="count">取得する注文数</param>
@@ -64,6 +64,11 @@ namespace BitbankDotNet
             return result.Orders;
         }
 
+        /// <summary>
+        /// [Private API]アクティブな注文を取得します。
+        /// </summary>
+        /// <param name="query">URLクエリパラメーター</param>
+        /// <returns><see cref="OrderList"/>クラスのインスタンス</returns>
         Task<OrderList> GetActiveOrdersAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[ActiveOrderPathLength + query.Length];

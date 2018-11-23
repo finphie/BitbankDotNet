@@ -22,7 +22,7 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// [PrivateAPI]約定履歴を取得します。
+        /// [Private API]約定履歴を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
@@ -36,7 +36,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]約定履歴を取得します。
+        /// [Private API]約定履歴を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="count">取得する注文数</param>
@@ -64,6 +64,11 @@ namespace BitbankDotNet
             return result.Trades;
         }
 
+        /// <summary>
+        /// [Private API]約定履歴を取得します。
+        /// </summary>
+        /// <param name="query">URLクエリパラメーター</param>
+        /// <returns><see cref="TradeList"/>クラスのインスタンス</returns>
         Task<TradeList> GetTradeHistoryAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[TradeHistoryPathLength + query.Length];

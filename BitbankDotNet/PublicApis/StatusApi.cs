@@ -9,7 +9,7 @@ namespace BitbankDotNet
         const string StatusPath = "spot/status";
 
         /// <summary>
-        /// [PublicAPI]取引所ステータスを返します。
+        /// [Public API]取引所ステータスを返します。
         /// </summary>
         /// <returns>取引所ステータス</returns>
         public async Task<HealthStatus[]> GetStatusAsync()

@@ -22,7 +22,7 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// [PrivateAPI]注文情報を取得します。
+        /// [Private API]注文情報を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
@@ -46,7 +46,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]複数の注文情報を取得します。
+        /// [Private API]複数の注文情報を取得します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderIds">複数の注文ID</param>

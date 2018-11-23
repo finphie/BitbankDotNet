@@ -23,7 +23,7 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// [PrivateAPI]出金アカウントを取得します。
+        /// [Private API]出金アカウントを取得します。
         /// </summary>
         /// <param name="asset">通貨名</param>
         /// <returns>出金アカウント情報</returns>
@@ -37,7 +37,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]出金リクエストを行います。
+        /// [Private API]出金リクエストを行います。
         /// </summary>
         /// <param name="asset">アセット名</param>
         /// <param name="amount">引き出し量</param>
@@ -56,7 +56,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]出金リクエストを行います。
+        /// [Private API]出金リクエストを行います。
         /// </summary>
         /// <param name="asset">アセット名</param>
         /// <param name="amount">引き出し量</param>
@@ -78,6 +78,11 @@ namespace BitbankDotNet
             return PrivateApiPostAsync<Withdrawal, WithdrawalBody>(RequestWithdrawalPath, body);
         }
 
+        /// <summary>
+        /// [Private API]出金アカウントを取得します。
+        /// </summary>
+        /// <param name="query">URLクエリパラメーター</param>
+        /// <returns><see cref="WithdrawalAccountList"/>クラスのインスタンス</returns>
         Task<WithdrawalAccountList> GetWithdrawalAccountsAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[WithdrawalAccountPathLength + query.Length];

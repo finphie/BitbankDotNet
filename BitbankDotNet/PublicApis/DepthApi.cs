@@ -9,7 +9,7 @@ namespace BitbankDotNet
         const string DepthPath = "/depth";
 
         /// <summary>
-        /// [PublicAPI]板情報を返します。
+        /// [Public API]板情報を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>板情報</returns>
