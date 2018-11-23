@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Helpers
 {
+    /// <summary>
+    /// <see cref="Span{T}"/>構造体のヘルパークラス
+    /// </summary>
     static class SpanHelper
     {
         static readonly int[] Table =
@@ -36,6 +39,11 @@ namespace BitbankDotNet.Helpers
             0x610066, 0x620066, 0x630066, 0x640066, 0x650066, 0x660066
         };
 
+        /// <summary>
+        /// UTF-8のbyte配列を16進数のUTF-16文字列に変換します。
+        /// </summary>
+        /// <param name="source">UTF-8のbyte配列</param>
+        /// <param name="destination">UTF-16文字列の出力先</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToHexString(in ReadOnlySpan<byte> source, in ReadOnlySpan<char> destination)
         {

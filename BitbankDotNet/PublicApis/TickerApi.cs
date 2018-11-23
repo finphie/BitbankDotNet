@@ -9,7 +9,7 @@ namespace BitbankDotNet
         const string TickerPath = "/ticker";
 
         /// <summary>
-        /// [PublicAPI]ティッカー情報を返します。
+        /// [Public API]ティッカー情報を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>ティッカー情報</returns>

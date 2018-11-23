@@ -3,6 +3,9 @@ using System;
 
 namespace BitbankDotNet.Formatters
 {
+    /// <summary>
+    /// <see cref="DateTime"/>構造体のフォーマッター
+    /// </summary>
     sealed class DateTimeAsLongFormatter : ICustomJsonFormatter<DateTime>
     {
         public static readonly DateTimeAsLongFormatter Default = new DateTimeAsLongFormatter();

@@ -10,7 +10,7 @@ namespace BitbankDotNet
         const string TransactionPath = "/transactions";
 
         /// <summary>
-        /// [PublicAPI]最新の約定履歴を返します。
+        /// [Public API]最新の約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
@@ -21,7 +21,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
+        /// [Public API]指定された日付（UTC）の全約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="query">クエリ</param>
@@ -34,7 +34,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
+        /// [Public API]指定された日付（UTC）の全約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="year">年</param>
@@ -45,7 +45,7 @@ namespace BitbankDotNet
             => GetTransactionsAsync(pair, $"{year:D2}{month:D2}{day:D2}");
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
+        /// [Public API]指定された日付（UTC）の全約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
@@ -54,7 +54,7 @@ namespace BitbankDotNet
             => GetTransactionsAsync(pair, $"{date:yyyyMMdd}");
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）の全約定履歴を返します。
+        /// [Public API]指定された日付（UTC）の全約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>

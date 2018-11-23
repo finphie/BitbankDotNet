@@ -3,6 +3,9 @@ using SpanJson;
 
 namespace BitbankDotNet.Formatters
 {
+    /// <summary>
+    /// <see cref="BoardOrder"/>クラスのフォーマッター
+    /// </summary>
     sealed class BitbankBoardOrderFormatter : ICustomJsonFormatter<BoardOrder>
     {
         public static readonly BitbankBoardOrderFormatter Default = new BitbankBoardOrderFormatter();

@@ -9,7 +9,7 @@ namespace BitbankDotNet
         const string SendOrderPath = "/v1/user/spot/order";
 
         /// <summary>
-        /// [PrivateAPI]新規指値買い注文を行います。
+        /// [Private API]新規指値買い注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="price">価格</param>
@@ -19,7 +19,7 @@ namespace BitbankDotNet
             => SendLimitOrderAsync(pair, price, amount, OrderSide.Buy, OrderType.Limit);
 
         /// <summary>
-        /// [PrivateAPI]新規成行買い注文を行います。
+        /// [Private API]新規成行買い注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
@@ -28,7 +28,7 @@ namespace BitbankDotNet
             => SendMarketOrderAsync(pair, amount, OrderSide.Buy, OrderType.Market);
 
         /// <summary>
-        /// [PrivateAPI]新規指値売り注文を行います。
+        /// [Private API]新規指値売り注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="price">価格</param>
@@ -38,7 +38,7 @@ namespace BitbankDotNet
             => SendLimitOrderAsync(pair, price, amount, OrderSide.Sell, OrderType.Limit);
 
         /// <summary>
-        /// [PrivateAPI]新規成行売り注文を行います。
+        /// [Private API]新規成行売り注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>
@@ -47,7 +47,7 @@ namespace BitbankDotNet
             => SendMarketOrderAsync(pair, amount, OrderSide.Sell, OrderType.Market);
 
         /// <summary>
-        /// [PrivateAPI]新規指値注文を行います。
+        /// [Private API]新規指値注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="price">価格</param>
@@ -69,7 +69,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]新規成行注文を行います。
+        /// [Private API]新規成行注文を行います。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="amount">数量</param>

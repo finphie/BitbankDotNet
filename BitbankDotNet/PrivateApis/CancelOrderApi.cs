@@ -10,7 +10,7 @@ namespace BitbankDotNet
         const string CancelOrdersPath = "/v1/user/spot/cancel_orders";
 
         /// <summary>
-        /// [PrivateAPI]注文をキャンセルします。
+        /// [Private API]注文をキャンセルします。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
@@ -26,7 +26,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// [PrivateAPI]複数の注文をキャンセルします。
+        /// [Private API]複数の注文をキャンセルします。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderIds">複数の注文ID</param>

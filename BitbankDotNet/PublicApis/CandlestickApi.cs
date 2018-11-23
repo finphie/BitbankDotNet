@@ -11,7 +11,7 @@ namespace BitbankDotNet
         const string CandlestickPath = "/candlestick/";
 
         /// <summary>
-        /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
+        /// [Public API]指定された年（UTC）のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>
@@ -21,7 +21,7 @@ namespace BitbankDotNet
             => GetCandlesticksAsync(pair, type, year.ToString());
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
+        /// [Public API]指定された日付（UTC）のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>
@@ -33,7 +33,7 @@ namespace BitbankDotNet
             => GetCandlesticksAsync(pair, type, $"{year:D2}{month:D2}{day:D2}");
 
         /// <summary>
-        /// [PublicAPI]指定された日付（UTC）のローソク足データを返します。
+        /// [Public API]指定された日付（UTC）のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>
@@ -43,7 +43,7 @@ namespace BitbankDotNet
             => GetCandlesticksAsync(pair, type, $"{date:yyyyMMdd}");
 
         /// <summary>
-        /// [PublicAPI]指定された日付のローソク足データを返します。
+        /// [Public API]指定された日付のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>
@@ -53,7 +53,7 @@ namespace BitbankDotNet
             => GetCandlesticksAsync(pair, type, date.UtcDateTime);
 
         /// <summary>
-        /// [PublicAPI]指定された年（UTC）のローソク足データを返します。
+        /// [Public API]指定された年（UTC）のローソク足データを返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="type">ローソク足の期間</param>

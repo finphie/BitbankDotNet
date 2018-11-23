@@ -15,7 +15,7 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// [PrivateAPI]アセット一覧を返します。
+        /// [Private API]アセット一覧を返します。
         /// </summary>
         /// <returns>アセット一覧</returns>
         public async Task<Asset[]> GetAssetsAsync()
