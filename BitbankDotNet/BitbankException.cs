@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BitbankDotNet
 {
     /// <summary>
-    /// <see cref="BitbankRestApiClient"/>例外クラス
+    /// <see cref="BitbankDotNet"/>例外クラス
     /// </summary>
     public class BitbankException : Exception
     {
@@ -83,20 +83,33 @@ namespace BitbankDotNet
         };
 
         /// <summary>
-        /// BitbankAPIのエラーコード
+        /// Bitbank APIのエラーコード
         /// </summary>
         public int ApiErrorCode { get; }
 
+        /// <summary>
+        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="message">エラーメッセージ</param>
         public BitbankException(string message)
             : base(message)
         {
         }
 
+        /// <summary>
+        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="message">エラーメッセージ</param>
+        /// <param name="inner">内部のエラー</param>
         public BitbankException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
+        /// <summary>
+        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="apiErrorCode">APIのエラーコード</param>
         public BitbankException(int apiErrorCode)
             : this(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage)
         {
