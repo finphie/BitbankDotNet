@@ -5,6 +5,9 @@ using System.Globalization;
 
 namespace BitbankDotNet.Formatters
 {
+    /// <summary>
+    /// <see cref="double"/>のフォーマッター
+    /// </summary>
     sealed class DoubleAsStringFormatter : ICustomJsonFormatter<double>
     {
         public static readonly DoubleAsStringFormatter Default = new DoubleAsStringFormatter();

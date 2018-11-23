@@ -5,6 +5,9 @@ using SpanJson.Formatters;
 
 namespace BitbankDotNet.Formatters
 {
+    /// <summary>
+    /// <see cref="Asset.WithdrawalFee"/>クラスのフォーマッター
+    /// </summary>
     sealed class BitbankWithdrawalFeeFormatter : ICustomJsonFormatter<Asset.WithdrawalFeeObject>
     {
         public static readonly BitbankWithdrawalFeeFormatter Default = new BitbankWithdrawalFeeFormatter();

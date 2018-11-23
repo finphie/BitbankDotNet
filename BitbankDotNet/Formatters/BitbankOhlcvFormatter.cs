@@ -3,6 +3,9 @@ using SpanJson;
 
 namespace BitbankDotNet.Formatters
 {
+    /// <summary>
+    /// <see cref="Ohlcv"/>クラスのフォーマッター
+    /// </summary>
     sealed class BitbankOhlcvFormatter : ICustomJsonFormatter<Ohlcv>
     {
         public static readonly BitbankOhlcvFormatter Default = new BitbankOhlcvFormatter();
