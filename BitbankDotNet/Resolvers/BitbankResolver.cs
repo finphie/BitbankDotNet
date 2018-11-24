@@ -8,7 +8,7 @@ namespace BitbankDotNet.Resolvers
     /// <summary>
     /// <see cref="Entities"/>名前空間内にあるクラスのResolver
     /// </summary>
-    /// <typeparam name="TSymbol"></typeparam>
+    /// <typeparam name="TSymbol"><see cref="byte"/>または<see cref="char"/></typeparam>
     sealed class BitbankResolver<TSymbol> : ResolverBase<TSymbol, BitbankResolver<TSymbol>>
         where TSymbol : struct
     {
