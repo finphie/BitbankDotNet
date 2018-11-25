@@ -149,7 +149,7 @@ namespace BitbankDotNet
             {
                 ThrowHelper.ThrowBitbankRequestTimeoutException(ex);
             }
-            catch (Exception ex) when (!(ex is BitbankException))
+            catch (Exception ex) when (!(ex is BitbankDotNetException))
             {
                 // ここに到達した場合、デシリアライズでエラーが発生しているはず。
                 // 1.JsonParserException

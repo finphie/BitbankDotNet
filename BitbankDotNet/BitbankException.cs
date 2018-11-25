@@ -6,7 +6,7 @@ namespace BitbankDotNet
     /// <summary>
     /// <see cref="BitbankDotNet"/>例外クラス
     /// </summary>
-    public class BitbankException : Exception
+    public class BitbankDotNetException : Exception
     {
         const string DefaultApiErrorMessage = "APIリクエストでエラーが発生しました。";
 
@@ -88,29 +88,29 @@ namespace BitbankDotNet
         public int ApiErrorCode { get; }
 
         /// <summary>
-        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// <see cref="BitbankDotNetException"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="message">エラーメッセージ</param>
-        public BitbankException(string message)
+        public BitbankDotNetException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// <see cref="BitbankDotNetException"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="message">エラーメッセージ</param>
         /// <param name="inner">内部のエラー</param>
-        public BitbankException(string message, Exception inner)
+        public BitbankDotNetException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
         /// <summary>
-        /// <see cref="BitbankException"/>クラスの新しいインスタンスを初期化します。
+        /// <see cref="BitbankDotNetException"/>クラスの新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="apiErrorCode">APIのエラーコード</param>
-        public BitbankException(int apiErrorCode)
+        public BitbankDotNetException(int apiErrorCode)
             : this(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage)
         {
             ApiErrorCode = apiErrorCode;

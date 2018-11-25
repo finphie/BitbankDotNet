@@ -15,7 +15,7 @@ namespace BitbankDotNet.Helpers
         /// <param name="apiErrorCode">APIのエラーコード</param>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankApiException(int apiErrorCode)
-            => throw new BitbankException(apiErrorCode);
+            => throw new BitbankDotNetException(apiErrorCode);
 
         /// <summary>
         /// 例外を送出します。（JSONデシリアライズでエラー）
@@ -23,7 +23,7 @@ namespace BitbankDotNet.Helpers
         /// <param name="inner">内部のエラー</param>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankJsonDeserializeException(Exception inner)
-            => throw new BitbankException("JSONデシリアライズでエラーが発生しました。", inner);
+            => throw new BitbankDotNetException("JSONデシリアライズでエラーが発生しました。", inner);
 
         /// <summary>
         /// 例外を送出します。（HTTPリクエストがタイムアウト）
@@ -31,7 +31,7 @@ namespace BitbankDotNet.Helpers
         /// <param name="inner">内部のエラー</param>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void ThrowBitbankRequestTimeoutException(Exception inner)
-            => throw new BitbankException("リクエストがタイムアウトしました。", inner);
+            => throw new BitbankDotNetException("リクエストがタイムアウトしました。", inner);
 
         /// <summary>
         /// 例外を送出します。（<see cref="SpanJson"/>でのJSONシリアライズやデシリアライズでエラー）
