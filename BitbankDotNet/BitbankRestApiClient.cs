@@ -127,6 +127,7 @@ namespace BitbankDotNet
         async Task<T> SendAsync<T>(HttpRequestMessage request)
             where T : class, IEntityResponse
         {
+            Error error = null;
             try
             {
                 var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
@@ -142,14 +143,13 @@ namespace BitbankDotNet
                         return result.Data;
                 }
 
-                var error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
-                ThrowHelper.ThrowBitbankApiException(error.Code);
+                error = Deserialize<Response<Error>, BitbankResolver<byte>>(json).Data;
             }
             catch (TaskCanceledException ex)
             {
                 ThrowHelper.ThrowBitbankRequestTimeoutException(ex);
             }
-            catch (Exception ex) when (!(ex is BitbankDotNetException))
+            catch (Exception ex)
             {
                 // ここに到達した場合、デシリアライズでエラーが発生しているはず。
                 // 1.JsonParserException
@@ -157,6 +157,8 @@ namespace BitbankDotNet
                 // また、nullチェックを省略しているため、NullReferenceExceptionも考慮する必要がある。
                 ThrowHelper.ThrowBitbankJsonDeserializeException(ex);
             }
+
+            ThrowHelper.ThrowBitbankApiException(error?.Code ?? default);
 
             // ここには到達しないはず
             return default;
