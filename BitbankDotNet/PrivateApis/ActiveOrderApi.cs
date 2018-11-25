@@ -26,6 +26,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>注文情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -45,6 +46,7 @@ namespace BitbankDotNet
         /// <param name="since">開始時間</param>
         /// <param name="end">終了時間</param>
         /// <returns>注文情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Order[]> GetActiveOrdersAsync(CurrencyPair pair, long? count, long? fromId, long? endId, DateTimeOffset? since, DateTimeOffset? end)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -69,6 +71,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="query">URLクエリパラメーター</param>
         /// <returns><see cref="OrderList"/>クラスのインスタンス</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<OrderList> GetActiveOrdersAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[ActiveOrderPathLength + query.Length];

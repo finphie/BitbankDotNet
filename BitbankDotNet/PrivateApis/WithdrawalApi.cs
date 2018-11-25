@@ -27,6 +27,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="asset">通貨名</param>
         /// <returns>出金アカウント情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<WithdrawalAccount[]> GetWithdrawalAccountsAsync(AssetName asset)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -43,6 +44,7 @@ namespace BitbankDotNet
         /// <param name="amount">引き出し量</param>
         /// <param name="uuid">出金アカウントのUUID</param>
         /// <returns></returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid)
         {
             var body = new WithdrawalBody
@@ -64,6 +66,7 @@ namespace BitbankDotNet
         /// <param name="otpToken">二段階認証トークン</param>
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns></returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int? otpToken, int? smsToken)
         {
             var body = new WithdrawalBody
@@ -83,6 +86,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="query">URLクエリパラメーター</param>
         /// <returns><see cref="WithdrawalAccountList"/>クラスのインスタンス</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<WithdrawalAccountList> GetWithdrawalAccountsAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[WithdrawalAccountPathLength + query.Length];

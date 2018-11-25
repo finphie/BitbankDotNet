@@ -17,6 +17,7 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="year">年</param>
         /// <returns>ローソク足データ</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year)
             => GetCandlesticksAsync(pair, type, year.ToString());
 
@@ -29,6 +30,7 @@ namespace BitbankDotNet
         /// <param name="month">月</param>
         /// <param name="day">日</param>
         /// <returns>ローソク足データ</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year, int month, int day)
             => GetCandlesticksAsync(pair, type, $"{year:D2}{month:D2}{day:D2}");
 
@@ -39,6 +41,7 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="date">日付</param>
         /// <returns>ローソク足データ</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTime date)
             => GetCandlesticksAsync(pair, type, $"{date:yyyyMMdd}");
 
@@ -49,6 +52,7 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="date">日付</param>
         /// <returns>ローソク足データ</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, DateTimeOffset date)
             => GetCandlesticksAsync(pair, type, date.UtcDateTime);
 
@@ -59,6 +63,7 @@ namespace BitbankDotNet
         /// <param name="type">ローソク足の期間</param>
         /// <param name="query">クエリ</param>
         /// <returns>ローソク足データ</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         async Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, string query)
         {
             var path = CandlestickPath + type.GetEnumMemberValue() + $"/{query}";
