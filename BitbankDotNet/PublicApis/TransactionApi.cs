@@ -14,6 +14,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair)
         {
             var result = await PublicApiGetAsync<TransactionList>(TransactionPath, pair).ConfigureAwait(false);
@@ -26,6 +27,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="query">クエリ</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         async Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, string query)
         {
             var path = TransactionPath + $"/{query}";
@@ -41,6 +43,7 @@ namespace BitbankDotNet
         /// <param name="month">月</param>
         /// <param name="day">日</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, int year, int month, int day)
             => GetTransactionsAsync(pair, $"{year:D2}{month:D2}{day:D2}");
 
@@ -50,6 +53,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTime date)
             => GetTransactionsAsync(pair, $"{date:yyyyMMdd}");
 
@@ -59,6 +63,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, DateTimeOffset date)
             => GetTransactionsAsync(pair, date.UtcDateTime);
     }

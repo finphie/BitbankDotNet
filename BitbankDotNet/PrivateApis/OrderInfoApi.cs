@@ -27,6 +27,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderId">注文ID</param>
         /// <returns>注文情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Order> GetOrderAsync(CurrencyPair pair, long orderId)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -51,6 +52,7 @@ namespace BitbankDotNet
         /// <param name="pair">通貨ペア</param>
         /// <param name="orderIds">複数の注文ID</param>
         /// <returns>注文情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Order[]> GetOrdersAsync(CurrencyPair pair, long[] orderIds)
         {
             var body = new OrdersInfoBody

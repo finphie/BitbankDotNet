@@ -12,6 +12,7 @@ namespace BitbankDotNet
         /// [Public API]取引所ステータスを返します。
         /// </summary>
         /// <returns>取引所ステータス</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<HealthStatus[]> GetStatusAsync()
         {
             var result = await PublicApiGetAsync<HealthStatusList>(StatusPath).ConfigureAwait(false);

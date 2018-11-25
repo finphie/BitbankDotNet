@@ -13,6 +13,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>ティッカー情報</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ticker> GetTickerAsync(CurrencyPair pair)
             => PublicApiGetAsync<Ticker>(TickerPath, pair);
     }

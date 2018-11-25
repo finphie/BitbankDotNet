@@ -26,6 +26,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -45,6 +46,7 @@ namespace BitbankDotNet
         /// <param name="end">終了時間</param>
         /// <param name="sort">順序</param>
         /// <returns>約定履歴</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Trade[]> GetTradeHistoryAsync(CurrencyPair pair, long? count, long? orderId, DateTimeOffset? since, DateTimeOffset? end, SortOrder? sort)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
@@ -69,6 +71,7 @@ namespace BitbankDotNet
         /// </summary>
         /// <param name="query">URLクエリパラメーター</param>
         /// <returns><see cref="TradeList"/>クラスのインスタンス</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<TradeList> GetTradeHistoryAsync(string query)
         {
             Span<byte> buffer = stackalloc byte[TradeHistoryPathLength + query.Length];

@@ -18,6 +18,7 @@ namespace BitbankDotNet
         /// [Private API]アセット一覧を返します。
         /// </summary>
         /// <returns>アセット一覧</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public async Task<Asset[]> GetAssetsAsync()
         {
             var result = await PrivateApiGetAsync<AssetList>(AssetPath, AssetUtf8Path).ConfigureAwait(false);
