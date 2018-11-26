@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="BitbankClientTestTemplate.tt">
+    <None Update="BitbankRestApiClientTestTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>BitbankClientTestTemplate.cs</LastGenOutput>
+      <LastGenOutput>BitbankRestApiClientTestTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="BitbankClientTestTemplate.cs">
+    <Compile Update="BitbankRestApiClientTestTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>BitbankClientTestTemplate.tt</DependentUpon>
+      <DependentUpon>BitbankRestApiClientTestTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

@@ -48,7 +48,7 @@ namespace BitbankDotNet.CodeGenerator
                 Console.WriteLine(group.Key);
                 var method = group.OrderByDescending(mi => mi.GetParameters().Length);
                 var isPublicApi = dic[group.Key];
-                var tt = new BitbankClientTestTemplate(method.First(), isPublicApi);
+                var tt = new BitbankRestApiClientTestTemplate(method.First(), isPublicApi);
                 var text = tt.TransformText();
                 var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
                 var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");

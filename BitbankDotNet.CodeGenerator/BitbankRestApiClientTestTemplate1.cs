@@ -12,12 +12,12 @@ using System.Reflection;
 
 namespace BitbankDotNet.CodeGenerator
 {
-    partial class BitbankClientTestTemplate
+    partial class BitbankRestApiClientTestTemplate
     {
         // Entityの名前空間名
         const string EntityNamespace = nameof(BitbankDotNet) + "." + nameof(Entities);
 
-        // BitbankClientがあるアセンブリ
+        // BitbankRestApiClientがあるアセンブリ
         static readonly Assembly LibraryAssembly = typeof(BitbankRestApiClient).Assembly;
 
         // Entityの型情報リスト
@@ -38,7 +38,7 @@ namespace BitbankDotNet.CodeGenerator
 
         public (string Name, string Type)[] Parameters { get; }
 
-        public BitbankClientTestTemplate(MethodInfo method, bool isPublicApi)
+        public BitbankRestApiClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
             IsPublicApi = isPublicApi;
             MethodName = method.Name;
