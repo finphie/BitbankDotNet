@@ -93,7 +93,8 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ", TimeSpan.FromMilliseconds(1));
+                client.Timeout = TimeSpan.FromMilliseconds(1);
+                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
                     bitbank.SendSellOrderAsync(default, default, default).GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
