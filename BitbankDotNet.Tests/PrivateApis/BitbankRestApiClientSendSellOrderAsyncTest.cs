@@ -24,7 +24,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-					Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -33,7 +33,7 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
+                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var result = bitbank.SendSellOrderAsync(default, default, default).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
@@ -68,15 +68,15 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
+                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
                     bitbank.SendSellOrderAsync(default, default, default).GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
-		[Fact]
-		public void タイムアウト_BitbankExceptionをスローする()
+        [Fact]
+        public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -120,7 +120,7 @@ namespace BitbankDotNet.Tests.PrivateApis
 
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
-				var bitbank = new BitbankRestApiClient(client, " ", " ");
+                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 Assert.Throws<BitbankDotNetException>(() =>
                     bitbank.SendSellOrderAsync(default, default, default).GetAwaiter().GetResult());
             }

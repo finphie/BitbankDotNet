@@ -74,8 +74,8 @@ namespace BitbankDotNet.Tests.PublicApis
             }
         }
 
-		[Fact]
-		public void タイムアウト_BitbankExceptionをスローする()
+        [Fact]
+        public void タイムアウト_BitbankExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
