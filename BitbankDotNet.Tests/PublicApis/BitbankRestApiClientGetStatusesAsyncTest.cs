@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PublicApis
 {
-    public class BitbankRestApiClientGetStatusAsyncTest
+    public class BitbankRestApiClientGetStatusesAsyncTest
     {
         const string Json =
             "{\"success\":1,\"data\":{\"statuses\":[{\"pair\":\"btc_jpy\",\"status\":\"NORMAL\",\"min_amount\":\"1.2\"},{\"pair\":\"btc_jpy\",\"status\":\"NORMAL\",\"min_amount\":\"1.2\"}]}}";
@@ -34,7 +34,7 @@ namespace BitbankDotNet.Tests.PublicApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 var bitbank = new BitbankRestApiClient(client);
-                var result = bitbank.GetStatusAsync().GetAwaiter().GetResult();
+                var result = bitbank.GetStatusesAsync().GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -65,7 +65,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankRestApiClient(client);
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
+                    bitbank.GetStatusesAsync().GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
@@ -91,7 +91,7 @@ namespace BitbankDotNet.Tests.PublicApis
                 client.Timeout = TimeSpan.FromMilliseconds(1);
                 var bitbank = new BitbankRestApiClient(client);
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
+                    bitbank.GetStatusesAsync().GetAwaiter().GetResult());
                 Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
@@ -117,7 +117,7 @@ namespace BitbankDotNet.Tests.PublicApis
             {
                 var bitbank = new BitbankRestApiClient(client);
                 Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetStatusAsync().GetAwaiter().GetResult());
+                    bitbank.GetStatusesAsync().GetAwaiter().GetResult());
             }
         }
     }
