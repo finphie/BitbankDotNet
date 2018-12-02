@@ -51,7 +51,7 @@ namespace BitbankDotNet
     }
 
     /// <summary>
-    /// ロウソク足の期間
+    /// ローソク足の期間
     /// </summary>
     public enum CandleType
     {
@@ -92,6 +92,12 @@ namespace BitbankDotNet
         FourHour,
 
         /// <summary>
+        /// 8時間
+        /// </summary>
+        [EnumMember(Value = "8hour")]
+        EightHour,
+
+        /// <summary>
         /// 12時間
         /// </summary>
         [EnumMember(Value = "12hour")]
@@ -107,7 +113,13 @@ namespace BitbankDotNet
         /// 1週間
         /// </summary>
         [EnumMember(Value = "1week")]
-        OneWeek
+        OneWeek,
+
+        /// <summary>
+        /// 1か月
+        /// </summary>
+        [EnumMember(Value = "1month")]
+        OneMonth
     }
 
     /// <summary>
