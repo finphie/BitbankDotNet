@@ -145,23 +145,23 @@ namespace BitbankDotNet
         /// </summary>
         /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
         /// <param name="path">リクエストのパス</param>
-        /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
-        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        Task<T> PublicApiGetAsync<T>(string path)
-            where T : class, IEntityResponse
-            => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + path));
-
-        /// <summary>
-        /// [Public API]Getリクエストを送信します。
-        /// </summary>
-        /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
-        /// <param name="path">リクエストのパス</param>
         /// <param name="pair">通貨ペア</param>
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
             where T : class, IEntityResponse
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path));
+
+        /// <summary>
+        /// [Private API]Getリクエストを送信します。
+        /// </summary>
+        /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
+        /// <param name="path">リクエストのパス</param>
+        /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
+        /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
+        Task<T> PrivateApiGetAsync<T>(string path)
+            where T : class, IEntityResponse
+            => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PrivateUrl + path));
 
         /// <summary>
         /// [Private API]Getリクエストを送信します。
