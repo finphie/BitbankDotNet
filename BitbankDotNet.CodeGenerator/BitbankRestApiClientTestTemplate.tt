@@ -28,7 +28,7 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 <# if (IsPublicApi) { #>
                     Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri);
 <# } else { #>
-                    Assert.StartsWith("https://api.bitbank.cc/v1/user/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://api.bitbank.cc/v1/", request.RequestUri.AbsoluteUri);
 <# } #>
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
