@@ -1,5 +1,4 @@
-﻿#define Core21
-//#define Core22
+﻿#define Core22
 //#define Core30
 //#define CoreRt
 //#define CoreRtCpp
@@ -32,9 +31,6 @@ namespace BitbankDotNet.Benchmarks
             Add(CategoriesColumn.Default);
             Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printSource: true)));
 
-#if Core21
-            Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp21));
-#endif
 #if Core22
             Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp22));
 #endif
@@ -48,13 +44,13 @@ namespace BitbankDotNet.Benchmarks
             // cf. https://benchmarkdotnet.org/articles/configs/toolchains.html
             // cf. https://github.com/dotnet/corert/blob/master/Documentation/how-to-build-and-run-ilcompiler-in-console-shell-prompt.md
             Add(Job.Default
-                .With(CsProjCoreToolchain.NetCoreApp21)
+                .With(CsProjCoreToolchain.NetCoreApp22)
                 .With(Runtime.CoreRT));
 #endif
 #if CoreRtCpp
             // CoreRT（CPP Code Generator利用）
             Add(Job.Default
-                .With(CsProjCoreToolchain.NetCoreApp21)
+                .With(CsProjCoreToolchain.NetCoreApp22)
                 .With(Runtime.CoreRT)
                 .With(CoreRtToolchain.CreateBuilder()
                     // ReSharper disable once StringLiteralTypo
