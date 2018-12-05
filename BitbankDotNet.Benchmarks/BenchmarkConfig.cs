@@ -44,13 +44,13 @@ namespace BitbankDotNet.Benchmarks
             // cf. https://benchmarkdotnet.org/articles/configs/toolchains.html
             // cf. https://github.com/dotnet/corert/blob/master/Documentation/how-to-build-and-run-ilcompiler-in-console-shell-prompt.md
             Add(Job.Default
-                .With(CsProjCoreToolchain.NetCoreApp21)
+                .With(CsProjCoreToolchain.NetCoreApp22)
                 .With(Runtime.CoreRT));
 #endif
 #if CoreRtCpp
             // CoreRT（CPP Code Generator利用）
             Add(Job.Default
-                .With(CsProjCoreToolchain.NetCoreApp21)
+                .With(CsProjCoreToolchain.NetCoreApp22)
                 .With(Runtime.CoreRT)
                 .With(CoreRtToolchain.CreateBuilder()
                     // ReSharper disable once StringLiteralTypo
