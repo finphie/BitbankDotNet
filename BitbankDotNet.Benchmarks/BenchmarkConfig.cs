@@ -1,5 +1,4 @@
-﻿#define Core21
-//#define Core22
+﻿#define Core22
 //#define Core30
 //#define CoreRt
 //#define CoreRtCpp
@@ -32,9 +31,6 @@ namespace BitbankDotNet.Benchmarks
             Add(CategoriesColumn.Default);
             Add(DisassemblyDiagnoser.Create(new DisassemblyDiagnoserConfig(printSource: true)));
 
-#if Core21
-            Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp21));
-#endif
 #if Core22
             Add(Job.Default.With(CsProjCoreToolchain.NetCoreApp22));
 #endif
