@@ -20,6 +20,8 @@ namespace BitbankDotNet.Benchmarks
         readonly HMACSHA256 _hmac;
         readonly IncrementalHash _incrementalHash;
 
+        bool _disposed;
+
         byte[] _source1;
         byte[] _source2;
 
@@ -34,10 +36,29 @@ namespace BitbankDotNet.Benchmarks
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key);
         }
 
+        ~HmacHha256Benchmark()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _hmac?.Dispose();
+                    _incrementalHash?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
         public void Dispose()
         {
-            _hmac?.Dispose();
-            _incrementalHash?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         [GlobalSetup]
