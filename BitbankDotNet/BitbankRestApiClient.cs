@@ -102,7 +102,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         async Task<T> SendAsync<T>(HttpRequestMessage request)
-            where T : class, IEntityResponse
+            where T : class
         {
             Error error = null;
             try
@@ -150,7 +150,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path));
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiGetAsync<T>(string path)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PrivateUrl + path));
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiGetAsync<T>(string path, in Span<byte> utf8Path)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, utf8Path));
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
-            where T : class, IEntityResponse
+            where T : class
         {
             var json = Serialize<TBody, BitbankResolver<byte>>(body);
 

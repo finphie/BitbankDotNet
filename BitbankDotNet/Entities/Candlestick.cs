@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// ローソク足データ
     /// </summary>
-    public class Ohlcv : IEntity
+    public class Ohlcv
     {
         /// <summary>
         /// 始値
@@ -52,7 +52,7 @@ namespace BitbankDotNet.Entities
         public Ohlcv[] Ohlcv { get; set; }
     }
 
-    class CandlestickList : IEntityResponse
+    class CandlestickList
     {
         [DataMember(Name = "candlestick")]
         public Candlestick[] Candlesticks { get; set; }

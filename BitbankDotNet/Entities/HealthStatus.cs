@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {
-    public class HealthStatus : IEntity
+    public class HealthStatus
     {
         /// <summary>
         /// 通貨ペア
@@ -27,7 +27,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<HealthStatus, BitbankResolver<char>>(this));
     }
 
-    class HealthStatusList : IEntityResponse
+    class HealthStatusList
     {
         public HealthStatus[] Statuses { get; set; }
     }

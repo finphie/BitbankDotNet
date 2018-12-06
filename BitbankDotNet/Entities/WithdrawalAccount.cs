@@ -7,7 +7,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金アカウント情報
     /// </summary>
-    public class WithdrawalAccount : IEntity
+    public class WithdrawalAccount
     {
         /// <summary>
         /// 出金アカウントのID
@@ -29,7 +29,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<WithdrawalAccount, BitbankResolver<char>>(this));
     }
 
-    class WithdrawalAccountList : IEntityResponse
+    class WithdrawalAccountList
     {
         public WithdrawalAccount[] Accounts { get; set; }
     }

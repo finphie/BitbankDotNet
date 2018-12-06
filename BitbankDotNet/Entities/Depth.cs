@@ -3,7 +3,7 @@ using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
-    public class BoardOrder : IEntity
+    public class BoardOrder
     {
         /// <summary>
         /// 価格
@@ -23,7 +23,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 板情報
     /// </summary>
-    public class Depth : IEntity, IEntityResponse
+    public class Depth
     {
         /// <summary>
         /// 売り板

@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 出金情報
     /// </summary>
-    public class Withdrawal : IEntity, IEntityResponse
+    public class Withdrawal
     {
         /// <summary>
         /// 出金アカウントのID

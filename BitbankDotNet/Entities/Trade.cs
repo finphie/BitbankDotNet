@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 約定履歴
     /// </summary>
-    public class Trade : IEntity
+    public class Trade
     {
         /// <summary>
         /// 注文ID
@@ -76,7 +76,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Trade, BitbankResolver<char>>(this));
     }
 
-    class TradeList : IEntityResponse
+    class TradeList
     {
         public Trade[] Trades { get; set; }
     }
