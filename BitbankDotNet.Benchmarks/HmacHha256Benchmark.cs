@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 namespace BitbankDotNet.Benchmarks
 {
     [Config(typeof(BenchmarkConfig))]
-    public class HmacHha256Benchmark
+    public class HmacHha256Benchmark : IDisposable
     {
         // キーの長さは64文字固定
         const int KeyLength = 64;
@@ -34,6 +34,12 @@ namespace BitbankDotNet.Benchmarks
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key);
         }
 
+        public void Dispose()
+        {
+            _hmac?.Dispose();
+            _incrementalHash?.Dispose();
+        }
+
         [GlobalSetup]
         public void Setup()
         {
@@ -42,11 +48,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [GlobalCleanup]
-        public void Cleanup()
-        {
-            _hmac?.Dispose();
-            _incrementalHash?.Dispose();
-        }
+        public void Cleanup() => Dispose();
 
         [Benchmark]
         public void HmacHha256TryComputeHash()
