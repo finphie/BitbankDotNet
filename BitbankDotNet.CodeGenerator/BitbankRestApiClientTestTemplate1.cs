@@ -69,9 +69,6 @@ namespace BitbankDotNet.CodeGenerator
                     var elementProperties = elementTypeName?.GetProperties()
                         .ToSortedList(pi2 => pi2.Name, pi2 => GetTypeOutput(pi2.PropertyType));
 
-                    // TODO: ネストされたクラスに対応
-                    // pi.PropertyType.IsNested
-
                     return (GetTypeOutput(pi.PropertyType), elementProperties);
                 });
 

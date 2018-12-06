@@ -1,12 +1,11 @@
-﻿using BitbankDotNet.Formatters;
+﻿using BitbankDotNet.Entities;
+using BitbankDotNet.Formatters;
 using SpanJson.Resolvers;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
-
-using WithdrawalFee = BitbankDotNet.Entities.Asset.WithdrawalFeeObject;
 
 namespace BitbankDotNet.Tests.Formatters
 {
