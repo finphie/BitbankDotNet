@@ -30,12 +30,12 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         }
 
         [Benchmark]
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要です")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]
         public string BitConverterToString()
             => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", "", StringComparison.Ordinal);
 
         [Benchmark]
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要です")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]
         public string XmlSerializationWriterFromByteArrayHex()
             => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
 
