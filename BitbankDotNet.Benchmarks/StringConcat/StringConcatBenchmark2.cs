@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
+namespace BitbankDotNet.Benchmarks.StringConcat
 {
     [Config(typeof(BenchmarkConfig))]
     public class StringConcat2Benchmark

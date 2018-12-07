@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
+namespace BitbankDotNet.Benchmarks.StringConcat
 {
     static partial class BinaryHelper
     {
