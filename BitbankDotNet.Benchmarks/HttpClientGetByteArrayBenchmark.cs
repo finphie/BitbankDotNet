@@ -16,13 +16,14 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         public async Task<byte[]> GetByteArrayAsync()
-            => await Client.GetByteArrayAsync(Url);
+            => await Client.GetByteArrayAsync(Url).ConfigureAwait(false);
 
         [Benchmark]
         public async Task<byte[]> ReadAsByteArrayAsync()
         {
-            var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, Url), HttpCompletionOption.ResponseHeadersRead);
-            return await response.Content.ReadAsByteArrayAsync();
+            var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, Url), HttpCompletionOption.ResponseHeadersRead)
+                .ConfigureAwait(false);
+            return await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
         }
     }
 }
