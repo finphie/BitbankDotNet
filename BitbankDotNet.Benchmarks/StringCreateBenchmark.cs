@@ -43,7 +43,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        public unsafe string Pointer()
+        public unsafe string UnsafePointer()
         {
             var s = new string(default, 2);
             fixed (char* pointer = s)
