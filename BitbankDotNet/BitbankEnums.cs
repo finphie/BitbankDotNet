@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 
 namespace BitbankDotNet
 {
@@ -215,6 +216,7 @@ namespace BitbankDotNet
     /// <summary>
     /// 注文のステータス
     /// </summary>
+    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names", Justification = "Statusは単数")]
     public enum OrderStatus
     {
         /// <summary>
@@ -269,6 +271,7 @@ namespace BitbankDotNet
     /// <summary>
     /// 取引所ステータス
     /// </summary>
+    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names", Justification = "Statusは単数")]
     public enum SystemStatus
     {
         /// <summary>
@@ -293,6 +296,7 @@ namespace BitbankDotNet
     /// <summary>
     /// 出金ステータス
     /// </summary>
+    [SuppressMessage("Naming", "CA1717:Only FlagsAttribute enums should have plural names", Justification = "Statusは単数")]
     public enum WithdrawalStatus
     {
         /// <summary>
