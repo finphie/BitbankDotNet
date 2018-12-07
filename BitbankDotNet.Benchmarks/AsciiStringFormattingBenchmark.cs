@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,9 +12,10 @@ namespace BitbankDotNet.Benchmarks
     /// ASCII文字列をUTF-8のbyte配列に変換する処理のベンチマーク
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class AsciiStringFormattingBenchmark
     {
-        public IEnumerable<string> Values => new[]
+        public static IEnumerable<string> Values => new[]
         {
             DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds().ToString()
         };

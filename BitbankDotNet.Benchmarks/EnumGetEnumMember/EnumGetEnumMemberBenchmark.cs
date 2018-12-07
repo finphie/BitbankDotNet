@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using EnumsNET;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
@@ -20,6 +21,7 @@ namespace BitbankDotNet.Benchmarks.EnumGetEnumMember
     ///                        EnumsNet |    21.3545 ns | 0.0670 ns | 0.0627 ns |      - |       0 B |
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class EnumGetEnumMemberBenchmark
     {
         public EnumGetEnumMemberBenchmark()

@@ -16,6 +16,7 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
     /// <remarks>
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class ByteArrayToHexStringBenchmark
     {
         // HMAC-SHA256は256bit
