@@ -17,7 +17,8 @@ namespace BitbankDotNet.Benchmarks
     {
         const int BufferSize = 32;
 
-        public double Value = 12345.6789;
+        [Params(12345.6789)]
+        public double Value { get; set; }
 
         [Benchmark]
         public string DoubleToString()

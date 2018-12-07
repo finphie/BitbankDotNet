@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Helpers;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 namespace BitbankDotNet.Benchmarks
 {
     [Config(typeof(BenchmarkConfig))]
-    public class HmacHha256Benchmark
+    public class HmacHha256Benchmark : IDisposable
     {
         // キーの長さは64文字固定
         const int KeyLength = 64;
@@ -19,6 +19,8 @@ namespace BitbankDotNet.Benchmarks
         readonly byte[] _hash;
         readonly HMACSHA256 _hmac;
         readonly IncrementalHash _incrementalHash;
+
+        bool _disposed;
 
         byte[] _source1;
         byte[] _source2;
@@ -34,6 +36,31 @@ namespace BitbankDotNet.Benchmarks
             _incrementalHash = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key);
         }
 
+        ~HmacHha256Benchmark()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _hmac?.Dispose();
+                    _incrementalHash?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         [GlobalSetup]
         public void Setup()
         {
@@ -42,11 +69,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [GlobalCleanup]
-        public void Cleanup()
-        {
-            _hmac?.Dispose();
-            _incrementalHash?.Dispose();
-        }
+        public void Cleanup() => Dispose();
 
         [Benchmark]
         public void HmacHha256TryComputeHash()

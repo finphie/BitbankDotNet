@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,6 +14,7 @@ namespace BitbankDotNet.Benchmarks
     /// 
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class StringCreateBenchmark
     {
         static readonly char[] SourceChars = "0123456789abcdef".ToCharArray();
@@ -43,7 +45,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        public unsafe string Pointer()
+        public unsafe string UnsafePointer()
         {
             var s = new string(default, 2);
             fixed (char* pointer = s)

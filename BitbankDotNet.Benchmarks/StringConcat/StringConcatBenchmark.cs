@@ -1,12 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.Shared.Extensions;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
+namespace BitbankDotNet.Benchmarks.StringConcat
 {
     /// <summary>
     /// 文字列連結処理のベンチマーク

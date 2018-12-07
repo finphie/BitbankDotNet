@@ -2,6 +2,7 @@
 using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,11 +13,12 @@ namespace BitbankDotNet.Benchmarks
     /// ulongをUTF-8のbyte配列に変換する処理のベンチマーク
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class ULongFormattingBenchmark
     {
         const int BufferLength = 20;
 
-        public IEnumerable<ulong> Values => new[]
+        public static IEnumerable<ulong> Values => new[]
         {
             (ulong)DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds()
         };

@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,17 +11,19 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
     /// <summary>
     /// byte配列を16進数stringに変換
-    /// cf. <see cref="!:https://stackoverflow.com/q/311165"/>
+    /// cf. https://stackoverflow.com/q/311165
     /// </summary>
     /// <remarks>
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class ByteArrayToHexStringBenchmark
     {
         // HMAC-SHA256は256bit
         const int ArraySize = 32;
         static readonly byte[] SourceBytes;
 
+        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "ベンチマーク")]
         static ByteArrayToHexStringBenchmark()
         {
             SourceBytes = new byte[ArraySize];
@@ -29,10 +32,12 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         }
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]
         public string BitConverterToString()
             => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", "", StringComparison.Ordinal);
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]
         public string XmlSerializationWriterFromByteArrayHex()
             => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
 

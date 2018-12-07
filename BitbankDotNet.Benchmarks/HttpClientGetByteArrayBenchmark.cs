@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace BitbankDotNet.Benchmarks
     /// 
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class HttpClientGetByteArrayBenchmark
     {
         static readonly Uri Url = new Uri("http://localhost:3000/depth");
@@ -16,13 +18,14 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         public async Task<byte[]> GetByteArrayAsync()
-            => await Client.GetByteArrayAsync(Url);
+            => await Client.GetByteArrayAsync(Url).ConfigureAwait(false);
 
         [Benchmark]
         public async Task<byte[]> ReadAsByteArrayAsync()
         {
-            var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, Url), HttpCompletionOption.ResponseHeadersRead);
-            return await response.Content.ReadAsByteArrayAsync();
+            var response = await Client.SendAsync(new HttpRequestMessage(HttpMethod.Get, Url), HttpCompletionOption.ResponseHeadersRead)
+                .ConfigureAwait(false);
+            return await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
         }
     }
 }

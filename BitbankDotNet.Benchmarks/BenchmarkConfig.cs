@@ -18,9 +18,11 @@ using BenchmarkDotNet.Toolchains.CsProj;
 #if Core30
 using BenchmarkDotNet.Toolchains.DotNetCli;
 #endif
+using System.Diagnostics.CodeAnalysis;
 
 namespace BitbankDotNet.Benchmarks
 {
+    [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "BenchmarkDotNetで使用される")]
     class BenchmarkConfig : ManualConfig
     {
         public BenchmarkConfig()

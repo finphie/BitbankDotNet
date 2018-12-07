@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 注文情報
     /// </summary>
-    public class Order : IEntity, IEntityResponse
+    public class Order
     {
         /// <summary>
         /// 取引ID
@@ -76,7 +76,7 @@ namespace BitbankDotNet.Entities
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Order, BitbankResolver<char>>(this));
     }
 
-    class OrderList : IEntityResponse
+    class OrderList
     {
         public Order[] Orders { get; set; }
     }

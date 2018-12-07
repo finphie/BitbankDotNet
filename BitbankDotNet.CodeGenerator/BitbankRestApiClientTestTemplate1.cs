@@ -1,7 +1,7 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
-using BitbankDotNet.Shared.Extensions;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 using Microsoft.CSharp;
 using SpanJson;
 using System;
@@ -69,9 +69,6 @@ namespace BitbankDotNet.CodeGenerator
                     var elementProperties = elementTypeName?.GetProperties()
                         .ToSortedList(pi2 => pi2.Name, pi2 => GetTypeOutput(pi2.PropertyType));
 
-                    // TODO: ネストされたクラスに対応
-                    // pi.PropertyType.IsNested
-
                     return (GetTypeOutput(pi.PropertyType), elementProperties);
                 });
 
@@ -84,7 +81,7 @@ namespace BitbankDotNet.CodeGenerator
             responseType.GetProperty("Data").SetValue(entityResponse, entity);
 
             Json = JsonSerializer.NonGeneric.Utf16.Serialize<BitbankResolver<char>>(entityResponse)
-                .Replace("\"", @"\""");
+                .Replace("\"", @"\""", StringComparison.Ordinal);
 
             Parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
         }

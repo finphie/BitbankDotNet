@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BitbankDotNet.Shared.Helpers
+namespace BitbankDotNet.SharedLibrary.Helpers
 {
     public static class ByteArrayHelper
     {

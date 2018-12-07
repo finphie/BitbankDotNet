@@ -1,11 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.Shared.Extensions;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace BitbankDotNet.Benchmarks.StringConcatBenchmark
+namespace BitbankDotNet.Benchmarks.StringConcat
 {
     [Config(typeof(BenchmarkConfig))]
     public class StringConcat2Benchmark

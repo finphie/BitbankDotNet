@@ -1,15 +1,17 @@
-﻿using BitbankDotNet.Formatters;
+﻿using BitbankDotNet.Entities;
+using BitbankDotNet.Formatters;
 using SpanJson.Resolvers;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
-using WithdrawalFee = BitbankDotNet.Entities.Asset.WithdrawalFeeObject;
-
 namespace BitbankDotNet.Tests.Formatters
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankWithdrawalFeeFormatterTest
     {
         const string Threshold = "\"threshold\"";
@@ -103,11 +105,11 @@ namespace BitbankDotNet.Tests.Formatters
 
             if (json.Length == 1)
             {
-                Assert.Contains(json[0], serialize);
+                Assert.Contains(json[0], serialize, StringComparison.Ordinal);
                 return;
             }
             foreach (var j in json)
-                Assert.Contains(j, serialize);
+                Assert.Contains(j, serialize, StringComparison.Ordinal);
         }
 
         static string Join(string key, double value) => string.Join(":", key, $"\"{value}\"");

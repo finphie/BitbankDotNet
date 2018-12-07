@@ -4,6 +4,7 @@ using BitbankDotNet.Extensions;
 using BitbankDotNet.Helpers;
 using BitbankDotNet.Resolvers;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
+[assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo(nameof(BitbankDotNet) + ".CodeGenerator")]
 [assembly: InternalsVisibleTo(nameof(BitbankDotNet) + ".Tests")]
 
@@ -21,6 +23,7 @@ namespace BitbankDotNet
     /// <summary>
     /// Bitbank REST API Client
     /// </summary>
+    [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification = "APIラッパー")]
     public sealed partial class BitbankRestApiClient : IDisposable
     {
         // Public API
@@ -101,7 +104,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         async Task<T> SendAsync<T>(HttpRequestMessage request)
-            where T : class, IEntityResponse
+            where T : class
         {
             Error error = null;
             try
@@ -149,7 +152,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PublicApiGetAsync<T>(string path, CurrencyPair pair)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PublicUrl + pair.GetEnumMemberValue() + path));
 
         /// <summary>
@@ -160,7 +163,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiGetAsync<T>(string path)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(new HttpRequestMessage(HttpMethod.Get, PrivateUrl + path));
 
         /// <summary>
@@ -172,7 +175,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiGetAsync<T>(string path, in Span<byte> utf8Path)
-            where T : class, IEntityResponse
+            where T : class
             => SendAsync<T>(MakePrivateRequestHeader(HttpMethod.Get, path, utf8Path));
 
         /// <summary>
@@ -185,7 +188,7 @@ namespace BitbankDotNet
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         Task<T> PrivateApiPostAsync<T, TBody>(string path, TBody body)
-            where T : class, IEntityResponse
+            where T : class
         {
             var json = Serialize<TBody, BitbankResolver<byte>>(body);
 

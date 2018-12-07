@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -14,6 +15,7 @@ namespace BitbankDotNet.Benchmarks
         const int Count = 32;
         const string SourceConstString = "0123456789abcdef";
         // ReSharper disable once ConvertToConstant.Local
+        [SuppressMessage("Performance", "CA1802:Use literals where appropriate", Justification = "ベンチマーク")]
         static readonly string SourceStaticString = SourceConstString;
 
         static readonly char[] SourceChars =

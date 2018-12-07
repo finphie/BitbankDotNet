@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -8,9 +9,10 @@ namespace BitbankDotNet.Benchmarks
     /// 桁数を取得する
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class CountDigitBenchmark
     {
-        public IEnumerable<ulong> Values => new[]
+        public static IEnumerable<ulong> Values => new[]
         {
             (ulong)DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds(),
             // ReSharper disable once ImpureMethodCallOnReadonlyValueField

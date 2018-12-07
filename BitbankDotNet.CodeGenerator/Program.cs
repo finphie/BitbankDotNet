@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
+[assembly: CLSCompliant(true)]
+
 namespace BitbankDotNet.CodeGenerator
 {
     class Program
@@ -19,24 +21,8 @@ namespace BitbankDotNet.CodeGenerator
                 .Concat(Directory.EnumerateFiles(path + "/PrivateApis"))
                 .Select(s => File.ReadAllText(s));
 
-            // Roslynによる構文解析
-            var tree = CSharpSyntaxTree.ParseText(string.Concat(files));
-            var methodDeclarations = tree.GetRoot().DescendantNodes()
-                .OfType<MethodDeclarationSyntax>()
-                .GroupBy(m => m.Identifier.ValueText);
-            var compilation = CSharpCompilation.Create("compilation", new[] {tree});
-            var semanticModel = compilation.GetSemanticModel(compilation.SyntaxTrees[0], true);
-
             // コメント取得
-            var dic = new Dictionary<string, bool>();
-            foreach (var group in methodDeclarations)
-            {
-                var symbol = semanticModel.GetDeclaredSymbol(group.First());
-                var comment = symbol.GetDocumentationCommentXml();
-                var summary = XDocument.Parse(comment).Descendants("summary").First().Value;
-
-                dic.Add(group.Key, Regex.Match(summary, @"\[.*?\]").Value.Contains("Public API"));
-            }
+            var dic = GetCommentSummary(string.Concat(files));
 
             // メソッド一覧を取得
             var methods = typeof(BitbankRestApiClient).GetMethods()
@@ -54,6 +40,35 @@ namespace BitbankDotNet.CodeGenerator
                 var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");
                 File.WriteAllText(outPath, text, Encoding.UTF8);
             }
+        }
+
+        /// <summary>
+        /// コメントの概要を取得します。
+        /// </summary>
+        /// <param name="text">コード</param>
+        /// <returns>コメントの概要</returns>
+        static Dictionary<string, bool> GetCommentSummary(string text)
+        {
+            // Roslynによる構文解析
+            var tree = CSharpSyntaxTree.ParseText(text);
+            var methodDeclarations = tree.GetRoot().DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .GroupBy(m => m.Identifier.ValueText);
+            var compilation = CSharpCompilation.Create("compilation", new[] { tree });
+            var semanticModel = compilation.GetSemanticModel(compilation.SyntaxTrees[0], true);
+
+            // コメント取得
+            var dic = new Dictionary<string, bool>();
+            foreach (var group in methodDeclarations)
+            {
+                var symbol = semanticModel.GetDeclaredSymbol(group.First());
+                var comment = symbol.GetDocumentationCommentXml();
+                var summary = XDocument.Parse(comment).Descendants("summary").First().Value;
+
+                dic.Add(group.Key, Regex.Match(summary, @"\[.*?\]").Value.Contains("Public API", StringComparison.Ordinal));
+            }
+
+            return dic;
         }
     }
 }

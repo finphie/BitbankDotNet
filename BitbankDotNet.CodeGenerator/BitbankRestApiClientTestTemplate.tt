@@ -1,8 +1,9 @@
 ﻿<#@ template language="C#" #>
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -11,6 +12,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankRestApiClient<#= MethodName #>Test
     {
         const string Json =
@@ -26,9 +28,9 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
 <# if (IsPublicApi) { #>
-                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri, StringComparison.Ordinal);
 <# } else { #>
-                    Assert.StartsWith("https://api.bitbank.cc/v1/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://api.bitbank.cc/v1/", request.RequestUri.AbsoluteUri, StringComparison.Ordinal);
 <# } #>
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)

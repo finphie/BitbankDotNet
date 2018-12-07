@@ -8,7 +8,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// アセット一覧
     /// </summary>
-    public class Asset : IEntity
+    public class Asset
     {
         /// <summary>
         /// アセット名
@@ -45,7 +45,7 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "withdrawal_fee")]
         [JsonCustomSerializer(typeof(BitbankWithdrawalFeeFormatter))]
-        public WithdrawalFeeObject WithdrawalFee { get; set; }
+        public WithdrawalFee WithdrawalFee { get; set; }
 
         // stop_depositとstop_withdrawalはドキュメントには載っていない。
         // 使い道もなさそうなのでコメントアウトしておく。
@@ -57,30 +57,9 @@ namespace BitbankDotNet.Entities
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Asset, BitbankResolver<char>>(this));
-
-        /// <summary>
-        /// 手数料
-        /// </summary>
-        public class WithdrawalFeeObject
-        {
-            /// <summary>
-            /// 手数料変動のしきい値
-            /// </summary>
-            public double Threshold { get; set; }
-
-            /// <summary>
-            /// 手数料（<see cref="Threshold"/>未満）
-            /// </summary>
-            public double Under { get; set; }
-
-            /// <summary>
-            /// 手数料（<see cref="Threshold"/>以上）
-            /// </summary>
-            public double Over { get; set; }
-        }
     }
 
-    class AssetList : IEntity, IEntityResponse
+    class AssetList
     {
         public Asset[] Assets { get; set; }
     }

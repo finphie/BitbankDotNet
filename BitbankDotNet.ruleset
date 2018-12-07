@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="New Rule Set" Description=" " ToolsVersion="10.0">
+<RuleSet Name="New Rule Set" Description=" " ToolsVersion="15.0">
   <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
     <Rule Id="CA1000" Action="Info" />
     <Rule Id="CA1008" Action="Info" />
@@ -96,7 +96,7 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.NetCore.Analyzers" RuleNamespace="Microsoft.NetCore.Analyzers">
     <Rule Id="CA1304" Action="Info" />
-    <Rule Id="CA1305" Action="Info" />
+    <Rule Id="CA1305" Action="None" />
     <Rule Id="CA1307" Action="Info" />
     <Rule Id="CA1308" Action="Info" />
     <Rule Id="CA1401" Action="Info" />

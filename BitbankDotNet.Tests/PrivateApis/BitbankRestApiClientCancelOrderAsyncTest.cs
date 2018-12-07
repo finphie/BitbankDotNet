@@ -1,7 +1,8 @@
-﻿using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.SharedLibrary.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -10,6 +11,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PrivateApis
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankRestApiClientCancelOrderAsyncTest
     {
         const string Json =
@@ -24,7 +26,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-                    Assert.StartsWith("https://api.bitbank.cc/v1/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://api.bitbank.cc/v1/", request.RequestUri.AbsoluteUri, StringComparison.Ordinal);
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {

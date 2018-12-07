@@ -1,5 +1,6 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
@@ -7,6 +8,7 @@ using static SpanJson.JsonSerializer.Generic.Utf8;
 
 namespace BitbankDotNet.Tests.Formatters
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankBoardOrderFormatterTest
     {
         static readonly BoardOrder Entity = new BoardOrder
