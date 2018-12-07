@@ -3,6 +3,7 @@ using BitbankDotNet.Shared.Helpers;
 using Moq;
 using Moq.Protected;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -11,6 +12,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankRestApiClient<#= MethodName #>Test
     {
         const string Json =

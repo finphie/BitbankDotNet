@@ -2,6 +2,7 @@
 using Moq;
 using Moq.Protected;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -10,6 +11,7 @@ using Xunit;
 
 namespace BitbankDotNet.Tests.PrivateApis
 {
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankRestApiClientSendBuyOrderAsyncTest
     {
         const string Json =
