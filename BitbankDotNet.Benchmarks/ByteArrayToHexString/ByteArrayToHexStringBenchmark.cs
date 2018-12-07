@@ -23,6 +23,7 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         const int ArraySize = 32;
         static readonly byte[] SourceBytes;
 
+        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "ベンチマーク")]
         static ByteArrayToHexStringBenchmark()
         {
             SourceBytes = new byte[ArraySize];

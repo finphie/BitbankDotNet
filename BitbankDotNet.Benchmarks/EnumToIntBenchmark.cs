@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using EnumsNET;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
@@ -18,6 +19,7 @@ namespace BitbankDotNet.Benchmarks
         static readonly Func<T, int> ExpressionConvert;
         static readonly Func<T, int> ExpressionConvertChecked;
 
+        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "ベンチマーク")]
         static EnumToIntBenchmark()
         {
             var parameter = Expression.Parameter(typeof(T), null);
