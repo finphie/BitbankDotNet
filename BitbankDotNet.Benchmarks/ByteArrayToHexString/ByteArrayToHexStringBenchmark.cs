@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -29,10 +30,12 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         }
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要です")]
         public string BitConverterToString()
             => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", "", StringComparison.Ordinal);
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要です")]
         public string XmlSerializationWriterFromByteArrayHex()
             => ByteArrayHelperXmlSerializationWriter.ToHexString(SourceBytes).ToLowerInvariant();
 
