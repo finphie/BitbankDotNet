@@ -26,7 +26,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
-                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri);
+                    Assert.StartsWith("https://public.bitbank.cc/", request.RequestUri.AbsoluteUri, StringComparison.Ordinal);
                 })
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {

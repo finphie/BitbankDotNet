@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
@@ -35,6 +36,7 @@ namespace BitbankDotNet.Benchmarks
             => (Property1, Property2, Property3, Property4, Property5).GetHashCode();
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "ベンチマーク")]
         public int ReSharper()
         {
             unchecked
@@ -49,6 +51,7 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
+        [SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "ベンチマーク")]
         public int HashHelpers()
         {
             var hash = Property1.GetHashCode();

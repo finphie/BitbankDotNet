@@ -81,7 +81,7 @@ namespace BitbankDotNet.CodeGenerator
             responseType.GetProperty("Data").SetValue(entityResponse, entity);
 
             Json = JsonSerializer.NonGeneric.Utf16.Serialize<BitbankResolver<char>>(entityResponse)
-                .Replace("\"", @"\""");
+                .Replace("\"", @"\""", StringComparison.Ordinal);
 
             Parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
         }

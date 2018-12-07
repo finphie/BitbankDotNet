@@ -65,7 +65,7 @@ namespace BitbankDotNet.CodeGenerator
                 var comment = symbol.GetDocumentationCommentXml();
                 var summary = XDocument.Parse(comment).Descendants("summary").First().Value;
 
-                dic.Add(group.Key, Regex.Match(summary, @"\[.*?\]").Value.Contains("Public API"));
+                dic.Add(group.Key, Regex.Match(summary, @"\[.*?\]").Value.Contains("Public API", StringComparison.Ordinal));
             }
 
             return dic;
