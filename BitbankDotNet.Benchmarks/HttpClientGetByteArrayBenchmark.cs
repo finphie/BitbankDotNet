@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace BitbankDotNet.Benchmarks
     /// 
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class HttpClientGetByteArrayBenchmark
     {
         static readonly Uri Url = new Uri("http://localhost:3000/depth");
