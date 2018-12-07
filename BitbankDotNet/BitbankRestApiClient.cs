@@ -4,6 +4,7 @@ using BitbankDotNet.Extensions;
 using BitbankDotNet.Helpers;
 using BitbankDotNet.Resolvers;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
@@ -22,6 +23,7 @@ namespace BitbankDotNet
     /// <summary>
     /// Bitbank REST API Client
     /// </summary>
+    [SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification = "APIラッパー")]
     public sealed partial class BitbankRestApiClient : IDisposable
     {
         // Public API
