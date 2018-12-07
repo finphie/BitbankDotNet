@@ -11,7 +11,7 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
     /// <summary>
     /// byte配列を16進数stringに変換
-    /// cf. <see cref="!:https://stackoverflow.com/q/311165"/>
+    /// cf. https://stackoverflow.com/q/311165
     /// </summary>
     /// <remarks>
     /// </remarks>
