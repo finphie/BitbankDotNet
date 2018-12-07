@@ -1,4 +1,4 @@
-﻿using BitbankDotNet.Shared.Helpers;
+﻿using BitbankDotNet.SharedLibrary.Helpers;
 using Moq;
 using Moq.Protected;
 using System;

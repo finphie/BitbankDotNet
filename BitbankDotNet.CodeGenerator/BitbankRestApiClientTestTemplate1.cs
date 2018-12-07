@@ -1,7 +1,7 @@
 ﻿using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
-using BitbankDotNet.Shared.Extensions;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 using Microsoft.CSharp;
 using SpanJson;
 using System;

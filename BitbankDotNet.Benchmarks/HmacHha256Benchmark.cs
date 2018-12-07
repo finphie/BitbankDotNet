@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.Shared.Helpers;
+using BitbankDotNet.SharedLibrary.Helpers;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

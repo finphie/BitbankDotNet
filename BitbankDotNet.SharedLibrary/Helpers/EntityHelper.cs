@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BitbankDotNet.Shared.Helpers
+namespace BitbankDotNet.SharedLibrary.Helpers
 {
     public static class EntityHelper
     {

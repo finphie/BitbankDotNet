@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BitbankDotNet.Shared.Extensions
+namespace BitbankDotNet.SharedLibrary.Extensions
 {
     public static class EnumerableExtensions
     {
