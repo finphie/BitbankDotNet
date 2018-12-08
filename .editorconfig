@@ -30,7 +30,7 @@ charset = utf-8-bom
 indent_size = 2
 
 # XML files
-[*.{props,ruleset}]
+[*.{props,targets,ruleset}]
 charset = utf-8-bom
 indent_size = 2
 
