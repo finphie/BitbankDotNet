@@ -1,7 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
-using System;
-
-[assembly: CLSCompliant(true)]
 
 namespace BitbankDotNet.Benchmarks
 {

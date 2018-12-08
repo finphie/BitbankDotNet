@@ -14,7 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
-[assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo(nameof(BitbankDotNet) + ".CodeGenerator")]
 [assembly: InternalsVisibleTo(nameof(BitbankDotNet) + ".Tests")]
 

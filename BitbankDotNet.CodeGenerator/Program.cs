@@ -8,8 +8,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-[assembly: CLSCompliant(true)]
-
 namespace BitbankDotNet.CodeGenerator
 {
     class Program

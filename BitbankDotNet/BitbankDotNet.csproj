@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+    <DefineConstants>CLS_COMPLIANT</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
