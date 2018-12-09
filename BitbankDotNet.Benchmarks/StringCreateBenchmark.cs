@@ -28,19 +28,19 @@ namespace BitbankDotNet.Benchmarks
             });
 
         [Benchmark]
-        public string New() => new string(new[] {SourceChars[1], SourceChars[10]});
+        public string New() => new string(new[] {SourceChars[1], SourceChars[10] });
 
         [Benchmark]
         public unsafe string Stackalloc()
         {
-            var array = stackalloc char[] {SourceChars[1], SourceChars[10]};
+            var array = stackalloc char[] {SourceChars[1], SourceChars[10] };
             return new string(array, 0, 2);
         }
 
         [Benchmark]
         public string SpanStackalloc()
         {
-            Span<char> span = stackalloc char[] {SourceChars[1], SourceChars[10]};
+            Span<char> span = stackalloc char[] {SourceChars[1], SourceChars[10] };
             return new string(span);
         }
 
