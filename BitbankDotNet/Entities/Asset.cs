@@ -49,10 +49,10 @@ namespace BitbankDotNet.Entities
 
         // stop_depositとstop_withdrawalはドキュメントには載っていない。
         // 使い道もなさそうなのでコメントアウトしておく。
-        //[DataMember(Name = "stop_deposit")]
-        //public bool StopDeposit { get; set; }
-        //[DataMember(Name = "stop_withdrawal")]
-        //public bool StopWithdrawal { get; set; }
+        // [DataMember(Name = "stop_deposit")]
+        // public bool StopDeposit { get; set; }
+        // [DataMember(Name = "stop_withdrawal")]
+        // public bool StopWithdrawal { get; set; }
 
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(

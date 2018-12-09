@@ -1,7 +1,7 @@
 ﻿#define Core22
-//#define Core30
-//#define CoreRt
-//#define CoreRtCpp
+// #define Core30
+// #define CoreRt
+// #define CoreRtCpp
 
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
