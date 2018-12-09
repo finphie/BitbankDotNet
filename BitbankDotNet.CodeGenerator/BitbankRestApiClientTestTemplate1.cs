@@ -22,7 +22,7 @@ namespace BitbankDotNet.CodeGenerator
 
         // Entityの型情報リスト
         static readonly TypeInfo[] EntityTypeInfos = LibraryAssembly.DefinedTypes
-            .Where(ti=> ti.Namespace == EntityNamespace)
+            .Where(ti => ti.Namespace == EntityNamespace)
             .ToArray();
 
         // Response<T>の型情報

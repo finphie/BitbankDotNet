@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace BitbankDotNet.Benchmarks.EnumGetEnumMember
 {
     static class EnumMemberCache<T>
-        where T: struct, Enum
+        where T : struct, Enum
     {
         // ReSharper disable once StaticMemberInGenericType
         static readonly string[] Table;

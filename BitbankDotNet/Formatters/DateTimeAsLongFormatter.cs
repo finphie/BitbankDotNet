@@ -17,11 +17,11 @@ namespace BitbankDotNet.Formatters
             => DateTimeOffset.FromUnixTimeMilliseconds(reader.ReadUtf16Int64()).DateTime;
 
         public void Serialize(ref JsonWriter<byte> writer, DateTime value, int nestingLimit)
-            => writer.WriteUtf8Int64(((DateTimeOffset) DateTime.SpecifyKind(value, DateTimeKind.Utc))
+            => writer.WriteUtf8Int64(((DateTimeOffset)DateTime.SpecifyKind(value, DateTimeKind.Utc))
                 .ToUnixTimeMilliseconds());
 
         public void Serialize(ref JsonWriter<char> writer, DateTime value, int nestingLimit)
-            => writer.WriteUtf16Int64(((DateTimeOffset) DateTime.SpecifyKind(value, DateTimeKind.Utc))
+            => writer.WriteUtf16Int64(((DateTimeOffset)DateTime.SpecifyKind(value, DateTimeKind.Utc))
                 .ToUnixTimeMilliseconds());
     }
 }

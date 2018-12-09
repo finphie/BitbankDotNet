@@ -39,15 +39,15 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int AsCast(T @enum) => (int) (@enum as object);
+        public int AsCast(T @enum) => (int)(@enum as object);
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int DirectCast(T @enum) => (int) (object) @enum;
+        public int DirectCast(T @enum) => (int)(object)@enum;
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int RefValue(T @enum) => (int) __refvalue(__makeref(@enum), Test);
+        public int RefValue(T @enum) => (int)__refvalue(__makeref(@enum), Test);
 
         [Benchmark]
         [Arguments(Test.A)]

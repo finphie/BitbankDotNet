@@ -91,7 +91,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int UnsafeAsPointerStaticString()
         {
             var handle = GCHandle.Alloc(SourceStaticString, GCHandleType.Pinned);
-            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceStaticString.AsSpan()));
+            var pointer = (char*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceStaticString.AsSpan()));
             var result = 0;
             for (var i = 0; i < Count; i++)
                 result += pointer[Index1] + pointer[Index2];
@@ -103,7 +103,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe int UnsafeAsPointerCharArray()
         {
             var handle = GCHandle.Alloc(SourceChars, GCHandleType.Pinned);
-            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceChars.AsSpan()));
+            var pointer = (char*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(SourceChars.AsSpan()));
             var result = 0;
             for (var i = 0; i < Count; i++)
                 result += pointer[Index1] + pointer[Index2];
@@ -118,7 +118,7 @@ namespace BitbankDotNet.Benchmarks
             var result = 0;
             using (var handle = memory.Pin())
             {
-                var pointer = (char*) handle.Pointer;
+                var pointer = (char*)handle.Pointer;
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];
             }
@@ -132,7 +132,7 @@ namespace BitbankDotNet.Benchmarks
             var result = 0;
             using (var handle = memory.Pin())
             {
-                var pointer = (char*) handle.Pointer;
+                var pointer = (char*)handle.Pointer;
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];
             }
@@ -145,7 +145,7 @@ namespace BitbankDotNet.Benchmarks
             var memory = SourceChars.AsMemory();
             using (var handle = memory.Pin())
             {
-                var pointer = (char*) handle.Pointer;
+                var pointer = (char*)handle.Pointer;
                 var result = 0;
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];

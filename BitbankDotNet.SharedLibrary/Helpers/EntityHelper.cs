@@ -34,7 +34,7 @@ namespace BitbankDotNet.SharedLibrary.Helpers
             {
                 var value = GetTestValue(type.GetElementType());
 
-                var entityArray = (object[]) Activator.CreateInstance(type, 2);
+                var entityArray = (object[])Activator.CreateInstance(type, 2);
                 for (var i = 0; i < entityArray.Length; i++)
                     entityArray[i] = value;
                 return entityArray;
@@ -52,7 +52,7 @@ namespace BitbankDotNet.SharedLibrary.Helpers
         }
 
         public static T GetTestValue<T>()
-            => (T) GetTestValue(typeof(T));
+            => (T)GetTestValue(typeof(T));
 
         public static void SetValue(object target)
         {

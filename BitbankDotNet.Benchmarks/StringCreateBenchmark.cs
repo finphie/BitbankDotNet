@@ -61,7 +61,7 @@ namespace BitbankDotNet.Benchmarks
         {
             var s = new string(default, 2);
             var handle = GCHandle.Alloc(s, GCHandleType.Pinned);
-            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(s.AsSpan()));
+            var pointer = (char*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(s.AsSpan()));
             pointer[0] = SourceChars[1];
             pointer[1] = SourceChars[10];
             handle.Free();
@@ -75,7 +75,7 @@ namespace BitbankDotNet.Benchmarks
             var memory = s.AsMemory();
             using (var handle = memory.Pin())
             {
-                var pointer = (char*) handle.Pointer;
+                var pointer = (char*)handle.Pointer;
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }
@@ -87,7 +87,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe string CfCoreFx()
         {
             var temp = 0U;
-            var array = (char*) &temp;
+            var array = (char*)&temp;
             array[0] = SourceChars[1];
             array[1] = SourceChars[10];
             return new string(array, 0, 2);

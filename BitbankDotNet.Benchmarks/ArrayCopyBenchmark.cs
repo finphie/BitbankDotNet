@@ -124,7 +124,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe void MarshalCopy()
         {
             fixed (byte* source = &_source[0])
-                Marshal.Copy((IntPtr) source, _destination, 0, _destination.Length);
+                Marshal.Copy((IntPtr)source, _destination, 0, _destination.Length);
         }
 
         [Benchmark]
