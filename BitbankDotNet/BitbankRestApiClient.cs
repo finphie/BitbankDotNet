@@ -36,7 +36,7 @@ namespace BitbankDotNet
         const int SignHexUtf16StringLength = HashSize * 2;
 
         static readonly MediaTypeHeaderValue ContentType =
-            new MediaTypeHeaderValue("application/json") {CharSet = Encoding.UTF8.WebName};
+            new MediaTypeHeaderValue("application/json") { CharSet = Encoding.UTF8.WebName };
 
         readonly HttpClient _client;
 

@@ -21,7 +21,7 @@ namespace BitbankDotNet.Formatters
 
             // JPY以外の場合
             var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
-            return new WithdrawalFee {Threshold = 0, Under = value, Over = value};
+            return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
         public WithdrawalFee Deserialize(ref JsonReader<char> reader)
@@ -33,7 +33,7 @@ namespace BitbankDotNet.Formatters
 
             // JPY以外の場合
             var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
-            return new WithdrawalFee {Threshold = 0, Under = value, Over = value};
+            return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
         public void Serialize(ref JsonWriter<byte> writer, WithdrawalFee value, int nestingLimit)
