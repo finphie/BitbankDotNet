@@ -2,12 +2,14 @@
 using BitbankDotNet.SharedLibrary.Extensions;
 using BitbankDotNet.SharedLibrary.Helpers;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.StringConcat
 {
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1132:Do not combine fields", Justification = "自動生成コード")]
     public class StringConcat2Benchmark
     {
         string _source1A, _source1B;

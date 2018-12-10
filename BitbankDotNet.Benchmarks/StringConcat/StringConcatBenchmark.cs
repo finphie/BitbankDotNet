@@ -2,6 +2,7 @@
 using BitbankDotNet.SharedLibrary.Extensions;
 using BitbankDotNet.SharedLibrary.Helpers;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -43,6 +44,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
     /// UnsafeCopyBlockUnaligned12 |         12 |     10 |  53.03 ns | 0.2643 ns | 0.2473 ns |      0.1729 |               272 B |
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1132:Do not combine fields", Justification = "ベンチマーク")]
     public class StringConcatBenchmark
     {
         const string Count04 = "04";
