@@ -8,9 +8,6 @@ namespace BitbankDotNet.Benchmarks
     /// <summary>
     /// char配列をUTF-16文字列に変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class CharArrayConcatBenchmark
     {

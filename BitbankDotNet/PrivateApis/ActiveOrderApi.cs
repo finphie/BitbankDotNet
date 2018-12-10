@@ -61,7 +61,7 @@ namespace BitbankDotNet
                 query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
             if (end.HasValue)
                 query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
-            
+
             var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
             return result.Orders;
         }

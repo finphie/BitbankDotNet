@@ -161,7 +161,7 @@ namespace BitbankDotNet.Benchmarks
             fixed (byte* destination = &_destination[0])
             using (var streamDestination =
                 new UnmanagedMemoryStream(destination, length, length, FileAccess.Write))
-                streamDestination.Write(_source);              
+                streamDestination.Write(_source);
         }
     }
 }

@@ -377,7 +377,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             return result;
         }
-       
+
         [Benchmark, BenchmarkCategory(Count08)]
         public string CopyChar08A()
         {

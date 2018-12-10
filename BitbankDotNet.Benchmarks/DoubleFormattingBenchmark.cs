@@ -9,9 +9,6 @@ namespace BitbankDotNet.Benchmarks
     /// <summary>
     /// doubleをstringに変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class DoubleFormattingBenchmark
     {

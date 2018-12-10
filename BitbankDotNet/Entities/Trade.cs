@@ -48,19 +48,19 @@ namespace BitbankDotNet.Entities
         public double Price { get; set; }
 
         /// <summary>
-        /// 
+        /// 注文方法
         /// </summary>
         [DataMember(Name = "maker_taker")]
         public string MakerTaker { get; set; }
 
         /// <summary>
-        /// 
+        /// 基本手数料
         /// </summary>
         [DataMember(Name = "fee_amount_base")]
         public string FeeAmountBase { get; set; }
 
         /// <summary>
-        /// 
+        /// 手数料見積もり
         /// </summary>
         [DataMember(Name = "fee_amount_quote")]
         public string FeeAmountQuote { get; set; }

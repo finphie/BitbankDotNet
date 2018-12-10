@@ -26,7 +26,7 @@ namespace BitbankDotNet.Tests.Formatters
         public void Deserialize_UTF8の不正なJSON文字列を入力_BitbankApiExceptionをスローする()
             => Assert.Throws<JsonParserException>(() =>
                 Deserialize<double, BitbankResolver<byte>>(Encoding.UTF8.GetBytes("\"a\"")));
-        
+
         [Fact]
         public void Deserialize_UTF16のJSON文字列を入力_doubleを返す()
         {

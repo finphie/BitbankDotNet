@@ -10,9 +10,6 @@ namespace BitbankDotNet.Benchmarks
     /// <summary>
     /// char配列から2文字を抽出してstringに変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class StringCreateBenchmark
@@ -49,7 +46,7 @@ namespace BitbankDotNet.Benchmarks
         {
             var s = new string(default, 2);
             fixed (char* pointer = s)
-            {             
+            {
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }

@@ -49,7 +49,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, <#= i * 2 #>);
- 
+
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, <#= i * 2 #>);
 
@@ -64,7 +64,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length<#= i #>);
- 
+
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, _length<#= i #>);
 

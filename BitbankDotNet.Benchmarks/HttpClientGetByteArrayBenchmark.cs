@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BitbankDotNet.Benchmarks
 {
     /// <summary>
-    /// 
+    ///  指定したURLからbyte配列を取得する処理のベンチマーク
     /// </summary>
     [Config(typeof(BenchmarkConfig))]
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
