@@ -13,8 +13,6 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
     /// byte配列を16進数stringに変換
     /// cf. https://stackoverflow.com/q/311165
     /// </summary>
-    /// <remarks>
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class ByteArrayToHexStringBenchmark
