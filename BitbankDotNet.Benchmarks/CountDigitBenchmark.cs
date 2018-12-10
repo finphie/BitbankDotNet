@@ -118,6 +118,7 @@ namespace BitbankDotNet.Benchmarks
         /// <summary>
         /// Unix時間用に最適化（13桁以上20桁以下）
         /// </summary>
+        /// <returns>桁数</returns>
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
         public int Min13Digits(ulong value)
