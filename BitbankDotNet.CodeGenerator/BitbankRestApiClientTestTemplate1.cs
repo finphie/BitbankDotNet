@@ -42,6 +42,19 @@ namespace BitbankDotNet.CodeGenerator
 
         public (string Name, string Type)[] Parameters { get; }
 
+        // 指定した型のエイリアスを取得する
+        static string GetTypeOutput(Type type)
+        {
+            using (var provider = new CSharpCodeProvider())
+            {
+                var typeRef = new CodeTypeReference(type);
+                var typeName = provider.GetTypeOutput(typeRef);
+
+                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
+                return typeName.Split('.').Last();
+            }
+        }
+
         public BitbankRestApiClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
             IsPublicApi = isPublicApi;
@@ -92,18 +105,5 @@ namespace BitbankDotNet.CodeGenerator
 
         string GetDefaultParametersString()
             => string.Join(", ", Enumerable.Repeat("default", Parameters.Length));
-
-        // 指定した型のエイリアスを取得する
-        static string GetTypeOutput(Type type)
-        {
-            using (var provider = new CSharpCodeProvider())
-            {
-                var typeRef = new CodeTypeReference(type);
-                var typeName = provider.GetTypeOutput(typeRef);
-
-                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
-                return typeName.Split('.').Last();
-            }
-        }
     }
 }
