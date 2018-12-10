@@ -25,9 +25,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BinaryHelper.Fast.cs</LastGenOutput>
     </None>
-    <None Update="StringConcat\StringConcatBenchmark2.tt">
+    <None Update="StringConcat\StringConcat2Benchmark.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StringConcatBenchmark2.cs</LastGenOutput>
+      <LastGenOutput>StringConcat2Benchmark.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -41,10 +41,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>BinaryHelper.Fast.tt</DependentUpon>
     </Compile>
-    <Compile Update="StringConcat\StringConcatBenchmark2.cs">
+    <Compile Update="StringConcat\StringConcat2Benchmark.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>StringConcatBenchmark2.tt</DependentUpon>
+      <DependentUpon>StringConcat2Benchmark.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
