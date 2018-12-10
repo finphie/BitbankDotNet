@@ -24,10 +24,10 @@ namespace BitbankDotNet.SharedLibrary.Helpers
                 return DateTimeOffset.Parse("2018-01-02T03:04:05.678Z").UtcDateTime;
 
             // BitbankDotNetで定義したenumの場合
+            // Activator.CreateInstance(type)では、enumの値が0のメンバーを返す。
+            // 0に相当するメンバーがない場合は0を返してしまうので使えない。
+            // また、type.GetFieldsは順序が不定なので注意
             if (type.IsEnum && type.Namespace == nameof(BitbankDotNet))
-                // Activator.CreateInstance(type)では、enumの値が0のメンバーを返す。
-                // 0に相当するメンバーがない場合は0を返してしまうので使えない。
-                // また、type.GetFieldsは順序が不定なので注意
                 return Enum.GetValues(type).Cast<object>().Min();
 
             if (type.IsArray)
