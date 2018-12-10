@@ -26,7 +26,7 @@ namespace BitbankDotNet.Benchmarks
         public string StringConcat() => string.Concat(_source);
 
         [Benchmark]
-        public string StringJoin() => string.Join("", _source);
+        public string StringJoin() => string.Join(string.Empty, _source);
 
         [Benchmark]
         public string SpanToString() => _source.AsSpan().ToString();
