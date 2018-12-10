@@ -40,7 +40,9 @@ namespace BitbankDotNet.Tests.Formatters
         public static IEnumerable<object[]> SerializeTestData() => new[]
         {
             new object[]
-                { new[] { GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0) }, Threshold0, Under0, Over0 },
+            {
+                new[] { GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0) }, Threshold0, Under0, Over0
+            },
             new object[] { new[] { $"\"{Under1}\"" }, Threshold1, Under1, Over1 }
         };
 
