@@ -115,8 +115,11 @@ namespace BitbankDotNet.Tests.Formatters
         }
 
         static string Join(string key, double value) => string.Join(":", key, $"\"{value}\"");
+
         static string GetThreshold(double value) => Join(Threshold, value);
+
         static string GetUnder(double value) => Join(Under, value);
+
         static string GetOver(double value) => Join(Over, value);
 
         sealed class WithdrawalFeeResolver<TSymbol> : ResolverBase<TSymbol, WithdrawalFeeResolver<TSymbol>>

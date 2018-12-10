@@ -29,11 +29,15 @@ namespace BitbankDotNet.CodeGenerator
         static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name == typeof(Response<>).Name);
 
         public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
+
         public string Json { get; }
+
         public string MethodName { get; }
+
         public string ApiName { get; }
 
         public bool IsArray { get; }
+
         public bool IsPublicApi { get; }
 
         public (string Name, string Type)[] Parameters { get; }
