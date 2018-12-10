@@ -16,8 +16,7 @@ namespace BitbankDotNet.Formatters
         {
             // JPYの場合、オブジェクトが返ってくるためチェックする。
             if (reader.ReadUtf8NextToken() == JsonToken.BeginObject)
-                return ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default
-                    .Deserialize(ref reader);
+                return ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default.Deserialize(ref reader);
 
             // JPY以外の場合
             var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
@@ -28,8 +27,7 @@ namespace BitbankDotNet.Formatters
         {
             // JPYの場合、オブジェクトが返ってくるためチェックする。
             if (reader.ReadUtf16NextToken() == JsonToken.BeginObject)
-                return ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default
-                    .Deserialize(ref reader);
+                return ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default.Deserialize(ref reader);
 
             // JPY以外の場合
             var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
@@ -41,8 +39,7 @@ namespace BitbankDotNet.Formatters
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default
-                    .Serialize(ref writer, value, nestingLimit);
+                ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default.Serialize(ref writer, value, nestingLimit);
             else
                 DoubleAsStringFormatter.Default.Serialize(ref writer, value.Under, nestingLimit);
         }
@@ -52,8 +49,7 @@ namespace BitbankDotNet.Formatters
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default
-                    .Serialize(ref writer, value, nestingLimit);
+                ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default.Serialize(ref writer, value, nestingLimit);
             else
                 DoubleAsStringFormatter.Default.Serialize(ref writer, value.Under, nestingLimit);
         }
