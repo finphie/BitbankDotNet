@@ -118,6 +118,7 @@ namespace BitbankDotNet.Benchmarks
         /// <summary>
         /// Unix時間用に最適化（13桁以上20桁以下）
         /// </summary>
+        /// <param name="value">数値</param>
         /// <returns>桁数</returns>
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
