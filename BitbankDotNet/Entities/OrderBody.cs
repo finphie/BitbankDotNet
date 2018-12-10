@@ -1,8 +1,11 @@
-﻿namespace BitbankDotNet.Entities
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace BitbankDotNet.Entities
 {
     /// <summary>
     /// 新規指値注文を行う際のリクエストボディ
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "OrderBody")]
     class LimitOrderBody
     {
         /// <summary>

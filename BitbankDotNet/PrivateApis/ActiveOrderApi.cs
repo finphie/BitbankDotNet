@@ -1,10 +1,10 @@
-﻿using BitbankDotNet.Entities;
-using BitbankDotNet.Extensions;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Extensions;
 
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet
@@ -61,7 +61,7 @@ namespace BitbankDotNet
                 query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
             if (end.HasValue)
                 query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
-            
+
             var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
             return result.Orders;
         }

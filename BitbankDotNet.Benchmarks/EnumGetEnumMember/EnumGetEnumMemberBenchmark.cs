@@ -1,8 +1,8 @@
-﻿using BenchmarkDotNet.Attributes;
-using EnumsNET;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using BenchmarkDotNet.Attributes;
+using EnumsNET;
 
 namespace BitbankDotNet.Benchmarks.EnumGetEnumMember
 {

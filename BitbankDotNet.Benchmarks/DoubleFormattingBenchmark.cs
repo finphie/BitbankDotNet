@@ -1,17 +1,14 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Buffers.Text;
 using System.Globalization;
 using System.Text;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
     /// <summary>
     /// doubleをstringに変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class DoubleFormattingBenchmark
     {

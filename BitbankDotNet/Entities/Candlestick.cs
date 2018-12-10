@@ -1,10 +1,23 @@
-﻿using BitbankDotNet.Resolvers;
-using SpanJson;
-using System;
+﻿using System;
 using System.Runtime.Serialization;
+using BitbankDotNet.Resolvers;
+using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
+    class Candlestick
+    {
+        public CandleType Type { get; set; }
+
+        public Ohlcv[] Ohlcv { get; set; }
+    }
+
+    class CandlestickList
+    {
+        [DataMember(Name = "candlestick")]
+        public Candlestick[] Candlesticks { get; set; }
+    }
+
     /// <summary>
     /// ローソク足データ
     /// </summary>
@@ -43,18 +56,5 @@ namespace BitbankDotNet.Entities
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(
                 JsonSerializer.Generic.Utf16.SerializeToArrayPool<Ohlcv, BitbankResolver<char>>(this));
-    }
-
-    class Candlestick
-    {
-        public CandleType Type { get; set; }
-
-        public Ohlcv[] Ohlcv { get; set; }
-    }
-
-    class CandlestickList
-    {
-        [DataMember(Name = "candlestick")]
-        public Candlestick[] Candlesticks { get; set; }
     }
 }

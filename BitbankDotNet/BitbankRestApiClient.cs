@@ -1,9 +1,4 @@
-﻿using BitbankDotNet.Caches;
-using BitbankDotNet.Entities;
-using BitbankDotNet.Extensions;
-using BitbankDotNet.Helpers;
-using BitbankDotNet.Resolvers;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,6 +7,11 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BitbankDotNet.Caches;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Extensions;
+using BitbankDotNet.Helpers;
+using BitbankDotNet.Resolvers;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
 namespace BitbankDotNet
@@ -36,7 +36,7 @@ namespace BitbankDotNet
         const int SignHexUtf16StringLength = HashSize * 2;
 
         static readonly MediaTypeHeaderValue ContentType =
-            new MediaTypeHeaderValue("application/json") {CharSet = Encoding.UTF8.WebName};
+            new MediaTypeHeaderValue("application/json") { CharSet = Encoding.UTF8.WebName };
 
         readonly HttpClient _client;
 
@@ -178,7 +178,7 @@ namespace BitbankDotNet
         /// [Private API]Postリクエストを送信します。
         /// </summary>
         /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
-        /// <typeparam name="TBody"></typeparam>
+        /// <typeparam name="TBody">リクエストボディの型</typeparam>
         /// <param name="path">リクエストのパス</param>
         /// <param name="body">リクエストボディ</param>
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>

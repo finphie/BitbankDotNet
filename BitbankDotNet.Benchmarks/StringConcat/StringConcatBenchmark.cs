@@ -1,10 +1,11 @@
-﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.SharedLibrary.Extensions;
-using BitbankDotNet.SharedLibrary.Helpers;
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using BenchmarkDotNet.Attributes;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 
 namespace BitbankDotNet.Benchmarks.StringConcat
 {
@@ -43,6 +44,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
     /// UnsafeCopyBlockUnaligned12 |         12 |     10 |  53.03 ns | 0.2643 ns | 0.2473 ns |      0.1729 |               272 B |
     /// </remarks>
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1132:Do not combine fields", Justification = "ベンチマーク")]
     public class StringConcatBenchmark
     {
         const string Count04 = "04";
@@ -66,23 +68,22 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             (_source08, _source09, _source10, _source11) = CreateUtf16Strings();
         }
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string StringConcat04() => string.Concat(_source00, _source01, _source02, _source03);
 
-        [Benchmark, BenchmarkCategory(Count08)]
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string StringConcat08()
-            => string.Concat(
-                _source00, _source01, _source02, _source03,
-                _source04, _source05, _source06, _source07);
+            => string.Concat(_source00, _source01, _source02, _source03, _source04, _source05, _source06, _source07);
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string StringConcat12()
-            => string.Concat(
-                _source00, _source01, _source02, _source03,
-                _source04, _source05, _source06, _source07,
-                _source08, _source09, _source10, _source11);
+            => string.Concat(_source00, _source01, _source02, _source03, _source04, _source05, _source06, _source07, _source08, _source09, _source10, _source11);
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string StringBuilder04()
         {
             var length = _source00.Length + _source01.Length + _source03.Length + _source04.Length;
@@ -96,7 +97,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return sb.ToString();
         }
 
-        [Benchmark, BenchmarkCategory(Count08)]
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string StringBuilder08()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -115,7 +117,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return sb.ToString();
         }
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string StringBuilder12()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -139,7 +142,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return sb.ToString();
         }
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string Span04()
         {
             var length = _source00.Length + _source01.Length + _source03.Length + _source04.Length;
@@ -158,7 +162,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count08)]
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string Span08()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -186,7 +191,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string Span12()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -223,7 +229,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string UnsafeCopyBlockUnaligned04()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
@@ -248,7 +255,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count08)]
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string UnsafeCopyBlockUnaligned08()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -290,7 +298,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string UnsafeCopyBlockUnaligned12()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -349,7 +358,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string CopyChar04A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
@@ -377,8 +387,9 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             return result;
         }
-       
-        [Benchmark, BenchmarkCategory(Count08)]
+
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string CopyChar08A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -428,7 +439,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string CopyChar12A()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -499,7 +511,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count04)]
+        [Benchmark]
+        [BenchmarkCategory(Count04)]
         public string CopyChar04B()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length;
@@ -528,7 +541,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count08)]
+        [Benchmark]
+        [BenchmarkCategory(Count08)]
         public string CopyChar08B()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +
@@ -578,7 +592,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory(Count12)]
+        [Benchmark]
+        [BenchmarkCategory(Count12)]
         public string CopyChar12B()
         {
             var length = _source00.Length + _source01.Length + _source02.Length + _source03.Length +

@@ -1,8 +1,8 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {

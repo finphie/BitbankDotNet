@@ -1,14 +1,14 @@
-﻿using BitbankDotNet.Entities;
+﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
 using BitbankDotNet.SharedLibrary.Extensions;
 using BitbankDotNet.SharedLibrary.Helpers;
 using Microsoft.CSharp;
 using SpanJson;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace BitbankDotNet.CodeGenerator
 {
@@ -22,21 +22,38 @@ namespace BitbankDotNet.CodeGenerator
 
         // Entityの型情報リスト
         static readonly TypeInfo[] EntityTypeInfos = LibraryAssembly.DefinedTypes
-            .Where(ti=> ti.Namespace == EntityNamespace)
+            .Where(ti => ti.Namespace == EntityNamespace)
             .ToArray();
 
         // Response<T>の型情報
         static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name == typeof(Response<>).Name);
 
         public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
+
         public string Json { get; }
+
         public string MethodName { get; }
+
         public string ApiName { get; }
 
         public bool IsArray { get; }
+
         public bool IsPublicApi { get; }
 
         public (string Name, string Type)[] Parameters { get; }
+
+        // 指定した型のエイリアスを取得する
+        static string GetTypeOutput(Type type)
+        {
+            using (var provider = new CSharpCodeProvider())
+            {
+                var typeRef = new CodeTypeReference(type);
+                var typeName = provider.GetTypeOutput(typeRef);
+
+                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
+                return typeName.Split('.').Last();
+            }
+        }
 
         public BitbankRestApiClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
@@ -88,18 +105,5 @@ namespace BitbankDotNet.CodeGenerator
 
         string GetDefaultParametersString()
             => string.Join(", ", Enumerable.Repeat("default", Parameters.Length));
-
-        // 指定した型のエイリアスを取得する
-        static string GetTypeOutput(Type type)
-        {
-            using (var provider = new CSharpCodeProvider())
-            {
-                var typeRef = new CodeTypeReference(type);
-                var typeName = provider.GetTypeOutput(typeRef);
-
-                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
-                return typeName.Split('.').Last();
-            }
-        }
     }
 }

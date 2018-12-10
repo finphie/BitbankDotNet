@@ -1,11 +1,11 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Buffers.Binary;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
 {
@@ -13,8 +13,6 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
     /// byte配列を16進数stringに変換
     /// cf. https://stackoverflow.com/q/311165
     /// </summary>
-    /// <remarks>
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class ByteArrayToHexStringBenchmark
@@ -34,7 +32,7 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         [Benchmark]
         [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]
         public string BitConverterToString()
-            => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", "", StringComparison.Ordinal);
+            => BitConverter.ToString(SourceBytes).ToLowerInvariant().Replace("-", string.Empty, StringComparison.Ordinal);
 
         [Benchmark]
         [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "小文字が必要")]

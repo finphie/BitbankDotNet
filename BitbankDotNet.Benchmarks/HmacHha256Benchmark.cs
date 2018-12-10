@@ -1,9 +1,9 @@
-﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.SharedLibrary.Helpers;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using BenchmarkDotNet.Attributes;
+using BitbankDotNet.SharedLibrary.Helpers;
 
 namespace BitbankDotNet.Benchmarks
 {

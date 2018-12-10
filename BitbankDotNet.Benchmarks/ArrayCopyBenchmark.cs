@@ -1,9 +1,9 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -13,7 +13,7 @@ namespace BitbankDotNet.Benchmarks
     /// <remarks>
     /// .NET Core 2.1.5 (CoreCLR 4.6.26919.02, CoreFX 4.6.26919.02), 64bit RyuJIT
     ///                      Method | ArraySize |       Mean |     Error |    StdDev | Gen 0/1k Op | Allocated Memory/Op |
-    ///---------------------------- |---------- |-----------:|----------:|----------:|------------:|--------------------:|
+    /// --------------------------- |---------- |-----------:|----------:|----------:|------------:|--------------------:|
     ///                   ArrayCopy |        10 |  11.164 ns | 0.0400 ns | 0.0374 ns |           - |                   - |
     ///                  SpanCopyTo |        10 |  11.446 ns | 0.0346 ns | 0.0307 ns |           - |                   - |
     ///                MemoryCopyTo |        10 |  20.576 ns | 0.1022 ns | 0.0853 ns |           - |                   - |
@@ -124,7 +124,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe void MarshalCopy()
         {
             fixed (byte* source = &_source[0])
-                Marshal.Copy((IntPtr) source, _destination, 0, _destination.Length);
+                Marshal.Copy((IntPtr)source, _destination, 0, _destination.Length);
         }
 
         [Benchmark]
@@ -161,7 +161,7 @@ namespace BitbankDotNet.Benchmarks
             fixed (byte* destination = &_destination[0])
             using (var streamDestination =
                 new UnmanagedMemoryStream(destination, length, length, FileAccess.Write))
-                streamDestination.Write(_source);              
+                streamDestination.Write(_source);
         }
     }
 }

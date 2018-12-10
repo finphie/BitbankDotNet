@@ -1,18 +1,15 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
     /// <summary>
     /// char配列から2文字を抽出してstringに変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class StringCreateBenchmark
@@ -28,19 +25,25 @@ namespace BitbankDotNet.Benchmarks
             });
 
         [Benchmark]
-        public string New() => new string(new[] {SourceChars[1], SourceChars[10]});
+        public string New() => new string(new[] { SourceChars[1], SourceChars[10] });
 
         [Benchmark]
         public unsafe string Stackalloc()
         {
-            var array = stackalloc char[] {SourceChars[1], SourceChars[10]};
+            var array = stackalloc char[]
+            {
+                SourceChars[1], SourceChars[10]
+            };
             return new string(array, 0, 2);
         }
 
         [Benchmark]
         public string SpanStackalloc()
         {
-            Span<char> span = stackalloc char[] {SourceChars[1], SourceChars[10]};
+            Span<char> span = stackalloc char[]
+            {
+                SourceChars[1], SourceChars[10]
+            };
             return new string(span);
         }
 
@@ -49,10 +52,11 @@ namespace BitbankDotNet.Benchmarks
         {
             var s = new string(default, 2);
             fixed (char* pointer = s)
-            {             
+            {
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }
+
             return s;
         }
 
@@ -61,7 +65,7 @@ namespace BitbankDotNet.Benchmarks
         {
             var s = new string(default, 2);
             var handle = GCHandle.Alloc(s, GCHandleType.Pinned);
-            var pointer = (char*) Unsafe.AsPointer(ref MemoryMarshal.GetReference(s.AsSpan()));
+            var pointer = (char*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(s.AsSpan()));
             pointer[0] = SourceChars[1];
             pointer[1] = SourceChars[10];
             handle.Free();
@@ -75,10 +79,11 @@ namespace BitbankDotNet.Benchmarks
             var memory = s.AsMemory();
             using (var handle = memory.Pin())
             {
-                var pointer = (char*) handle.Pointer;
+                var pointer = (char*)handle.Pointer;
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }
+
             return s;
         }
 
@@ -87,7 +92,7 @@ namespace BitbankDotNet.Benchmarks
         public unsafe string CfCoreFx()
         {
             var temp = 0U;
-            var array = (char*) &temp;
+            var array = (char*)&temp;
             array[0] = SourceChars[1];
             array[1] = SourceChars[10];
             return new string(array, 0, 2);

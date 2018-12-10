@@ -1,7 +1,7 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -38,16 +38,21 @@ namespace BitbankDotNet.Benchmarks
         [ArgumentsSource(nameof(Values))]
         public int MathLog10(ulong value) => (int)Math.Log10(value) + 1;
 
+        /// <summary>
+        /// CoreFXやSpanJsonでの実装です。
+        /// </summary>
+        /// <remarks>
+        /// System.Buffers.Text.FormattingHelpers.CountDigits
+        /// cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Buffers/Text/FormattingHelpers.CountDigits.cs#L13-L66
+        /// SpanJson.FormatterUtils.CountDigits
+        /// cf. https://github.com/Tornhoof/SpanJson/blob/master/SpanJson/Helpers/FormatterUtils.cs#L11-L64
+        /// </remarks>
+        /// <param name="value">数値</param>
+        /// <returns>桁数</returns>
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
         public int CoreFx(ulong value)
         {
-            // CoreFXやSpanJsonでの実装
-            // System.Buffers.Text.FormattingHelpers.CountDigits
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Buffers/Text/FormattingHelpers.CountDigits.cs#L13-L66
-            // SpanJson.FormatterUtils.CountDigits
-            // cf. https://github.com/Tornhoof/SpanJson/blob/master/SpanJson/Helpers/FormatterUtils.cs#L11-L64
-
             var digits = 1;
             uint part;
             if (value >= 10000000)
@@ -113,6 +118,8 @@ namespace BitbankDotNet.Benchmarks
         /// <summary>
         /// Unix時間用に最適化（13桁以上20桁以下）
         /// </summary>
+        /// <param name="value">数値</param>
+        /// <returns>桁数</returns>
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
         public int Min13Digits(ulong value)

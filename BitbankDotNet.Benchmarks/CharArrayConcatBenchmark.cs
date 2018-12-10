@@ -1,16 +1,13 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
     /// <summary>
     /// char配列をUTF-16文字列に変換
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     [Config(typeof(BenchmarkConfig))]
     public class CharArrayConcatBenchmark
     {
@@ -29,7 +26,7 @@ namespace BitbankDotNet.Benchmarks
         public string StringConcat() => string.Concat(_source);
 
         [Benchmark]
-        public string StringJoin() => string.Join("", _source);
+        public string StringJoin() => string.Join(string.Empty, _source);
 
         [Benchmark]
         public string SpanToString() => _source.AsSpan().ToString();

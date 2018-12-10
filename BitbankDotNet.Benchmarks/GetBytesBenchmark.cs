@@ -1,7 +1,7 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Buffers;
 using System.Text;
+using BenchmarkDotNet.Attributes;
 
 namespace BitbankDotNet.Benchmarks
 {
@@ -22,7 +22,7 @@ namespace BitbankDotNet.Benchmarks
         [Benchmark]
         public byte[] Array()
             => Encoding.UTF8.GetBytes(_data);
-   
+
         [Benchmark]
         public byte[] SpanStackAlloc()
         {
@@ -79,6 +79,6 @@ namespace BitbankDotNet.Benchmarks
                 if (buffer != null)
                     ArrayPool<byte>.Shared.Return(buffer);
             }
-        }    
+        }
     }
 }

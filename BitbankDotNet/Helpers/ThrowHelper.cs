@@ -1,6 +1,6 @@
-﻿using SpanJson;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
+using SpanJson;
 
 namespace BitbankDotNet.Helpers
 {

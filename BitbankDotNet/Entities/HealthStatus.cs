@@ -1,6 +1,6 @@
-﻿using BitbankDotNet.Resolvers;
+﻿using System.Runtime.Serialization;
+using BitbankDotNet.Resolvers;
 using SpanJson;
-using System.Runtime.Serialization;
 
 namespace BitbankDotNet.Entities
 {

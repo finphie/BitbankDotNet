@@ -1,16 +1,16 @@
-﻿using BenchmarkDotNet.Attributes;
-using EnumsNET;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
+using EnumsNET;
 
 namespace BitbankDotNet.Benchmarks
 {
     /// <summary>
     /// enumの値を取得
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">列挙型</typeparam>
     [Config(typeof(BenchmarkConfig))]
     [GenericTypeArguments(typeof(Test))]
     public class EnumToIntBenchmark<T>
@@ -39,15 +39,15 @@ namespace BitbankDotNet.Benchmarks
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int AsCast(T @enum) => (int) (@enum as object);
+        public int AsCast(T @enum) => (int)(@enum as object);
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int DirectCast(T @enum) => (int) (object) @enum;
+        public int DirectCast(T @enum) => (int)(object)@enum;
 
         [Benchmark]
         [Arguments(Test.A)]
-        public int RefValue(T @enum) => (int) __refvalue(__makeref(@enum), Test);
+        public int RefValue(T @enum) => (int)__refvalue(__makeref(@enum), Test);
 
         [Benchmark]
         [Arguments(Test.A)]

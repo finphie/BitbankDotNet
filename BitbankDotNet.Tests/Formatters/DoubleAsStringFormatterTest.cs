@@ -1,7 +1,7 @@
-﻿using BitbankDotNet.Resolvers;
-using SpanJson;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BitbankDotNet.Resolvers;
+using SpanJson;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
@@ -26,7 +26,7 @@ namespace BitbankDotNet.Tests.Formatters
         public void Deserialize_UTF8の不正なJSON文字列を入力_BitbankApiExceptionをスローする()
             => Assert.Throws<JsonParserException>(() =>
                 Deserialize<double, BitbankResolver<byte>>(Encoding.UTF8.GetBytes("\"a\"")));
-        
+
         [Fact]
         public void Deserialize_UTF16のJSON文字列を入力_doubleを返す()
         {

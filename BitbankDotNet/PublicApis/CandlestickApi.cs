@@ -1,7 +1,7 @@
-﻿using BitbankDotNet.Entities;
-using BitbankDotNet.Extensions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Extensions;
 
 // ReSharper disable once CheckNamespace
 namespace BitbankDotNet

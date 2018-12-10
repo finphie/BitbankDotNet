@@ -33,9 +33,7 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
             ref var resultStart = ref Unsafe.As<char, int>(ref MemoryMarshal.GetReference(result.AsSpan()));
             ref var tableStart = ref Table[0];
             for (var i = 0; i < source.Length; i++)
-                Unsafe.Add(ref resultStart, i) =
-                    Unsafe.As<char, int>(
-                        ref MemoryMarshal.GetReference(Unsafe.Add(ref tableStart, source[i]).AsSpan()));
+                Unsafe.Add(ref resultStart, i) = Unsafe.As<char, int>(ref MemoryMarshal.GetReference(Unsafe.Add(ref tableStart, source[i]).AsSpan()));
 
             return result;
         }

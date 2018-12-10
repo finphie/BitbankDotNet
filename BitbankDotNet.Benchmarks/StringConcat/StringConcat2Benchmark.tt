@@ -4,16 +4,18 @@
     const int Min = 1;
     const int Max = 32;
 #>
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using BitbankDotNet.SharedLibrary.Extensions;
 using BitbankDotNet.SharedLibrary.Helpers;
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Benchmarks.StringConcat
 {
     [Config(typeof(BenchmarkConfig))]
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1132:Do not combine fields", Justification = "自動生成コード")]
     public class StringConcat2Benchmark
     {
 <# for (var i = Min; i <= Max; i++) { #>
@@ -41,7 +43,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
     var sourceA = $"_source{i}A";
     var sourceB = $"_source{i}B";
 #>
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>A()
         {
             var result = new string(default, <#= i * 2 #>);
@@ -49,14 +52,15 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, <#= i * 2 #>);
- 
+
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, <#= i * 2 #>);
 
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>B()
         {
             var result = new string(default, <#= i * 2 #>);
@@ -64,14 +68,15 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
             ref var sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceA #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref resultStart, ref sourceStart, _length<#= i #>);
- 
+
             sourceStart = ref Unsafe.As<char, byte>(ref MemoryMarshal.GetReference(<#= sourceB #>.AsSpan()));
             Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref resultStart, <#= i * 2 #>), ref sourceStart, _length<#= i #>);
 
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string CopyChar<#= i #>()
         {
             var result = new string(default, <#= i * 2 #>);

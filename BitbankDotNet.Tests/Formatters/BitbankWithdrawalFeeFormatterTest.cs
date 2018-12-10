@@ -1,10 +1,10 @@
-﻿using BitbankDotNet.Entities;
-using BitbankDotNet.Formatters;
-using SpanJson.Resolvers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Formatters;
+using SpanJson.Resolvers;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;
@@ -33,15 +33,17 @@ namespace BitbankDotNet.Tests.Formatters
             var json0 = string.Join(",", GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0));
             var json1 = string.Join(",", GetThreshold(Threshold1), GetUnder(Under1), GetOver(Over1));
 
-            yield return new object[] {CreateJsonString(json0), Threshold0, Under0, Over0};
-            yield return new object[] {CreateJsonString(json1), Threshold1, Under1, Over1};
+            yield return new object[] { CreateJsonString(json0), Threshold0, Under0, Over0 };
+            yield return new object[] { CreateJsonString(json1), Threshold1, Under1, Over1 };
         }
 
         public static IEnumerable<object[]> SerializeTestData() => new[]
         {
             new object[]
-                {new[] {GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0)}, Threshold0, Under0, Over0},
-            new object[] {new[] {$"\"{Under1}\""}, Threshold1, Under1, Over1}
+            {
+                new[] { GetThreshold(Threshold0), GetUnder(Under0), GetOver(Over0) }, Threshold0, Under0, Over0
+            },
+            new object[] { new[] { $"\"{Under1}\"" }, Threshold1, Under1, Over1 }
         };
 
         [Theory]
@@ -86,6 +88,7 @@ namespace BitbankDotNet.Tests.Formatters
                 Assert.All(Encoding.UTF8.GetBytes(json[0]), b => Assert.Contains(b, serialize));
                 return;
             }
+
             foreach (var j in json)
                 Assert.All(Encoding.UTF8.GetBytes(j), b => Assert.Contains(b, serialize));
         }
@@ -108,19 +111,24 @@ namespace BitbankDotNet.Tests.Formatters
                 Assert.Contains(json[0], serialize, StringComparison.Ordinal);
                 return;
             }
+
             foreach (var j in json)
                 Assert.Contains(j, serialize, StringComparison.Ordinal);
         }
 
         static string Join(string key, double value) => string.Join(":", key, $"\"{value}\"");
+
         static string GetThreshold(double value) => Join(Threshold, value);
+
         static string GetUnder(double value) => Join(Under, value);
+
         static string GetOver(double value) => Join(Over, value);
 
         sealed class WithdrawalFeeResolver<TSymbol> : ResolverBase<TSymbol, WithdrawalFeeResolver<TSymbol>>
             where TSymbol : struct
         {
-            public WithdrawalFeeResolver() : base(new SpanJsonOptions
+            public WithdrawalFeeResolver()
+                : base(new SpanJsonOptions
             {
                 NullOption = NullOptions.ExcludeNulls,
                 NamingConvention = NamingConventions.CamelCase,

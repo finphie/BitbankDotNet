@@ -22,9 +22,13 @@ namespace BitbankDotNet.Benchmarks
     public class GetHashCodeBenchmark
     {
         public long Property1 { get; set; } = long.MaxValue;
+
         public SampleClass Property2 { get; set; } = new SampleClass();
+
         public string Property3 { get; set; } = "abcdefghij";
+
         public double Property4 { get; set; } = double.MaxValue;
+
         public int Property5 { get; set; } = 1;
 
         [Benchmark]
@@ -77,7 +81,9 @@ namespace BitbankDotNet.Benchmarks
     public class SampleClass
     {
         public string Property1 { get; set; }
+
         public double Property2 { get; set; }
+
         public int Property3 { get; set; }
     }
 }
