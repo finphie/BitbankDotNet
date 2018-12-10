@@ -10,7 +10,7 @@ namespace BitbankDotNet.Benchmarks
     /// <summary>
     /// enumの値を取得
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">列挙型</typeparam>
     [Config(typeof(BenchmarkConfig))]
     [GenericTypeArguments(typeof(Test))]
     public class EnumToIntBenchmark<T>

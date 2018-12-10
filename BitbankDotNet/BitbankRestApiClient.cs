@@ -178,7 +178,7 @@ namespace BitbankDotNet
         /// [Private API]Postリクエストを送信します。
         /// </summary>
         /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
-        /// <typeparam name="TBody"></typeparam>
+        /// <typeparam name="TBody">リクエストボディの型</typeparam>
         /// <param name="path">リクエストのパス</param>
         /// <param name="body">リクエストボディ</param>
         /// <returns><see cref="Entities"/>名前空間内にあるクラスのインスタンス</returns>
