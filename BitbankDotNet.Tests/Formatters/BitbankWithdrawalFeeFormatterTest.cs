@@ -120,7 +120,8 @@ namespace BitbankDotNet.Tests.Formatters
         sealed class WithdrawalFeeResolver<TSymbol> : ResolverBase<TSymbol, WithdrawalFeeResolver<TSymbol>>
             where TSymbol : struct
         {
-            public WithdrawalFeeResolver() : base(new SpanJsonOptions
+            public WithdrawalFeeResolver()
+                : base(new SpanJsonOptions
             {
                 NullOption = NullOptions.ExcludeNulls,
                 NamingConvention = NamingConventions.CamelCase,
