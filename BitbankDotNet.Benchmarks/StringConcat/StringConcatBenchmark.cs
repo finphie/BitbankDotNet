@@ -71,16 +71,11 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
         [Benchmark, BenchmarkCategory(Count08)]
         public string StringConcat08()
-            => string.Concat(
-                _source00, _source01, _source02, _source03,
-                _source04, _source05, _source06, _source07);
+            => string.Concat(_source00, _source01, _source02, _source03, _source04, _source05, _source06, _source07);
 
         [Benchmark, BenchmarkCategory(Count12)]
         public string StringConcat12()
-            => string.Concat(
-                _source00, _source01, _source02, _source03,
-                _source04, _source05, _source06, _source07,
-                _source08, _source09, _source10, _source11);
+            => string.Concat(_source00, _source01, _source02, _source03, _source04, _source05, _source06, _source07, _source08, _source09, _source10, _source11);
 
         [Benchmark, BenchmarkCategory(Count04)]
         public string StringBuilder04()
