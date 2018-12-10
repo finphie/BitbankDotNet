@@ -12,6 +12,8 @@ namespace BitbankDotNet.Tests.Formatters
     [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "ユニットテスト")]
     public class BitbankOhlcvFormatterTest
     {
+        const string Json = "[\"0.1\",\"1.2\",\"2.3\",\"3.4\",\"4.5\",1514862245678]";
+
         static readonly Ohlcv Entity = new Ohlcv
         {
             Open = 0.1,
@@ -22,7 +24,6 @@ namespace BitbankDotNet.Tests.Formatters
             Date = DateTimeOffset.Parse("2018-01-02T03:04:05.678Z").UtcDateTime
         };
 
-        const string Json = "[\"0.1\",\"1.2\",\"2.3\",\"3.4\",\"4.5\",1514862245678]";
         static readonly byte[] UJson = Encoding.UTF8.GetBytes(Json);
 
         [Fact]
