@@ -1,7 +1,7 @@
-﻿using BitbankDotNet.Resolvers;
-using SpanJson;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BitbankDotNet.Resolvers;
+using SpanJson;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;

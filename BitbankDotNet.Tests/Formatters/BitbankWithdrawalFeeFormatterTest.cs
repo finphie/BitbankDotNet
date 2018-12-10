@@ -1,10 +1,10 @@
-﻿using BitbankDotNet.Entities;
-using BitbankDotNet.Formatters;
-using SpanJson.Resolvers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Formatters;
+using SpanJson.Resolvers;
 using Xunit;
 using static SpanJson.JsonSerializer.Generic.Utf16;
 using static SpanJson.JsonSerializer.Generic.Utf8;

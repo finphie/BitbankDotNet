@@ -1,6 +1,6 @@
-﻿using BitbankDotNet.Caches;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
+using BitbankDotNet.Caches;
 
 namespace BitbankDotNet.Extensions
 {

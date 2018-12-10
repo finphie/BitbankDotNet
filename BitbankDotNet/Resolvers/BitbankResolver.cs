@@ -1,7 +1,7 @@
-﻿using BitbankDotNet.Entities;
+﻿using System;
+using BitbankDotNet.Entities;
 using BitbankDotNet.Formatters;
 using SpanJson.Resolvers;
-using System;
 
 namespace BitbankDotNet.Resolvers
 {

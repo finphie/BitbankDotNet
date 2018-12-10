@@ -1,12 +1,12 @@
-﻿using BitbankDotNet.SharedLibrary.Helpers;
-using Moq;
-using Moq.Protected;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using BitbankDotNet.SharedLibrary.Helpers;
+using Moq;
+using Moq.Protected;
 using Xunit;
 
 namespace BitbankDotNet.Tests.PublicApis

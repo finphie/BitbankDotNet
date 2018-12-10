@@ -1,6 +1,5 @@
 ﻿using BitbankDotNet.Resolvers;
 using SpanJson;
-using System;
 
 namespace BitbankDotNet.Entities
 {

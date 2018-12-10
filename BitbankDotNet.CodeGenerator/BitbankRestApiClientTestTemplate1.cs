@@ -1,14 +1,14 @@
-﻿using BitbankDotNet.Entities;
+﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
 using BitbankDotNet.SharedLibrary.Extensions;
 using BitbankDotNet.SharedLibrary.Helpers;
 using Microsoft.CSharp;
 using SpanJson;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace BitbankDotNet.CodeGenerator
 {

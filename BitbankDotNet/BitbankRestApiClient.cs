@@ -1,9 +1,4 @@
-﻿using BitbankDotNet.Caches;
-using BitbankDotNet.Entities;
-using BitbankDotNet.Extensions;
-using BitbankDotNet.Helpers;
-using BitbankDotNet.Resolvers;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,6 +7,11 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BitbankDotNet.Caches;
+using BitbankDotNet.Entities;
+using BitbankDotNet.Extensions;
+using BitbankDotNet.Helpers;
+using BitbankDotNet.Resolvers;
 using static SpanJson.JsonSerializer.Generic.Utf8;
 
 namespace BitbankDotNet

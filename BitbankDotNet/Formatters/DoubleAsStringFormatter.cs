@@ -1,7 +1,7 @@
-﻿using BitbankDotNet.Helpers;
-using SpanJson;
-using System.Buffers.Text;
+﻿using System.Buffers.Text;
 using System.Globalization;
+using BitbankDotNet.Helpers;
+using SpanJson;
 
 namespace BitbankDotNet.Formatters
 {

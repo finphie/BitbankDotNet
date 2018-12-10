@@ -1,10 +1,10 @@
-﻿using BenchmarkDotNet.Attributes;
-using BitbankDotNet.SharedLibrary.Extensions;
-using BitbankDotNet.SharedLibrary.Helpers;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using BenchmarkDotNet.Attributes;
+using BitbankDotNet.SharedLibrary.Extensions;
+using BitbankDotNet.SharedLibrary.Helpers;
 
 namespace BitbankDotNet.Benchmarks.StringConcat
 {
