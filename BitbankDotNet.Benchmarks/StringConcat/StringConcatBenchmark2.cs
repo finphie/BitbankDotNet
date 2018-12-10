@@ -148,7 +148,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             _length32 = (uint)_source32A.Length * 2;
         }
 
-        [Benchmark, BenchmarkCategory("1")]
+        [Benchmark]
+        [BenchmarkCategory("1")]
         public string UnsafeCopyBlockUnaligned1A()
         {
             var result = new string(default, 2);
@@ -163,7 +164,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("1")]
+        [Benchmark]
+        [BenchmarkCategory("1")]
         public string UnsafeCopyBlockUnaligned1B()
         {
             var result = new string(default, 2);
@@ -178,7 +180,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("1")]
+        [Benchmark]
+        [BenchmarkCategory("1")]
         public string CopyChar1()
         {
             var result = new string(default, 2);
@@ -193,7 +196,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("2")]
+        [Benchmark]
+        [BenchmarkCategory("2")]
         public string UnsafeCopyBlockUnaligned2A()
         {
             var result = new string(default, 4);
@@ -208,7 +212,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("2")]
+        [Benchmark]
+        [BenchmarkCategory("2")]
         public string UnsafeCopyBlockUnaligned2B()
         {
             var result = new string(default, 4);
@@ -223,7 +228,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("2")]
+        [Benchmark]
+        [BenchmarkCategory("2")]
         public string CopyChar2()
         {
             var result = new string(default, 4);
@@ -238,7 +244,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("3")]
+        [Benchmark]
+        [BenchmarkCategory("3")]
         public string UnsafeCopyBlockUnaligned3A()
         {
             var result = new string(default, 6);
@@ -253,7 +260,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("3")]
+        [Benchmark]
+        [BenchmarkCategory("3")]
         public string UnsafeCopyBlockUnaligned3B()
         {
             var result = new string(default, 6);
@@ -268,7 +276,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("3")]
+        [Benchmark]
+        [BenchmarkCategory("3")]
         public string CopyChar3()
         {
             var result = new string(default, 6);
@@ -283,7 +292,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("4")]
+        [Benchmark]
+        [BenchmarkCategory("4")]
         public string UnsafeCopyBlockUnaligned4A()
         {
             var result = new string(default, 8);
@@ -298,7 +308,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("4")]
+        [Benchmark]
+        [BenchmarkCategory("4")]
         public string UnsafeCopyBlockUnaligned4B()
         {
             var result = new string(default, 8);
@@ -313,7 +324,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("4")]
+        [Benchmark]
+        [BenchmarkCategory("4")]
         public string CopyChar4()
         {
             var result = new string(default, 8);
@@ -328,7 +340,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("5")]
+        [Benchmark]
+        [BenchmarkCategory("5")]
         public string UnsafeCopyBlockUnaligned5A()
         {
             var result = new string(default, 10);
@@ -343,7 +356,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("5")]
+        [Benchmark]
+        [BenchmarkCategory("5")]
         public string UnsafeCopyBlockUnaligned5B()
         {
             var result = new string(default, 10);
@@ -358,7 +372,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("5")]
+        [Benchmark]
+        [BenchmarkCategory("5")]
         public string CopyChar5()
         {
             var result = new string(default, 10);
@@ -373,7 +388,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("6")]
+        [Benchmark]
+        [BenchmarkCategory("6")]
         public string UnsafeCopyBlockUnaligned6A()
         {
             var result = new string(default, 12);
@@ -388,7 +404,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("6")]
+        [Benchmark]
+        [BenchmarkCategory("6")]
         public string UnsafeCopyBlockUnaligned6B()
         {
             var result = new string(default, 12);
@@ -403,7 +420,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("6")]
+        [Benchmark]
+        [BenchmarkCategory("6")]
         public string CopyChar6()
         {
             var result = new string(default, 12);
@@ -418,7 +436,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("7")]
+        [Benchmark]
+        [BenchmarkCategory("7")]
         public string UnsafeCopyBlockUnaligned7A()
         {
             var result = new string(default, 14);
@@ -433,7 +452,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("7")]
+        [Benchmark]
+        [BenchmarkCategory("7")]
         public string UnsafeCopyBlockUnaligned7B()
         {
             var result = new string(default, 14);
@@ -448,7 +468,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("7")]
+        [Benchmark]
+        [BenchmarkCategory("7")]
         public string CopyChar7()
         {
             var result = new string(default, 14);
@@ -463,7 +484,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("8")]
+        [Benchmark]
+        [BenchmarkCategory("8")]
         public string UnsafeCopyBlockUnaligned8A()
         {
             var result = new string(default, 16);
@@ -478,7 +500,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("8")]
+        [Benchmark]
+        [BenchmarkCategory("8")]
         public string UnsafeCopyBlockUnaligned8B()
         {
             var result = new string(default, 16);
@@ -493,7 +516,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("8")]
+        [Benchmark]
+        [BenchmarkCategory("8")]
         public string CopyChar8()
         {
             var result = new string(default, 16);
@@ -508,7 +532,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("9")]
+        [Benchmark]
+        [BenchmarkCategory("9")]
         public string UnsafeCopyBlockUnaligned9A()
         {
             var result = new string(default, 18);
@@ -523,7 +548,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("9")]
+        [Benchmark]
+        [BenchmarkCategory("9")]
         public string UnsafeCopyBlockUnaligned9B()
         {
             var result = new string(default, 18);
@@ -538,7 +564,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("9")]
+        [Benchmark]
+        [BenchmarkCategory("9")]
         public string CopyChar9()
         {
             var result = new string(default, 18);
@@ -553,7 +580,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("10")]
+        [Benchmark]
+        [BenchmarkCategory("10")]
         public string UnsafeCopyBlockUnaligned10A()
         {
             var result = new string(default, 20);
@@ -568,7 +596,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("10")]
+        [Benchmark]
+        [BenchmarkCategory("10")]
         public string UnsafeCopyBlockUnaligned10B()
         {
             var result = new string(default, 20);
@@ -583,7 +612,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("10")]
+        [Benchmark]
+        [BenchmarkCategory("10")]
         public string CopyChar10()
         {
             var result = new string(default, 20);
@@ -598,7 +628,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("11")]
+        [Benchmark]
+        [BenchmarkCategory("11")]
         public string UnsafeCopyBlockUnaligned11A()
         {
             var result = new string(default, 22);
@@ -613,7 +644,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("11")]
+        [Benchmark]
+        [BenchmarkCategory("11")]
         public string UnsafeCopyBlockUnaligned11B()
         {
             var result = new string(default, 22);
@@ -628,7 +660,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("11")]
+        [Benchmark]
+        [BenchmarkCategory("11")]
         public string CopyChar11()
         {
             var result = new string(default, 22);
@@ -643,7 +676,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("12")]
+        [Benchmark]
+        [BenchmarkCategory("12")]
         public string UnsafeCopyBlockUnaligned12A()
         {
             var result = new string(default, 24);
@@ -658,7 +692,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("12")]
+        [Benchmark]
+        [BenchmarkCategory("12")]
         public string UnsafeCopyBlockUnaligned12B()
         {
             var result = new string(default, 24);
@@ -673,7 +708,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("12")]
+        [Benchmark]
+        [BenchmarkCategory("12")]
         public string CopyChar12()
         {
             var result = new string(default, 24);
@@ -688,7 +724,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("13")]
+        [Benchmark]
+        [BenchmarkCategory("13")]
         public string UnsafeCopyBlockUnaligned13A()
         {
             var result = new string(default, 26);
@@ -703,7 +740,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("13")]
+        [Benchmark]
+        [BenchmarkCategory("13")]
         public string UnsafeCopyBlockUnaligned13B()
         {
             var result = new string(default, 26);
@@ -718,7 +756,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("13")]
+        [Benchmark]
+        [BenchmarkCategory("13")]
         public string CopyChar13()
         {
             var result = new string(default, 26);
@@ -733,7 +772,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("14")]
+        [Benchmark]
+        [BenchmarkCategory("14")]
         public string UnsafeCopyBlockUnaligned14A()
         {
             var result = new string(default, 28);
@@ -748,7 +788,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("14")]
+        [Benchmark]
+        [BenchmarkCategory("14")]
         public string UnsafeCopyBlockUnaligned14B()
         {
             var result = new string(default, 28);
@@ -763,7 +804,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("14")]
+        [Benchmark]
+        [BenchmarkCategory("14")]
         public string CopyChar14()
         {
             var result = new string(default, 28);
@@ -778,7 +820,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("15")]
+        [Benchmark]
+        [BenchmarkCategory("15")]
         public string UnsafeCopyBlockUnaligned15A()
         {
             var result = new string(default, 30);
@@ -793,7 +836,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("15")]
+        [Benchmark]
+        [BenchmarkCategory("15")]
         public string UnsafeCopyBlockUnaligned15B()
         {
             var result = new string(default, 30);
@@ -808,7 +852,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("15")]
+        [Benchmark]
+        [BenchmarkCategory("15")]
         public string CopyChar15()
         {
             var result = new string(default, 30);
@@ -823,7 +868,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("16")]
+        [Benchmark]
+        [BenchmarkCategory("16")]
         public string UnsafeCopyBlockUnaligned16A()
         {
             var result = new string(default, 32);
@@ -838,7 +884,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("16")]
+        [Benchmark]
+        [BenchmarkCategory("16")]
         public string UnsafeCopyBlockUnaligned16B()
         {
             var result = new string(default, 32);
@@ -853,7 +900,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("16")]
+        [Benchmark]
+        [BenchmarkCategory("16")]
         public string CopyChar16()
         {
             var result = new string(default, 32);
@@ -868,7 +916,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("17")]
+        [Benchmark]
+        [BenchmarkCategory("17")]
         public string UnsafeCopyBlockUnaligned17A()
         {
             var result = new string(default, 34);
@@ -883,7 +932,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("17")]
+        [Benchmark]
+        [BenchmarkCategory("17")]
         public string UnsafeCopyBlockUnaligned17B()
         {
             var result = new string(default, 34);
@@ -898,7 +948,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("17")]
+        [Benchmark]
+        [BenchmarkCategory("17")]
         public string CopyChar17()
         {
             var result = new string(default, 34);
@@ -913,7 +964,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("18")]
+        [Benchmark]
+        [BenchmarkCategory("18")]
         public string UnsafeCopyBlockUnaligned18A()
         {
             var result = new string(default, 36);
@@ -928,7 +980,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("18")]
+        [Benchmark]
+        [BenchmarkCategory("18")]
         public string UnsafeCopyBlockUnaligned18B()
         {
             var result = new string(default, 36);
@@ -943,7 +996,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("18")]
+        [Benchmark]
+        [BenchmarkCategory("18")]
         public string CopyChar18()
         {
             var result = new string(default, 36);
@@ -958,7 +1012,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("19")]
+        [Benchmark]
+        [BenchmarkCategory("19")]
         public string UnsafeCopyBlockUnaligned19A()
         {
             var result = new string(default, 38);
@@ -973,7 +1028,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("19")]
+        [Benchmark]
+        [BenchmarkCategory("19")]
         public string UnsafeCopyBlockUnaligned19B()
         {
             var result = new string(default, 38);
@@ -988,7 +1044,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("19")]
+        [Benchmark]
+        [BenchmarkCategory("19")]
         public string CopyChar19()
         {
             var result = new string(default, 38);
@@ -1003,7 +1060,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("20")]
+        [Benchmark]
+        [BenchmarkCategory("20")]
         public string UnsafeCopyBlockUnaligned20A()
         {
             var result = new string(default, 40);
@@ -1018,7 +1076,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("20")]
+        [Benchmark]
+        [BenchmarkCategory("20")]
         public string UnsafeCopyBlockUnaligned20B()
         {
             var result = new string(default, 40);
@@ -1033,7 +1092,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("20")]
+        [Benchmark]
+        [BenchmarkCategory("20")]
         public string CopyChar20()
         {
             var result = new string(default, 40);
@@ -1048,7 +1108,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("21")]
+        [Benchmark]
+        [BenchmarkCategory("21")]
         public string UnsafeCopyBlockUnaligned21A()
         {
             var result = new string(default, 42);
@@ -1063,7 +1124,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("21")]
+        [Benchmark]
+        [BenchmarkCategory("21")]
         public string UnsafeCopyBlockUnaligned21B()
         {
             var result = new string(default, 42);
@@ -1078,7 +1140,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("21")]
+        [Benchmark]
+        [BenchmarkCategory("21")]
         public string CopyChar21()
         {
             var result = new string(default, 42);
@@ -1093,7 +1156,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("22")]
+        [Benchmark]
+        [BenchmarkCategory("22")]
         public string UnsafeCopyBlockUnaligned22A()
         {
             var result = new string(default, 44);
@@ -1108,7 +1172,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("22")]
+        [Benchmark]
+        [BenchmarkCategory("22")]
         public string UnsafeCopyBlockUnaligned22B()
         {
             var result = new string(default, 44);
@@ -1123,7 +1188,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("22")]
+        [Benchmark]
+        [BenchmarkCategory("22")]
         public string CopyChar22()
         {
             var result = new string(default, 44);
@@ -1138,7 +1204,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("23")]
+        [Benchmark]
+        [BenchmarkCategory("23")]
         public string UnsafeCopyBlockUnaligned23A()
         {
             var result = new string(default, 46);
@@ -1153,7 +1220,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("23")]
+        [Benchmark]
+        [BenchmarkCategory("23")]
         public string UnsafeCopyBlockUnaligned23B()
         {
             var result = new string(default, 46);
@@ -1168,7 +1236,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("23")]
+        [Benchmark]
+        [BenchmarkCategory("23")]
         public string CopyChar23()
         {
             var result = new string(default, 46);
@@ -1183,7 +1252,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("24")]
+        [Benchmark]
+        [BenchmarkCategory("24")]
         public string UnsafeCopyBlockUnaligned24A()
         {
             var result = new string(default, 48);
@@ -1198,7 +1268,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("24")]
+        [Benchmark]
+        [BenchmarkCategory("24")]
         public string UnsafeCopyBlockUnaligned24B()
         {
             var result = new string(default, 48);
@@ -1213,7 +1284,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("24")]
+        [Benchmark]
+        [BenchmarkCategory("24")]
         public string CopyChar24()
         {
             var result = new string(default, 48);
@@ -1228,7 +1300,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("25")]
+        [Benchmark]
+        [BenchmarkCategory("25")]
         public string UnsafeCopyBlockUnaligned25A()
         {
             var result = new string(default, 50);
@@ -1243,7 +1316,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("25")]
+        [Benchmark]
+        [BenchmarkCategory("25")]
         public string UnsafeCopyBlockUnaligned25B()
         {
             var result = new string(default, 50);
@@ -1258,7 +1332,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("25")]
+        [Benchmark]
+        [BenchmarkCategory("25")]
         public string CopyChar25()
         {
             var result = new string(default, 50);
@@ -1273,7 +1348,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("26")]
+        [Benchmark]
+        [BenchmarkCategory("26")]
         public string UnsafeCopyBlockUnaligned26A()
         {
             var result = new string(default, 52);
@@ -1288,7 +1364,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("26")]
+        [Benchmark]
+        [BenchmarkCategory("26")]
         public string UnsafeCopyBlockUnaligned26B()
         {
             var result = new string(default, 52);
@@ -1303,7 +1380,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("26")]
+        [Benchmark]
+        [BenchmarkCategory("26")]
         public string CopyChar26()
         {
             var result = new string(default, 52);
@@ -1318,7 +1396,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("27")]
+        [Benchmark]
+        [BenchmarkCategory("27")]
         public string UnsafeCopyBlockUnaligned27A()
         {
             var result = new string(default, 54);
@@ -1333,7 +1412,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("27")]
+        [Benchmark]
+        [BenchmarkCategory("27")]
         public string UnsafeCopyBlockUnaligned27B()
         {
             var result = new string(default, 54);
@@ -1348,7 +1428,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("27")]
+        [Benchmark]
+        [BenchmarkCategory("27")]
         public string CopyChar27()
         {
             var result = new string(default, 54);
@@ -1363,7 +1444,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("28")]
+        [Benchmark]
+        [BenchmarkCategory("28")]
         public string UnsafeCopyBlockUnaligned28A()
         {
             var result = new string(default, 56);
@@ -1378,7 +1460,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("28")]
+        [Benchmark]
+        [BenchmarkCategory("28")]
         public string UnsafeCopyBlockUnaligned28B()
         {
             var result = new string(default, 56);
@@ -1393,7 +1476,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("28")]
+        [Benchmark]
+        [BenchmarkCategory("28")]
         public string CopyChar28()
         {
             var result = new string(default, 56);
@@ -1408,7 +1492,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("29")]
+        [Benchmark]
+        [BenchmarkCategory("29")]
         public string UnsafeCopyBlockUnaligned29A()
         {
             var result = new string(default, 58);
@@ -1423,7 +1508,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("29")]
+        [Benchmark]
+        [BenchmarkCategory("29")]
         public string UnsafeCopyBlockUnaligned29B()
         {
             var result = new string(default, 58);
@@ -1438,7 +1524,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("29")]
+        [Benchmark]
+        [BenchmarkCategory("29")]
         public string CopyChar29()
         {
             var result = new string(default, 58);
@@ -1453,7 +1540,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("30")]
+        [Benchmark]
+        [BenchmarkCategory("30")]
         public string UnsafeCopyBlockUnaligned30A()
         {
             var result = new string(default, 60);
@@ -1468,7 +1556,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("30")]
+        [Benchmark]
+        [BenchmarkCategory("30")]
         public string UnsafeCopyBlockUnaligned30B()
         {
             var result = new string(default, 60);
@@ -1483,7 +1572,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("30")]
+        [Benchmark]
+        [BenchmarkCategory("30")]
         public string CopyChar30()
         {
             var result = new string(default, 60);
@@ -1498,7 +1588,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("31")]
+        [Benchmark]
+        [BenchmarkCategory("31")]
         public string UnsafeCopyBlockUnaligned31A()
         {
             var result = new string(default, 62);
@@ -1513,7 +1604,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("31")]
+        [Benchmark]
+        [BenchmarkCategory("31")]
         public string UnsafeCopyBlockUnaligned31B()
         {
             var result = new string(default, 62);
@@ -1528,7 +1620,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("31")]
+        [Benchmark]
+        [BenchmarkCategory("31")]
         public string CopyChar31()
         {
             var result = new string(default, 62);
@@ -1543,7 +1636,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("32")]
+        [Benchmark]
+        [BenchmarkCategory("32")]
         public string UnsafeCopyBlockUnaligned32A()
         {
             var result = new string(default, 64);
@@ -1558,7 +1652,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("32")]
+        [Benchmark]
+        [BenchmarkCategory("32")]
         public string UnsafeCopyBlockUnaligned32B()
         {
             var result = new string(default, 64);
@@ -1573,7 +1668,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("32")]
+        [Benchmark]
+        [BenchmarkCategory("32")]
         public string CopyChar32()
         {
             var result = new string(default, 64);

@@ -43,7 +43,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
     var sourceA = $"_source{i}A";
     var sourceB = $"_source{i}B";
 #>
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>A()
         {
             var result = new string(default, <#= i * 2 #>);
@@ -58,7 +59,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string UnsafeCopyBlockUnaligned<#= i #>B()
         {
             var result = new string(default, <#= i * 2 #>);
@@ -73,7 +75,8 @@ namespace BitbankDotNet.Benchmarks.StringConcat
             return result;
         }
 
-        [Benchmark, BenchmarkCategory("<#= i #>")]
+        [Benchmark]
+        [BenchmarkCategory("<#= i #>")]
         public string CopyChar<#= i #>()
         {
             var result = new string(default, <#= i * 2 #>);
