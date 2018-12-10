@@ -47,12 +47,19 @@ namespace BitbankDotNet.Entities
         [JsonCustomSerializer(typeof(BitbankWithdrawalFeeFormatter))]
         public WithdrawalFee WithdrawalFee { get; set; }
 
-        // stop_depositとstop_withdrawalはドキュメントには載っていない。
-        // 使い道もなさそうなのでコメントアウトしておく。
-        // [DataMember(Name = "stop_deposit")]
-        // public bool StopDeposit { get; set; }
-        // [DataMember(Name = "stop_withdrawal")]
-        // public bool StopWithdrawal { get; set; }
+#if false
+        /// <summary>
+        /// 入金停止
+        /// </summary>
+        [DataMember(Name = "stop_deposit")]
+        public bool StopDeposit { get; set; }
+
+        /// <summary>
+        /// 出金停止
+        /// </summary>
+        [DataMember(Name = "stop_withdrawal")]
+        public bool StopWithdrawal { get; set; }
+#endif
 
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(
