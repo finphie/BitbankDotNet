@@ -156,6 +156,7 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="None" />
     <Rule Id="SA1205" Action="None" />
+    <Rule Id="SA1400" Action="None" />
   </Rules>
   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
     <Rule Id="CA1704" Action="Info" />
