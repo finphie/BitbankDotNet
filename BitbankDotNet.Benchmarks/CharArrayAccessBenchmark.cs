@@ -122,6 +122,7 @@ namespace BitbankDotNet.Benchmarks
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];
             }
+
             return result;
         }
 
@@ -136,6 +137,7 @@ namespace BitbankDotNet.Benchmarks
                 for (var i = 0; i < Count; i++)
                     result += pointer[Index1] + pointer[Index2];
             }
+
             return result;
         }
 

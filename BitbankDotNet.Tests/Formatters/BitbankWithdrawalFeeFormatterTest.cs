@@ -86,6 +86,7 @@ namespace BitbankDotNet.Tests.Formatters
                 Assert.All(Encoding.UTF8.GetBytes(json[0]), b => Assert.Contains(b, serialize));
                 return;
             }
+
             foreach (var j in json)
                 Assert.All(Encoding.UTF8.GetBytes(j), b => Assert.Contains(b, serialize));
         }
@@ -108,6 +109,7 @@ namespace BitbankDotNet.Tests.Formatters
                 Assert.Contains(json[0], serialize, StringComparison.Ordinal);
                 return;
             }
+
             foreach (var j in json)
                 Assert.Contains(j, serialize, StringComparison.Ordinal);
         }

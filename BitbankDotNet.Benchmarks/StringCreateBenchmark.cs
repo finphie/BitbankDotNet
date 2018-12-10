@@ -50,6 +50,7 @@ namespace BitbankDotNet.Benchmarks
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }
+
             return s;
         }
 
@@ -76,6 +77,7 @@ namespace BitbankDotNet.Benchmarks
                 pointer[0] = SourceChars[1];
                 pointer[1] = SourceChars[10];
             }
+
             return s;
         }
 
