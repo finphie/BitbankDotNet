@@ -178,6 +178,24 @@ namespace BitbankDotNet
     }
 
     /// <summary>
+    /// 注文方法
+    /// </summary>
+    public enum LiquidityType
+    {
+        /// <summary>
+        /// 指値
+        /// </summary>
+        [EnumMember(Value = "maker")]
+        Maker,
+
+        /// <summary>
+        /// 成行
+        /// </summary>
+        [EnumMember(Value = "taker")]
+        Taker
+    }
+
+    /// <summary>
     /// 注文の方向
     /// </summary>
     public enum OrderSide

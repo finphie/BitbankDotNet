@@ -15,7 +15,7 @@ namespace BitbankDotNet.Tests.PrivateApis
     public class BitbankRestApiClientGetTradeHistoryAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"trades\":[{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678},{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"a\",\"fee_amount_base\":\"a\",\"fee_amount_quote\":\"a\",\"executed_at\":1514862245678}]}}";
+            "{\"success\":1,\"data\":{\"trades\":[{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"maker\",\"fee_amount_base\":\"1.2\",\"fee_amount_quote\":\"1.2\",\"executed_at\":1514862245678},{\"trade_id\":4,\"pair\":\"btc_jpy\",\"order_id\":4,\"side\":\"buy\",\"type\":\"limit\",\"amount\":\"1.2\",\"price\":\"1.2\",\"maker_taker\":\"maker\",\"fee_amount_base\":\"1.2\",\"fee_amount_quote\":\"1.2\",\"executed_at\":1514862245678}]}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Tradeを返す()
@@ -42,9 +42,9 @@ namespace BitbankDotNet.Tests.PrivateApis
                 {
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
                     Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountBase);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.FeeAmountQuote);
-                    Assert.Equal(EntityHelper.GetTestValue<string>(), entity.MakerTaker);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FeeAmountBase);
+                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FeeAmountQuote);
+                    Assert.Equal(EntityHelper.GetTestValue<LiquidityType>(), entity.MakerTaker);
                     Assert.Equal(EntityHelper.GetTestValue<long>(), entity.OrderId);
                     Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
                     Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
