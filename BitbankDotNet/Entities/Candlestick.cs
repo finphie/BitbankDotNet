@@ -26,27 +26,27 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 始値
         /// </summary>
-        public double Open { get; set; }
+        public decimal Open { get; set; }
 
         /// <summary>
         /// 高値
         /// </summary>
-        public double High { get; set; }
+        public decimal High { get; set; }
 
         /// <summary>
         /// 安値
         /// </summary>
-        public double Low { get; set; }
+        public decimal Low { get; set; }
 
         /// <summary>
         /// 終値
         /// </summary>
-        public double Close { get; set; }
+        public decimal Close { get; set; }
 
         /// <summary>
         /// 出来高
         /// </summary>
-        public double Volume { get; set; }
+        public decimal Volume { get; set; }
 
         /// <summary>
         /// 日時

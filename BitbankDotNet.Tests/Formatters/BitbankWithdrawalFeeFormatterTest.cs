@@ -18,13 +18,13 @@ namespace BitbankDotNet.Tests.Formatters
         const string Under = "\"under\"";
         const string Over = "\"over\"";
 
-        const double Threshold0 = 30000.0;
-        const double Under0 = 540.0;
-        const double Over0 = 756.0;
+        const decimal Threshold0 = 30000.0M;
+        const decimal Under0 = 540.0M;
+        const decimal Over0 = 756.0M;
 
-        const double Threshold1 = 0.0;
-        const double Under1 = 0.001;
-        const double Over1 = 0.001;
+        const decimal Threshold1 = 0.0M;
+        const decimal Under1 = 0.001M;
+        const decimal Over1 = 0.001M;
 
         public static IEnumerable<object[]> DeserializeTestData()
         {
@@ -48,7 +48,7 @@ namespace BitbankDotNet.Tests.Formatters
 
         [Theory]
         [MemberData(nameof(DeserializeTestData))]
-        public void Deserialize_UTF8のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, double threshold, double under, double over)
+        public void Deserialize_UTF8のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, decimal threshold, decimal under, decimal over)
         {
             var deserialize = Deserialize<WithdrawalFee, WithdrawalFeeResolver<byte>>(Encoding.UTF8.GetBytes(json));
 
@@ -60,7 +60,7 @@ namespace BitbankDotNet.Tests.Formatters
 
         [Theory]
         [MemberData(nameof(DeserializeTestData))]
-        public void Deserialize_UTF16のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, double threshold, double under, double over)
+        public void Deserialize_UTF16のJSON文字列を入力_WithdrawalFeeObjectを返す(string json, decimal threshold, decimal under, decimal over)
         {
             var deserialize = Deserialize<WithdrawalFee, WithdrawalFeeResolver<char>>(json);
 
@@ -72,7 +72,7 @@ namespace BitbankDotNet.Tests.Formatters
 
         [Theory]
         [MemberData(nameof(SerializeTestData))]
-        public void Serialize_WithdrawalFeeObjectを入力_UTF8のJSON文字列を出力(string[] json, double threshold, double under, double over)
+        public void Serialize_WithdrawalFeeObjectを入力_UTF8のJSON文字列を出力(string[] json, decimal threshold, decimal under, decimal over)
         {
             var serialize = Serialize<WithdrawalFee, WithdrawalFeeResolver<byte>>(new WithdrawalFee
             {
@@ -95,7 +95,7 @@ namespace BitbankDotNet.Tests.Formatters
 
         [Theory]
         [MemberData(nameof(SerializeTestData))]
-        public void Serialize_WithdrawalFeeObjectを入力_UTF16のJSON文字列を出力(string[] json, double threshold, double under, double over)
+        public void Serialize_WithdrawalFeeObjectを入力_UTF16のJSON文字列を出力(string[] json, decimal threshold, decimal under, decimal over)
         {
             var serialize = Serialize<WithdrawalFee, WithdrawalFeeResolver<char>>(new WithdrawalFee
             {
@@ -116,13 +116,13 @@ namespace BitbankDotNet.Tests.Formatters
                 Assert.Contains(j, serialize, StringComparison.Ordinal);
         }
 
-        static string Join(string key, double value) => string.Join(":", key, $"\"{value}\"");
+        static string Join(string key, decimal value) => string.Join(":", key, $"\"{value}\"");
 
-        static string GetThreshold(double value) => Join(Threshold, value);
+        static string GetThreshold(decimal value) => Join(Threshold, value);
 
-        static string GetUnder(double value) => Join(Under, value);
+        static string GetUnder(decimal value) => Join(Under, value);
 
-        static string GetOver(double value) => Join(Over, value);
+        static string GetOver(decimal value) => Join(Over, value);
 
         sealed class WithdrawalFeeResolver<TSymbol> : ResolverBase<TSymbol, WithdrawalFeeResolver<TSymbol>>
             where TSymbol : struct

@@ -15,8 +15,8 @@ namespace BitbankDotNet.Tests.Formatters
 
         static readonly BoardOrder Entity = new BoardOrder
         {
-            Price = 0.1,
-            Amount = 1.2
+            Price = 0.1M,
+            Amount = 1.2M
         };
 
         static readonly byte[] UJson = Encoding.UTF8.GetBytes(Json);

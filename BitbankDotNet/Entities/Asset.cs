@@ -26,19 +26,19 @@ namespace BitbankDotNet.Entities
         /// 保有量
         /// </summary>
         [DataMember(Name = "onhand_amount")]
-        public double OnhandAmount { get; set; }
+        public decimal OnhandAmount { get; set; }
 
         /// <summary>
         /// ロックされている量
         /// </summary>
         [DataMember(Name = "locked_amount")]
-        public double LockedAmount { get; set; }
+        public decimal LockedAmount { get; set; }
 
         /// <summary>
         /// 利用可能な量
         /// </summary>
         [DataMember(Name = "free_amount")]
-        public double FreeAmount { get; set; }
+        public decimal FreeAmount { get; set; }
 
         /// <summary>
         /// 手数料

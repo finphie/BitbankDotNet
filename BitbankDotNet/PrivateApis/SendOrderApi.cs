@@ -16,7 +16,7 @@ namespace BitbankDotNet
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, double price, double amount)
+        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, decimal price, decimal amount)
             => SendLimitOrderAsync(pair, price, amount, OrderSide.Buy, OrderType.Limit);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace BitbankDotNet
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, double amount)
+        public Task<Order> SendBuyOrderAsync(CurrencyPair pair, decimal amount)
             => SendMarketOrderAsync(pair, amount, OrderSide.Buy, OrderType.Market);
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace BitbankDotNet
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Order> SendSellOrderAsync(CurrencyPair pair, double price, double amount)
+        public Task<Order> SendSellOrderAsync(CurrencyPair pair, decimal price, decimal amount)
             => SendLimitOrderAsync(pair, price, amount, OrderSide.Sell, OrderType.Limit);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace BitbankDotNet
         /// <param name="amount">数量</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Order> SendSellOrderAsync(CurrencyPair pair, double amount)
+        public Task<Order> SendSellOrderAsync(CurrencyPair pair, decimal amount)
             => SendMarketOrderAsync(pair, amount, OrderSide.Sell, OrderType.Market);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        Task<Order> SendLimitOrderAsync(CurrencyPair pair, double price, double amount, OrderSide side, OrderType type)
+        Task<Order> SendLimitOrderAsync(CurrencyPair pair, decimal price, decimal amount, OrderSide side, OrderType type)
         {
             var body = new LimitOrderBody
             {
@@ -82,7 +82,7 @@ namespace BitbankDotNet
         /// <param name="type">注文の種類</param>
         /// <returns>注文情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        Task<Order> SendMarketOrderAsync(CurrencyPair pair, double amount, OrderSide side, OrderType type)
+        Task<Order> SendMarketOrderAsync(CurrencyPair pair, decimal amount, OrderSide side, OrderType type)
         {
             var body = new MarketOrderBody
             {

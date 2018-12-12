@@ -7,6 +7,8 @@ namespace BitbankDotNet.SharedLibrary.Helpers
     {
         public static object GetTestValue(Type type)
         {
+            if (type == typeof(decimal))
+                return 1.2M;
             if (type == typeof(double))
                 return 1.2;
             if (type == typeof(int))

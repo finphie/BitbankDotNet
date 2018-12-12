@@ -28,12 +28,12 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 価格
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// 数量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(

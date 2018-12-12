@@ -16,12 +16,12 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 価格
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// 数量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 注文の方向
@@ -47,7 +47,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 数量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 注文の方向
