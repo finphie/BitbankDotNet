@@ -21,7 +21,7 @@ namespace BitbankDotNet.Formatters
         }
 
         public decimal Deserialize(ref JsonReader<char> reader)
-            => decimal.Parse(reader.ReadUtf16StringSpan(), NumberStyles.None, CultureInfo.InvariantCulture);
+            => decimal.Parse(reader.ReadUtf16StringSpan(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
         public void Serialize(ref JsonWriter<byte> writer, decimal value, int nestingLimit)
         {
