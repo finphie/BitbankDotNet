@@ -40,9 +40,9 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.NotNull(result);
                 Assert.Equal(EntityHelper.GetTestValue<string>(), result.AccountUuid);
                 Assert.Equal(EntityHelper.GetTestValue<string>(), result.Address);
-                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Amount);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Amount);
                 Assert.Equal(EntityHelper.GetTestValue<AssetName>(), result.Asset);
-                Assert.Equal(EntityHelper.GetTestValue<double>(), result.Fee);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Fee);
                 Assert.Equal(EntityHelper.GetTestValue<string>(), result.Label);
                 Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.RequestedAt);
                 Assert.Equal(EntityHelper.GetTestValue<WithdrawalStatus>(), result.Status);

@@ -41,13 +41,13 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.All(result, entity =>
                 {
                     Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountPrecision);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FreeAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.LockedAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.FreeAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.LockedAmount);
                     Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.OnhandAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Over);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Threshold);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.WithdrawalFee.Under);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.OnhandAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Over);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Threshold);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Under);
                 });
             }
         }
