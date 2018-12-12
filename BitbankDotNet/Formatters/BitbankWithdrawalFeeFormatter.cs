@@ -5,21 +5,29 @@ using SpanJson.Formatters;
 
 namespace BitbankDotNet.Formatters
 {
+#pragma warning disable SA1200 // Using directives should be placed correctly
+    using WithdrawalFeeUtf16Formatter = ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>;
+    using WithdrawalFeeUtf8Formatter = ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>;
+#pragma warning restore SA1200 // Using directives should be placed correctly
+
     /// <summary>
     /// <see cref="Asset.WithdrawalFee"/>クラスのフォーマッター
     /// </summary>
     sealed class BitbankWithdrawalFeeFormatter : ICustomJsonFormatter<WithdrawalFee>
     {
         public static readonly BitbankWithdrawalFeeFormatter Default = new BitbankWithdrawalFeeFormatter();
+        static readonly DoubleAsStringFormatter ElementDoubleAsStringFormatter = DoubleAsStringFormatter.Default;
+        static readonly WithdrawalFeeUtf16Formatter ElementComplexClassUtf16Formatter = WithdrawalFeeUtf16Formatter.Default;
+        static readonly WithdrawalFeeUtf8Formatter ElementComplexClassUtf8Formatter = WithdrawalFeeUtf8Formatter.Default;
 
         public WithdrawalFee Deserialize(ref JsonReader<byte> reader)
         {
             // JPYの場合、オブジェクトが返ってくるためチェックする。
             if (reader.ReadUtf8NextToken() == JsonToken.BeginObject)
-                return ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default.Deserialize(ref reader);
+                return ElementComplexClassUtf8Formatter.Deserialize(ref reader);
 
             // JPY以外の場合
-            var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
+            var value = ElementDoubleAsStringFormatter.Deserialize(ref reader);
             return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
@@ -27,10 +35,10 @@ namespace BitbankDotNet.Formatters
         {
             // JPYの場合、オブジェクトが返ってくるためチェックする。
             if (reader.ReadUtf16NextToken() == JsonToken.BeginObject)
-                return ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default.Deserialize(ref reader);
+                return ElementComplexClassUtf16Formatter.Deserialize(ref reader);
 
             // JPY以外の場合
-            var value = DoubleAsStringFormatter.Default.Deserialize(ref reader);
+            var value = ElementDoubleAsStringFormatter.Deserialize(ref reader);
             return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
@@ -39,9 +47,9 @@ namespace BitbankDotNet.Formatters
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ComplexClassFormatter<WithdrawalFee, byte, BitbankResolver<byte>>.Default.Serialize(ref writer, value, nestingLimit);
+                ElementComplexClassUtf8Formatter.Serialize(ref writer, value, nestingLimit);
             else
-                DoubleAsStringFormatter.Default.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDoubleAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
         }
 
         public void Serialize(ref JsonWriter<char> writer, WithdrawalFee value, int nestingLimit)
@@ -49,9 +57,9 @@ namespace BitbankDotNet.Formatters
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ComplexClassFormatter<WithdrawalFee, char, BitbankResolver<char>>.Default.Serialize(ref writer, value, nestingLimit);
+                ElementComplexClassUtf16Formatter.Serialize(ref writer, value, nestingLimit);
             else
-                DoubleAsStringFormatter.Default.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDoubleAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
         }
     }
 }
