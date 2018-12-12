@@ -40,12 +40,12 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 数量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 価格
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// 注文方法
@@ -57,13 +57,13 @@ namespace BitbankDotNet.Entities
         /// 基本手数料
         /// </summary>
         [DataMember(Name = "fee_amount_base")]
-        public double FeeAmountBase { get; set; }
+        public decimal FeeAmountBase { get; set; }
 
         /// <summary>
         /// 手数料見積もり
         /// </summary>
         [DataMember(Name = "fee_amount_quote")]
-        public double FeeAmountQuote { get; set; }
+        public decimal FeeAmountQuote { get; set; }
 
         /// <summary>
         /// 日時

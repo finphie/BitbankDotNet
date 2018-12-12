@@ -16,7 +16,7 @@ namespace BitbankDotNet.Formatters
     sealed class BitbankWithdrawalFeeFormatter : ICustomJsonFormatter<WithdrawalFee>
     {
         public static readonly BitbankWithdrawalFeeFormatter Default = new BitbankWithdrawalFeeFormatter();
-        static readonly DoubleAsStringFormatter ElementDoubleAsStringFormatter = DoubleAsStringFormatter.Default;
+        static readonly DecimalAsStringFormatter ElementDecimalAsStringFormatter = DecimalAsStringFormatter.Default;
         static readonly WithdrawalFeeUtf16Formatter ElementComplexClassUtf16Formatter = WithdrawalFeeUtf16Formatter.Default;
         static readonly WithdrawalFeeUtf8Formatter ElementComplexClassUtf8Formatter = WithdrawalFeeUtf8Formatter.Default;
 
@@ -27,7 +27,7 @@ namespace BitbankDotNet.Formatters
                 return ElementComplexClassUtf8Formatter.Deserialize(ref reader);
 
             // JPY以外の場合
-            var value = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            var value = ElementDecimalAsStringFormatter.Deserialize(ref reader);
             return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
@@ -38,7 +38,7 @@ namespace BitbankDotNet.Formatters
                 return ElementComplexClassUtf16Formatter.Deserialize(ref reader);
 
             // JPY以外の場合
-            var value = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            var value = ElementDecimalAsStringFormatter.Deserialize(ref reader);
             return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
@@ -49,7 +49,7 @@ namespace BitbankDotNet.Formatters
             if ((int)value.Threshold != 0)
                 ElementComplexClassUtf8Formatter.Serialize(ref writer, value, nestingLimit);
             else
-                ElementDoubleAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
         }
 
         public void Serialize(ref JsonWriter<char> writer, WithdrawalFee value, int nestingLimit)
@@ -59,7 +59,7 @@ namespace BitbankDotNet.Formatters
             if ((int)value.Threshold != 0)
                 ElementComplexClassUtf16Formatter.Serialize(ref writer, value, nestingLimit);
             else
-                ElementDoubleAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
         }
     }
 }

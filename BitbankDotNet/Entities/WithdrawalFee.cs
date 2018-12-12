@@ -8,16 +8,16 @@
         /// <summary>
         /// 手数料変動のしきい値
         /// </summary>
-        public double Threshold { get; set; }
+        public decimal Threshold { get; set; }
 
         /// <summary>
         /// 手数料（<see cref="Threshold"/>未満）
         /// </summary>
-        public double Under { get; set; }
+        public decimal Under { get; set; }
 
         /// <summary>
         /// 手数料（<see cref="Threshold"/>以上）
         /// </summary>
-        public double Over { get; set; }
+        public decimal Over { get; set; }
     }
 }

@@ -16,11 +16,11 @@ namespace BitbankDotNet.Tests.Formatters
 
         static readonly Ohlcv Entity = new Ohlcv
         {
-            Open = 0.1,
-            High = 1.2,
-            Low = 2.3,
-            Close = 3.4,
-            Volume = 4.5,
+            Open = 0.1M,
+            High = 1.2M,
+            Low = 2.3M,
+            Close = 3.4M,
+            Volume = 4.5M,
             Date = DateTimeOffset.Parse("2018-01-02T03:04:05.678Z").UtcDateTime
         };
 

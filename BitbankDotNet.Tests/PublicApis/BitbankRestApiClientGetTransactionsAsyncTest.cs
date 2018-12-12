@@ -40,9 +40,9 @@ namespace BitbankDotNet.Tests.PublicApis
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Amount);
                     Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Price);
                     Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
                     Assert.Equal(EntityHelper.GetTestValue<int>(), entity.TransactionId);
                 });

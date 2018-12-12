@@ -20,7 +20,7 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 引き出し量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 二段階認証トークン

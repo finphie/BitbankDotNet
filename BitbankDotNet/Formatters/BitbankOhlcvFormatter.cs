@@ -9,7 +9,7 @@ namespace BitbankDotNet.Formatters
     sealed class BitbankOhlcvFormatter : ICustomJsonFormatter<Ohlcv>
     {
         public static readonly BitbankOhlcvFormatter Default = new BitbankOhlcvFormatter();
-        static readonly DoubleAsStringFormatter ElementDoubleAsStringFormatter = DoubleAsStringFormatter.Default;
+        static readonly DecimalAsStringFormatter ElementDecimalAsStringFormatter = DecimalAsStringFormatter.Default;
         static readonly DateTimeAsLongFormatter ElementDateTimeAsLongFormatter = DateTimeAsLongFormatter.Default;
 
         public Ohlcv Deserialize(ref JsonReader<byte> reader)
@@ -19,19 +19,19 @@ namespace BitbankDotNet.Formatters
             var count = 0;
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Open = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Open = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
-            ohlcv.High = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.High = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Low = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Low = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Close = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Close = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Volume = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Volume = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf8IsEndArrayOrValueSeparator(ref count);
             ohlcv.Date = ElementDateTimeAsLongFormatter.Deserialize(ref reader);
@@ -48,19 +48,19 @@ namespace BitbankDotNet.Formatters
             var count = 0;
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Open = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Open = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
-            ohlcv.High = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.High = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Low = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Low = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Close = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Close = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
-            ohlcv.Volume = ElementDoubleAsStringFormatter.Deserialize(ref reader);
+            ohlcv.Volume = ElementDecimalAsStringFormatter.Deserialize(ref reader);
 
             reader.TryReadUtf16IsEndArrayOrValueSeparator(ref count);
             ohlcv.Date = ElementDateTimeAsLongFormatter.Deserialize(ref reader);
@@ -74,15 +74,15 @@ namespace BitbankDotNet.Formatters
         {
             writer.WriteUtf8BeginArray();
 
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
             writer.WriteUtf8ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
             writer.WriteUtf8ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
             writer.WriteUtf8ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
             writer.WriteUtf8ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
             writer.WriteUtf8ValueSeparator();
             ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date, nestingLimit);
 
@@ -93,15 +93,15 @@ namespace BitbankDotNet.Formatters
         {
             writer.WriteUtf16BeginArray();
 
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
             writer.WriteUtf16ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
             writer.WriteUtf16ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
             writer.WriteUtf16ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
             writer.WriteUtf16ValueSeparator();
-            ElementDoubleAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
             writer.WriteUtf16ValueSeparator();
             ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date, nestingLimit);
 

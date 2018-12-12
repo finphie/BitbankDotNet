@@ -29,12 +29,12 @@ namespace BitbankDotNet.Entities
         /// <summary>
         /// 引き出し量
         /// </summary>
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 引き出し手数料
         /// </summary>
-        public double Fee { get; set; }
+        public decimal Fee { get; set; }
 
         /// <summary>
         /// ラベル

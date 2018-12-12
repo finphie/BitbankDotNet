@@ -9,7 +9,7 @@ namespace BitbankDotNet.Formatters
     sealed class BitbankBoardOrderFormatter : ICustomJsonFormatter<BoardOrder>
     {
         public static readonly BitbankBoardOrderFormatter Default = new BitbankBoardOrderFormatter();
-        static readonly DoubleAsStringFormatter ElementFormatter = DoubleAsStringFormatter.Default;
+        static readonly DecimalAsStringFormatter ElementFormatter = DecimalAsStringFormatter.Default;
 
         public BoardOrder Deserialize(ref JsonReader<byte> reader)
         {

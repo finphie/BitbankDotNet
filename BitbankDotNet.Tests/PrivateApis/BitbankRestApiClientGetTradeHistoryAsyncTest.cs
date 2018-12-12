@@ -40,14 +40,14 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Amount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Amount);
                     Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.ExecutedAt);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FeeAmountBase);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.FeeAmountQuote);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.FeeAmountBase);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.FeeAmountQuote);
                     Assert.Equal(EntityHelper.GetTestValue<LiquidityType>(), entity.MakerTaker);
                     Assert.Equal(EntityHelper.GetTestValue<long>(), entity.OrderId);
                     Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Price);
                     Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
                     Assert.Equal(EntityHelper.GetTestValue<long>(), entity.TradeId);
                     Assert.Equal(EntityHelper.GetTestValue<OrderType>(), entity.Type);

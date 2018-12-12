@@ -45,7 +45,7 @@ namespace BitbankDotNet
         /// <param name="uuid">出金アカウントのUUID</param>
         /// <returns>出金情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid)
+        public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, decimal amount, string uuid)
         {
             var body = new WithdrawalBody
             {
@@ -67,7 +67,7 @@ namespace BitbankDotNet
         /// <param name="smsToken">SMS認証トークン</param>
         /// <returns>出金情報</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
-        public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, double amount, string uuid, int? otpToken, int? smsToken)
+        public Task<Withdrawal> RequestWithdrawalAsync(AssetName asset, decimal amount, string uuid, int? otpToken, int? smsToken)
         {
             var body = new WithdrawalBody
             {

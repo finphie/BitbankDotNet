@@ -40,7 +40,7 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.MinAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MinAmount);
                     Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
                     Assert.Equal(EntityHelper.GetTestValue<SystemStatus>(), entity.Status);
                 });

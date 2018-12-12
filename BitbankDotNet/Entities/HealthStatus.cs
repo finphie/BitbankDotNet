@@ -20,7 +20,7 @@ namespace BitbankDotNet.Entities
         /// 取引所ステータスに応じた最小注文数量
         /// </summary>
         [DataMember(Name = "min_amount")]
-        public double MinAmount { get; set; }
+        public decimal MinAmount { get; set; }
 
         public override string ToString()
             => JsonSerializer.PrettyPrinter.Print(

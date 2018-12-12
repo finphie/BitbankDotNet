@@ -40,15 +40,15 @@ namespace BitbankDotNet.Tests.PrivateApis
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
                 {
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.AveragePrice);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.ExecutedAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.AveragePrice);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.ExecutedAmount);
                     Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.OrderedAt);
                     Assert.Equal(EntityHelper.GetTestValue<long>(), entity.OrderId);
                     Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Pair);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.Price);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.RemainingAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Price);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.RemainingAmount);
                     Assert.Equal(EntityHelper.GetTestValue<OrderSide>(), entity.Side);
-                    Assert.Equal(EntityHelper.GetTestValue<double>(), entity.StartAmount);
+                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.StartAmount);
                     Assert.Equal(EntityHelper.GetTestValue<OrderStatus>(), entity.Status);
                     Assert.Equal(EntityHelper.GetTestValue<OrderType>(), entity.Type);
                 });
