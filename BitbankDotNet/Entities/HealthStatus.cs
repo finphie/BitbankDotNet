@@ -23,8 +23,7 @@ namespace BitbankDotNet.Entities
         public decimal MinAmount { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<HealthStatus, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<HealthStatus, BitbankResolver<char>>(this);
     }
 
     class HealthStatusList

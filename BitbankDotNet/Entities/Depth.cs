@@ -19,8 +19,7 @@ namespace BitbankDotNet.Entities
         public BoardOrder[] Bids { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Depth, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<Depth, BitbankResolver<char>>(this);
     }
 
     public class BoardOrder
@@ -36,7 +35,6 @@ namespace BitbankDotNet.Entities
         public decimal Amount { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<BoardOrder, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<BoardOrder, BitbankResolver<char>>(this);
     }
 }

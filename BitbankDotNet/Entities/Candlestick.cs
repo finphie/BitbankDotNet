@@ -54,7 +54,6 @@ namespace BitbankDotNet.Entities
         public DateTime Date { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Ohlcv, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<Ohlcv, BitbankResolver<char>>(this);
     }
 }

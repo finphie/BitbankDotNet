@@ -63,7 +63,6 @@ namespace BitbankDotNet.Entities
         public DateTime RequestedAt { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Withdrawal, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<Withdrawal, BitbankResolver<char>>(this);
     }
 }

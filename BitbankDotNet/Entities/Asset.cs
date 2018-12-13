@@ -62,8 +62,7 @@ namespace BitbankDotNet.Entities
 #endif
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Asset, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<Asset, BitbankResolver<char>>(this);
     }
 
     class AssetList

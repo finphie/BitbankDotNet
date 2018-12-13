@@ -72,8 +72,7 @@ namespace BitbankDotNet.Entities
         public OrderStatus Status { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<Order, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<Order, BitbankResolver<char>>(this);
     }
 
     class OrderList

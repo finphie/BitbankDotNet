@@ -1,4 +1,7 @@
-﻿namespace BitbankDotNet.Entities
+﻿using BitbankDotNet.Resolvers;
+using SpanJson;
+
+namespace BitbankDotNet.Entities
 {
     /// <summary>
     /// 出金手数料
@@ -19,5 +22,8 @@
         /// 手数料（<see cref="Threshold"/>以上）
         /// </summary>
         public decimal Over { get; set; }
+
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<WithdrawalFee, BitbankResolver<char>>(this);
     }
 }

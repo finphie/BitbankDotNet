@@ -24,8 +24,7 @@ namespace BitbankDotNet.Entities
         public string Address { get; set; }
 
         public override string ToString()
-            => JsonSerializer.PrettyPrinter.Print(
-                JsonSerializer.Generic.Utf16.SerializeToArrayPool<WithdrawalAccount, BitbankResolver<char>>(this));
+            => JsonSerializer.Generic.Utf16.Serialize<WithdrawalAccount, BitbankResolver<char>>(this);
     }
 
     class WithdrawalAccountList
