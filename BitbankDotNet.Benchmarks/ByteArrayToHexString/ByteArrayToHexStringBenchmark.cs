@@ -251,9 +251,6 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
         }
 
         [Benchmark]
-        public string StringTable() => ByteArrayHelperStringTable.ToHexString(SourceBytes);
-
-        [Benchmark]
         public string Lookup() => ByteArrayHelperLookup.ToHexString(SourceBytes);
 
         [Benchmark]
