@@ -252,9 +252,9 @@ namespace BitbankDotNet
             _incrementalHash.AppendData(buffer);
 
             // 出力先バッファは固定サイズなので、戻り値やbytesWrittenのチェックは省略できる。
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/Internal/Cryptography/HashProviderCng.cs#L87-L104
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.Unix.cs#L151-L166
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.OSX.cs#L121-L142
+            // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/Common/src/Internal/Cryptography/HashProviderCng.cs#L87-L104
+            // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.Unix.cs#L151-L166
+            // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/System.Security.Cryptography.Algorithms/src/Internal/Cryptography/HashProviderDispenser.OSX.cs#L121-L142
             Span<byte> hash = stackalloc byte[HashSize];
             _incrementalHash.TryGetHashAndReset(hash, out _);
             SpanHelper.ToHexString(hash, _signHexUtf16String);

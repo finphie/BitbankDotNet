@@ -70,7 +70,7 @@ namespace BitbankDotNet.Benchmarks
         public int SystemHashCode()
             => HashCode.Combine(Property1, Property2, Property3, Property4, Property5);
 
-        // cf. https://github.com/dotnet/corefx/blob/master/src/Common/src/System/Numerics/Hashing/HashHelpers.cs
+        // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/Common/src/System/Numerics/Hashing/HashHelpers.cs
         static int Combine(int h1, int h2)
         {
             var rol5 = ((uint)h1 << 5) | ((uint)h1 >> 27);

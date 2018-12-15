@@ -39,13 +39,11 @@ namespace BitbankDotNet.Benchmarks
         public int MathLog10(ulong value) => (int)Math.Log10(value) + 1;
 
         /// <summary>
-        /// CoreFXやSpanJsonでの実装です。
+        /// CoreFXでの実装です。
         /// </summary>
         /// <remarks>
         /// System.Buffers.Text.FormattingHelpers.CountDigits
-        /// cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Buffers/Text/FormattingHelpers.CountDigits.cs#L13-L66
-        /// SpanJson.FormatterUtils.CountDigits
-        /// cf. https://github.com/Tornhoof/SpanJson/blob/master/SpanJson/Helpers/FormatterUtils.cs#L11-L64
+        /// cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/Common/src/CoreLib/System/Buffers/Text/FormattingHelpers.CountDigits.cs#L13-L66
         /// </remarks>
         /// <param name="value">数値</param>
         /// <returns>桁数</returns>

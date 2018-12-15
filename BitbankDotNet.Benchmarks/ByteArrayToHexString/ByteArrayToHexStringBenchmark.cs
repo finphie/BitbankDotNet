@@ -101,8 +101,8 @@ namespace BitbankDotNet.Benchmarks.ByteArrayToHexString
             // BinaryPrimitives.ReadInt64BigEndianやBitConverter.ToInt64、MemoryMarshal.Read内部では、
             // Unsafe.ReadUnalignedを使用している。
             // cf. https://github.com/dotnet/corefx/blob/b0f6ef48cca9ae70b0e8d81ffa640cbdd1b26f55/src/Common/src/CoreLib/System/Buffers/Binary/ReaderBigEndian.cs#L46
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/BitConverter.cs#L293
-            // cf. https://github.com/dotnet/corefx/blob/v2.1.5/src/Common/src/CoreLib/System/Runtime/InteropServices/MemoryMarshal.cs#L165
+            // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/Common/src/CoreLib/System/BitConverter.cs#L293
+            // cf. https://github.com/dotnet/corefx/blob/v2.2.0/src/Common/src/CoreLib/System/Runtime/InteropServices/MemoryMarshal.cs#L165
             BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 0)))
                 .TryFormat(resultSpan, out _, format);
             BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<long>(ref Unsafe.Add(ref sourceStart, size * 1)))
