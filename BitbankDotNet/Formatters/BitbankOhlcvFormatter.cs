@@ -12,6 +12,8 @@ namespace BitbankDotNet.Formatters
         static readonly DecimalAsStringFormatter ElementDecimalAsStringFormatter = DecimalAsStringFormatter.Default;
         static readonly DateTimeAsLongFormatter ElementDateTimeAsLongFormatter = DateTimeAsLongFormatter.Default;
 
+        public object Arguments { get; set; }
+
         public Ohlcv Deserialize(ref JsonReader<byte> reader)
         {
             reader.ReadUtf8BeginArrayOrThrow();
@@ -70,40 +72,40 @@ namespace BitbankDotNet.Formatters
             return ohlcv;
         }
 
-        public void Serialize(ref JsonWriter<byte> writer, Ohlcv value, int nestingLimit)
+        public void Serialize(ref JsonWriter<byte> writer, Ohlcv value)
         {
             writer.WriteUtf8BeginArray();
 
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open);
             writer.WriteUtf8ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High);
             writer.WriteUtf8ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low);
             writer.WriteUtf8ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close);
             writer.WriteUtf8ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume);
             writer.WriteUtf8ValueSeparator();
-            ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date, nestingLimit);
+            ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date);
 
             writer.WriteUtf8EndArray();
         }
 
-        public void Serialize(ref JsonWriter<char> writer, Ohlcv value, int nestingLimit)
+        public void Serialize(ref JsonWriter<char> writer, Ohlcv value)
         {
             writer.WriteUtf16BeginArray();
 
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Open);
             writer.WriteUtf16ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.High);
             writer.WriteUtf16ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Low);
             writer.WriteUtf16ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Close);
             writer.WriteUtf16ValueSeparator();
-            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume, nestingLimit);
+            ElementDecimalAsStringFormatter.Serialize(ref writer, value.Volume);
             writer.WriteUtf16ValueSeparator();
-            ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date, nestingLimit);
+            ElementDateTimeAsLongFormatter.Serialize(ref writer, value.Date);
 
             writer.WriteUtf16EndArray();
         }

@@ -11,6 +11,8 @@ namespace BitbankDotNet.Formatters
         public static readonly BitbankBoardOrderFormatter Default = new BitbankBoardOrderFormatter();
         static readonly DecimalAsStringFormatter ElementFormatter = DecimalAsStringFormatter.Default;
 
+        public object Arguments { get; set; }
+
         public BoardOrder Deserialize(ref JsonReader<byte> reader)
         {
             reader.ReadUtf8BeginArrayOrThrow();
@@ -45,24 +47,24 @@ namespace BitbankDotNet.Formatters
             return boardOrder;
         }
 
-        public void Serialize(ref JsonWriter<byte> writer, BoardOrder value, int nestingLimit)
+        public void Serialize(ref JsonWriter<byte> writer, BoardOrder value)
         {
             writer.WriteUtf8BeginArray();
 
-            ElementFormatter.Serialize(ref writer, value.Price, nestingLimit);
+            ElementFormatter.Serialize(ref writer, value.Price);
             writer.WriteUtf8ValueSeparator();
-            ElementFormatter.Serialize(ref writer, value.Amount, nestingLimit);
+            ElementFormatter.Serialize(ref writer, value.Amount);
 
             writer.WriteUtf8EndArray();
         }
 
-        public void Serialize(ref JsonWriter<char> writer, BoardOrder value, int nestingLimit)
+        public void Serialize(ref JsonWriter<char> writer, BoardOrder value)
         {
             writer.WriteUtf16BeginArray();
 
-            ElementFormatter.Serialize(ref writer, value.Price, nestingLimit);
+            ElementFormatter.Serialize(ref writer, value.Price);
             writer.WriteUtf16ValueSeparator();
-            ElementFormatter.Serialize(ref writer, value.Amount, nestingLimit);
+            ElementFormatter.Serialize(ref writer, value.Amount);
 
             writer.WriteUtf16EndArray();
         }

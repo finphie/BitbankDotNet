@@ -12,6 +12,8 @@ namespace BitbankDotNet.Formatters
     {
         public static readonly DecimalAsStringFormatter Default = new DecimalAsStringFormatter();
 
+        public object Arguments { get; set; }
+
         public decimal Deserialize(ref JsonReader<byte> reader)
         {
             if (!Utf8Parser.TryParse(reader.ReadUtf8StringSpan(), out decimal value, out _))
@@ -23,14 +25,14 @@ namespace BitbankDotNet.Formatters
         public decimal Deserialize(ref JsonReader<char> reader)
             => decimal.Parse(reader.ReadUtf16StringSpan(), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
 
-        public void Serialize(ref JsonWriter<byte> writer, decimal value, int nestingLimit)
+        public void Serialize(ref JsonWriter<byte> writer, decimal value)
         {
             writer.WriteDoubleQuote();
             writer.WriteUtf8Decimal(value);
             writer.WriteDoubleQuote();
         }
 
-        public void Serialize(ref JsonWriter<char> writer, decimal value, int nestingLimit)
+        public void Serialize(ref JsonWriter<char> writer, decimal value)
         {
             writer.WriteDoubleQuote();
             writer.WriteUtf16Decimal(value);

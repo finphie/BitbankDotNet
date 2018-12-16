@@ -20,6 +20,8 @@ namespace BitbankDotNet.Formatters
         static readonly WithdrawalFeeUtf16Formatter ElementComplexClassUtf16Formatter = WithdrawalFeeUtf16Formatter.Default;
         static readonly WithdrawalFeeUtf8Formatter ElementComplexClassUtf8Formatter = WithdrawalFeeUtf8Formatter.Default;
 
+        public object Arguments { get; set; }
+
         public WithdrawalFee Deserialize(ref JsonReader<byte> reader)
         {
             // JPYの場合、オブジェクトが返ってくるためチェックする。
@@ -42,24 +44,24 @@ namespace BitbankDotNet.Formatters
             return new WithdrawalFee { Threshold = 0, Under = value, Over = value };
         }
 
-        public void Serialize(ref JsonWriter<byte> writer, WithdrawalFee value, int nestingLimit)
+        public void Serialize(ref JsonWriter<byte> writer, WithdrawalFee value)
         {
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ElementComplexClassUtf8Formatter.Serialize(ref writer, value, nestingLimit);
+                ElementComplexClassUtf8Formatter.Serialize(ref writer, value);
             else
-                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under);
         }
 
-        public void Serialize(ref JsonWriter<char> writer, WithdrawalFee value, int nestingLimit)
+        public void Serialize(ref JsonWriter<char> writer, WithdrawalFee value)
         {
             // JPYの場合は0ではないはず。
             // また、小数点以下は無視できる。
             if ((int)value.Threshold != 0)
-                ElementComplexClassUtf16Formatter.Serialize(ref writer, value, nestingLimit);
+                ElementComplexClassUtf16Formatter.Serialize(ref writer, value);
             else
-                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under, nestingLimit);
+                ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under);
         }
     }
 }
