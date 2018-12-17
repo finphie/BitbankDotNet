@@ -47,8 +47,7 @@ namespace BitbankDotNet.Formatters
         public void Serialize(ref JsonWriter<byte> writer, WithdrawalFee value)
         {
             // JPYの場合は0ではないはず。
-            // また、小数点以下は無視できる。
-            if ((int)value.Threshold != 0)
+            if (value.Threshold != 0)
                 ElementComplexClassUtf8Formatter.Serialize(ref writer, value);
             else
                 ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under);
@@ -57,8 +56,7 @@ namespace BitbankDotNet.Formatters
         public void Serialize(ref JsonWriter<char> writer, WithdrawalFee value)
         {
             // JPYの場合は0ではないはず。
-            // また、小数点以下は無視できる。
-            if ((int)value.Threshold != 0)
+            if (value.Threshold != 0)
                 ElementComplexClassUtf16Formatter.Serialize(ref writer, value);
             else
                 ElementDecimalAsStringFormatter.Serialize(ref writer, value.Under);
