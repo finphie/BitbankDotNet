@@ -62,6 +62,7 @@ namespace BitbankDotNet.Entities
         [DataMember(Name = "requested_at")]
         public DateTime RequestedAt { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Withdrawal, BitbankResolver<char>>(this);
     }

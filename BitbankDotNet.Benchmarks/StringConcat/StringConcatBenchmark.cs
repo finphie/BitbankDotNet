@@ -51,12 +51,12 @@ namespace BitbankDotNet.Benchmarks.StringConcat
         const string Count08 = "08";
         const string Count12 = "12";
 
-        [Params(5, 10, 16, 32)]
-        public int Length { get; set; }
-
         string _source00, _source01, _source02, _source03;
         string _source04, _source05, _source06, _source07;
         string _source08, _source09, _source10, _source11;
+
+        [Params(5, 10, 16, 32)]
+        public int Length { get; set; }
 
         [GlobalSetup]
         public void Setup()

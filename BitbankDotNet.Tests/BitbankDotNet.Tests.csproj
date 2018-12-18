@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
+    <NoWarn>CA1506;SA1600</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

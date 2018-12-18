@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using BitbankDotNet.Entities;
 using BitbankDotNet.Formatters;
 using SpanJson.Resolvers;
@@ -9,6 +10,7 @@ namespace BitbankDotNet.Resolvers
     /// <see cref="Entities"/>名前空間内にあるクラスのResolver
     /// </summary>
     /// <typeparam name="TSymbol"><see cref="byte"/>または<see cref="char"/></typeparam>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Resolver")]
     sealed class BitbankResolver<TSymbol> : ResolverBase<TSymbol, BitbankResolver<TSymbol>>
         where TSymbol : struct
     {

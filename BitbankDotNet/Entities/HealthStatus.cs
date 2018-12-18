@@ -4,6 +4,9 @@ using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
+    /// <summary>
+    /// 取引所ステータス
+    /// </summary>
     public class HealthStatus
     {
         /// <summary>
@@ -22,12 +25,19 @@ namespace BitbankDotNet.Entities
         [DataMember(Name = "min_amount")]
         public decimal MinAmount { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<HealthStatus, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// 取引所ステータスのリスト
+    /// </summary>
     class HealthStatusList
     {
+        /// <summary>
+        /// 取引所ステータスのリスト
+        /// </summary>
         public HealthStatus[] Statuses { get; set; }
     }
 }

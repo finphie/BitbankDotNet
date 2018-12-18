@@ -3,8 +3,16 @@ using System.Linq;
 
 namespace BitbankDotNet.SharedLibrary.Helpers
 {
+    /// <summary>
+    /// Entityクラスのヘルパークラス
+    /// </summary>
     public static class EntityHelper
     {
+        /// <summary>
+        /// テスト値を取得します。
+        /// </summary>
+        /// <param name="type">対象の型</param>
+        /// <returns>テスト値</returns>
         public static object GetTestValue(Type type)
         {
             if (type == typeof(decimal))
@@ -53,9 +61,18 @@ namespace BitbankDotNet.SharedLibrary.Helpers
             return entity;
         }
 
+        /// <summary>
+        /// テスト値を取得します。
+        /// </summary>
+        /// <typeparam name="T">対象の型</typeparam>
+        /// <returns>テスト値</returns>
         public static T GetTestValue<T>()
             => (T)GetTestValue(typeof(T));
 
+        /// <summary>
+        /// 値を設定します。
+        /// </summary>
+        /// <param name="target">対象の変数</param>
         public static void SetValue(object target)
         {
             foreach (var property in target.GetType().GetProperties())

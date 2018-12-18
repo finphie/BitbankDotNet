@@ -12,7 +12,7 @@ namespace BitbankDotNet.Benchmarks
     /// </summary>
     /// <typeparam name="T">列挙型</typeparam>
     [Config(typeof(BenchmarkConfig))]
-    [GenericTypeArguments(typeof(Test))]
+    [GenericTypeArguments(typeof(TestEnum))]
     public class EnumToIntBenchmark<T>
         where T : struct, Enum
     {
@@ -34,45 +34,39 @@ namespace BitbankDotNet.Benchmarks
         }
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int ConvertToInt32(T @enum) => Convert.ToInt32(@enum);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int AsCast(T @enum) => (int)(@enum as object);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int DirectCast(T @enum) => (int)(object)@enum;
 
         [Benchmark]
-        [Arguments(Test.A)]
-        public int RefValue(T @enum) => (int)__refvalue(__makeref(@enum), Test);
+        [Arguments(TestEnum.A)]
+        public int RefValue(T @enum) => (int)__refvalue(__makeref(@enum), TestEnum);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int UnsafeAs(T @enum) => Unsafe.As<T, int>(ref @enum);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int LinqExpressionConvert(T @enum) => ExpressionConvert(@enum);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int LinqExpressionConvertChecked(T @enum) => ExpressionConvertChecked(@enum);
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int EnumsNetToInt32(T @enum) => @enum.GetMember().ToInt32();
 
         [Benchmark]
-        [Arguments(Test.A)]
+        [Arguments(TestEnum.A)]
         public int GetHashCode(T @enum) => @enum.GetHashCode();
-    }
-
-    public enum Test
-    {
-        A,
-        B
     }
 }

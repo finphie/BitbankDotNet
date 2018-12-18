@@ -71,12 +71,19 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public OrderStatus Status { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Order, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// 注文情報のリスト
+    /// </summary>
     class OrderList
     {
+        /// <summary>
+        /// 注文情報のリスト
+        /// </summary>
         public Order[] Orders { get; set; }
     }
 }

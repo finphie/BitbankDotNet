@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BitbankDotNet.SharedLibrary.Helpers
 {
+    /// <summary>
+    /// <see cref="string"/>のヘルパークラス
+    /// </summary>
     public static class StringHelper
     {
         /// <summary>

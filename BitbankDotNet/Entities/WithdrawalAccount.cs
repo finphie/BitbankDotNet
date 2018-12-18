@@ -23,12 +23,19 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public string Address { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<WithdrawalAccount, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// 出金アカウント情報のリスト
+    /// </summary>
     class WithdrawalAccountList
     {
+        /// <summary>
+        /// 出金アカウント情報のリスト
+        /// </summary>
         public WithdrawalAccount[] Accounts { get; set; }
     }
 }

@@ -71,12 +71,19 @@ namespace BitbankDotNet.Entities
         [DataMember(Name = "executed_at")]
         public DateTime ExecutedAt { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Trade, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// 約定履歴のリスト
+    /// </summary>
     class TradeList
     {
+        /// <summary>
+        /// 約定履歴のリスト
+        /// </summary>
         public Trade[] Trades { get; set; }
     }
 }

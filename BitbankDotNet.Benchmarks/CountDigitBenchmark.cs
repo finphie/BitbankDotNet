@@ -12,10 +12,10 @@ namespace BitbankDotNet.Benchmarks
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ベンチマーク")]
     public class CountDigitBenchmark
     {
+        [SuppressMessage("ReSharper", "ImpureMethodCallOnReadonlyValueField", Justification = "不要")]
         public static IEnumerable<ulong> Values => new[]
         {
             (ulong)DateTimeOffset.Parse("2018/01/01T00:00:00Z").ToUnixTimeMilliseconds(),
-            // ReSharper disable once ImpureMethodCallOnReadonlyValueField
             (ulong)DateTimeOffset.MaxValue.ToUnixTimeMilliseconds(),
             ulong.MaxValue
         };

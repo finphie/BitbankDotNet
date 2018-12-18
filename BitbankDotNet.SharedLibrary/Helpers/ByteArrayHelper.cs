@@ -2,6 +2,9 @@
 
 namespace BitbankDotNet.SharedLibrary.Helpers
 {
+    /// <summary>
+    /// <see cref="byte"/>配列のヘルパークラス
+    /// </summary>
     public static class ByteArrayHelper
     {
         /// <summary>

@@ -29,34 +29,26 @@ namespace BitbankDotNet.Benchmarks.EnumGetEnumMember
 
         [Benchmark]
         public string Standard()
-            => EnumHelper.GetEnumMemberValue(TestEnum.Test1);
+            => EnumHelper.GetEnumMemberValue(TestEnum.A);
 
         [Benchmark]
         public string ConcurrentDictionaryBaseEnumKey()
-            => EnumHelperConcurrentDictionaryBaseEnumKey.GetEnumMemberValue(TestEnum.Test1);
+            => EnumHelperConcurrentDictionaryBaseEnumKey.GetEnumMemberValue(TestEnum.A);
 
         [Benchmark]
         public string ConcurrentDictionaryEnumKey()
-            => EnumHelperConcurrentDictionaryEnumKey.GetEnumMemberValue(TestEnum.Test1);
+            => EnumHelperConcurrentDictionaryEnumKey.GetEnumMemberValue(TestEnum.A);
 
         [Benchmark]
         public string Hashtable()
-            => EnumHelperHashtable.GetEnumMemberValue(TestEnum.Test1);
+            => EnumHelperHashtable.GetEnumMemberValue(TestEnum.A);
 
         [Benchmark]
         public string Array()
-            => EnumMemberCache<TestEnum>.Get(TestEnum.Test1);
+            => EnumMemberCache<TestEnum>.Get(TestEnum.A);
 
         [Benchmark]
         public string EnumsNet()
-            => TestEnum.Test1.GetAttributes().Get<EnumMemberAttribute>().Value;
-
-        enum TestEnum
-        {
-            [EnumMember(Value = "1")]
-            Test1,
-            [EnumMember(Value = "2")]
-            Test2
-        }
+            => TestEnum.A.GetAttributes().Get<EnumMemberAttribute>().Value;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using SpanJson;
 
 namespace BitbankDotNet.Formatters
@@ -6,6 +7,7 @@ namespace BitbankDotNet.Formatters
     /// <summary>
     /// <see cref="DateTime"/>構造体のフォーマッター
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Formatter")]
     sealed class DateTimeAsLongFormatter : ICustomJsonFormatter<DateTime>
     {
         public static readonly DateTimeAsLongFormatter Default = new DateTimeAsLongFormatter();
