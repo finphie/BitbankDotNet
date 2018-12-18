@@ -64,7 +64,7 @@ namespace BitbankDotNet.SharedLibrary.Helpers
         /// <summary>
         /// テスト値を取得します。
         /// </summary>
-        /// <param name="type">対象の型</param>
+        /// <typeparam name="T">対象の型</typeparam>
         /// <returns>テスト値</returns>
         public static T GetTestValue<T>()
             => (T)GetTestValue(typeof(T));
