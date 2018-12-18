@@ -16,14 +16,6 @@ namespace BitbankDotNet.Caches
         // ReSharper disable once StaticMemberInGenericType
         static readonly string[] Table;
 
-        /// <summary>
-        /// <see cref="EnumMemberAttribute"/>の値を取得します。
-        /// </summary>
-        /// <param name="value">int型で0から始まる連番の列挙体</param>
-        /// <returns><see cref="EnumMemberAttribute"/>の値（文字列）を返します。</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string Get(T value) => Table[Unsafe.As<T, int>(ref value)];
-
         [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "キャッシュを事前に作成するため、静的コンストラクターを明示的に呼び出す")]
         static EnumMemberCache()
         {
@@ -39,5 +31,13 @@ namespace BitbankDotNet.Caches
             for (var i = 0; i < values.Length; i++)
                 Table[i] = values[i].GetCustomAttribute<EnumMemberAttribute>().Value;
         }
+
+        /// <summary>
+        /// <see cref="EnumMemberAttribute"/>の値を取得します。
+        /// </summary>
+        /// <param name="value">int型で0から始まる連番の列挙体</param>
+        /// <returns><see cref="EnumMemberAttribute"/>の値（文字列）を返します。</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string Get(T value) => Table[Unsafe.As<T, int>(ref value)];
     }
 }
