@@ -6,7 +6,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <NoWarn>SA1600</NoWarn>
+    <NoWarn>SA1600;SA1602</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
