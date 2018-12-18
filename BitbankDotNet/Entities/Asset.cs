@@ -61,12 +61,19 @@ namespace BitbankDotNet.Entities
         public bool StopWithdrawal { get; set; }
 #endif
 
+        /// <inheritdoc/>
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Asset, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// アセット一覧のリスト
+    /// </summary>
     class AssetList
     {
+        /// <summary>
+        /// アセット一覧のリスト
+        /// </summary>
         public Asset[] Assets { get; set; }
     }
 }

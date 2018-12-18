@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace BitbankDotNet.Extensions
 {
+    /// <summary>
+    /// <see cref="string"/>の拡張メソッド
+    /// </summary>
     static class StringExtensions
     {
         /// <summary>

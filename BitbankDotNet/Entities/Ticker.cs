@@ -44,6 +44,7 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public DateTime Timestamp { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Ticker, BitbankResolver<char>>(this);
     }

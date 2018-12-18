@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using BitbankDotNet.Entities;
 using SpanJson;
 
 namespace BitbankDotNet.Formatters
@@ -6,6 +7,7 @@ namespace BitbankDotNet.Formatters
     /// <summary>
     /// <see cref="Ohlcv"/>クラスのフォーマッター
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Formatter")]
     sealed class BitbankOhlcvFormatter : ICustomJsonFormatter<Ohlcv>
     {
         public static readonly BitbankOhlcvFormatter Default = new BitbankOhlcvFormatter();

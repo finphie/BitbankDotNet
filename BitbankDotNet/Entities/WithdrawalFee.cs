@@ -23,6 +23,7 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public decimal Over { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<WithdrawalFee, BitbankResolver<char>>(this);
     }

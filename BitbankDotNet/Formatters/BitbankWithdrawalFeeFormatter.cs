@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
 using SpanJson;
 using SpanJson.Formatters;
@@ -13,6 +14,7 @@ namespace BitbankDotNet.Formatters
     /// <summary>
     /// <see cref="Asset.WithdrawalFee"/>クラスのフォーマッター
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Formatter")]
     sealed class BitbankWithdrawalFeeFormatter : ICustomJsonFormatter<WithdrawalFee>
     {
         public static readonly BitbankWithdrawalFeeFormatter Default = new BitbankWithdrawalFeeFormatter();

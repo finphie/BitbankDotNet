@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
+using BitbankDotNet.Entities;
 using SpanJson;
 
 namespace BitbankDotNet.Formatters
@@ -6,6 +7,7 @@ namespace BitbankDotNet.Formatters
     /// <summary>
     /// <see cref="BoardOrder"/>クラスのフォーマッター
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Formatter")]
     sealed class BitbankBoardOrderFormatter : ICustomJsonFormatter<BoardOrder>
     {
         public static readonly BitbankBoardOrderFormatter Default = new BitbankBoardOrderFormatter();

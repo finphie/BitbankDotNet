@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Text;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using BitbankDotNet.Helpers;
 using SpanJson;
@@ -8,6 +9,7 @@ namespace BitbankDotNet.Formatters
     /// <summary>
     /// <see cref="decimal"/>のフォーマッター
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "SpanJson Formatter")]
     sealed class DecimalAsStringFormatter : ICustomJsonFormatter<decimal>
     {
         public static readonly DecimalAsStringFormatter Default = new DecimalAsStringFormatter();

@@ -18,10 +18,14 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public BoardOrder[] Bids { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<Depth, BitbankResolver<char>>(this);
     }
 
+    /// <summary>
+    /// 板情報
+    /// </summary>
     public class BoardOrder
     {
         /// <summary>
@@ -34,6 +38,7 @@ namespace BitbankDotNet.Entities
         /// </summary>
         public decimal Amount { get; set; }
 
+        /// <inheritdoc />
         public override string ToString()
             => JsonSerializer.Generic.Utf16.Serialize<BoardOrder, BitbankResolver<char>>(this);
     }
