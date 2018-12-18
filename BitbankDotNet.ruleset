@@ -165,7 +165,10 @@
     <Rule Id="SA1503" Action="None" />
     <Rule Id="SA1520" Action="None" />
     <Rule Id="SA1601" Action="None" />
+    <Rule Id="SA1623" Action="None" />
+    <Rule Id="SA1629" Action="None" />
     <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1642" Action="None" />
   </Rules>
   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
     <Rule Id="CA1704" Action="Info" />
