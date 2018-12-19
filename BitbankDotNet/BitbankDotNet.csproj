@@ -4,6 +4,17 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
     <DefineConstants>CLS_COMPLIANT</DefineConstants>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>finphie</Authors>
+    <Description>.Net wrapper for Bitbank.cc API.</Description>
+    <Copyright>finphie</Copyright>
+    <PackageProjectUrl>https://github.com/finphie/BitbankDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/finphie/BitbankDotNet</RepositoryUrl>
+    <PackageTags>bitbank</PackageTags>
+    <NeutralLanguage>ja</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
