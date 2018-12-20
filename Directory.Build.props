@@ -3,6 +3,9 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)BitbankDotNetPublicKey.snk</AssemblyOriginatorKeyFile>
+    <PublicSign>true</PublicSign>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)BitbankDotNet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
