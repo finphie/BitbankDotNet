@@ -14,6 +14,8 @@
     <NeutralLanguage>ja</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>0.1.0</Version>
   </PropertyGroup>
 
