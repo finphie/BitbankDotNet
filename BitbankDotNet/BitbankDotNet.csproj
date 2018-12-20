@@ -31,10 +31,10 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>$(MSBuildProjectName).CodeGenerator</_Parameter1>
+      <_Parameter1>$(MSBuildProjectName).CodeGenerator, PublicKey=0024000004800000940000000602000000240000525341310004000001000100a1b58d6073fd1c7caa80c1d08c42cbb9d22dd8d4370f3e811eb5697d1a1ece6b73c527431b58d9b3eb9f743d4e9825a898d5694703c48fc1bbb640d96142c605fe9a1e6f4ff9b22e5956ceb5dc95775ec7c0b88349f0d10e9751d536d64c5437a2164346d6db8a6f57bf19ffd687c884b07d6865c75671e01a0a965510aa1ead</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>$(MSBuildProjectName).Tests</_Parameter1>
+      <_Parameter1>$(MSBuildProjectName).Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100a1b58d6073fd1c7caa80c1d08c42cbb9d22dd8d4370f3e811eb5697d1a1ece6b73c527431b58d9b3eb9f743d4e9825a898d5694703c48fc1bbb640d96142c605fe9a1e6f4ff9b22e5956ceb5dc95775ec7c0b88349f0d10e9751d536d64c5437a2164346d6db8a6f57bf19ffd687c884b07d6865c75671e01a0a965510aa1ead</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
