@@ -35,17 +35,18 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 <# for(var i = 1; i < Count; i++) { #>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CopyChar<#= i #>(ref char source, ref char destination)
-        {
 <# if (i == 1) { #>
-            destination = source;
+            => destination = source;
 <# } else { #>
+        {
             ref var s = ref Unsafe.As<char, int>(ref source);
             ref var d = ref Unsafe.As<char, int>(ref destination);
             d = s;
-<# } if (i == 3) { #>
+<# if (i == 3) { #>
             Unsafe.Add(ref destination, <#= i - 1 #>) = Unsafe.Add(ref source, <#= i - 1 #>);
 <# } #>
         }
+<# } #>
 <# if (i < Count - 1) { Write(Environment.NewLine); } #>
 <# } #>
 

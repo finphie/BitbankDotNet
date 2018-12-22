@@ -28,6 +28,8 @@ namespace BitbankDotNet.CodeGenerator
         // Response<T>の型情報
         static readonly TypeInfo ResponseTypeInfo = EntityTypeInfos.First(ti => ti.Name == typeof(Response<>).Name);
 
+        readonly (string Name, string Type)[] _parameters;
+
         public SortedList<string, (string TypeName, SortedList<string, string> Element)> EntityProperties { get; }
 
         public string Json { get; }
@@ -39,8 +41,6 @@ namespace BitbankDotNet.CodeGenerator
         public bool IsArray { get; }
 
         public bool IsPublicApi { get; }
-
-        public (string Name, string Type)[] Parameters { get; }
 
         public BitbankRestApiClientTestTemplate(MethodInfo method, bool isPublicApi)
         {
@@ -87,7 +87,7 @@ namespace BitbankDotNet.CodeGenerator
             Json = JsonSerializer.NonGeneric.Utf16.Serialize<BitbankResolver<char>>(entityResponse)
                 .Replace("\"", @"\""", StringComparison.Ordinal);
 
-            Parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
+            _parameters = method.GetParameters().Select(pi => (pi.Name, GetTypeOutput(pi.ParameterType))).ToArray();
         }
 
         // 指定した型のエイリアスを取得する
@@ -104,6 +104,6 @@ namespace BitbankDotNet.CodeGenerator
         }
 
         string GetDefaultParametersString()
-            => string.Join(", ", Enumerable.Repeat("default", Parameters.Length));
+            => string.Join(", ", Enumerable.Repeat("default", _parameters.Length));
     }
 }

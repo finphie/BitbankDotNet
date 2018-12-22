@@ -112,8 +112,6 @@ namespace BitbankDotNet
         /// <param name="apiErrorCode">APIのエラーコード</param>
         public BitbankDotNetException(int apiErrorCode)
             : base(ApiErrorCodes.TryGetValue(apiErrorCode, out var value) ? value : DefaultApiErrorMessage)
-        {
-            ApiErrorCode = apiErrorCode;
-        }
+            => ApiErrorCode = apiErrorCode;
     }
 }

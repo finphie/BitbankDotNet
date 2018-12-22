@@ -154,6 +154,7 @@
     <Rule Id="CA3077" Action="Info" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
     <Rule Id="SA1101" Action="None" />
     <Rule Id="SA1135" Action="None" />
     <Rule Id="SA1205" Action="None" />

@@ -119,9 +119,7 @@ namespace BitbankDotNet.Benchmarks.StringConcat
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CopyChar1(ref char source, ref char destination)
-        {
-            destination = source;
-        }
+            => destination = source;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CopyChar2(ref char source, ref char destination)

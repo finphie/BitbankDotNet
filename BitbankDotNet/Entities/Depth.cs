@@ -1,4 +1,5 @@
-﻿using BitbankDotNet.Resolvers;
+﻿using System.Diagnostics.CodeAnalysis;
+using BitbankDotNet.Resolvers;
 using SpanJson;
 
 namespace BitbankDotNet.Entities
@@ -6,6 +7,7 @@ namespace BitbankDotNet.Entities
     /// <summary>
     /// 板情報
     /// </summary>
+    [SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "API")]
     public class Depth
     {
         /// <summary>
