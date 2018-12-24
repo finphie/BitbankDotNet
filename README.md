@@ -1,17 +1,17 @@
 # BitbankDotNet
 
-.Net Core用の[Bitbank.cc](https://bitbank.cc) APIライブラリです。
+.NET Core用の[Bitbank.cc](https://bitbank.cc) APIライブラリです。
 
 ## 説明
 
-BitbankDotNetは、C#で開発している.Net Core用の[Bitbank.cc](https://bitbank.cc) APIライブラリです。
+BitbankDotNetは、C#で開発している.NET Core用の[Bitbank.cc](https://bitbank.cc) APIライブラリです。
 
 パフォーマンスを重視して開発しています。
 
 ## 依存ライブラリ
 
 - [.NET Core](https://dotnet.microsoft.com/download) 2.2.0+
-- System.Runtime.CompilerServices.Unsafe 4.5.2
+- [System.Runtime.CompilerServices.Unsafe](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe) 4.5.2
 - [SpanJson](https://github.com/Tornhoof/SpanJson) 2.0.0
 
 ## 使い方
