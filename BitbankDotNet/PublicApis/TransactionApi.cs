@@ -44,7 +44,7 @@ namespace BitbankDotNet
             => GetTransactionsAsync(pair, $"{date:yyyyMMdd}");
 
         /// <summary>
-        /// [Public API]指定された日付（UTC）の全約定履歴を返します。
+        /// [Public API]指定された日付の全約定履歴を返します。
         /// </summary>
         /// <param name="pair">通貨ペア</param>
         /// <param name="date">日付</param>
