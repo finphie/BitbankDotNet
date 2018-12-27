@@ -2,9 +2,8 @@
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
-using Sample.Commands;
 
-namespace Sample
+namespace Sample.Commands
 {
     /// <summary>
     /// コマンド
