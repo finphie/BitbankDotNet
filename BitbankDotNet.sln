@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet", "BitbankDotNet\BitbankDotNet.csproj", "{11E1E216-48F5-47B4-8839-82E14B5C0B0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csproj", "{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Tests", "BitbankDotNet.Tests\BitbankDotNet.Tests.csproj", "{B1E5C39E-D135-4E56-B28E-77248A7FCC71}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.CodeGenerator", "BitbankDotNet.CodeGenerator\BitbankDotNet.CodeGenerator.csproj", "{14BC8007-44B5-4B7A-999F-47CB0A8D5962}"
@@ -33,10 +31,6 @@ Global
 		{11E1E216-48F5-47B4-8839-82E14B5C0B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11E1E216-48F5-47B4-8839-82E14B5C0B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11E1E216-48F5-47B4-8839-82E14B5C0B0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20D359F9-CEC4-4C62-B7AE-285D5F5CB681}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1E5C39E-D135-4E56-B28E-77248A7FCC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
