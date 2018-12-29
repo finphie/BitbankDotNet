@@ -6,7 +6,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)BitbankDotNetPublicKey.snk</AssemblyOriginatorKeyFile>
     <PublicSign>true</PublicSign>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)BitbankDotNet.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)OpenSource.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
