@@ -4,9 +4,9 @@
     <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)BitbankDotNetPublicKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\OpenSourcePublicKey.snk</AssemblyOriginatorKeyFile>
     <PublicSign>true</PublicSign>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)BitbankDotNet.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)config\OpenSource.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)SharedAssemblyInfo.cs" Visible="false" />
-    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Visible="false" />
+    <Compile Include="$(MSBuildThisFileDirectory)\src\BitbankDotNet.Shared\SharedAssemblyInfo.cs" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\config\stylecop.json" Visible="false" />
   </ItemGroup>
 
 </Project>
