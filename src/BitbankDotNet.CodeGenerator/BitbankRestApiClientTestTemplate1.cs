@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using BitbankDotNet.Entities;
 using BitbankDotNet.Resolvers;
-using BitbankDotNet.SharedLibrary.Extensions;
-using BitbankDotNet.SharedLibrary.Helpers;
+using BitbankDotNet.InternalShared.Extensions;
+using BitbankDotNet.InternalShared.Helpers;
 using Microsoft.CSharp;
 using SpanJson;
 

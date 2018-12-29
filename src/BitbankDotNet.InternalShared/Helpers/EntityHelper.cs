@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BitbankDotNet.SharedLibrary.Helpers
+namespace BitbankDotNet.InternalShared.Helpers
 {
     /// <summary>
     /// Entityクラスのヘルパークラス

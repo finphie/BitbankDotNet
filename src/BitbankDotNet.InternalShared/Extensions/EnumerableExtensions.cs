@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BitbankDotNet.SharedLibrary.Extensions
+namespace BitbankDotNet.InternalShared.Extensions
 {
     /// <summary>
     /// <see cref="IEnumerable{T}"/>の拡張メソッド

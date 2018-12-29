@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using BenchmarkDotNet.Attributes;
-using BitbankDotNet.SharedLibrary.Extensions;
-using BitbankDotNet.SharedLibrary.Helpers;
+using BitbankDotNet.InternalShared.Extensions;
+using BitbankDotNet.InternalShared.Helpers;
 
 namespace BitbankDotNet.Benchmarks.StringConcat
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BitbankDotNet.SharedLibrary.Helpers
+namespace BitbankDotNet.InternalShared.Helpers
 {
     /// <summary>
     /// <see cref="byte"/>配列のヘルパークラス

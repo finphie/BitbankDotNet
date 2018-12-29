@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BitbankDotNet.SharedLibrary.Extensions
+namespace BitbankDotNet.InternalShared.Extensions
 {
     /// <summary>
     /// 配列の拡張メソッド

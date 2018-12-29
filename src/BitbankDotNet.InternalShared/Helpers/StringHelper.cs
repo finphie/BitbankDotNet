@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace BitbankDotNet.SharedLibrary.Helpers
+namespace BitbankDotNet.InternalShared.Helpers
 {
     /// <summary>
     /// <see cref="string"/>のヘルパークラス
