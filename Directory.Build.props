@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)BitbankDotNetPublicKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)OpenSourcePublicKey.snk</AssemblyOriginatorKeyFile>
     <PublicSign>true</PublicSign>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)OpenSource.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
