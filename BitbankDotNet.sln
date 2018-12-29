@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet", "BitbankDotNet\BitbankDotNet.csproj", "{11E1E216-48F5-47B4-8839-82E14B5C0B0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet", "src\BitbankDotNet\BitbankDotNet.csproj", "{11E1E216-48F5-47B4-8839-82E14B5C0B0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Tests", "BitbankDotNet.Tests\BitbankDotNet.Tests.csproj", "{B1E5C39E-D135-4E56-B28E-77248A7FCC71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Tests", "tests\BitbankDotNet.Tests\BitbankDotNet.Tests.csproj", "{B1E5C39E-D135-4E56-B28E-77248A7FCC71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.CodeGenerator", "BitbankDotNet.CodeGenerator\BitbankDotNet.CodeGenerator.csproj", "{14BC8007-44B5-4B7A-999F-47CB0A8D5962}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.CodeGenerator", "src\BitbankDotNet.CodeGenerator\BitbankDotNet.CodeGenerator.csproj", "{14BC8007-44B5-4B7A-999F-47CB0A8D5962}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Benchmarks", "BitbankDotNet.Benchmarks\BitbankDotNet.Benchmarks.csproj", "{E2574B71-3CD8-4E0B-A81F-48176D65A40D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.Benchmarks", "src\BitbankDotNet.Benchmarks\BitbankDotNet.Benchmarks.csproj", "{E2574B71-3CD8-4E0B-A81F-48176D65A40D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.InternalShared", "BitbankDotNet.InternalShared\BitbankDotNet.InternalShared.csproj", "{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitbankDotNet.InternalShared", "src\BitbankDotNet.InternalShared\BitbankDotNet.InternalShared.csproj", "{0F35A380-8F2C-4043-B9E3-66CE7FEB6A39}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{551BBA41-3B76-498E-9BB5-A06E25C8E51B}"
 	ProjectSection(SolutionItems) = preProject
