@@ -33,11 +33,25 @@ BitbankDotNetは、C#で開発している.NET Core用の[Bitbank.cc](https://bi
 - [Moq](https://github.com/moq/moq4) 4.10.1
 - [xUnit.net](https://github.com/xunit/xunit) 2.4.1
 
+## インストール
+
+コマンドラインやNuGetパッケージマネージャーを使用してインストールできます。
+
+### コマンドライン
+
+```shell
+dotnet add package BitbankDotNet
+```
+
+### NuGetパッケージマネージャー
+
+[BitbankDotNet](https://www.nuget.org/packages/BitbankDotNet)をインストールしてください。
+
 ## 使い方
 
 ### Public API
 
-```cs
+```csharp
 using System.Net.Http;
 using BitbankDotNet;
 
@@ -47,7 +61,7 @@ var restApi = new BitbankRestApiClient(client);
 
 ### Private API
 
-```cs
+```csharp
 using System.Net.Http;
 using BitbankDotNet;
 

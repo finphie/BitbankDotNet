@@ -3,9 +3,6 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\OpenSourcePublicKey.snk</AssemblyOriginatorKeyFile>
-    <PublicSign>true</PublicSign>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)config\OpenSource.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
