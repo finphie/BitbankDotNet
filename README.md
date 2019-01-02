@@ -72,6 +72,10 @@ var client = new HttpClient();
 var restApi = new BitbankRestApiClient(client, apiKey, apiSecret);
 ```
 
+## サンプル
+
+- [BitbankApiTool](https://github.com/finphie/BitbankApiTool)
+
 ## 使用言語
 
 - C# 7.3
