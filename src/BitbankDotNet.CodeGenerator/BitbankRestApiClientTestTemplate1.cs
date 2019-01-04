@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BitbankDotNet.Entities;
-using BitbankDotNet.Resolvers;
 using BitbankDotNet.InternalShared.Extensions;
 using BitbankDotNet.InternalShared.Helpers;
+using BitbankDotNet.Resolvers;
 using Microsoft.CSharp;
 using SpanJson;
 
