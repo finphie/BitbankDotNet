@@ -5,7 +5,7 @@
     <DefineConstants>CLS_COMPLIANT</DefineConstants>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>finphie</Authors>
-    <Description>.Net wrapper for Bitbank.cc API.</Description>
+    <Description>.NET wrapper for Bitbank.cc API.</Description>
     <Copyright>finphie</Copyright>
     <PackageProjectUrl>https://github.com/finphie/BitbankDotNet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/finphie/BitbankDotNet.git</RepositoryUrl>
