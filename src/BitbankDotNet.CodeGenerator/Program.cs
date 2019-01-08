@@ -12,11 +12,19 @@ namespace BitbankDotNet.CodeGenerator
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
-            var path = $"../../../../{nameof(BitbankDotNet)}";
-            var files = Directory.EnumerateFiles(path + "/PublicApis")
-                .Concat(Directory.EnumerateFiles(path + "/PrivateApis"))
+            if (args.Length != 2)
+                return;
+
+            var path = args.FirstOrDefault();
+            var outDirectoryPath = args.ElementAtOrDefault(1);
+
+            if (!Directory.Exists(path) || !Directory.Exists(outDirectoryPath))
+                return;
+
+            var files = Directory.EnumerateFiles(Path.Combine(path, "PublicApis"))
+                .Concat(Directory.EnumerateFiles(Path.Combine(path, "PrivateApis")))
                 .Select(s => File.ReadAllText(s));
 
             // コメント取得
@@ -29,14 +37,14 @@ namespace BitbankDotNet.CodeGenerator
 
             foreach (var group in methods.GroupBy(mi => mi.Name))
             {
-                Console.WriteLine(group.Key);
+                var key = group.Key;
+                Console.WriteLine(key);
                 var method = group.OrderByDescending(mi => mi.GetParameters().Length);
-                var isPublicApi = dic[group.Key];
+                var isPublicApi = dic[key];
                 var tt = new BitbankRestApiClientTestTemplate(method.First(), isPublicApi);
                 var text = tt.TransformText();
-                var outDirectoryPath = path + ".Tests/" + (isPublicApi ? "Public" : "Private") + "Apis/";
-                var outPath = Path.GetFullPath($"{outDirectoryPath}{nameof(BitbankRestApiClient)}{group.Key}Test.cs");
-                File.WriteAllText(outPath, text, Encoding.UTF8);
+                var outPath = Path.Combine(outDirectoryPath, $"{(isPublicApi ? "Public" : "Private")}Apis", $"{nameof(BitbankRestApiClient)}{key}Test.cs");
+                File.WriteAllText(Path.GetFullPath(outPath), text, Encoding.UTF8);
             }
         }
 
