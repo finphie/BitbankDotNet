@@ -3,6 +3,8 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <Authors>finphie</Authors>
+    <Copyright>finphie</Copyright>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)config\OpenSource.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
