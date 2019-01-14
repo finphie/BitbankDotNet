@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)\src\BitbankDotNet.Shared\SharedAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\src\BitbankDotNet.Shared\**\*.cs" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)\config\stylecop.json" Visible="false" />
   </ItemGroup>
 
