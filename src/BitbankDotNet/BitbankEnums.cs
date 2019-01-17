@@ -178,18 +178,18 @@ namespace BitbankDotNet
     }
 
     /// <summary>
-    /// 注文方法
+    /// メイカーまたはテイカー
     /// </summary>
     public enum LiquidityType
     {
         /// <summary>
-        /// 指値
+        /// メイカー
         /// </summary>
         [EnumMember(Value = "maker")]
         Maker,
 
         /// <summary>
-        /// 成行
+        /// テイカー
         /// </summary>
         [EnumMember(Value = "taker")]
         Taker
