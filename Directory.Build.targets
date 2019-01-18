@@ -1,7 +1,7 @@
 ﻿<Project>
 
   <ItemGroup>
-    <PackageReference Update="SpanJson" Version="2.0.1" />
+    <PackageReference Update="SpanJson" Version="2.0.2" />
     <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
 
