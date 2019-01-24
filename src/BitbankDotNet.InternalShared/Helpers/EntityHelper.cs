@@ -25,6 +25,8 @@ namespace BitbankDotNet.InternalShared.Helpers
                 return 4L;
             if (type == typeof(string))
                 return "a";
+            if (type == typeof(bool))
+                return false;
 
             // タイムゾーンを明示的に指定しないと、ローカル時間と認識されてしまう。
             // 対応策は主に2つ
