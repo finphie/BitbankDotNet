@@ -14,7 +14,7 @@ BitbankDotNetは、C#で開発している.NET Core用の[Bitbank.cc](https://bi
 
 - [.NET Core](https://dotnet.microsoft.com/download) 2.2.0+
 - [System.Runtime.CompilerServices.Unsafe](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe) 4.5.2
-- [SpanJson](https://github.com/Tornhoof/SpanJson) 2.0.2
+- [SpanJson](https://github.com/Tornhoof/SpanJson) 2.0.4
 
 ### BitbankDotNet.CodeGenerator（コード生成のプロジェクト）
 
