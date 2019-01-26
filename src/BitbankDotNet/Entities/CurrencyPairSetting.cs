@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using BitbankDotNet.Resolvers;
+using SpanJson;
 
 namespace BitbankDotNet.Entities
 {
@@ -95,6 +97,10 @@ namespace BitbankDotNet.Entities
         /// </summary>
         [DataMember(Name = "is_stop_sell")]
         public bool IsStopSell { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+            => JsonSerializer.Generic.Utf16.Serialize<CurrencyPairSetting, BitbankResolver<char>>(this);
     }
 
     /// <summary>
