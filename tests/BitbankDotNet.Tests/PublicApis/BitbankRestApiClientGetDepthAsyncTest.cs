@@ -15,7 +15,7 @@ namespace BitbankDotNet.Tests.PublicApis
     public class BitbankRestApiClientGetDepthAsyncTest
     {
         const string Json =
-            "{\"success\":1,\"data\":{\"asks\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]],\"bids\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]]}}";
+            "{\"success\":1,\"data\":{\"asks\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]],\"bids\":[[\"1.2\",\"1.2\"],[\"1.2\",\"1.2\"]],\"timestamp\":1514862245678}}";
 
         [Fact]
         public void HTTPステータスが200かつSuccessが1_Depthを返す()
@@ -48,6 +48,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Amount);
                     Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Price);
                 });
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
             }
         }
 
