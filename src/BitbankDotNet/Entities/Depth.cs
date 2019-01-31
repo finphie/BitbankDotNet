@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using BitbankDotNet.Resolvers;
 using SpanJson;
 
@@ -19,6 +20,11 @@ namespace BitbankDotNet.Entities
         /// 買い板
         /// </summary>
         public BoardOrder[] Bids { get; set; }
+
+        /// <summary>
+        /// 日時
+        /// </summary>
+        public DateTime Timestamp { get; set; }
 
         /// <inheritdoc />
         public override string ToString()
