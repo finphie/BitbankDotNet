@@ -106,6 +106,7 @@ namespace BitbankDotNet
             where T : class
         {
             Error error = null;
+
             try
             {
                 var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
