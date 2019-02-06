@@ -38,13 +38,13 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
-            {
 <# if (IsPublicApi) { #>
-                var bitbank = new BitbankRestApiClient(client);
+            using (var restApi = new BitbankRestApiClient(client))
 <# } else { #>
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
 <# } #>
-                var result = bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
+            {
+                var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
 <# if (IsArray) { #>
@@ -86,14 +86,14 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
-            {
 <# if (IsPublicApi) { #>
-                var bitbank = new BitbankRestApiClient(client);
+            using (var restApi = new BitbankRestApiClient(client))
 <# } else { #>
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
 <# } #>
+            {
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
+                    restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
@@ -117,13 +117,15 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
             {
                 client.Timeout = TimeSpan.FromMilliseconds(1);
 <# if (IsPublicApi) { #>
-                var bitbank = new BitbankRestApiClient(client);
+                using (var restApi = new BitbankRestApiClient(client))
 <# } else { #>
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
+                using (var restApi = new BitbankRestApiClient(client, " ", " "))
 <# } #>
-                var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
+                {
+                    var exception = Assert.Throws<BitbankDotNetException>(() =>
+                        restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
+                    Assert.IsType<TaskCanceledException>(exception.InnerException);
+                }
             }
         }
 
@@ -144,14 +146,14 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
-            {
 <# if (IsPublicApi) { #>
-                var bitbank = new BitbankRestApiClient(client);
+            using (var restApi = new BitbankRestApiClient(client))
 <# } else { #>
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
 <# } #>
+            {
                 Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
+                    restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).GetAwaiter().GetResult());
             }
         }
     }

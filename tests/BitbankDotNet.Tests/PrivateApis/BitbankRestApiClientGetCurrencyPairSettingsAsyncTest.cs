@@ -33,9 +33,9 @@ namespace BitbankDotNet.Tests.PrivateApis
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var result = bitbank.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult();
+                var result = restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult();
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -74,10 +74,10 @@ namespace BitbankDotNet.Tests.PrivateApis
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                    restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
@@ -100,10 +100,12 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             {
                 client.Timeout = TimeSpan.FromMilliseconds(1);
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
-                var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
+                using (var restApi = new BitbankRestApiClient(client, " ", " "))
+                {
+                    var exception = Assert.Throws<BitbankDotNetException>(() =>
+                        restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                    Assert.IsType<TaskCanceledException>(exception.InnerException);
+                }
             }
         }
 
@@ -124,10 +126,10 @@ namespace BitbankDotNet.Tests.PrivateApis
                 });
 
             using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var bitbank = new BitbankRestApiClient(client, " ", " ");
                 Assert.Throws<BitbankDotNetException>(() =>
-                    bitbank.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                    restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
             }
         }
     }
