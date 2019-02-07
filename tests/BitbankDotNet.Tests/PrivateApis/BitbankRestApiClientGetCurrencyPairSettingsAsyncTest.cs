@@ -18,7 +18,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             "{\"success\":1,\"data\":{\"pairs\":[{\"name\":\"btc_jpy\",\"base_asset\":\"jpy\",\"quote_asset\":\"jpy\",\"maker_fee_rate_base\":\"1.2\",\"taker_fee_rate_base\":\"1.2\",\"maker_fee_rate_quote\":\"1.2\",\"taker_fee_rate_quote\":\"1.2\",\"unit_amount\":\"1.2\",\"limit_max_amount\":\"1.2\",\"market_max_amount\":\"1.2\",\"market_allowance_rate\":\"1.2\",\"price_digits\":3,\"amount_digits\":3,\"is_stop_buy\":false,\"is_stop_sell\":false},{\"name\":\"btc_jpy\",\"base_asset\":\"jpy\",\"quote_asset\":\"jpy\",\"maker_fee_rate_base\":\"1.2\",\"taker_fee_rate_base\":\"1.2\",\"maker_fee_rate_quote\":\"1.2\",\"taker_fee_rate_quote\":\"1.2\",\"unit_amount\":\"1.2\",\"limit_max_amount\":\"1.2\",\"market_max_amount\":\"1.2\",\"market_allowance_rate\":\"1.2\",\"price_digits\":3,\"amount_digits\":3,\"is_stop_buy\":false,\"is_stop_sell\":false}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_CurrencyPairSettingを返す()
+        public async Task HTTPステータスが200かつSuccessが1_CurrencyPairSettingを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -35,7 +35,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var result = restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult();
+                var result = await restApi.GetCurrencyPairSettingsAsync().ConfigureAwait(false);
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -63,7 +63,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankDotNetExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public async Task HTTPステータスが404またはSuccessが0_BitbankDotNetExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -76,14 +76,14 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                var result = restApi.GetCurrencyPairSettingsAsync();
+                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
         [Fact]
-        public void タイムアウト_BitbankDotNetExceptionをスローする()
+        public async Task タイムアウト_BitbankDotNetExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -102,8 +102,8 @@ namespace BitbankDotNet.Tests.PrivateApis
                 client.Timeout = TimeSpan.FromMilliseconds(1);
                 using (var restApi = new BitbankRestApiClient(client, " ", " "))
                 {
-                    var exception = Assert.Throws<BitbankDotNetException>(() =>
-                        restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                    var result = restApi.GetCurrencyPairSettingsAsync();
+                    var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
                     Assert.IsType<TaskCanceledException>(exception.InnerException);
                 }
             }
@@ -115,7 +115,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankDotNetExceptionをスローする(string content)
+        public async Task 不正なJSONを取得_BitbankDotNetExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -128,8 +128,8 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                Assert.Throws<BitbankDotNetException>(() =>
-                    restApi.GetCurrencyPairSettingsAsync().GetAwaiter().GetResult());
+                var result = restApi.GetCurrencyPairSettingsAsync();
+                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
             }
         }
     }

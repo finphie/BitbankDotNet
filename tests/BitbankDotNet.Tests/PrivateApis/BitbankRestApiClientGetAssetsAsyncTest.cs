@@ -18,7 +18,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             "{\"success\":1,\"data\":{\"assets\":[{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\",\"withdrawal_fee\":{\"threshold\":\"1.2\",\"under\":\"1.2\",\"over\":\"1.2\"}},{\"asset\":\"jpy\",\"amount_precision\":3,\"onhand_amount\":\"1.2\",\"locked_amount\":\"1.2\",\"free_amount\":\"1.2\",\"withdrawal_fee\":{\"threshold\":\"1.2\",\"under\":\"1.2\",\"over\":\"1.2\"}}]}}";
 
         [Fact]
-        public void HTTPステータスが200かつSuccessが1_Assetを返す()
+        public async Task HTTPステータスが200かつSuccessが1_Assetを返す()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -35,7 +35,7 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var result = restApi.GetAssetsAsync().GetAwaiter().GetResult();
+                var result = await restApi.GetAssetsAsync().ConfigureAwait(false);
 
                 Assert.NotNull(result);
                 Assert.All(result, entity =>
@@ -56,7 +56,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData(HttpStatusCode.NotFound, 0, 10000)]
         [InlineData(HttpStatusCode.NotFound, 1, 60003)]
         [InlineData(HttpStatusCode.OK, 0, 70001)]
-        public void HTTPステータスが404またはSuccessが0_BitbankDotNetExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
+        public async Task HTTPステータスが404またはSuccessが0_BitbankDotNetExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -69,14 +69,14 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                var exception = Assert.Throws<BitbankDotNetException>(() =>
-                    restApi.GetAssetsAsync().GetAwaiter().GetResult());
+                var result = restApi.GetAssetsAsync();
+                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
                 Assert.Equal(apiErrorCode, exception.ApiErrorCode);
             }
         }
 
         [Fact]
-        public void タイムアウト_BitbankDotNetExceptionをスローする()
+        public async Task タイムアウト_BitbankDotNetExceptionをスローする()
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -95,8 +95,8 @@ namespace BitbankDotNet.Tests.PrivateApis
                 client.Timeout = TimeSpan.FromMilliseconds(1);
                 using (var restApi = new BitbankRestApiClient(client, " ", " "))
                 {
-                    var exception = Assert.Throws<BitbankDotNetException>(() =>
-                        restApi.GetAssetsAsync().GetAwaiter().GetResult());
+                    var result = restApi.GetAssetsAsync();
+                    var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
                     Assert.IsType<TaskCanceledException>(exception.InnerException);
                 }
             }
@@ -108,7 +108,7 @@ namespace BitbankDotNet.Tests.PrivateApis
         [InlineData("{\"data\":\"\"}")]
         [InlineData("{\"data\":{}")]
         [InlineData("{\"data\":\"a\"}")]
-        public void 不正なJSONを取得_BitbankDotNetExceptionをスローする(string content)
+        public async Task 不正なJSONを取得_BitbankDotNetExceptionをスローする(string content)
         {
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
@@ -121,8 +121,8 @@ namespace BitbankDotNet.Tests.PrivateApis
             using (var client = new HttpClient(mockHttpHandler.Object))
             using (var restApi = new BitbankRestApiClient(client, " ", " "))
             {
-                Assert.Throws<BitbankDotNetException>(() =>
-                    restApi.GetAssetsAsync().GetAwaiter().GetResult());
+                var result = restApi.GetAssetsAsync();
+                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
             }
         }
     }
