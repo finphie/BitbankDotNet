@@ -20,8 +20,8 @@ namespace BitbankDotNet.Tests.PublicApis
         [Fact]
         public async Task HTTPステータスが200かつSuccessが1_Tickerを返す()
         {
-            var mockHttpHandler = new Mock<HttpMessageHandler>();
-            mockHttpHandler.Protected()
+            var handler = new Mock<HttpMessageHandler>();
+            handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Callback<HttpRequestMessage, CancellationToken>((request, _) =>
                 {
@@ -32,7 +32,7 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var client = new HttpClient(handler.Object))
             using (var restApi = new BitbankRestApiClient(client))
             {
                 var result = await restApi.GetTickerAsync(default).ConfigureAwait(false);
@@ -54,15 +54,15 @@ namespace BitbankDotNet.Tests.PublicApis
         [InlineData(HttpStatusCode.OK, 0, 70001)]
         public async Task HTTPステータスが404またはSuccessが0_BitbankDotNetExceptionをスローする(HttpStatusCode statusCode, int success, int apiErrorCode)
         {
-            var mockHttpHandler = new Mock<HttpMessageHandler>();
-            mockHttpHandler.Protected()
+            var handler = new Mock<HttpMessageHandler>();
+            handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage(statusCode)
                 {
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var client = new HttpClient(handler.Object))
             using (var restApi = new BitbankRestApiClient(client))
             {
                 var result = restApi.GetTickerAsync(default);
@@ -74,20 +74,17 @@ namespace BitbankDotNet.Tests.PublicApis
         [Fact]
         public async Task タイムアウト_BitbankDotNetExceptionをスローする()
         {
-            var mockHttpHandler = new Mock<HttpMessageHandler>();
-            mockHttpHandler.Protected()
+            var handler = new Mock<HttpMessageHandler>();
+            handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var client = new HttpClient(handler.Object))
+            using (var restApi = new BitbankRestApiClient(client))
             {
-                client.Timeout = TimeSpan.FromMilliseconds(1);
-                using (var restApi = new BitbankRestApiClient(client))
-                {
-                    var result = restApi.GetTickerAsync(default);
-                    var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                    Assert.IsType<TaskCanceledException>(exception.InnerException);
-                }
+                var result = restApi.GetTickerAsync(default);
+                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+                Assert.IsType<TaskCanceledException>(exception.InnerException);
             }
         }
 
@@ -99,15 +96,15 @@ namespace BitbankDotNet.Tests.PublicApis
         [InlineData("{\"data\":\"a\"}")]
         public async Task 不正なJSONを取得_BitbankDotNetExceptionをスローする(string content)
         {
-            var mockHttpHandler = new Mock<HttpMessageHandler>();
-            mockHttpHandler.Protected()
+            var handler = new Mock<HttpMessageHandler>();
+            handler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(mockHttpHandler.Object))
+            using (var client = new HttpClient(handler.Object))
             using (var restApi = new BitbankRestApiClient(client))
             {
                 var result = restApi.GetTickerAsync(default);
