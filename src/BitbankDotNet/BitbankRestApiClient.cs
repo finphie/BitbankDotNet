@@ -245,7 +245,7 @@ namespace BitbankDotNet
             // 今回の場合、数値のUTF-16文字列が他に必要となるので、stringへの変換コストは無視できる。
             // ベンチマークを取った結果、文字列を変換する方が数値を直接変換するよりも速くなった。
             // なお、Encoding.GetBytesやUtf8Formatterを利用するのは遅いため、
-            // 独自に高速化したバージョン同士で比較した。（ベンチマークプロジェクト参照）
+            // 独自に高速化したバージョン同士で比較した。
             nonce.FromAsciiStringToUtf8Bytes(buffer);
 
             // ReSharper disable once CommentTypo
