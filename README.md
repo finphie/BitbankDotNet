@@ -1,5 +1,7 @@
 # BitbankDotNet
 
+[![Build Status](https://dev.azure.com/finphie/BitbankDotNet/_apis/build/status/finphie.BitbankDotNet)](https://dev.azure.com/finphie/BitbankDotNet/_build/latest?definitionId=1)
+
 .NET Core用の[Bitbank.cc](https://bitbank.cc) APIライブラリです。
 
 ## 説明
