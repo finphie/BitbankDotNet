@@ -1,0 +1,33 @@
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: test
+      arguments: '--configuration $(buildConfiguration)'
+
+- job: Linux
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: test
+      arguments: '--configuration $(buildConfiguration)'
+
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: test
+      arguments: '--configuration $(buildConfiguration)'
