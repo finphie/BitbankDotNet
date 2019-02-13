@@ -40,9 +40,9 @@ namespace BitbankDotNet.Helpers
         };
 
         /// <summary>
-        /// UTF-8のbyte配列を16進数のUTF-16文字列に変換します。
+        /// byte配列を16進数のUTF-16文字列に変換します。
         /// </summary>
-        /// <param name="source">UTF-8のbyte配列</param>
+        /// <param name="source">byte配列</param>
         /// <param name="destination">UTF-16文字列の出力先</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToHexString(in ReadOnlySpan<byte> source, in ReadOnlySpan<char> destination)
