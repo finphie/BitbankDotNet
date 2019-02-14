@@ -96,7 +96,7 @@ namespace BitbankDotNet
         }
 
         /// <summary>
-        /// HTTPリクエスト送信します。
+        /// HTTPリクエストを送信します。
         /// </summary>
         /// <typeparam name="T"><see cref="Entities"/>名前空間内のクラス</typeparam>
         /// <param name="request"><see cref="HttpRequestMessage"/>クラスのインスタンス</param>
