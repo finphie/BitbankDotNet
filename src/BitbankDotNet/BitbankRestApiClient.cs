@@ -89,11 +89,7 @@ namespace BitbankDotNet
         }
 
         /// <inheritdoc/>
-        public void Dispose()
-        {
-            _client?.Dispose();
-            _incrementalHash?.Dispose();
-        }
+        public void Dispose() => _incrementalHash?.Dispose();
 
         /// <summary>
         /// HTTPリクエストを送信します。
