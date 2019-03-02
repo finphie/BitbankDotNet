@@ -37,38 +37,36 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(handler.Object))
+            using var client = new HttpClient(handler.Object);
 <# if (IsPublicApi) { #>
-            using (var restApi = new BitbankRestApiClient(client))
+            using var restApi = new BitbankRestApiClient(client);
 <# } else { #>
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
 <# } #>
-            {
-                var result = await restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).ConfigureAwait(false);
+            var result = await restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>).ConfigureAwait(false);
 
-                Assert.NotNull(result);
+            Assert.NotNull(result);
 <# if (IsArray) { #>
-                Assert.All(result, entity =>
-                {
+            Assert.All(result, entity =>
+            {
 <# foreach (var proparty in EntityProperties) { #>
-                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), entity.<#= proparty.Key #>);
+                Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), entity.<#= proparty.Key #>);
 <# } #>
-                });
+            });
 <# } else { #>
 <# foreach (var proparty in EntityProperties) { #>
 <# if (proparty.Value.Element != null) { #>
-                Assert.All(result.<#= proparty.Key #>, entity =>
-                {
+            Assert.All(result.<#= proparty.Key #>, entity =>
+            {
 <# foreach (var proparty2 in proparty.Value.Element) { #>
-                    Assert.Equal(EntityHelper.GetTestValue<<#= proparty2.Value #>>(), entity.<#= proparty2.Key #>);
+                Assert.Equal(EntityHelper.GetTestValue<<#= proparty2.Value #>>(), entity.<#= proparty2.Key #>);
 <# } #>
-                });
+            });
 <# } else { #>
-                Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), result.<#= proparty.Key #>);
+            Assert.Equal(EntityHelper.GetTestValue<<#= proparty.Value.TypeName #>>(), result.<#= proparty.Key #>);
 <# } #>
 <# } #>
 <# } #>
-            }
         }
 
         [Theory]
@@ -85,17 +83,16 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(handler.Object))
+            using var client = new HttpClient(handler.Object);
 <# if (IsPublicApi) { #>
-            using (var restApi = new BitbankRestApiClient(client))
+            using var restApi = new BitbankRestApiClient(client);
 <# } else { #>
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
 <# } #>
-            {
-                var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
-            }
+            var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
 
         [Fact]
@@ -106,17 +103,16 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(handler.Object))
+            using var client = new HttpClient(handler.Object);
 <# if (IsPublicApi) { #>
-            using (var restApi = new BitbankRestApiClient(client))
+            using var restApi = new BitbankRestApiClient(client);
 <# } else { #>
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
 <# } #>
-            {
-                var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
-            }
+            var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
 
         [Theory]
@@ -135,16 +131,15 @@ namespace BitbankDotNet.Tests.<#= IsPublicApi ? "PublicApis" : "PrivateApis" #>
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(handler.Object))
+            using var client = new HttpClient(handler.Object);
 <# if (IsPublicApi) { #>
-            using (var restApi = new BitbankRestApiClient(client))
+            using var restApi = new BitbankRestApiClient(client);
 <# } else { #>
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
 <# } #>
-            {
-                var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
-                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-            }
+            var result = restApi.<#= MethodName #>(<#= GetDefaultParametersString() #>);
+
+            await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
 }

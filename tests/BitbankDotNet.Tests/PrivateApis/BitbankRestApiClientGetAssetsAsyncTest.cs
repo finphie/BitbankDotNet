@@ -32,24 +32,22 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = await restApi.GetAssetsAsync().ConfigureAwait(false);
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = await restApi.GetAssetsAsync().ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                Assert.All(result, entity =>
-                {
-                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountPrecision);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.FreeAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.LockedAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.OnhandAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Over);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Threshold);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Under);
-                });
-            }
+            Assert.NotNull(result);
+            Assert.All(result, entity =>
+            {
+                Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountPrecision);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.FreeAmount);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.LockedAmount);
+                Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.Name);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.OnhandAmount);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Over);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Threshold);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.WithdrawalFee.Under);
+            });
         }
 
         [Theory]
@@ -66,13 +64,11 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetAssetsAsync();
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetAssetsAsync();
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
 
         [Fact]
@@ -83,13 +79,11 @@ namespace BitbankDotNet.Tests.PrivateApis
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetAssetsAsync();
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetAssetsAsync();
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
 
         [Theory]
@@ -108,12 +102,10 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetAssetsAsync();
-                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetAssetsAsync();
+            await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
 }
