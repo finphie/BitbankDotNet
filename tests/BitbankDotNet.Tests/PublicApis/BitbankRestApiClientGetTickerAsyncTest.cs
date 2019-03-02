@@ -63,6 +63,7 @@ namespace BitbankDotNet.Tests.PublicApis
             using var client = new HttpClient(handler.Object);
             using var restApi = new BitbankRestApiClient(client);
             var result = restApi.GetTickerAsync(default);
+
             var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
             Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
@@ -78,6 +79,7 @@ namespace BitbankDotNet.Tests.PublicApis
             using var client = new HttpClient(handler.Object);
             using var restApi = new BitbankRestApiClient(client);
             var result = restApi.GetTickerAsync(default);
+
             var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
             Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
@@ -101,6 +103,7 @@ namespace BitbankDotNet.Tests.PublicApis
             using var client = new HttpClient(handler.Object);
             using var restApi = new BitbankRestApiClient(client);
             var result = restApi.GetTickerAsync(default);
+
             await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
