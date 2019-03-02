@@ -56,7 +56,7 @@ namespace BitbankDotNet
             if (fromId.HasValue)
                 query["from_id"] = fromId.ToString();
             if (endId.HasValue)
-                query["end_id"] = fromId.ToString();
+                query["end_id"] = endId.ToString();
             if (since.HasValue)
                 query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
             if (end.HasValue)
