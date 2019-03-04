@@ -32,7 +32,7 @@ namespace BitbankDotNet
         /// <returns>ローソク足データ</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Ohlcv[]> GetCandlesticksAsync(CurrencyPair pair, CandleType type, int year, int month, int day)
-            => GetCandlesticksAsync(pair, type, $"{year:D2}{month:D2}{day:D2}");
+            => GetCandlesticksAsync(pair, type, $"{year}{month:D2}{day:D2}");
 
         /// <summary>
         /// [Public API]指定された日付（UTC）のローソク足データを返します。

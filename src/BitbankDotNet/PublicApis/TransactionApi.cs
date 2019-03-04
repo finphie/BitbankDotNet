@@ -31,7 +31,7 @@ namespace BitbankDotNet
         /// <returns>約定履歴</returns>
         /// <exception cref="BitbankDotNetException">APIリクエストでエラーが発生しました。</exception>
         public Task<Transaction[]> GetTransactionsAsync(CurrencyPair pair, int year, int month, int day)
-            => GetTransactionsAsync(pair, $"{year:D2}{month:D2}{day:D2}");
+            => GetTransactionsAsync(pair, $"{year}{month:D2}{day:D2}");
 
         /// <summary>
         /// [Public API]指定された日付（UTC）の全約定履歴を返します。
