@@ -32,7 +32,7 @@ BitbankDotNetは、C#で開発している.NET Core用の[Bitbank.cc](https://bi
 ### BitbankDotNet.Tests（ライブラリ本体のユニットテストプロジェクト）
 
 - [.NET Core](https://dotnet.microsoft.com/download) 2.2.0+
-- [Microsoft.NET.Test.Sdk](https://github.com/microsoft/vstest) 15.9.0
+- [Microsoft.NET.Test.Sdk](https://github.com/microsoft/vstest) 16.0.1
 - [Moq](https://github.com/moq/moq4) 4.10.1
 - [xUnit.net](https://github.com/xunit/xunit) 2.4.1
 
