@@ -47,6 +47,7 @@ namespace BitbankDotNet
         readonly IncrementalHash _incrementalHash;
         readonly string _signHexUtf16String = new string(default, SignHexUtf16StringLength);
 
+        bool _disposed;
         ulong _nonce = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
         static BitbankRestApiClient()
@@ -89,7 +90,15 @@ namespace BitbankDotNet
         }
 
         /// <inheritdoc/>
-        public void Dispose() => _incrementalHash?.Dispose();
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+
+            _incrementalHash?.Dispose();
+
+            _disposed = true;
+        }
 
         /// <summary>
         /// HTTPリクエストを送信します。
