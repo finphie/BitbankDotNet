@@ -32,22 +32,20 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = await restApi.GetCandlesticksAsync(default, default, default, default, default).ConfigureAwait(false);
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = await restApi.GetCandlesticksAsync(default, default, default, default, default).ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                Assert.All(result, entity =>
-                {
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Close);
-                    Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.Date);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.High);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Low);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Open);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Volume);
-                });
-            }
+            Assert.NotNull(result);
+            Assert.All(result, entity =>
+            {
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Close);
+                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), entity.Date);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.High);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Low);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Open);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.Volume);
+            });
         }
 
         [Theory]
@@ -64,13 +62,12 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
 
         [Fact]
@@ -81,13 +78,12 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
 
         [Theory]
@@ -106,12 +102,11 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
-                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetCandlesticksAsync(default, default, default, default, default);
+
+            await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
 }

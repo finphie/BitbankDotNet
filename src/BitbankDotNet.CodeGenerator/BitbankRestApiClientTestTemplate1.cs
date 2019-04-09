@@ -93,14 +93,13 @@ namespace BitbankDotNet.CodeGenerator
         // 指定した型のエイリアスを取得する
         static string GetTypeOutput(Type type)
         {
-            using (var provider = new CSharpCodeProvider())
-            {
-                var typeRef = new CodeTypeReference(type);
-                var typeName = provider.GetTypeOutput(typeRef);
+            using var provider = new CSharpCodeProvider();
 
-                // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
-                return typeName.Split('.').Last();
-            }
+            var typeRef = new CodeTypeReference(type);
+            var typeName = provider.GetTypeOutput(typeRef);
+
+            // エイリアスがない型だと、名前空間付きで出力されてしまうので削除
+            return typeName.Split('.').Last();
         }
 
         string GetDefaultParametersString()

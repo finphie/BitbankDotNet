@@ -32,31 +32,29 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = await restApi.GetCurrencyPairSettingsAsync().ConfigureAwait(false);
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = await restApi.GetCurrencyPairSettingsAsync().ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                Assert.All(result, entity =>
-                {
-                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountDigits);
-                    Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.BaseAsset);
-                    Assert.Equal(EntityHelper.GetTestValue<bool>(), entity.IsStopBuy);
-                    Assert.Equal(EntityHelper.GetTestValue<bool>(), entity.IsStopSell);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.LimitMaxAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MakerFeeRateBase);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MakerFeeRateQuote);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MarketAllowanceRate);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MarketMaxAmount);
-                    Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Name);
-                    Assert.Equal(EntityHelper.GetTestValue<int>(), entity.PriceDigits);
-                    Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.QuoteAsset);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.TakerFeeRateBase);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.TakerFeeRateQuote);
-                    Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.UnitAmount);
-                });
-            }
+            Assert.NotNull(result);
+            Assert.All(result, entity =>
+            {
+                Assert.Equal(EntityHelper.GetTestValue<int>(), entity.AmountDigits);
+                Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.BaseAsset);
+                Assert.Equal(EntityHelper.GetTestValue<bool>(), entity.IsStopBuy);
+                Assert.Equal(EntityHelper.GetTestValue<bool>(), entity.IsStopSell);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.LimitMaxAmount);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MakerFeeRateBase);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MakerFeeRateQuote);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MarketAllowanceRate);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.MarketMaxAmount);
+                Assert.Equal(EntityHelper.GetTestValue<CurrencyPair>(), entity.Name);
+                Assert.Equal(EntityHelper.GetTestValue<int>(), entity.PriceDigits);
+                Assert.Equal(EntityHelper.GetTestValue<AssetName>(), entity.QuoteAsset);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.TakerFeeRateBase);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.TakerFeeRateQuote);
+                Assert.Equal(EntityHelper.GetTestValue<decimal>(), entity.UnitAmount);
+            });
         }
 
         [Theory]
@@ -73,13 +71,12 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetCurrencyPairSettingsAsync();
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetCurrencyPairSettingsAsync();
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
 
         [Fact]
@@ -90,13 +87,12 @@ namespace BitbankDotNet.Tests.PrivateApis
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetCurrencyPairSettingsAsync();
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetCurrencyPairSettingsAsync();
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
 
         [Theory]
@@ -115,12 +111,11 @@ namespace BitbankDotNet.Tests.PrivateApis
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client, " ", " "))
-            {
-                var result = restApi.GetCurrencyPairSettingsAsync();
-                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client, " ", " ");
+            var result = restApi.GetCurrencyPairSettingsAsync();
+
+            await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
 }

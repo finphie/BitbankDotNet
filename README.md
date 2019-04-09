@@ -81,12 +81,12 @@ var restApi = new BitbankRestApiClient(client, apiKey, apiSecret);
 
 ## 使用言語
 
-- C# 7.3
+- C# 8.0
 - [PowerShell Core](https://github.com/PowerShell/PowerShell) 6.1
 
 ## 開発環境
 
-- Visual Studio 2017 version 15.9
+- Visual Studio 2019
 - Visual Studio Code
 
 ## 作者

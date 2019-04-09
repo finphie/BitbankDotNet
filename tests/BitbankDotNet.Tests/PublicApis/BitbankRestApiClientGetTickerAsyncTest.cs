@@ -32,20 +32,18 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent(Json)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = await restApi.GetTickerAsync(default).ConfigureAwait(false);
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = await restApi.GetTickerAsync(default).ConfigureAwait(false);
 
-                Assert.NotNull(result);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Buy);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.High);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Last);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Low);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Sell);
-                Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
-                Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Vol);
-            }
+            Assert.NotNull(result);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Buy);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.High);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Last);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Low);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Sell);
+            Assert.Equal(EntityHelper.GetTestValue<DateTime>(), result.Timestamp);
+            Assert.Equal(EntityHelper.GetTestValue<decimal>(), result.Vol);
         }
 
         [Theory]
@@ -62,13 +60,12 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent($"{{\"success\":{success},\"data\":{{\"code\":{apiErrorCode}}}}}")
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetTickerAsync(default);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.Equal(apiErrorCode, exception.ApiErrorCode);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetTickerAsync(default);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.Equal(apiErrorCode, exception.ApiErrorCode);
         }
 
         [Fact]
@@ -79,13 +76,12 @@ namespace BitbankDotNet.Tests.PublicApis
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Throws<TaskCanceledException>();
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetTickerAsync(default);
-                var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-                Assert.IsType<TaskCanceledException>(exception.InnerException);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetTickerAsync(default);
+
+            var exception = await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
+            Assert.IsType<TaskCanceledException>(exception.InnerException);
         }
 
         [Theory]
@@ -104,12 +100,11 @@ namespace BitbankDotNet.Tests.PublicApis
                     Content = new StringContent(content)
                 });
 
-            using (var client = new HttpClient(handler.Object))
-            using (var restApi = new BitbankRestApiClient(client))
-            {
-                var result = restApi.GetTickerAsync(default);
-                await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
-            }
+            using var client = new HttpClient(handler.Object);
+            using var restApi = new BitbankRestApiClient(client);
+            var result = restApi.GetTickerAsync(default);
+
+            await Assert.ThrowsAsync<BitbankDotNetException>(() => result).ConfigureAwait(false);
         }
     }
 }
