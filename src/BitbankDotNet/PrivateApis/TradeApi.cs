@@ -51,16 +51,16 @@ namespace BitbankDotNet
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
-            if (count.HasValue)
-                query["count"] = count.ToString();
-            if (orderId.HasValue)
-                query["order_id"] = orderId.ToString();
-            if (since.HasValue)
-                query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
-            if (end.HasValue)
-                query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
-            if (sort.HasValue)
-                query["order"] = sort.Value.GetEnumMemberValue();
+            if (count is { } nonNullCount)
+                query["count"] = nonNullCount.ToString();
+            if (orderId is { } nonNullOrderId)
+                query["order_id"] = nonNullOrderId.ToString();
+            if (since is { } nonNullSince)
+                query["since"] = nonNullSince.ToUnixTimeMilliseconds().ToString();
+            if (end is { } nonNullEnd)
+                query["end"] = nonNullEnd.ToUnixTimeMilliseconds().ToString();
+            if (sort is { } nonNullSort)
+                query["order"] = nonNullSort.GetEnumMemberValue();
 
             var result = await GetTradeHistoryAsync(query.ToString()).ConfigureAwait(false);
             return result.Trades;

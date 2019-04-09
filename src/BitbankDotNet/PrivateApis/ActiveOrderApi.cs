@@ -51,16 +51,16 @@ namespace BitbankDotNet
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["pair"] = pair.GetEnumMemberValue();
-            if (count.HasValue)
-                query["count"] = count.ToString();
-            if (fromId.HasValue)
-                query["from_id"] = fromId.ToString();
-            if (endId.HasValue)
-                query["end_id"] = endId.ToString();
-            if (since.HasValue)
-                query["since"] = since.Value.ToUnixTimeMilliseconds().ToString();
-            if (end.HasValue)
-                query["end"] = end.Value.ToUnixTimeMilliseconds().ToString();
+            if (count is { } nonNullCount)
+                query["count"] = nonNullCount.ToString();
+            if (fromId is { } nonNullFromId)
+                query["from_id"] = nonNullFromId.ToString();
+            if (endId is { } nonNullEndId)
+                query["end_id"] = nonNullEndId.ToString();
+            if (since is { } nonNullSince)
+                query["since"] = nonNullSince.ToUnixTimeMilliseconds().ToString();
+            if (end is { } nonNullEnd)
+                query["end"] = nonNullEnd.ToUnixTimeMilliseconds().ToString();
 
             var result = await GetActiveOrdersAsync(query.ToString()).ConfigureAwait(false);
             return result.Orders;
