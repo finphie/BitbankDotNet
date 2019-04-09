@@ -1,7 +1,7 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>preview</LangVersion>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <Authors>finphie</Authors>
     <Copyright>finphie</Copyright>
