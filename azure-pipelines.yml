@@ -9,6 +9,10 @@ jobs:
   pool:
     vmImage: 'Windows-2019'
   steps:
+  - task: DotNetCoreInstaller@1
+    inputs:
+      version: '3.x'
+      includePreviewVersions: true
   - task: DotNetCoreCLI@2
     inputs:
       command: test
@@ -18,6 +22,10 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
+  - task: DotNetCoreInstaller@1
+    inputs:
+      version: '3.x'
+      includePreviewVersions: true
   - task: DotNetCoreCLI@2
     inputs:
       command: test
@@ -27,6 +35,10 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
+  - task: DotNetCoreInstaller@1
+    inputs:
+      version: '3.x'
+      includePreviewVersions: true
   - task: DotNetCoreCLI@2
     inputs:
       command: test
